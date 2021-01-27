@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'package:nazarath_app/Screens/login.dart';
 
 import 'Screens/home.dart';
 import 'Screens/profile.dart';
@@ -62,7 +63,7 @@ class _DashBoard extends State<DashBoard> {
           children: <Widget>[
             Home(),
             Register(),
-            Profile(),
+            Login(),
             Profile(),
             Profile(),
           ],

@@ -10,7 +10,7 @@ import 'package:nazarath_app/Constants/dart/constants.dart';
 
 // show CheckBoxNotifier;
 
-class Register extends StatelessWidget {
+class Login extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 14.0);
   // CheckBoxNotifier _checkBoxNotifier;
