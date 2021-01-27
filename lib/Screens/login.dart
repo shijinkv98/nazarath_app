@@ -63,94 +63,9 @@ class Login extends StatelessWidget {
     );
 
     // TextEditingController emailController = new TextEditingController();
-    String email;
-    final emailField = TextFormField(
-      cursorColor: colorPrimary,
-      obscureText: false,
-      // controller: emailController,
-      onSaved: (value) {
-        email = value;
-      },
-      style: style,
-      validator: (value) {
-        if (value.trim().isEmpty) {
-          return 'This field is required';
-        } else if (!RegExp(
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(value)) {
-          return 'Invalid email';
-        } else {
-          return null;
-        }
-      },
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        hintText: "Email", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'EMAIL',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[200]),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: colorPrimary),
-        ),
-        prefixIcon: new IconButton(
-          icon: new Image.asset(
-            'assets/icons/mail.png',
-            width: 20.0,
-            height: 20.0,
-          ),
-          onPressed: null,
-          color: colorPrimary,
-        ),
-        // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-      ),
-    );
 
-    String phoneNo;
-    final phoneField = TextFormField(
-      cursorColor: colorPrimary,
-      obscureText: false,
-      onSaved: (value) {
-        phoneNo = value;
-      },
-      style: style,
-      validator: (value) {
-        if (value.trim().isEmpty) {
-          return 'This field is required';
-        } else {
-          return null;
-        }
-      },
-      keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        hintText: "Phone Number",
-        hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'PHONE NUMBER',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
-        prefixText: '+91 ', prefixStyle: TextStyle(color: Colors.grey),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[200]),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: colorPrimary),
-        ),
-        prefixIcon: new IconButton(
-          icon: new Image.asset(
-            'assets/icons/call.png',
-            width: 20.0,
-            height: 20.0,
-          ),
-          onPressed: null,
-          color: colorPrimary,
-        ),
-        // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-      ),
-    );
+
+
 
     // final TextEditingController passwordController =
     //     new TextEditingController();
@@ -236,7 +151,7 @@ class Login extends StatelessWidget {
         // }
         // }
         // },
-        child: Text("Register",
+        child: Text("Sign In",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 fontSize: 18,
@@ -290,91 +205,55 @@ class Login extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Create Account",
+                            style: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        shopNameField,
+                        SizedBox(
+                          height: 25,
+                        ),
+                        passwordField,
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    shopNameField,
-                    SizedBox(
-                      height: 25,
-                    ),
-                    passwordField,
-                    SizedBox(
-                      height: 25,
-                    ),
-                    emailField,
-                    SizedBox(
-                      height: 25,
-                    ),
-                    phoneField,
-                    SizedBox(
-                      height: 25,
-                    ),
-                    // Row(
-                    //   children: [
-                    //
-                    //     Expanded(
-                    //       child: RichText(
-                    //         text: TextSpan(
-                    //           text: "I Accept All The",
-                    //           style:
-                    //           TextStyle(color: Colors.black, fontSize: 12),
-                    //           children: <TextSpan>[
-                    //             TextSpan(
-                    //                 text: ' Terms of Use',
-                    //                 style: TextStyle(
-                    //                   fontSize: 12,
-                    //                   color: Color(0xFF265c7e),
-                    //                 )),
-                    //             TextSpan(
-                    //               text: ' and',
-                    //               style: TextStyle(
-                    //                   color: Colors.black, fontSize: 12),
-                    //             ),
-                    //             TextSpan(
-                    //                 text: ' Privacy Policy',
-                    //                 style: TextStyle(
-                    //                   fontSize: 12,
-                    //                   color: Color(0xFF265c7e),
-                    //                 )),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    loginButon,
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // RichText(
-                    //     text: TextSpan(
-                    //         text: 'Already have an account?',
-                    //         style: TextStyle(color: Colors.black, fontSize: 15),
-                    //         children: <TextSpan>[
-                    //           TextSpan(
-                    //               text: ' Sign in',
-                    //               recognizer: new TapGestureRecognizer()
-                    //                 ..onTap = () {
-                    //                   Navigator.of(context).pop();
-                    //                 },
-                    //               style:
-                    //               TextStyle(color: colorPrimary, fontSize: 15))
-                    //         ]))
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "Forgot Password ?",
+                            style: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+
+                        loginButon,
+
+                      ],
+                    )
+
                   ],
                 ),
+
               ),
             ),
           ],
