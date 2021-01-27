@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/Constants/dart/constants.dart';
 
+import 'Screens/home.dart';
 import 'Screens/profile.dart';
 
 class DashBoard extends StatefulWidget {
@@ -17,14 +18,14 @@ List<Widget> _widgetOptions = <Widget>[
   Profile(),
   Profile(),
   Profile(),
-  Text(
-    'Others',
-    style: _optionStyle,
-  ),
-  Text(
-    'Others2',
-    style: _optionStyle,
-  ),
+  // Text(
+  //   'Others',
+  //   style: _optionStyle,
+  // ),
+  // Text(
+  //   'Others2',
+  //   style: _optionStyle,
+  // ),
 ];
 
 class _DashBoard extends State<DashBoard> {
@@ -48,14 +49,22 @@ class _DashBoard extends State<DashBoard> {
               //   icon: ImageIcon(AssetImage('assets/icons/bottom_nav/Email.png')),
               // ),
             ],
-
-            labelColor: Colors.black,
+            labelColor: Colors.white,
             unselectedLabelColor: Colors.white,
             indicatorColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
             labelPadding: EdgeInsets.all(0),
             indicatorPadding: EdgeInsets.all(0),
           ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            Home(),
+            Profile(),
+            Profile(),
+            Profile(),
+            Profile(),
+          ],
         ),
       ),
     );
@@ -69,28 +78,29 @@ Widget _individualTab(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color:colorPrimary, width: 0, style: BorderStyle.solid),
+              color: colorPrimary, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),text: 'HOME',
+              icon: ImageIcon(AssetImage(imagePath)),
+              text: 'HOME',
             ),
-
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[400],
+              color: Colors.grey[300],
               width: 1,
-              height: 35,
+              height: 50,
             ),
           )
         ],
       ));
 }
+
 Widget _individualTab2(String imagePath) {
   return Container(
       height: 70,
@@ -98,28 +108,29 @@ Widget _individualTab2(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color:colorPrimary, width: 0, style: BorderStyle.solid),
+              color: colorPrimary, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),text: 'CHECKUP',
+              icon: ImageIcon(AssetImage(imagePath)),
+              text: 'CHECKUP',
             ),
-
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[400],
+              color: Colors.grey[300],
               width: 1,
-              height: 35,
+              height: 50,
             ),
           )
         ],
       ));
 }
+
 Widget _individualTab3(String imagePath) {
   return Container(
       height: 70,
@@ -127,28 +138,29 @@ Widget _individualTab3(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color:colorPrimary, width: 0, style: BorderStyle.solid),
+              color: colorPrimary, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),text: 'STORES',
+              icon: ImageIcon(AssetImage(imagePath)),
+              text: 'STORES',
             ),
-
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[400],
+              color: Colors.grey[300],
               width: 1,
-              height: 35,
+              height: 50,
             ),
           )
         ],
       ));
 }
+
 Widget _individualTab4(String imagePath) {
   return Container(
       height: 70,
@@ -156,28 +168,29 @@ Widget _individualTab4(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color:colorPrimary, width: 0, style: BorderStyle.solid),
+              color: colorPrimary, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),text: 'PROFILE',
+              icon: ImageIcon(AssetImage(imagePath)),
+              text: 'PROFILE',
             ),
-
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[400],
+              color: Colors.grey[300],
               width: 1,
-              height: 35,
+              height: 50,
             ),
           )
         ],
       ));
 }
+
 Widget _individualTab5(String imagePath) {
   return Container(
       height: 70,
@@ -185,23 +198,23 @@ Widget _individualTab5(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color:colorPrimary, width: 0, style: BorderStyle.solid),
+              color: colorPrimary, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),text: 'NEWS',
+              icon: ImageIcon(AssetImage(imagePath)),
+              text: 'NEWS',
             ),
-
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[400],
+              color: Colors.grey[300],
               width: 1,
-              height: 35,
+              height: 50,
             ),
           )
         ],
