@@ -3,6 +3,7 @@ import 'package:nazarath_app/Constants/dart/constants.dart';
 
 import 'Screens/home.dart';
 import 'Screens/profile.dart';
+import 'Screens/register.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -60,7 +61,7 @@ class _DashBoard extends State<DashBoard> {
         body: TabBarView(
           children: <Widget>[
             Home(),
-            Profile(),
+            Register(),
             Profile(),
             Profile(),
             Profile(),
