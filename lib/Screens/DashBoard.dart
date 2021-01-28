@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
 import 'package:nazarath_app/Screens/login.dart';
 
-import 'Screens/home.dart';
-import 'Screens/profile.dart';
-import 'Screens/register.dart';
+import 'home.dart';
+import 'profile.dart';
+import 'register/register.dart';
 
 class DashBoard extends StatefulWidget {
   @override

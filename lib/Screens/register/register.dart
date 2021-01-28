@@ -1,4 +1,5 @@
 // import 'dart:io';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -6,13 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
-import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'package:nazarath_app/Screens/register/otp.dart';
+import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/SignupResponse.dart';
 
 // show CheckBoxNotifier;
 
 class Register extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 14.0);
+  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: font_size_head);
   // CheckBoxNotifier _checkBoxNotifier;
 
   @override
@@ -36,10 +40,10 @@ class Register extends StatelessWidget {
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
         labelText: 'USERNAME',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey[200]),
           ),
@@ -51,8 +55,8 @@ class Register extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/user.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -86,10 +90,10 @@ class Register extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "Email", hintStyle: TextStyle(color: textColorSecondary),
         labelText: 'EMAIL',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
         ),
@@ -99,8 +103,8 @@ class Register extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/mail.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -127,12 +131,12 @@ class Register extends StatelessWidget {
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "Phone Number",
         hintStyle: TextStyle(color: textColorSecondary),
         labelText: 'PHONE NUMBER',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
-        prefixText: '+91 ', prefixStyle: TextStyle(color: Colors.grey),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+        prefixText: '+971 ', prefixStyle: TextStyle(color: Colors.grey),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
         ),
@@ -142,8 +146,8 @@ class Register extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/call.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -172,10 +176,10 @@ class Register extends StatelessWidget {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "Password", hintStyle: TextStyle(color: textColorSecondary),
         labelText: "PASSWORD",
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
         ),
@@ -186,8 +190,8 @@ class Register extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/password.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -202,44 +206,45 @@ class Register extends StatelessWidget {
       color: colorPrimary,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        onPressed: () {},
-        // async {
-        //   if (_formKey.currentState.validate()) {
-        //     _formKey.currentState.save();
-        //
-        //     if (!_checkBoxNotifier.isChecked) {
-        //       ApiCall()
-        //           .showToast('Please Accept Terms of Use and Privacy Policy');
-        //     } else {
-        //       Map body = {
-        //         // name,email,phone_number,password
-        //         'name': shopName.trim(),
-        //         'email': email.trim(),
-        //         'password': password.trim(),
-        //         'phone_number': phoneNo,
-        // 'device_token': deviceToken,
-        // 'device_id': deviceId,
-        // 'device_platform': Platform.isIOS ? '2' : '1',
-        // };
+        padding: EdgeInsets.fromLTRB(register_icon_size, padding, register_icon_size, padding),
+        onPressed: ()
+        async {
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
 
-        // FocusScope.of(context).requestFocus(FocusNode());
-        // var response = await ApiCall()
-        //     .execute<SignupResponse, Null>("vendorregistration", body);
-        //
-        // if (response?.vendorData != null) {
+            {
+              Map body = {
+                // name,email,phone_number,password
+                'name': shopName.trim(),
+                'email': email.trim(),
+                'password': password.trim(),
+                'phone_number': phoneNo,
+                'phone_country_code':'971',
+                'referral_code':'',
+                'guest_id':'',
+        'device_token': deviceToken,
+        'device_id': deviceId,
+        'device_platform': Platform.isIOS ? '2' : '1',
+        };
+
+        FocusScope.of(context).requestFocus(FocusNode());
+        var response = await ApiCall()
+            .execute<SignupResponse, Null>("register/en", body);
+
+        if (response?.customerData != null) {
         // Navigator.of(context)
-        //     .pushReplacementNamed('vendorDetails', arguments: '');
-        // Navigator.of(context)
-        //     .pushNamed('otp', arguments: response.vendorData);
-        // }
-        // }
-        // }
-        // },
+        //     .pushReplacementNamed('HomePage', arguments: '');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OtpScreen(userData: response.customerData)),);
+        }
+        }
+        }
+        },
         child: Text("Register",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                fontSize: 18,
+                fontSize: button_text_size,
                 color: Colors.white,
                 fontWeight: FontWeight.normal)),
       ),
@@ -263,10 +268,11 @@ class Register extends StatelessWidget {
           children: <Widget>[
             Container(
               color: colorPrimary,
+              padding:EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 35.0),
               child: ImageIcon(
                 AssetImage("assets/icons/nazarath_logo.png"),
                 color: Colors.white,
-                size: 80,
+                size: register_logo_size,
               ),
             ),
             Container(
@@ -274,18 +280,18 @@ class Register extends StatelessWidget {
               color: colorPrimary,
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 110),
-                height: 50,
+                margin: EdgeInsets.only(top: primary_margin),
+                height: container_space,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(65.0),
-                      topRight: Radius.circular(65.0)),
+                      topLeft: Radius.circular(border_radius),
+                      topRight: Radius.circular(border_radius)),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
+              padding: EdgeInsets.fromLTRB(forms_padding, 0, forms_padding, forms_padding),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -297,27 +303,27 @@ class Register extends StatelessWidget {
                         style: TextStyle(
                             color: textColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: header_text_size),
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: space2,
                     ),
                     shopNameField,
                     SizedBox(
-                      height: 25,
+                      height: space,
                     ),
                     passwordField,
                     SizedBox(
-                      height: 25,
+                      height: space,
                     ),
                     emailField,
                     SizedBox(
-                      height: 25,
+                      height: space,
                     ),
                     phoneField,
                     SizedBox(
-                      height: 25,
+                      height: space,
                     ),
                     // Row(
                     //   children: [
@@ -327,23 +333,23 @@ class Register extends StatelessWidget {
                     //         text: TextSpan(
                     //           text: "I Accept All The",
                     //           style:
-                    //           TextStyle(color: Colors.black, fontSize: 12),
+                    //           TextStyle(color: Colors.black, fontSize: field_text_size),
                     //           children: <TextSpan>[
                     //             TextSpan(
                     //                 text: ' Terms of Use',
                     //                 style: TextStyle(
-                    //                   fontSize: 12,
+                    //                   fontSize: field_text_size,
                     //                   color: Color(0xFF265c7e),
                     //                 )),
                     //             TextSpan(
                     //               text: ' and',
                     //               style: TextStyle(
-                    //                   color: Colors.black, fontSize: 12),
+                    //                   color: Colors.black, fontSize: field_text_size),
                     //             ),
                     //             TextSpan(
                     //                 text: ' Privacy Policy',
                     //                 style: TextStyle(
-                    //                   fontSize: 12,
+                    //                   fontSize: field_text_size,
                     //                   color: Color(0xFF265c7e),
                     //                 )),
                     //           ],
@@ -353,11 +359,11 @@ class Register extends StatelessWidget {
                     //   ],
                     // ),
                     SizedBox(
-                      height: 10,
+                      height: normal_space,
                     ),
                     loginButon,
                     SizedBox(
-                      height: 10,
+                      height: normal_space,
                     ),
                     // RichText(
                     //     text: TextSpan(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
-import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
 
 class Profile extends StatelessWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
 
 void main() => runApp(Home());
 

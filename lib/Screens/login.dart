@@ -1,4 +1,5 @@
 // import 'dart:io';
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
-import 'package:nazarath_app/Constants/dart/constants.dart';
+import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/LoginResponse.dart';
+
+import 'home.dart';
 
 // show CheckBoxNotifier;
 
@@ -118,39 +123,10 @@ class Login extends StatelessWidget {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        onPressed: () {},
-        // async {
-        //   if (_formKey.currentState.validate()) {
-        //     _formKey.currentState.save();
-        //
-        //     if (!_checkBoxNotifier.isChecked) {
-        //       ApiCall()
-        //           .showToast('Please Accept Terms of Use and Privacy Policy');
-        //     } else {
-        //       Map body = {
-        //         // name,email,phone_number,password
-        //         'name': shopName.trim(),
-        //         'email': email.trim(),
-        //         'password': password.trim(),
-        //         'phone_number': phoneNo,
-        // 'device_token': deviceToken,
-        // 'device_id': deviceId,
-        // 'device_platform': Platform.isIOS ? '2' : '1',
-        // };
+        onPressed: () {
+          guestLogin(context);
+        },
 
-        // FocusScope.of(context).requestFocus(FocusNode());
-        // var response = await ApiCall()
-        //     .execute<SignupResponse, Null>("vendorregistration", body);
-        //
-        // if (response?.vendorData != null) {
-        // Navigator.of(context)
-        //     .pushReplacementNamed('vendorDetails', arguments: '');
-        // Navigator.of(context)
-        //     .pushNamed('otp', arguments: response.vendorData);
-        // }
-        // }
-        // }
-        // },
         child: Text("Sign In",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -260,5 +236,58 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+    
+  }
+  Future<void> guestLogin(BuildContext context)
+  async {
+    Map body = {
+      // name,email,phone_number,password
+    };
+    var response = await ApiCall()
+        .execute<LoginResponse, Null>("guest-login/en", body);
+
+    if (response?.customerData != null) {
+      await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),);
+    }
+  }
+  Future<void> login(String email_phone,String referral_code,String guest_id,String password,BuildContext context)
+  async {
+    Map body = {
+      // name,email,phone_number,password
+      'email_phone': email_phone,
+      'password': password.trim(),
+      'password': password.trim(),
+      'referral_code': referral_code,
+      'guest_id':'guest_id',
+    };
+    var response = await ApiCall()
+        .execute<LoginResponse, Null>("login/en", body);
+
+    if (response?.customerData != null) {
+      await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),);
+    }
+  }
+  Future<void> forgotPassword(String email,String id,BuildContext context)
+  async {
+    Map body = {
+      // name,email,phone_number,password
+      'email': email,
+      'id': id,
+    };
+    var response = await ApiCall()
+        .execute<LoginResponse, Null>("verify-email/en", body);
+
+    if (response?.customerData != null) {
+      await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),);
+    }
   }
 }
