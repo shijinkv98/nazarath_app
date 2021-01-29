@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
+import 'DashBoard.dart';
 import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
 
 class Profile extends StatelessWidget {
@@ -18,7 +19,7 @@ class Profile extends StatelessWidget {
         leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
         title: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 50, top: 20),
+            padding: const EdgeInsets.only(bottom: 30, top: 20),
             child: ImageIcon(
               AssetImage("assets/icons/nazarath_logo.png"),
               size: 100,
@@ -31,39 +32,39 @@ class Profile extends StatelessWidget {
         actions: <Widget>[
           // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 5),
             child: Container(
-              height: 20,
-              width: 20,
+              height: 16,
+              width: 16,
               child: ImageIcon(AssetImage("assets/icons/search.png"),),
 
               ),
             ),
 
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 5),
             child: Container(
-              height: 20,
-              width: 20,
+              height: 16,
+              width: 16,
               child: ImageIcon(AssetImage("assets/icons/notification.png"),),
 
               ),
             ),
 
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 5),
             child: Container(
-              height: 20,
-              width: 20,
+              height: 16,
+              width: 16,
               child: ImageIcon(AssetImage("assets/icons/favourite.png"),),
 
               ),
             ),
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 10),
             child: Container(
-              height: 20,
-              width: 20,
+              height: 16,
+              width: 16,
               child: ImageIcon(AssetImage("assets/icons/cart.png"),),
 
 
@@ -122,7 +123,7 @@ class Profile extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 25, top: 20),
-                      child: Text('Muhd. Rafeeque',
+                      child: Text(customer.name,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class Profile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 25),
-                      child: Text('muhdsalam@gmail.com',
+                      child: Text(customer.email,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.normal,
