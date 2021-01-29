@@ -7,11 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/model/user.dart';
+import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CategoryResponse.dart';
+import 'package:nazarath_app/network/response/FilterResponse.dart';
+import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/network/response/ProductListResponse.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
+import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
 
@@ -176,35 +180,15 @@ class ApiCall{
         return ProductListResponse.fromJson(json) as T;
     } else if (T == ProductDetailsResponse) {
       return ProductDetailsResponse.fromJson(json) as T;
-    // } else if (T == DashboardResponse) {
-    //   return DashboardResponse.fromJson(json) as T;
-    // } else if (T == OrdersListResponse) {
-    //   return OrdersListResponse.fromJson(json) as T;
-    // } else if (T == OrderPagination) {
-    //   return OrderPagination.fromJson(json) as T;
-    // } else if (T == OrderDetailsResponse) {
-    //   return OrderDetailsResponse.fromJson(json) as T;
-    // } else if (T == CategoryResponse) {
-    //   return CategoryResponse.fromJson(json) as T;
+    } else if (T == CartResponse) {
+        return CartResponse.fromJson(json) as T;
+    } else if (T == WishListResponse) {
+      return WishListResponse.fromJson(json) as T;
+    } else if (T == HomeResponse) {
+      return HomeResponse.fromJson(json) as T;
+    } else if (T == FilterResponse) {
+      return FilterResponse.fromJson(json) as T;
 
-      // } else if (T == AgeRestrictionResponse) {
-      //   return AgeRestrictionResponse.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
-      // } else if (T == Message) {
-      //   return Message.fromJson(json) as T;
     } else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");

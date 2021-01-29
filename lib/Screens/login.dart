@@ -11,6 +11,7 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
 
+import 'DashBoard.dart';
 import 'home.dart';
 
 // show CheckBoxNotifier;
@@ -124,7 +125,12 @@ class Login extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         onPressed: () {
-          guestLogin(context);
+
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            login(shopName, "", "", password, context);
+          }
+         // guestLogin(context);
         },
 
         child: Text("Sign In",
@@ -250,7 +256,7 @@ class Login extends StatelessWidget {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home()),);
+        MaterialPageRoute(builder: (context) => DashBoard()),);
     }
   }
   Future<void> login(String email_phone,String referral_code,String guest_id,String password,BuildContext context)
@@ -258,7 +264,6 @@ class Login extends StatelessWidget {
     Map body = {
       // name,email,phone_number,password
       'email_phone': email_phone,
-      'password': password.trim(),
       'password': password.trim(),
       'referral_code': referral_code,
       'guest_id':'guest_id',
@@ -270,7 +275,7 @@ class Login extends StatelessWidget {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home()),);
+        MaterialPageRoute(builder: (context) => DashBoard()),);
     }
   }
   Future<void> forgotPassword(String email,String id,BuildContext context)
