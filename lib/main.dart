@@ -6,14 +6,14 @@ import 'file:///D:/0Likhin/nazarath_app/lib/Screens/Splash.dart';
 
 
 void main() {
-  runApp(MyApp());
-  // runApp(new MaterialApp(
-  //   home: new SplashScreen(),
-  //   debugShowCheckedModeBanner: false,
-  //   routes: <String, WidgetBuilder>{
-  //     '/DashBoard': (BuildContext context) => new DashBoard()
-  //   },
-  // ));
+ // runApp(MyApp());
+  runApp(new MaterialApp(
+    home: new SplashScreen(),
+    debugShowCheckedModeBanner: false,
+    routes: <String, WidgetBuilder>{
+      '/DashBoard': (BuildContext context) => new DashBoard()
+    },
+  ));
 }
 
 class MyApp extends StatelessWidget {

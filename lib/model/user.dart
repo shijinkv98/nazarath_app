@@ -2,7 +2,19 @@ class UserData {
   String id, mobile, name, email, locationDetails, token;
   int status, otpVerificationStatus, emailVerificationStatus;
   String otp,referral_code;
+  UserData()
+  {
+    id = "";
+    mobile ="";
+    name = "";
+    email ="";
+    status =0;
+    token = "";
+    referral_code = "";
 
+    otpVerificationStatus = 0;
+    emailVerificationStatus = 0;
+  }
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     mobile = json['mobile'];

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
 import 'package:nazarath_app/Screens/login.dart';
+import 'package:nazarath_app/model/user.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/HomeResponse.dart';
 
 import 'home.dart';
 import 'profile.dart';
@@ -9,6 +12,22 @@ import 'register/register.dart';
 class DashBoard extends StatefulWidget {
   @override
   _DashBoard createState() => _DashBoard();
+
+
+  // void setState(AppLifecycleState state)
+  // {
+  //   switch(state) {
+  //     case AppLifecycleState.resumed:
+  //       getHomeData();
+  //       break;
+  //     case AppLifecycleState.inactive:
+  //     // Handle this case
+  //       break;
+  //     case AppLifecycleState.paused:
+  //     // Handle this case
+  //       break;
+  //   }
+  // }
 }
 
 int tbPosition = 1;
@@ -29,8 +48,31 @@ List<Widget> _widgetOptions = <Widget>[
   //   style: _optionStyle,
   // ),
 ];
-
+var homeResponse;
+var customer;
 class _DashBoard extends State<DashBoard> {
+  @override
+  void initState() {
+    customer=new UserData();
+    super.initState();
+
+    getHomeData(context);
+  }
+  Future<void> getHomeData(BuildContext context)
+  async {
+    customer=await ApiCall().getUser();
+
+    Map body = {
+      // name,email,phone_number,passwor
+    };
+    homeResponse = await ApiCall()
+        .execute<HomeResponse, Null>("home/en", body);
+
+    if (homeResponse != null) {
+
+      ApiCall().showToast(homeResponse.categories.toString());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     debugPrint('MJM HomeScreen build()');

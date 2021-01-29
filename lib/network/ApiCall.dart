@@ -7,14 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/model/user.dart';
+import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CategoryResponse.dart';
+import 'package:nazarath_app/network/response/CouponResponse.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/network/response/NotificationResponse.dart';
+import 'package:nazarath_app/network/response/OrderCancelesponse.dart';
+import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/network/response/ProductListResponse.dart';
+import 'package:nazarath_app/network/response/ProfileResponse.dart';
+import 'package:nazarath_app/network/response/RefferalResponse.dart';
+import 'package:nazarath_app/network/response/ReviewResponse.dart';
+import 'package:nazarath_app/network/response/SearchResponse.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
+import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
+import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
@@ -134,6 +145,12 @@ class ApiCall{
     bool success = await prefs.setString('user', userResponse);
     return success;
   }
+  Future saveHome(String userResponse) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    debugPrint('save user resp: $userResponse');
+    bool success = await prefs.setString('user', userResponse);
+    return success;
+  }
 
   Future saveAdminPhone(String adminNo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -188,7 +205,28 @@ class ApiCall{
       return HomeResponse.fromJson(json) as T;
     } else if (T == FilterResponse) {
       return FilterResponse.fromJson(json) as T;
-
+    } else if (T == ProfileResponse) {
+      return ProfileResponse.fromJson(json) as T;
+    } else if (T == SearchResponse) {
+      return SearchResponse.fromJson(json) as T;
+    } else if (T == TrackOrderResponse) {
+      return TrackOrderResponse.fromJson(json) as T;
+    } else if (T == WalletResponse) {
+      return WalletResponse.fromJson(json) as T;
+    } else if (T == ReferalResponse) {
+      return ReferalResponse.fromJson(json) as T;
+    } else if (T == OrderResponse) {
+      return OrderResponse.fromJson(json) as T;
+    } else if (T == OrderCancelResponse) {
+      return OrderCancelResponse.fromJson(json) as T;
+    } else if (T == NotificationResponse) {
+      return NotificationResponse.fromJson(json) as T;
+    } else if (T == CouponResponse) {
+      return CouponResponse.fromJson(json) as T;
+    } else if (T == AddressResponse) {
+      return AddressResponse.fromJson(json) as T;
+    } else if (T == ReviewResponse) {
+      return ReviewResponse.fromJson(json) as T;
     } else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");

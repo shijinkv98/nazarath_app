@@ -16,6 +16,7 @@ class SplashScreen extends StatelessWidget {
       ApiCall().getUserToken().then((token) => {
         if (token != null && token.trim().isNotEmpty)
           {
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DashBoard()),)

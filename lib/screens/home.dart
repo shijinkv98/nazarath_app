@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'DashBoard.dart';
 import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/HomeResponse.dart';
 
 void main() => runApp(Home());
 
-class Home extends StatelessWidget {
+class Home extends StatelessWidget  {
   final appTitle = 'Home';
 
   @override
@@ -20,6 +23,7 @@ class Home extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   final String title;
+  AppLifecycleState _notification;
 
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -85,7 +89,7 @@ class HomePage extends StatelessWidget {
                                 width: 180,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 6),
-                                  child: Text('Muhd. Rafeeque',
+                                  child: Text(customer.name,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -97,7 +101,7 @@ class HomePage extends StatelessWidget {
 
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 6),
-                                  child: AutoSizeText('muhdsalam@gmail.com',
+                                  child: AutoSizeText(customer.email,
                                       style: TextStyle(
                                           color: Colors.grey[700],
                                           fontWeight: FontWeight.normal,
@@ -240,4 +244,6 @@ class HomePage extends StatelessWidget {
           ),
         ));
   }
+
+
 }
