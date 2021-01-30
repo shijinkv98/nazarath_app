@@ -6,73 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
+import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/screens/address.dart';
+import 'package:nazarath_app/screens/wishlist.dart';
 import 'DashBoard.dart';
-import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
+import 'order.dart';
+
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        // titleSpacing: 100,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
-        title: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 30, top: 20),
-            child: ImageIcon(
-              AssetImage("assets/icons/nazarath_logo.png"),
-              size: 100,
-            ),
-          ),
-        ),
-        backgroundColor: colorPrimary,
-        elevation: 0,
-
-        actions: <Widget>[
-          // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Container(
-              height: 16,
-              width: 16,
-              child: ImageIcon(AssetImage("assets/icons/search.png"),),
-
-              ),
-            ),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Container(
-              height: 16,
-              width: 16,
-              child: ImageIcon(AssetImage("assets/icons/notification.png"),),
-
-              ),
-            ),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Container(
-              height: 16,
-              width: 16,
-              child: ImageIcon(AssetImage("assets/icons/favourite.png"),),
-
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Container(
-              height: 16,
-              width: 16,
-              child: ImageIcon(AssetImage("assets/icons/cart.png"),),
-
-
-              ),
-            ),
-
-        ],
-      ),
+      appBar: getAppBarMain(context),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Column(
@@ -191,7 +136,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('My Orders',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderScreen("Notification is empty")),
+                    );
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,
@@ -202,7 +152,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('My Addresses',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddressScreen("Notification is empty")),
+                    );
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,
@@ -213,7 +168,9 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Saved Power',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,
@@ -236,6 +193,8 @@ class Profile extends StatelessWidget {
                         Text('Refer to Friend',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {},
+
+
                   ),
                   FlatButton(
                     color: Colors.white,
@@ -246,7 +205,13 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Favourite',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WishListScreen()),
+                    );
+
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,

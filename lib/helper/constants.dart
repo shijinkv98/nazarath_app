@@ -1,8 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/screens/cart.dart';
+import 'package:nazarath_app/screens/notification.dart';
+import 'package:nazarath_app/screens/wishlist.dart';
 
 const Color colorPrimary = Color(0xFF45ccc1);
+const Color colorRed = Color(0xFFF00000);
 const Color textColor = Color(0xFF616161);
 const Color textColorSecondary = Color(0xFF999999);
 const String BASE_URL = "https://alranna.alisonsdemo.tk/";
@@ -13,6 +17,14 @@ const Color primaryIconColor = Color(0xFF45ccc1);
 const String productThumbUrl = '${BASE_URL}images/product/thumbnail/';
 const double padding = 10.0;
 const contryCode = 971;
+const double appTabIconSize=18.0;
+const double appTabTop=10;
+const double appTabBottom=10;
+const double appTabIconPad=3;
+
+const double appTabLeft=0;
+const double appTabRight=0;
+const double appTabImageSize=90.0;
 const double register_icon_size=16.0;
 const double font_size_head=16.0;
 const double field_text_size=10.0;
@@ -67,3 +79,99 @@ Widget progressBar = InkWell(
     ),
   ),
 );
+AppBar getAppBarMain(BuildContext context)
+{
+  AppBar(
+    centerTitle: true,
+    // titleSpacing: 100,
+    leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+    title: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
+        child: ImageIcon(
+          AssetImage("assets/icons/nazarath_logo.png"),
+          size: appTabImageSize,
+        ),
+      ),
+    ),
+    backgroundColor: colorPrimary,
+    elevation: 0,
+
+    actions: <Widget>[
+      // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => Search(product.name)),
+              // );
+            },
+            child: Container(
+              height: appTabIconSize,
+              width: appTabIconSize,
+              child: ImageIcon(AssetImage("assets/icons/search.png"),),
+            ),
+          )
+      ),
+
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
+              );
+            },
+            child: Container(
+              height: appTabIconSize,
+              width: appTabIconSize,
+              child: ImageIcon(AssetImage("assets/icons/notification.png"),),
+            ),
+          )
+      ),
+
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishListScreen()),
+              );
+            },
+            child: Container(
+              height: appTabIconSize,
+              width: appTabIconSize,
+              child: ImageIcon(AssetImage("assets/icons/favorite.png"),),
+            ),
+          )
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: appTabIconPad),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+            );
+          },
+          child: Container(
+            height: appTabIconSize,
+            width: appTabIconSize,
+            child: ImageIcon(AssetImage("assets/icons/cart.png"),),
+          ),
+        ),
+      ),
+
+    ],
+  );
+}
+
+AppBar getAppBarNotification(BuildContext context)
+{
+
+}
+

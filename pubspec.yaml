@@ -94,6 +94,7 @@ flutter:
     - assets/icons/stores_white.png
     - assets/icons/no_image.png
     - assets/icons/edit_profile.png
+    - assets/images/no_image.png
     - assets/icons/my_orders.png
     - assets/icons/favourite.png
     - assets/icons/my_address.png
