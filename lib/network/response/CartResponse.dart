@@ -94,7 +94,7 @@ class Products {
   String rating;
   String image;
   int wishlist;
-  int deliveryCharge;
+  String deliveryCharge;
   DeliveryDetails deliveryDetails;
   Product product;
 
@@ -166,7 +166,7 @@ class Products {
     rating = json['rating'];
     image = json['image'];
     wishlist = json['wishlist'];
-    deliveryCharge = json['delivery_charge'];
+    deliveryCharge = json['delivery_charge'].toString();
     deliveryDetails = json['delivery_details'] != null
         ? new DeliveryDetails.fromJson(json['delivery_details'])
         : null;
@@ -410,7 +410,7 @@ class ThisOptions {
 }
 
 class ThisValues {
-  int optionValueId;
+  String optionValueId;
   String value;
   String text;
   String slug;
@@ -424,7 +424,7 @@ class ThisValues {
         this.productOptionId});
 
   ThisValues.fromJson(Map<String, dynamic> json) {
-    optionValueId = json['option_value_id'];
+    optionValueId = json['option_value_id'].toString();
     value = json['value'];
     text = json['text'];
     slug = json['slug'];

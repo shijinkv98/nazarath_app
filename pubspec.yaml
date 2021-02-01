@@ -112,7 +112,10 @@ flutter:
     - assets/icons/favorite.png
     - assets/icons/cart.png
     - assets/icons/call.png
-
+    - assets/icons/inner_banner.png
+    - assets/icons/delete.png
+    - assets/icons/minus.png
+    - assets/icons/plus.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

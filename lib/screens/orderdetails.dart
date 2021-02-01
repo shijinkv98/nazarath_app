@@ -4,15 +4,13 @@ import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
-
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
-import 'package:nazarath_app/screens/orderdetails.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'notification.dart';
 // void main() {
-//   runApp(Order(
+//   runApp(OrderDetails(
 //     items: List<ListItem>.generate(
 //       1000,
 //           (i) => i % 6 == 0
@@ -21,33 +19,28 @@ import 'notification.dart';
 //     ),
 //   ));
 // }
-class OrderScreen extends StatefulWidget {
+class OrderDetailsScreen extends StatefulWidget {
+  Data _orderResponse;
   @override
-  _OrderState createState() => new _OrderState();
+  _OrderDetailsState createState() => new _OrderDetailsState(orderresponse: _orderResponse);
+  OrderDetailsScreen(Data response)
+  {
+    this._orderResponse=response;
+  }
 }
-class _OrderState extends State<OrderScreen> {
+class _OrderDetailsState extends State<OrderDetailsScreen> {
   List data;
   List<Data> products;
-  OrderResponse Orderresponse;
+  Data orderresponse;
+  _OrderDetailsState({ this.orderresponse}) ;
   Future<String> getData() async {
-
-    Map body = {
-      // name,email,phone_number,passwor
-    };
-    Orderresponse = await ApiCall()
-        .execute<OrderResponse, Null>("my-orders/en", body);
-
-    if (Orderresponse != null) {
-      products=Orderresponse.result.data;
-      ApiCall().showToast(Orderresponse.message);
-    }
     return "Success!";
   }
 
   @override
   void initState() {
     super.initState();
-    this.getData();
+   // this.getData();
   }
 
   @override
@@ -125,23 +118,10 @@ class _OrderState extends State<OrderScreen> {
 
         ],
       ),
-      body: FutureBuilder<OrderResponse>(
-        future: ApiCall()
-            .execute<OrderResponse, Null>('my-orders/en', null),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data?.result.data?.length}');
-            return _listview(snapshot.data?.result?.data
-                ?.where((element) =>
-            element != null )
-                ?.toList(),context,super.widget);
-          } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
-          } else {
-            return progressBar;
-          }
-        },
-      ),
+      body:  _listview(orderresponse?.itemsNew?.
+          where((element) =>
+        element != null )
+        ?.toList(),context,super.widget),
     );
     // return new Scaffold(
     //   appBar: new AppBar(
@@ -157,7 +137,7 @@ class _OrderState extends State<OrderScreen> {
   }
 }
 
-Widget _listview(List<Data> products,BuildContext context,Widget widget) => ListView.builder(
+Widget _listview(List<ItemsNew> products,BuildContext context,Widget widget) => ListView.builder(
     padding: EdgeInsets.only(bottom: 70),
     itemBuilder: (context, index) =>
         _itemsBuilder(products[index],context,widget),
@@ -167,17 +147,10 @@ Widget _listview(List<Data> products,BuildContext context,Widget widget) => List
     //     ),
     itemCount: products.length);
 
-Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
+Widget _itemsBuilder(ItemsNew product,BuildContext context,Widget widget) {
   bool status = false;
 
-  return  GestureDetector(
-      onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => OrderDetailsScreen(product)),
-    );
-  },
-  child:Container(
+  return Container(
     margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(0),
@@ -200,7 +173,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
             children: [
               FadeInImage.assetNetwork(
                 placeholder: 'assets/images/no_image.png',
-                image: '$productThumbUrl${product.itemsNew.first.image}',
+                image: '$productThumbUrl${product.image}',
                 width: 100,
               ),
               SizedBox(
@@ -212,7 +185,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      product.invoiceNumber,
+                      product.productName,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.w500),
                     ),
@@ -221,7 +194,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                     ),
                     Row(
                       children: [
-                        Text('${product.totalAmount}}',style: TextStyle(
+                        Text('${product.amount}',style: TextStyle(
                             color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
                         SizedBox(
                           width: 10,
@@ -247,8 +220,8 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
 
       ],
     ),
-  )
   );
+
 }
 
 

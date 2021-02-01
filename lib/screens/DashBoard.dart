@@ -285,7 +285,7 @@ DefaultTabController getTabController(BuildContext context)
                         ), onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OrderScreen("Notification is empty")),
+                          MaterialPageRoute(builder: (context) => OrderScreen()),
                         );
                       },
                       ),

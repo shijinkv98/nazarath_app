@@ -139,7 +139,7 @@ class Profile extends StatelessWidget {
                     ), onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OrderScreen("Notification is empty")),
+                      MaterialPageRoute(builder: (context) => OrderScreen()),
                     );
                   },
                   ),

@@ -123,35 +123,89 @@ class _CartState extends State<CartScreen> {
 
         ],
       ),
-      body: FutureBuilder<CartResponse>(
-        future: ApiCall()
-            .execute<CartResponse, Null>('cart/en', null),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data?.products?.length}');
-            return _listview(snapshot.data?.products
-                ?.where((element) =>
-            element != null )
-                ?.toList(),context,super.widget);
-          } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
-          } else {
-            return progressBar;
-          }
-        },
-      ),
-    );
-    // return new Scaffold(
-    //   appBar: new AppBar(
-    //     title: new Text("Listviews"),
-    //   ),
-    //   body: new ListView.builder(
-    //     itemCount: products == null ? 0 : products.length,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return new Text(products[index].name);
-    //     },
-    //   ),
-    // );
+      body:Container(
+        child:FutureBuilder<CartResponse>(
+          future: ApiCall()
+              .execute<CartResponse, Null>('cart/en', null),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              debugPrint('products size: ${snapshot.data?.products?.length}');
+              return _listview(snapshot.data?.products
+                  ?.where((element) =>
+              element != null )
+                  ?.toList(),context,super.widget);
+            } else if (snapshot.hasError) {
+              return errorScreen('Error: ${snapshot.error}');
+            } else {
+              return progressBar;
+            }
+          },
+        ),
+      )
+          // SingleChildScrollView(
+          // child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Stack(
+          //         children: <Widget>[
+          //             // Center(
+          //             //   child: Container(
+          //             //     width: double.infinity,
+          //             //     color:colorPrimary,
+          //             //     child: Container(
+          //             //       width: double.infinity,
+          //             //       margin: EdgeInsets.only(top: 10),
+          //             //       decoration: BoxDecoration(
+          //             //         color: Colors.white,
+          //             //         borderRadius: BorderRadius.only(
+          //             //             bottomLeft: Radius.circular(65.0),
+          //             //             bottomRight: Radius.circular(65.0)),
+          //             //       ),
+          //             //       child: Container(
+          //             //         color: Colors.white,
+          //             //         margin: EdgeInsets.only(top: 10),
+          //             //         child: Image(
+          //             //           image:  AssetImage("assets/icons/inner_banner.png"),
+          //             //           height: 100,
+          //             //         ),
+          //             //       ),
+          //             //     ),
+          //             //   ),
+          //             //
+          //             // ),
+          //
+          //           Container(
+          //             child: FutureBuilder<CartResponse>(
+          //               future: ApiCall()
+          //                   .execute<CartResponse, Null>('cart/en', null),
+          //               builder: (context, snapshot) {
+          //                 if (snapshot.hasData) {
+          //                   debugPrint('products size: ${snapshot.data?.products?.length}');
+          //                   return _listview(snapshot.data?.products
+          //                       ?.where((element) =>
+          //                   element != null )
+          //                       ?.toList(),context,super.widget);
+          //                 } else if (snapshot.hasError) {
+          //                   return errorScreen('Error: ${snapshot.error}');
+          //                 } else {
+          //                   return progressBar;
+          //                 }
+          //               },
+          //             ),
+          //           )
+          //         ]
+          //       ),
+          //
+          //
+          //
+          //
+          //     ],
+          //
+          // )
+          //
+          // ),
+      );
+
   }
 }
 
