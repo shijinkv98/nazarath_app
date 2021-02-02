@@ -86,7 +86,7 @@ SingleChildScrollView getFullView(
           padding: const EdgeInsets.only(top: 10),
           child: Center(child: getCategory(homeResponse.categories)),
         ),
-        getFeatured()
+        getFeatured(homeResponse.newarrivals)
       ],
     ),
   );
@@ -143,7 +143,10 @@ Container getCategory(List<Categories> categories) {
   );
 }
 
-Container getFeatured() {
+Container getFeatured(List<Newarrivals> featured) {
+  if (featured == null)
+    return Container();
+  else if (featured.length == 0) return Container();
   return Container(
     child: Container(
       width: double.infinity,
@@ -201,7 +204,7 @@ Container getFeatured() {
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 7, right: 6),
                                 child: Text(
-                                  'Zyden Black & silver Rectangular',
+                                 featured[index].name,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -253,9 +256,9 @@ Container getFeatured() {
                                       padding: const EdgeInsets.only(left: 5,right: 10,top: 3,),
                                       child: Row(
                                         children: [
-                                          Text('AD 259.0',style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.bold),),
+                                          Text('${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.bold),),
                                           SizedBox(width: 5),
-                                          Text('AD 259.0',style: TextStyle(color: Colors.grey[700],fontSize: 10,decoration: TextDecoration.lineThrough),),
+                                          Text('${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',style: TextStyle(color: Colors.grey[700],fontSize: 10,decoration: TextDecoration.lineThrough),),
                                         ],
                                       ),
                                     ),
