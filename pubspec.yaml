@@ -117,6 +117,7 @@ flutter:
     - assets/icons/minus.png
     - assets/icons/plus.png
     - assets/icons/homebanner.png
+    - assets/icons/product1.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
