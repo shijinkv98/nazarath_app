@@ -8,6 +8,8 @@ import 'dart:convert';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import 'DashBoard.dart';
+import 'home.dart';
 import 'notification.dart';
 // void main() {
 //   runApp(Cart(
@@ -134,7 +136,7 @@ class _CartState extends State<CartScreen> {
               element != null )
                   ?.toList(),context,super.widget);
             } else if (snapshot.hasError) {
-              return getEmptyContainerCart();
+              return getEmptyContainerCart(context);
             } else {
               return progressBar;
             }
@@ -381,22 +383,55 @@ Container getTopContainer()
   );
 
 }
-Container getEmptyContainerCart()
+Container getEmptyContainerCart(BuildContext context)
 {
   return Container(
-    child: Column(
+    height: double.infinity,
+    child: Center(
+      child:Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-
         Center(
-          child: Text(
-            "Your Cart is Empty",
-            style: TextStyle(
-                color: Colors.grey,fontSize: 11),
-          ),
-        )
-      ],
-    ),
+            child: Image.asset(
+                "assets/icons/empty_cart.png",height: 50,),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Center(
+                child: Text(
+                  "Your Cart is Empty",
+                  style: TextStyle(
+                      color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+                ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Material(
+          elevation: 0.0,
+          borderRadius: BorderRadius.circular(5.0),
+          color: colorPrimary,
+          child: MaterialButton(
+            minWidth: 100,
+            padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoard()),);
+            },
+
+            child: Text("Continue Shopping",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
+          )
+        ),
+      ],),
+    )
   );
+
+
 
 }
 
