@@ -395,15 +395,14 @@ GestureDetector BagButton(String slug,String store,BuildContext context,Widget w
       onTap: () {
       },
       child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 2, color:colorPrimary)),
+        color: colorPrimary,
         child: Row(
           children: [
             Image.asset("assets/icons/bag.png",height: 14,),
             Text(
-              "Remove",
+              "Move to bag",
               style: TextStyle(
-                  color: Colors.grey[600],fontSize: 12,fontWeight: FontWeight.bold),
+                  color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
             )
           ],
         ),
@@ -415,6 +414,7 @@ GestureDetector removeButton(String slug,String store,BuildContext context,Widge
 {
   return GestureDetector(
       onTap: () {
+        removeFromWishList(slug,store,context,widget);
   },
   child: Container(
     decoration: BoxDecoration(
@@ -425,7 +425,7 @@ GestureDetector removeButton(String slug,String store,BuildContext context,Widge
           Text(
             "Remove",
             style: TextStyle(
-                color: Colors.grey[600],fontSize: 12,fontWeight: FontWeight.bold),
+                color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold),
           )
         ],
       ),
