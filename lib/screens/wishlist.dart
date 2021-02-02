@@ -225,36 +225,11 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                     ),
                     Row(
                       children: [
-                            Container(
-                                    margin: EdgeInsets.all(20),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(width: 2, color: Colors.white)),
-                                child: Icon(
-                                  Icons.cancel,
-                                  color: Colors.white,
-                                ),
-                      ),
-
+                        BagButton(product.slug, product.store, context, widget),
                         SizedBox(
                           width: 2,
                         ),
-                        RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/favorite.png'),color: Colors.white,size: 12,),
-                          label: Text('Remove',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          onPressed: (){
-                              removeFromWishList(product.slug,product.store,context,widget);
-                          },
-                          color: colorPrimary,
-                          padding: EdgeInsets.all(2),
-                          textColor: Colors.white,
-
-                        ),
+                        removeButton(product.slug, product.store, context, widget),
                       ],
                     )
                   ],
@@ -393,6 +368,7 @@ GestureDetector BagButton(String slug,String store,BuildContext context,Widget w
 {
   return GestureDetector(
       onTap: () {
+        movetoCart(slug,store,context,widget);
       },
       child: Container(
         color: colorPrimary,
