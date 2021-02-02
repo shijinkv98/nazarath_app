@@ -385,6 +385,7 @@ Container getEmptyContainerCart()
 {
   return Container(
     child: Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
 
         Center(
