@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/NotificationResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'cart.dart';
@@ -91,8 +93,103 @@ class _NotificationState extends State<NotificationScreen> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: Center(child: Text('My Page!')),
+      body: Container(
+        child:FutureBuilder<NotificationResponse>(
+          future: ApiCall()
+              .execute<NotificationResponse, Null>('notifications/en', null),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              debugPrint('products size: ${snapshot.data?.notifications?.length}');
+              return _listview(snapshot.data?.notifications
+                  ?.where((element) =>
+              element != null )
+                  ?.toList(),context,super.widget);
+            } else if (snapshot.hasError) {
+              return errorScreen('Error: ${snapshot.error}');
+            } else {
+              return progressBar;
+            }
+          },
+        ),
+      ),
     );
   }
 
+}
+Widget _listview(List<Notifications> products,BuildContext context,Widget widget) => ListView.builder(
+    padding: EdgeInsets.only(bottom: 70),
+    itemBuilder: (context, index) =>
+        _itemsBuilder(products[index],context,widget),
+    // separatorBuilder: (context, index) => Divider(
+    //       color: Colors.grey,
+    //       height: 1,
+    //     ),
+    itemCount: products.length);
+Widget _itemsBuilder(Notifications notification,BuildContext context,Widget widget) {
+  if(notification.notification==null)
+    return Container();
+  else if (notification.notification.languages==null)
+    return Container();
+  else if (notification.notification.languages.length==0)
+    return Container();
+  return Container(
+      margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(0),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          blurRadius: 2.0,
+        ),
+      ],
+    ),
+  child: Column(
+    children: [
+      SizedBox(
+        height: 20,
+      ),
+      Row(
+
+        children: [
+          Padding(
+            padding:
+            EdgeInsets.fromLTRB(20, 0, 0, 20)),
+          CircleAvatar(
+            radius: 16.0,
+            backgroundImage:
+            NetworkImage('$productThumbUrl${notification.notification.languages[0].smallImage}'),
+            backgroundColor:colorPrimary,
+          ),
+          Padding(
+              padding:
+              EdgeInsets.fromLTRB(padding, 0, 0, 2),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      notification.notification.languages[0].title,
+                      style: TextStyle(
+                          color: Colors.grey[800], fontWeight: FontWeight.w500,fontSize: 14),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      notification.notification.languages[0].smallDescription,
+                      style: TextStyle(
+                          color: Colors.grey,fontSize: 11),
+                    )
+                  ]
+              ))
+        ]
+    ),
+      SizedBox(
+        height: 20,
+      )
+    ],
+  ),
+
+  );
 }
