@@ -54,6 +54,7 @@ class _WishListState extends State<WishListScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.grey[200],
         appBar:AppBar(
           centerTitle: true,
           automaticallyImplyLeading: true,
@@ -173,14 +174,13 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
   return Container(
     margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(0),
+      borderRadius: BorderRadius.circular(10),
       color: Colors.white,
-      boxShadow: [
+        boxShadow: [
         BoxShadow(
-          color: Colors.grey,
-          blurRadius: 3.0,
-        ),
-      ],
+        color: Colors.grey,
+        blurRadius: 1.0,
+      )]
     ),
     child: Column(
       children: [
@@ -194,7 +194,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
               FadeInImage.assetNetwork(
                 placeholder: 'assets/images/no_image.png',
                 image: '$productThumbUrl${product.image}',
-                width: 100,
+                width: 120,
               ),
               SizedBox(
                 width: 5,
@@ -207,7 +207,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                     Text(
                       product.name,
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
+                          color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 5,
@@ -215,19 +215,22 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                     Row(
                       children: [
                         Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
-                            color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
+                            color: colorRed,fontSize: 11,fontWeight: FontWeight.w500)),
                         SizedBox(
                           width: 10,
                         ),
                         Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
-                            color: Colors.grey,fontSize: 12,decoration: TextDecoration.lineThrough)),
+                            color: Colors.grey,fontSize: 11,decoration: TextDecoration.lineThrough)),
                       ],
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Row(
                       children: [
                         BagButton(product.slug, product.store, context, widget),
                         SizedBox(
-                          width: 2,
+                          width: 5,
                         ),
                         removeButton(product.slug, product.store, context, widget),
                       ],
@@ -243,10 +246,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
         ),
 
 
-        Divider(
-          height: 2,
-          color: Colors.grey,
-        ),
+
 
       ],
     ),
@@ -351,7 +351,7 @@ Container getTopContainer()
         ),
         Center(
           child: Text(
-            "Your WishList",
+            "WishList",
             style: TextStyle(
                 color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
           ),
@@ -371,10 +371,14 @@ GestureDetector BagButton(String slug,String store,BuildContext context,Widget w
         movetoCart(slug,store,context,widget);
       },
       child: Container(
-        color: colorPrimary,
+        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+        decoration: BoxDecoration(
+          color: colorPrimary,
+            border: Border.all(width: 0.5, color:Colors.grey[500]),
+            borderRadius:  BorderRadius.circular(2)),
         child: Row(
           children: [
-            Image.asset("assets/icons/bag.png",height: 14,),
+            Image.asset("assets/icons/bag.png",height: 18,),
             Text(
               "Move to bag",
               style: TextStyle(
@@ -393,15 +397,17 @@ GestureDetector removeButton(String slug,String store,BuildContext context,Widge
         removeFromWishList(slug,store,context,widget);
   },
   child: Container(
+    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
     decoration: BoxDecoration(
-        border: Border.all(width: 2, color:colorPrimary)),
+        border: Border.all(width: 1, color:colorPrimary),
+    borderRadius:  BorderRadius.circular(2)),
       child: Row(
         children: [
-          Image.asset("assets/icons/remove.png",height: 14,),
+          Image.asset("assets/icons/remove.png",width: 18,),
           Text(
             "Remove",
             style: TextStyle(
-                color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold),
+                color: Colors.grey[500],fontSize: 12,fontWeight: FontWeight.bold),
           )
         ],
       ),
