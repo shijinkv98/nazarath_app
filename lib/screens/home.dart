@@ -258,7 +258,7 @@ Container getFeatured(List<Newarrivals> featured) {
                                         children: [
                                           Text('${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.bold),),
                                           SizedBox(width: 5),
-                                          Text('${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',style: TextStyle(color: Colors.grey[700],fontSize: 10,decoration: TextDecoration.lineThrough),),
+                                          Text('${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',style: TextStyle(color: Colors.grey[700],fontSize: 10,decoration: TextDecoration.lineThrough),),
                                         ],
                                       ),
                                     ),
