@@ -6,7 +6,7 @@ import 'package:nazarath_app/screens/sideDrawer.dart';
 
 void main() => runApp(Home());
 
-class Home extends StatelessWidget  {
+class Home extends StatelessWidget {
   final appTitle = 'Home';
 
   @override
@@ -15,7 +15,6 @@ class Home extends StatelessWidget  {
       debugShowCheckedModeBanner: false,
       title: appTitle,
       home: HomePage(title: appTitle),
-
     );
   }
 }
@@ -30,10 +29,45 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        drawer: SideDrawer(),
-        body: Center(child: Text('My Page!')),
-        );
+        // drawer: SideDrawer(),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: <Widget>[
+                  Center(
+                   child: Container(
+                     height: 160,
+                     decoration: BoxDecoration(
+                       color: colorPrimary,
+                       borderRadius:
+                       BorderRadius.only(bottomRight: Radius.circular(120.0),bottomLeft: Radius.circular(120.0)),
+                     ),
+                   ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Container(
+                        height: 160,
+                        width:320,
+                        decoration: new BoxDecoration(
+                            image: new DecorationImage(
+                              image: new AssetImage("assets/icons/homebanner.png"),
+                              fit: BoxFit.fill,
+                            )
+                      )
+                      ),
+                    ),
+                  )
+                ],
+              ),
+
+            ],
+
+          ),
+
+        ));
   }
-
-
 }
