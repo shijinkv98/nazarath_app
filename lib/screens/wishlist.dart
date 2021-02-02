@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 
 import 'DashBoard.dart';
+import 'ProductDetails.dart';
 import 'cart.dart';
 import 'notification.dart';
 // void main() {
@@ -162,25 +163,30 @@ Widget _listview(List<Products> products,BuildContext context,Widget widget) => 
     padding: EdgeInsets.only(bottom: 70),
     itemBuilder: (context, index) =>
         _itemsBuilder(products[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
+
     itemCount: products.length);
 
 Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
   bool status = false;
 
-  return Container(
+  return GestureDetector(
+      onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.name)),
+    );
+  },
+  child:
+  Container(
     margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
         boxShadow: [
-        BoxShadow(
-        color: Colors.grey,
-        blurRadius: 1.0,
-      )]
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+          )]
     ),
     child: Column(
       children: [
@@ -250,8 +256,8 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
 
       ],
     ),
+  )
   );
-
 }
 
 Future<String>removeFromWishList(String slug,String store,BuildContext context,Widget widget) async {
