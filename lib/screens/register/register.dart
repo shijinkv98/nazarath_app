@@ -6,9 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+
 import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/Screens/register/otp.dart';
-import 'file:///D:/0Likhin/nazarath_app/lib/helper/constants.dart';
+import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
 

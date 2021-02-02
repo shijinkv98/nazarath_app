@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/0Likhin/nazarath_app/lib/Screens/DashBoard.dart';
-import 'file:///D:/0Likhin/nazarath_app/lib/Screens/DashBoard.dart';
-import 'file:///D:/0Likhin/nazarath_app/lib/Screens/Splash.dart';
-
-
+import 'package:nazarath_app/screens/DashBoard.dart';
+import 'package:nazarath_app/screens/Splash.dart';
 
 void main() {
- // runApp(MyApp());
+  // runApp(MyApp());
   runApp(new MaterialApp(
     home: new SplashScreen(),
     debugShowCheckedModeBanner: false,
@@ -24,20 +21,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
-      home:SplashScreen(),
-
+      home: SplashScreen(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-
-
-
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -46,22 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-
-      ),
-      body: Center(
-
-      ),
-
+      appBar: AppBar(),
+      body: Center(),
     );
   }
 }
