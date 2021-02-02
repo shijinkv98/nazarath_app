@@ -37,37 +37,81 @@ class HomePage extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Center(
-                   child: Container(
-                     height: 160,
-                     decoration: BoxDecoration(
-                       color: colorPrimary,
-                       borderRadius:
-                       BorderRadius.only(bottomRight: Radius.circular(120.0),bottomLeft: Radius.circular(120.0)),
-                     ),
-                   ),
+                    child: Container(
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: colorPrimary,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(120.0),
+                            bottomLeft: Radius.circular(120.0)),
+                      ),
+                    ),
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 10,left: 35,right: 35),
                       child: Container(
-                        height: 160,
-                        width:320,
-                        decoration: new BoxDecoration(
-                            image: new DecorationImage(
-                              image: new AssetImage("assets/icons/homebanner.png"),
-                              fit: BoxFit.fill,
-                            )
-                      )
-                      ),
+                          height: 180,
+                          // width: 320,
+
+                          decoration: new BoxDecoration(
+                              image: new DecorationImage(
+                            image:new AssetImage("assets/icons/homebanner.png"),
+                            fit: BoxFit.fill,
+                          ))),
                     ),
                   )
                 ],
               ),
-
-            ],
-
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Center(
+                    child:getCategory()
+                ),
+              )
+              ],
           ),
-
         ));
   }
+}
+Container getCategory(){
+  return Container(
+    child: Container(width: double.infinity,
+      child: Column(
+        children: [
+          Text("Categories",style: TextStyle(fontSize: 15,color: Colors.grey[600],fontWeight:FontWeight.bold)),
+          Container(
+            padding: EdgeInsets.only(left: 5,right: 5),
+            color: Colors.white,
+            height:120,
+            width: double.infinity,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount:6, itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 5,right: 5,top: 10),
+                child: Container(
+                    child:  Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage('https://lh3.googleusercontent.com/a-/AAuE7mChgTiAe-N8ibcM3fB_qvGdl2vQ9jvjYv0iOOjB=s96-c'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text('test',style: TextStyle(fontSize: 15,color: Colors.black),),
+                        ),
+                      ],
+                    )
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
+
+    ),
+
+
+);
 }
