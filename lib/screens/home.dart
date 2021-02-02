@@ -86,7 +86,10 @@ SingleChildScrollView getFullView(
           padding: const EdgeInsets.only(top: 10),
           child: Center(child: getCategory(homeResponse.categories)),
         ),
-        getFeatured(homeResponse.newarrivals)
+        getFeatured(homeResponse.newarrivals),
+        getMiddleBanner(),
+        getRecommended(),
+        getBottomBanner()
       ],
     ),
   );
@@ -168,7 +171,7 @@ Container getFeatured(List<Newarrivals> featured) {
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 6,
+                itemCount: featured.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 10, right: 5, top: 10),
@@ -276,6 +279,150 @@ Container getFeatured(List<Newarrivals> featured) {
           ),
         ],
       ),
+    ),
+  );
+}
+
+Container getMiddleBanner() {
+  return Container(
+    height: 130,
+    width: double.infinity,
+    child: Image(
+      image: new AssetImage('assets/icons/banner1.png'),
+      fit: BoxFit.cover,
+    ),
+  );
+}
+
+Container getRecommended() {
+  return Container(
+    child: Container(
+      width: double.infinity,
+      color: Color(0xFFe5eeef),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text("Featured Products",
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+            color: Color(0xFFe5eeef),
+            height: 210,
+            width: double.infinity,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 5, top: 10),
+                    child: Container(
+                      width: 160,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 2,right: 2),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0)),
+                          ),
+                          color: Colors.white,
+                          elevation: 2,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5, left: 5, right: 5),
+                                  child: Container(
+                                    child: Image(
+                                      image: new AssetImage(
+                                          'assets/icons/product1.png'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2,right: 2),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'AED 259.00',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        'AED 259.0',
+                                        style: TextStyle(
+                                            color: Colors.grey[700],
+                                            fontSize: 10,
+                                            decoration: TextDecoration
+                                                .lineThrough),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Container(
+
+                                          child: InkWell(
+                                            // onTap: ,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 0),
+                                              child: ImageIcon(
+                                                AssetImage(
+                                                    'assets/icons/favourite.png'),
+                                                size: 20,
+                                                color: colorPrimary,
+                                              ),
+                                            ),
+                                          )),
+
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, left: 15, right: 6),
+                                    child: AutoSizeText(
+                                      'Zyden Black & silver Rectangular',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+Container getBottomBanner() {
+  return Container(
+    height: 130,
+    width: double.infinity,
+    child: Image(
+      image: new AssetImage('assets/icons/banner2.png'),
+      fit: BoxFit.cover,
     ),
   );
 }

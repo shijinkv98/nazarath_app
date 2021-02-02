@@ -121,6 +121,8 @@ flutter:
     - assets/icons/empty_cart.png
     - assets/icons/bag.png
     - assets/icons/remove.png
+    - assets/icons/banner1.png
+    - assets/icons/banner2.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
