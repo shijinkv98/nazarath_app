@@ -54,8 +54,9 @@ class _WishListState extends State<WishListScreen> {
     return Scaffold(
         appBar:AppBar(
           centerTitle: true,
+          automaticallyImplyLeading: true,
           // titleSpacing: 100,
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+          // leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: ()=> Navigator.pop(context, false), ),
           title: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
