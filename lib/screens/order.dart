@@ -57,7 +57,7 @@ class _OrderState extends State<OrderScreen> {
       appBar: AppBar(
         centerTitle: true,
         // titleSpacing: 100,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+        automaticallyImplyLeading: true,
         title: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),

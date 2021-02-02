@@ -118,7 +118,7 @@ class Data {
   String shippingLongitude;
   String comments;
   int cartId;
-  double totalAmount;
+  String totalAmount;
   String couponId;
   String couponCode;
   String couponDiscount;
@@ -127,7 +127,7 @@ class Data {
   int walletAmount;
   String shippingCharge;
   String totalTaxAmount;
-  double netTotalAmount;
+  String netTotalAmount;
   PaymentMode paymentMode;
   String deliveryMode;
   String pickupStoreId;
@@ -262,7 +262,7 @@ class Data {
     shippingLongitude = json['shipping_longitude'];
     comments = json['comments'];
     cartId = json['cart_id'];
-    totalAmount = json['total_amount'];
+    totalAmount = json['total_amount'].toString();
     couponId = json['coupon_id'];
     couponCode = json['coupon_code'];
     couponDiscount = json['coupon_discount'];
@@ -270,8 +270,8 @@ class Data {
     discountAmount = json['discount_amount'];
     walletAmount = json['wallet_amount'];
     shippingCharge = json['shipping_charge'];
-    totalTaxAmount = json['total_tax_amount'];
-    netTotalAmount = json['net_total_amount'];
+    totalTaxAmount = json['total_tax_amount'].toString();
+    netTotalAmount = json['net_total_amount'].toString();
     paymentMode = json['payment_mode'] != null
         ? new PaymentMode.fromJson(json['payment_mode'])
         : null;

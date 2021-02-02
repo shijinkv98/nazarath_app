@@ -25,7 +25,7 @@ class _NotificationState extends State<NotificationScreen> {
       appBar: AppBar(
         centerTitle: true,
         // titleSpacing: 100,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+        automaticallyImplyLeading: true,
         title: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
@@ -100,12 +100,12 @@ class _NotificationState extends State<NotificationScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               debugPrint('products size: ${snapshot.data?.notifications?.length}');
-              return _listview(snapshot.data?.notifications
+              return getNotificationFull(snapshot.data?.notifications
                   ?.where((element) =>
               element != null )
                   ?.toList(),context,super.widget);
             } else if (snapshot.hasError) {
-              return errorScreen('Error: ${snapshot.error}');
+              return getEmptyContainerNotification();
             } else {
               return progressBar;
             }
@@ -114,6 +114,50 @@ class _NotificationState extends State<NotificationScreen> {
       ),
     );
   }
+
+}
+Container getNotificationFull(List<Notifications> products,BuildContext context,Widget widget)
+{
+    return Container(
+        child: Column(
+        children: [
+          getTopContainer(),
+          _listview(products, context, widget)
+        ])
+    );
+}
+Container getTopContainer()
+{
+  return Container(
+    child: Column(
+      children: [
+        Center(
+          child: Text(
+            "Notification",
+            style: TextStyle(
+                color: Colors.grey,fontSize: 11),
+          ),
+        )
+      ],
+    ),
+  );
+
+}
+Container getEmptyContainerNotification()
+{
+  return Container(
+      child: Column(
+        children: [
+          Center(
+            child: Text(
+              "Notification is Emppy",
+              style: TextStyle(
+                  color: Colors.grey,fontSize: 11),
+            ),
+          )
+        ],
+      ),
+  );
 
 }
 Widget _listview(List<Notifications> products,BuildContext context,Widget widget) => ListView.builder(

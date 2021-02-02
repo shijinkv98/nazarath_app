@@ -28,17 +28,17 @@ class _CartState extends State<CartScreen> {
   List<Products> products;
   CartResponse cartresponse;
   Future<String> getData() async {
-
-    Map body = {
-      // name,email,phone_number,passwor
-    };
-    cartresponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/en", body);
-
-    if (cartresponse != null) {
-      products=cartresponse.products;
-      ApiCall().showToast(cartresponse.message);
-    }
+    //
+    // Map body = {
+    //   // name,email,phone_number,passwor
+    // };
+    // cartresponse = await ApiCall()
+    //     .execute<CartResponse, Null>("cart/en", body);
+    //
+    // if (cartresponse != null) {
+    //   products=cartresponse.products;
+    //   ApiCall().showToast(cartresponse.message);
+    // }
     return "Success!";
   }
 
@@ -54,8 +54,7 @@ class _CartState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        // titleSpacing: 100,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+          automaticallyImplyLeading: true,
         title: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
@@ -130,87 +129,25 @@ class _CartState extends State<CartScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               debugPrint('products size: ${snapshot.data?.products?.length}');
-              return _listview(snapshot.data?.products
+              return getCartFull(snapshot.data?.products
                   ?.where((element) =>
               element != null )
                   ?.toList(),context,super.widget);
             } else if (snapshot.hasError) {
-              return errorScreen('Error: ${snapshot.error}');
+              return getEmptyContainerCart();
             } else {
               return progressBar;
             }
           },
         ),
       )
-          // SingleChildScrollView(
-          // child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Stack(
-          //         children: <Widget>[
-          //             // Center(
-          //             //   child: Container(
-          //             //     width: double.infinity,
-          //             //     color:colorPrimary,
-          //             //     child: Container(
-          //             //       width: double.infinity,
-          //             //       margin: EdgeInsets.only(top: 10),
-          //             //       decoration: BoxDecoration(
-          //             //         color: Colors.white,
-          //             //         borderRadius: BorderRadius.only(
-          //             //             bottomLeft: Radius.circular(65.0),
-          //             //             bottomRight: Radius.circular(65.0)),
-          //             //       ),
-          //             //       child: Container(
-          //             //         color: Colors.white,
-          //             //         margin: EdgeInsets.only(top: 10),
-          //             //         child: Image(
-          //             //           image:  AssetImage("assets/icons/inner_banner.png"),
-          //             //           height: 100,
-          //             //         ),
-          //             //       ),
-          //             //     ),
-          //             //   ),
-          //             //
-          //             // ),
-          //
-          //           Container(
-          //             child: FutureBuilder<CartResponse>(
-          //               future: ApiCall()
-          //                   .execute<CartResponse, Null>('cart/en', null),
-          //               builder: (context, snapshot) {
-          //                 if (snapshot.hasData) {
-          //                   debugPrint('products size: ${snapshot.data?.products?.length}');
-          //                   return _listview(snapshot.data?.products
-          //                       ?.where((element) =>
-          //                   element != null )
-          //                       ?.toList(),context,super.widget);
-          //                 } else if (snapshot.hasError) {
-          //                   return errorScreen('Error: ${snapshot.error}');
-          //                 } else {
-          //                   return progressBar;
-          //                 }
-          //               },
-          //             ),
-          //           )
-          //         ]
-          //       ),
-          //
-          //
-          //
-          //
-          //     ],
-          //
-          // )
-          //
-          // ),
+
       );
 
   }
 }
 
 Widget _listview(List<Products> products,BuildContext context,Widget widget) => ListView.builder(
-    padding: EdgeInsets.only(bottom: 70),
     itemBuilder: (context, index) =>
         _itemsBuilder(products[index],context,widget),
     // separatorBuilder: (context, index) => Divider(
@@ -373,7 +310,95 @@ Future<String> movetoWishList(String slug,String store,BuildContext context,Widg
   }
   return "Success!";
 }
+Container getCartFull(List<Products> products,BuildContext context,Widget widget)
+{
+  return Container(
+    child: Container(width: double.infinity,
+      child: Column(
 
+        children: [
+          getTopContainer(),
+          Flexible(
+            child: _listview(products,context,widget),
+
+          ),
+        ],
+      ),
+
+    ),
+  );
+  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+
+}
+Container getTopContainer()
+{
+  return Container(
+    child: Column(
+      children: [
+        Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: colorPrimary,
+                  borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                child: Container(
+                    height: 100,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new AssetImage("assets/icons/inner_banner.png"),
+                          fit: BoxFit.fill,
+                        )
+                    )
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Text(
+            "Your Cart",
+            style: TextStyle(
+                color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    ),
+  );
+
+}
+Container getEmptyContainerCart()
+{
+  return Container(
+    child: Column(
+      children: [
+
+        Center(
+          child: Text(
+            "Your Cart is Empty",
+            style: TextStyle(
+                color: Colors.grey,fontSize: 11),
+          ),
+        )
+      ],
+    ),
+  );
+
+}
 
 
 ///

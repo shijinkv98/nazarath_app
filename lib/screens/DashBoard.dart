@@ -28,7 +28,7 @@ class DashBoard extends StatefulWidget {
 
 int tbPosition = 1;
 
-var homeResponse;
+//var homeResponse;
 var customer;
 
 class _DashBoard extends State<DashBoard> {
@@ -43,16 +43,16 @@ class _DashBoard extends State<DashBoard> {
   async {
     customer=await ApiCall().getUser();
 
-    Map body = {
-      // name,email,phone_number,passwor
-    };
-    homeResponse = await ApiCall()
-        .execute<HomeResponse, Null>("home/en", body);
-
-    if (homeResponse != null) {
-
-      ApiCall().showToast(homeResponse.categories.toString());
-    }
+    // Map body = {
+    //   // name,email,phone_number,passwor
+    // };
+    // homeResponse = await ApiCall()
+    //     .execute<HomeResponse, Null>("home/en", body);
+    //
+    // if (homeResponse != null) {
+    //
+    //   ApiCall().showToast(homeResponse.categories.toString());
+    // }
   }
   @override
   Widget build(BuildContext context) {
