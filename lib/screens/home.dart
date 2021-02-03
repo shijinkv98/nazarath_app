@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
-import 'package:nazarath_app/screens/sideDrawer.dart';
-
+// import 'package:nazarath_app/screens/sideDrawer.dart';
+import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/network/response/CartResponse.dart';
+// import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
 
 class Home extends StatelessWidget {
@@ -112,7 +114,7 @@ Container getCategory(List<Categories> categories) {
           Container(
             padding: EdgeInsets.only(left: 5, right: 5),
             color: Colors.white,
-            height: 120,
+            height: 100,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -121,18 +123,19 @@ Container getCategory(List<Categories> categories) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
                     child: Container(
+
                         child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 40,
+                          radius: 30,
                           backgroundImage: NetworkImage(
-                              'https://lh3.googleusercontent.com/a-/AAuE7mChgTiAe-N8ibcM3fB_qvGdl2vQ9jvjYv0iOOjB=s96-c'),
+                              '$categoryThumbUrl${categories[index].category.image}'),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Text(
                             categories[index].category.name,
-                            style: TextStyle(fontSize: 15, color: Colors.black),
+                            style: TextStyle(fontSize: 11, color: Colors.black),
                           ),
                         ),
                       ],
@@ -165,16 +168,16 @@ Container getFeatured(List<Newarrivals> featured) {
                     fontWeight: FontWeight.bold)),
           ),
           Container(
-            padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+            padding: EdgeInsets.only(top: 5, left: 5, right: 0, bottom: 10),
             color: Color(0xFFe5eeef),
-            height: 210,
+            height: 190,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: featured.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 5, top: 10),
+                    padding: const EdgeInsets.only(left: 2, right: 2, top: 10),
                     child: Container(
                       width: 160,
                       child: Card(
@@ -195,9 +198,11 @@ Container getFeatured(List<Newarrivals> featured) {
                               padding: const EdgeInsets.only(
                                   top: 5, left: 5, right: 5),
                               child: Container(
-                                child: Image(
-                                  image: new AssetImage(
-                                      'assets/icons/product1.png'),
+
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/images/no_image.png',
+                                  image: '$productThumbUrl${featured[index].image}',
+                                  height: 60,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -283,6 +288,61 @@ Container getFeatured(List<Newarrivals> featured) {
   );
 }
 
+Future<String>removefromWishList(String slug,String store,BuildContext context,Widget widget) async {
+  Map body = {
+    "slug": slug,
+    "quantity": "0",
+    "store": store
+  };
+  WishListResponse wishListResponse = await ApiCall()
+      .execute<WishListResponse, Null>("wishlist/add/en", body);
+
+  if (wishListResponse != null) {
+    ApiCall().showToast(wishListResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":quantity,
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String>addtoWishList(String slug,String store,BuildContext context,Widget widget) async {
+  Map body = {
+    "slug": slug,
+    "quantity": "1",
+    "store": store
+  };
+  WishListResponse Productresponse = await ApiCall()
+      .execute<WishListResponse, Null>("wishlist/add/en", body);
+
+  if (Productresponse != null) {
+    ApiCall().showToast(Productresponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
 Container getMiddleBanner() {
   return Container(
     height: 130,
@@ -412,6 +472,34 @@ Container getRecommended() {
                 }),
           ),
         ],
+      ),
+    ),
+  );
+}
+
+InkWell getWishListIcon(bool condition )
+{
+  if(condition) {
+    return InkWell(
+// onTap: ,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ImageIcon(
+          AssetImage('assets/icons/favourite.png'),
+          size: 16,
+          color: colorPrimary,
+        ),
+      ),
+    );
+  }
+  return InkWell(
+// onTap: ,
+    child:  Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: ImageIcon(
+        AssetImage('assets/icons/favourite.png'),
+        size: 18,
+        color: colorPrimary,
       ),
     ),
   );
