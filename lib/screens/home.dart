@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
-import 'package:nazarath_app/screens/sideDrawer.dart';
-
+// import 'package:nazarath_app/screens/sideDrawer.dart';
+import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/network/response/CartResponse.dart';
+// import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
 
 class Home extends StatelessWidget {
@@ -146,13 +148,13 @@ Container getCategory(List<Categories> categories) {
                         CircleAvatar(
                           radius: 40,
                           backgroundImage: NetworkImage(
-                              'https://lh3.googleusercontent.com/a-/AAuE7mChgTiAe-N8ibcM3fB_qvGdl2vQ9jvjYv0iOOjB=s96-c'),
+                              '$categoryThumbUrl${categories[index].category.image}'),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Text(
                             categories[index].category.name,
-                            style: TextStyle(fontSize: 15, color: Colors.black),
+                            style: TextStyle(fontSize: 11, color: Colors.black),
                           ),
                         ),
                       ],
@@ -322,6 +324,72 @@ Container getFeatured(List<Newarrivals> featured) {
   );
 }
 
+Future<String>removefromWishList(String slug,String store,BuildContext context,Widget widget) async {
+  Map body = {
+    "slug": slug,
+    "quantity": "0",
+    "store": store
+  };
+  WishListResponse wishListResponse = await ApiCall()
+      .execute<WishListResponse, Null>("wishlist/add/en", body);
+
+  if (wishListResponse != null) {
+    ApiCall().showToast(wishListResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":quantity,
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String>addtoWishList(String slug,String store,BuildContext context,Widget widget) async {
+  Map body = {
+    "slug": slug,
+    "quantity": "1",
+    "store": store
+  };
+  WishListResponse Productresponse = await ApiCall()
+      .execute<WishListResponse, Null>("wishlist/add/en", body);
+
+  if (Productresponse != null) {
+    ApiCall().showToast(Productresponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Container getMiddleBanner() {
+  return Container(
+    height: 130,
+    width: double.infinity,
+    child: Image(
+      image: new AssetImage('assets/icons/banner1.png'),
+      fit: BoxFit.cover,
+    ),
+  );
+}
+
 Container getRecommended() {
   return Container(
     child: Container(
@@ -446,6 +514,35 @@ Container getRecommended() {
 }
 
 Container getMiddleSlider() {
+
+InkWell getWishListIcon(bool condition )
+{
+  if(condition) {
+    return InkWell(
+// onTap: ,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ImageIcon(
+          AssetImage('assets/icons/favourite.png'),
+          size: 16,
+          color: colorPrimary,
+        ),
+      ),
+    );
+  }
+  return InkWell(
+// onTap: ,
+    child:  Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: ImageIcon(
+        AssetImage('assets/icons/favourite.png'),
+        size: 18,
+        color: colorPrimary,
+      ),
+    ),
+  );
+}
+Container getBottomBanner() {
   return Container(
       height: 150,
       width: double.infinity,

@@ -261,26 +261,33 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
   }
   return "Success!";
 }
-// }
-// Future<String> addtoCart(String slug,String store,BuildContext context,Widget widget) async {
-//
-//   Map body = {
-//     "slug":slug,
-//     "quantity":"1",
-//     "store":store
-//   };
-//   ProductResponse Productresponse = await ApiCall()
-//       .execute<ProductResponse, Null>("Product/move/en", body);
-//
-//   if (Productresponse != null) {
-//     ApiCall().showToast(Productresponse.message);
-//     Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(
-//             builder: (BuildContext context) => widget));
-//   }
-//   return "Success!";
-// }
+InkWell getWishListIcon(bool condition )
+{
+  if(condition) {
+    return InkWell(
+// onTap: ,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ImageIcon(
+          AssetImage('assets/icons/favourite.png'),
+          size: 16,
+          color: colorPrimary,
+        ),
+      ),
+    );
+  }
+  return InkWell(
+// onTap: ,
+    child:  Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: ImageIcon(
+        AssetImage('assets/icons/favourite.png'),
+        size: 18,
+        color: colorPrimary,
+      ),
+    ),
+  );
+}
 
 
 
