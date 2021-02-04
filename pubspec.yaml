@@ -41,6 +41,7 @@ dependencies:
   geolocator: ^6.1.13
   geocoding: ^1.0.5
   geocoder: ^0.2.1
+  carousel_slider: ^3.0.0
   dio: ^3.0.10
   path_provider: ^1.6.24
   auth_buttons: ^0.0.4

@@ -1,7 +1,7 @@
 class HomeResponse {
   int success;
   String message;
-  List<Slider> slider;
+  List<HomeSlider> slider;
   List<Categories> categories;
   List<Sellers> sellers;
   List<Offers> offers;
@@ -36,9 +36,9 @@ class HomeResponse {
     success = json['success'];
     message = json['message'];
     if (json['slider'] != null) {
-      slider = new List<Slider>();
+      slider = new List<HomeSlider>();
       json['slider'].forEach((v) {
-        slider.add(new Slider.fromJson(v));
+        slider.add(new HomeSlider.fromJson(v));
       });
     }
     if (json['categories'] != null) {
@@ -135,7 +135,7 @@ class HomeResponse {
   }
 }
 
-class Slider {
+class HomeSlider {
   int id;
   int bannerTypeId;
   int linkType;
@@ -158,7 +158,7 @@ class Slider {
   String position;
   int status;
 
-  Slider(
+  HomeSlider(
       {this.id,
         this.bannerTypeId,
         this.linkType,
@@ -181,7 +181,7 @@ class Slider {
         this.position,
         this.status});
 
-  Slider.fromJson(Map<String, dynamic> json) {
+  HomeSlider.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bannerTypeId = json['banner_type_id'];
     linkType = json['link_type'];
