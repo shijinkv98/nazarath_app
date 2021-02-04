@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
@@ -87,14 +88,33 @@ SingleChildScrollView getFullView(
           child: Center(child: getCategory(homeResponse.categories)),
         ),
         getFeatured(homeResponse.newarrivals),
-        getMiddleBanner(),
+        getMiddleSlider(),
         getRecommended(),
-        getBottomBanner()
+        getBottomSlider()
       ],
     ),
   );
 }
-
+// Container getMiddleBanner() {
+//   return Container(
+//     height: 130,
+//     width: double.infinity,
+//     child: Image(
+//       image: new AssetImage('assets/icons/banner1.png'),
+//       fit: BoxFit.cover,
+//     ),
+//   );
+// }
+// Container getBottomBanner() {
+//   return Container(
+//     height: 130,
+//     width: double.infinity,
+//     child: Image(
+//       image: new AssetImage('assets/icons/banner2.png'),
+//       fit: BoxFit.cover,
+//     ),
+//   );
+// }
 Container getCategory(List<Categories> categories) {
   if (categories == null)
     return Container();
@@ -188,90 +208,109 @@ Container getFeatured(List<Newarrivals> featured) {
                         color: Colors.white,
                         elevation: 2,
                         child: Column(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 5, right: 5),
-                              child: Container(
-                                child: Image(
-                                  image: new AssetImage(
-                                      'assets/icons/product1.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: Padding(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 5, left: 7, right: 6),
-                                child: Text(
-                                 featured[index].name,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
+                                    top: 5, left: 5, right: 5),
+                                child: Container(
+                                  child: Image(
+                                    image: new AssetImage(
+                                        'assets/icons/product1.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 35,
-                                  alignment: Alignment.bottomLeft,
-                                  decoration: BoxDecoration(
-                                      color: colorPrimary,
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                           bottomLeft: Radius.circular(10)
-                                      )
-                                  ),
-                                  child: Center(child:IconButton(
-                                    icon:  Icon(Icons.add,color: Colors.white,size: 22,),
-                                    onPressed: (){
-                                      // Do something
-                                    },
-                                  )
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5, left: 10, right: 6),
+                                  child: Text(
+                                    featured[index].name,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12),
                                   ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child:InkWell(
-                                        // onTap: ,
-                                        child:  Padding(
-                                          padding: const EdgeInsets.only(right: 8),
-                                          child: ImageIcon(
-                                            AssetImage('assets/icons/favourite.png'),
-                                            size: 20,
-                                            color: colorPrimary,
-                                          ),
-                                        ),
-                                     )
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5,right: 10,top: 3,),
-                                      child: Row(
-                                        children: [
-                                          Text('${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.bold),),
-                                          SizedBox(width: 5),
-                                          Text('${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',style: TextStyle(color: Colors.grey[700],fontSize: 10,decoration: TextDecoration.lineThrough),),
-                                        ],
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: 45,
+                                    width: 35,
+                                    alignment: Alignment.bottomLeft,
+                                    decoration: BoxDecoration(
+                                        color: colorPrimary,
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10),
+                                            bottomLeft: Radius.circular(10))),
+                                    child: Center(
+                                        child: IconButton(
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                        size: 22,
                                       ),
-                                    ),
-
-                                  ],
-                                )
-                              ],
-                            )
-                        ]
-                        ),
+                                      onPressed: () {
+                                        // Do something
+                                      },
+                                    )),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                          alignment: Alignment.topRight,
+                                          child: InkWell(
+                                            // onTap: ,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8,bottom: 2),
+                                              child: ImageIcon(
+                                                AssetImage(
+                                                    'assets/icons/favourite.png'),
+                                                size: 20,
+                                                color: colorPrimary,
+                                              ),
+                                            ),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 5,
+                                          right: 10,
+                                          top: 3,
+                                          bottom: 8
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              '${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 8,
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ]),
                       ),
                     ),
                   );
@@ -279,17 +318,6 @@ Container getFeatured(List<Newarrivals> featured) {
           ),
         ],
       ),
-    ),
-  );
-}
-
-Container getMiddleBanner() {
-  return Container(
-    height: 130,
-    width: double.infinity,
-    child: Image(
-      image: new AssetImage('assets/icons/banner1.png'),
-      fit: BoxFit.cover,
     ),
   );
 }
@@ -323,7 +351,7 @@ Container getRecommended() {
                     child: Container(
                       width: 160,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 2,right: 2),
+                        padding: const EdgeInsets.only(left: 2, right: 2),
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -350,10 +378,12 @@ Container getRecommended() {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 2,right: 2),
+                                  padding:
+                                      const EdgeInsets.only(left: 2, right: 2),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment:MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'AED 259.00',
@@ -368,26 +398,24 @@ Container getRecommended() {
                                         style: TextStyle(
                                             color: Colors.grey[700],
                                             fontSize: 10,
-                                            decoration: TextDecoration
-                                                .lineThrough),
+                                            decoration:
+                                                TextDecoration.lineThrough),
                                       ),
                                       SizedBox(width: 5),
                                       Container(
-
                                           child: InkWell(
-                                            // onTap: ,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 0),
-                                              child: ImageIcon(
-                                                AssetImage(
-                                                    'assets/icons/favourite.png'),
-                                                size: 20,
-                                                color: colorPrimary,
-                                              ),
-                                            ),
-                                          )),
-
+                                        // onTap: ,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 0),
+                                          child: ImageIcon(
+                                            AssetImage(
+                                                'assets/icons/favourite.png'),
+                                            size: 20,
+                                            color: colorPrimary,
+                                          ),
+                                        ),
+                                      )),
                                     ],
                                   ),
                                 ),
@@ -416,13 +444,41 @@ Container getRecommended() {
     ),
   );
 }
-Container getBottomBanner() {
+
+Container getMiddleSlider() {
   return Container(
-    height: 130,
-    width: double.infinity,
-    child: Image(
-      image: new AssetImage('assets/icons/banner2.png'),
-      fit: BoxFit.cover,
-    ),
-  );
+      height: 150,
+      width: double.infinity,
+      child: Carousel(
+        dotBgColor: Colors.transparent, // onImageTap: ,
+        images: [
+          AssetImage('assets/icons/banner1.png'),
+          // NetworkImage('imageurl'),
+          AssetImage("assets/icons/banner2.png"),
+          NetworkImage(
+              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+          AssetImage("assets/image3.jpeg"),
+          NetworkImage(
+              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
+        ],
+      ));
+}
+
+Container getBottomSlider() {
+  return Container(
+      height: 150,
+      width: double.infinity,
+      child: Carousel(
+        dotBgColor: Colors.transparent,
+        images: [
+          AssetImage('assets/icons/banner2.png'),
+          // NetworkImage('imageurl'),
+          AssetImage("assets/icons/banner1.png"),
+          NetworkImage(
+              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+          AssetImage("assets/image3.jpeg"),
+          NetworkImage(
+              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
+        ],
+      ));
 }
