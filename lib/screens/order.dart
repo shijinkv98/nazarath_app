@@ -242,7 +242,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
       children: [
         Padding(
           padding:
-          EdgeInsets.fromLTRB(5, 10, 5, 10),
+          EdgeInsets.fromLTRB(10, 10, 5, 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -250,7 +250,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
               FadeInImage.assetNetwork(
                 placeholder: 'assets/images/no_image.png',
                 image: '$productThumbUrl${item.image}',
-                height: 90,
+                width: 120,
               ),
               SizedBox(
                 width: 5,
@@ -283,7 +283,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                         SizedBox(
                           width: 5,
                         ),
-                        Text('${item.amount}',style: TextStyle(
+                        Text('$currency${item.amount}',style: TextStyle(
                             color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
                       ],
                     ),
