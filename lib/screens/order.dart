@@ -54,6 +54,7 @@ class _OrderState extends State<OrderScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: product_bg,
       appBar: AppBar(
         centerTitle: true,
         // titleSpacing: 100,
@@ -136,7 +137,7 @@ class _OrderState extends State<OrderScreen> {
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
+            return getEmptyContainerOrder(context);
           } else {
             return progressBar;
           }
@@ -260,6 +261,14 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text(
+                      orderData.invoiceNumber,
+                      style: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.w500,fontSize: 11),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       item.productName,
                       style: TextStyle(

@@ -54,6 +54,7 @@ class _CartState extends State<CartScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+     backgroundColor: product_bg,
       appBar: AppBar(
         centerTitle: true,
           automaticallyImplyLeading: true,
@@ -372,7 +373,7 @@ Container getTopContainer()
           child: Text(
             "Your Cart",
             style: TextStyle(
-                color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
+                color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(

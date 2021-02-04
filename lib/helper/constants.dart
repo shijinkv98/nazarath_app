@@ -6,7 +6,12 @@ import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 const Color colorPrimary = Color(0xFF45ccc1);
-const Color colorRed = Color(0xFFF00000);
+const Color colorRed =const Color.fromRGBO(239, 89, 30, 1.0);
+const Color product_bg =const Color.fromRGBO(233, 233, 233, 1.0);
+const Color text_tilte_page =const Color.fromRGBO(108, 108, 108, 1.0);
+const Color item_text_gray =const Color.fromRGBO(174, 174, 174, 1.0);
+const Color item_text_gray_light =const Color.fromRGBO(201, 201, 201, 1.0);
+
 const Color textColor = Color(0xFF616161);
 const Color textColorSecondary = Color(0xFF999999);
 const String BASE_URL = "https://alranna.alisonsdemo.tk/";
