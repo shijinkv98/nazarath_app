@@ -209,7 +209,7 @@ Container getFeatured(List<Newarrivals> featured) {
                         elevation: 2,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -217,8 +217,8 @@ Container getFeatured(List<Newarrivals> featured) {
                                 child: Container(
                                   height: 70,
                                   child: Image(
-                                    image: new AssetImage(
-                                        'assets/icons/product1.png'),
+                                    image: new NetworkImage(
+                                        "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -432,7 +432,7 @@ Container getRecommended() {
                           elevation: 2,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -440,8 +440,8 @@ Container getRecommended() {
                                   child: Container(
                                     height: 70,
                                     child: Image(
-                                      image: new AssetImage(
-                                          'assets/icons/product1.png'),
+                                      image: new NetworkImage(
+                                          "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
