@@ -194,7 +194,7 @@ Container getFeatured(List<Newarrivals> featured) {
                 itemCount: featured.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 5, top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Container(
                       width: 160,
                       child: Card(
@@ -209,15 +209,16 @@ Container getFeatured(List<Newarrivals> featured) {
                         elevation: 2,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 5, right: 5),
                                 child: Container(
+                                  height: 70,
                                   child: Image(
-                                    image: new AssetImage(
-                                        'assets/icons/product1.png'),
+                                    image: new NetworkImage(
+                                        "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -236,11 +237,11 @@ Container getFeatured(List<Newarrivals> featured) {
                                 ),
                               ),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    height: 45,
+                                    height: 40,
                                     width: 35,
                                     alignment: Alignment.bottomLeft,
                                     decoration: BoxDecoration(
@@ -261,6 +262,7 @@ Container getFeatured(List<Newarrivals> featured) {
                                     )),
                                   ),
                                   Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Container(
@@ -269,7 +271,7 @@ Container getFeatured(List<Newarrivals> featured) {
                                             // onTap: ,
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 8,bottom: 2),
+                                                  right: 8),
                                               child: ImageIcon(
                                                 AssetImage(
                                                     'assets/icons/favourite.png'),
@@ -397,7 +399,7 @@ Container getRecommended() {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text("Featured Products",
+            child: Text("Recommended Products",
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey[600],
@@ -413,7 +415,7 @@ Container getRecommended() {
                 itemCount: 6,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 5, top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Container(
                       width: 160,
                       child: Padding(
@@ -430,65 +432,81 @@ Container getRecommended() {
                           elevation: 2,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 5, left: 5, right: 5),
                                   child: Container(
+                                    height: 70,
                                     child: Image(
-                                      image: new AssetImage(
-                                          'assets/icons/product1.png'),
+                                      image: new NetworkImage(
+                                          "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 2, right: 2),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'AED 259.00',
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        'AED 259.0',
-                                        style: TextStyle(
-                                            color: Colors.grey[700],
-                                            fontSize: 10,
-                                            decoration:
-                                                TextDecoration.lineThrough),
-                                      ),
-                                      SizedBox(width: 5),
-                                      Container(
-                                          child: InkWell(
-                                        // onTap: ,
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 0),
-                                          child: ImageIcon(
-                                            AssetImage(
-                                                'assets/icons/favourite.png'),
-                                            size: 20,
-                                            color: colorPrimary,
-                                          ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10,right: 5,left: 5),
+                                      child: Container(
+                                        height: 25,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              height: 25,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 8,right: 3),
+                                                child: Text(
+                                                  'AED 259.000',
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 10,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+
+                                            Container(
+                                                height: 25,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 10,right: 5),
+                                                  child: Text(
+                                                    'AED 259.0',
+                                                    style: TextStyle(
+                                                        color: Colors.grey[700],
+                                                        fontSize: 8,
+                                                        decoration:
+                                                            TextDecoration.lineThrough),
+                                                  ),
+                                                ),
+                                              ),
+                                            InkWell(
+                                              // onTap: ,
+                                              child: ImageIcon(
+                                                AssetImage(
+                                                    'assets/icons/favourite.png'),
+                                                size: 20,
+                                                color: colorPrimary,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      )),
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+
+                                  ],
                                 ),
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 5, left: 15, right: 6),
+                                        top: 5, left: 10,right: 5),
                                     child: AutoSizeText(
                                       'Zyden Black & silver Rectangular',
                                       textAlign: TextAlign.start,
