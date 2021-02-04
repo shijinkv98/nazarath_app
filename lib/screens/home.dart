@@ -11,7 +11,7 @@ import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 // import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
-
+HomeResponse homeResponse;
 class Home extends StatefulWidget {
   final appTitle = 'Home';
   @override
@@ -53,7 +53,8 @@ class HomePage extends State<Home> {
 }
 
 SingleChildScrollView getFullView(
-    HomeResponse homeResponse, BuildContext context,Widget widget) {
+    HomeResponse homeResponse1, BuildContext context,Widget widget) {
+  homeResponse=homeResponse1;
   return SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
