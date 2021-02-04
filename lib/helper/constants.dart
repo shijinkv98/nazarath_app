@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
@@ -178,8 +179,106 @@ AppBar getAppBarMain(BuildContext context)
   );
 }
 
-AppBar getAppBarNotification(BuildContext context)
+Container getTopContainer(String title)
 {
+  return Container(
+    child: Column(
+      children: [
+        Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: colorPrimary,
+                  borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                child: Container(
+                    height: 100,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new AssetImage("assets/icons/inner_banner.png"),
+                          fit: BoxFit.fill,
+                        )
+                    )
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Text(
+            title,
+            style: TextStyle(
+                color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    ),
+  );
+
+}
+Container getEmptyContainer(BuildContext context,String emptyText,String imagename)
+{
+  return Container(
+      height: double.infinity,
+      child: Center(
+        child:Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Image.asset(
+                '${"assets/icons/"}$imagename${".png"}',height: 50,),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                emptyText,
+                style: TextStyle(
+                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Material(
+                elevation: 0.0,
+                borderRadius: BorderRadius.circular(5.0),
+                color: colorPrimary,
+                child: MaterialButton(
+                  minWidth: 100,
+                  padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DashBoard()),);
+                  },
+
+                  child: Text("Continue Shopping",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
+                )
+            ),
+          ],),
+      )
+  );
+
+
 
 }
 
