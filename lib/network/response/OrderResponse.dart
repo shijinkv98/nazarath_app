@@ -157,7 +157,6 @@ class Data {
   List<ItemsNew> itemsNew;
   Currency currency;
   List<Items> items;
-
   Data(
       {this.id,
         this.invoiceNumber,
