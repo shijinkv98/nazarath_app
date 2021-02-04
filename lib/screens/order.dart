@@ -228,22 +228,21 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
     );
   },
   child:Container(
-    margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
+    margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(0),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 3.0,
-        ),
-      ],
+        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+          )]
     ),
     child: Column(
       children: [
         Padding(
           padding:
-          EdgeInsets.fromLTRB(padding, padding, 0, 2),
+          EdgeInsets.fromLTRB(5, 10, 5, 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -251,7 +250,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
               FadeInImage.assetNetwork(
                 placeholder: 'assets/images/no_image.png',
                 image: '$productThumbUrl${item.image}',
-                width: 100,
+                height: 90,
               ),
               SizedBox(
                 width: 5,
@@ -264,7 +263,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                     Text(
                       orderData.invoiceNumber,
                       style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.w500,fontSize: 11),
+                          color: item_text_gray,fontSize: 9),
                     ),
                     SizedBox(
                       height: 5,
@@ -272,21 +271,26 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                     Text(
                       item.productName,
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
+                          color: Colors.black, fontWeight: FontWeight.w500,fontSize: 12),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Text('${item.amount}}',style: TextStyle(
-                            color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
+                        Text('$currency${item.amount}',style: TextStyle(
+                            color: colorRed,fontSize: 11,fontWeight: FontWeight.w800)),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
+                        Text('${item.amount}',style: TextStyle(
+                            color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
                       ],
                     ),
-
+                    SizedBox(
+                      height: 5,
+                    ),
+                    viewDetailsButton(orderData, context)
                   ],
                 ),
               ),
@@ -298,15 +302,40 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
         ),
 
 
-        Divider(
-          height: 2,
-          color: Colors.grey,
-        ),
-
       ],
     ),
   )
   );
+}
+GestureDetector viewDetailsButton(Data orderData,BuildContext context)
+{
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderData)),
+        );
+      },
+      child: Container(
+
+        padding: EdgeInsets.fromLTRB(15, 7, 15, 7),
+        decoration: BoxDecoration(
+            color: colorPrimary,
+            borderRadius:  BorderRadius.circular(3)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "View Details",
+              style: TextStyle(
+                  color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      )
+  );
+
 }
 Container getTopContainer()
 {
