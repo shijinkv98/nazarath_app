@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
@@ -11,24 +12,25 @@ import 'package:nazarath_app/network/response/CartResponse.dart';
 // import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   final appTitle = 'Home';
-
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: appTitle,
-      home: HomePage(title: appTitle),
-    );
-  }
+  HomePage createState() => new HomePage();
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //    // debugShowCheckedModeBanner: false,
+  //    // title: appTitle,
+  //     //home: HomePage(title: appTitle),
+  //   );
+  // }
 }
 
-class HomePage extends StatelessWidget {
-  final String title;
+class HomePage extends State<Home> {
+  //final String title;
   AppLifecycleState _notification;
 
-  HomePage({Key key, this.title}) : super(key: key);
+ // HomePage({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class HomePage extends StatelessWidget {
           future: ApiCall().execute<HomeResponse, Null>('home/en', null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return getFullView(snapshot.data, context);
+              return getFullView(snapshot.data, context,super.widget);
             } else if (snapshot.hasError) {
               return errorScreen('Error: ${snapshot.error}');
             } else {
@@ -51,7 +53,7 @@ class HomePage extends StatelessWidget {
 }
 
 SingleChildScrollView getFullView(
-    HomeResponse homeResponse, BuildContext context) {
+    HomeResponse homeResponse, BuildContext context,Widget widget) {
   return SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,12 +77,13 @@ SingleChildScrollView getFullView(
                 child: Container(
                     height: 180,
                     // width: 320,
-
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                      image: new AssetImage("assets/icons/homebanner.png"),
-                      fit: BoxFit.fill,
-                    ))),
+                      child: getBannerSlider(homeResponse.banners,180),
+                    // decoration: new BoxDecoration(
+                    //     image: new DecorationImage(
+                    //   image: new AssetImage("assets/icons/homebanner.png"),
+                    //   fit: BoxFit.fill,
+                    // ))
+                ),
               ),
             )
           ],
@@ -89,10 +92,10 @@ SingleChildScrollView getFullView(
           padding: const EdgeInsets.only(top: 10),
           child: Center(child: getCategory(homeResponse.categories)),
         ),
-        getFeatured(homeResponse.newarrivals),
-        getMiddleSlider(),
-        getRecommended(),
-        getBottomSlider()
+        getFeatured(homeResponse.newarrivals,widget),
+        getSlider(homeResponse.slider,190),
+        getRecommended(homeResponse.newarrivals,widget),
+        getBannerSlider(homeResponse.banners,180)
       ],
     ),
   );
@@ -166,7 +169,7 @@ Container getCategory(List<Categories> categories) {
   );
 }
 
-Container getFeatured(List<Newarrivals> featured) {
+Container getFeatured(List<Newarrivals> featured,Widget widget) {
   if (featured == null)
     return Container();
   else if (featured.length == 0) return Container();
@@ -218,7 +221,7 @@ Container getFeatured(List<Newarrivals> featured) {
                                   height: 70,
                                   child: Image(
                                     image: new NetworkImage(
-                                        "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+                                        '$productThumbUrl${featured[index].image}'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -258,6 +261,7 @@ Container getFeatured(List<Newarrivals> featured) {
                                       ),
                                       onPressed: () {
                                         // Do something
+                                        addtoCart(featured[index].slug, featured[index].store, context, widget,"1");
                                       },
                                     )),
                                   ),
@@ -268,7 +272,9 @@ Container getFeatured(List<Newarrivals> featured) {
                                       Container(
                                           alignment: Alignment.topRight,
                                           child: InkWell(
-                                            // onTap: ,
+                                            onTap:(){
+                                              addtoWishList(featured[index].slug, featured[index].store, context, widget);
+                                            } ,
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 8),
@@ -354,10 +360,10 @@ Future<String>addtoCart(String slug,String store,BuildContext context,Widget wid
 
   if (cartResponse != null) {
     ApiCall().showToast(cartResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => widget));
   }
   return "Success!";
 }
@@ -372,10 +378,10 @@ Future<String>addtoWishList(String slug,String store,BuildContext context,Widget
 
   if (Productresponse != null) {
     ApiCall().showToast(Productresponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => widget));
   }
   return "Success!";
 }
@@ -390,7 +396,7 @@ Container getMiddleBanner() {
   );
 }
 
-Container getRecommended() {
+Container getRecommended(List<Newarrivals> recommended,Widget widget) {
   return Container(
     child: Container(
       width: double.infinity,
@@ -412,7 +418,7 @@ Container getRecommended() {
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 6,
+                itemCount: recommended.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -441,7 +447,7 @@ Container getRecommended() {
                                     height: 70,
                                     child: Image(
                                       image: new NetworkImage(
-                                          "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+                                          '$productThumbUrl${recommended[index].image}'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -464,7 +470,7 @@ Container getRecommended() {
                                               child: Padding(
                                                 padding: const EdgeInsets.only(top: 8,right: 3),
                                                 child: Text(
-                                                  'AED 259.000',
+                                                  '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
                                                   style: TextStyle(
                                                       color: Colors.red,
                                                       fontSize: 10,
@@ -478,7 +484,7 @@ Container getRecommended() {
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(top: 10,right: 5),
                                                   child: Text(
-                                                    'AED 259.0',
+                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
                                                     style: TextStyle(
                                                         color: Colors.grey[700],
                                                         fontSize: 8,
@@ -488,7 +494,9 @@ Container getRecommended() {
                                                 ),
                                               ),
                                             InkWell(
-                                              // onTap: ,
+                                               onTap: (){
+                                                 addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
+                                               } ,
                                               child: ImageIcon(
                                                 AssetImage(
                                                     'assets/icons/favourite.png'),
@@ -508,7 +516,7 @@ Container getRecommended() {
                                     padding: const EdgeInsets.only(
                                         top: 5, left: 10,right: 5),
                                     child: AutoSizeText(
-                                      'Zyden Black & silver Rectangular',
+                                      recommended[index].name,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -528,8 +536,7 @@ Container getRecommended() {
     ),
   );
 }
-
-Container getMiddleSlider() {
+Container getMainSlider(List<Banners> banners) {
   return Container(
       height: 150,
       width: double.infinity,
@@ -547,7 +554,132 @@ Container getMiddleSlider() {
         ],
       ));
 }
+Widget getMiddleSlider(List<Banners> banners) {
+  return
+    CarouselSlider(
+      options: CarouselOptions(height: 150.0),
+      items: banners.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return getImage(i.image);
+          },
+        );
+      }).toList(),
+    );
 
+}
+
+Widget getBannerSlider(List<Banners> banners,double height) {
+  return
+    CarouselSlider(
+      options: CarouselOptions(
+        height: 180.0,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 1.0,
+      ),
+
+      items: banners.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return getImageBanner(i.image);
+          },
+        );
+      }).toList(),
+    );
+
+}
+
+Widget getSlider(List<HomeSlider> sliders,double height) {
+  return
+    CarouselSlider(
+      options: CarouselOptions(height: height,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 1.0,),
+      items: sliders.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return getImage(i.image);
+          },
+        );
+      }).toList(),
+    );
+
+}
+Widget getOfferSlider(List<Offers> offers,double height) {
+  return
+    CarouselSlider(
+      options: CarouselOptions(height:  height,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 1.0,),
+      items: offers.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return getImageOffer(i.image);
+          },
+        );
+      }).toList(),
+    );
+
+}
+
+
+Widget getImage(String url)
+{
+  return Container(
+    child: FadeInImage.assetNetwork(
+      placeholder: 'assets/images/no_image.png',
+      image: '$bannerThumbUrl$url',
+
+    ) ,
+  );
+}
+Widget getImageBanner(String url)
+{
+  return Container(
+    child: FadeInImage.assetNetwork(
+      placeholder: 'assets/images/no_image.png',
+      image: '$bannerThumbUrl$url',
+
+    ) ,
+  );
+}
+Widget getImageOffer(String url)
+{
+  return Container(
+    child: FadeInImage.assetNetwork(
+      placeholder: 'assets/images/no_image.png',
+      image: '$offerThumbUrl$url',
+
+    ) ,
+  );
+}
+// Widget getImagesSliders(List<Banners> banners) => ListView.builder(
+//     itemBuilder: (context, index) =>
+//         getImage(banners[index].image),
+//     itemCount: banners.length);
+// Widget getImagesOffers(List<Banners> banners) => ListView.builder(
+//     itemBuilder: (context, index) =>
+//         getImage(banners[index].image),
+//     itemCount: banners.length);
+// Widget getImagesBanners(List<Banners> banners) => ListView.builder(
+//     itemBuilder: (context, index) =>
+//         getImage(banners[index].image),
+//     itemCount: banners.length);
 InkWell getWishListIcon(bool condition )
 {
   if(condition) {

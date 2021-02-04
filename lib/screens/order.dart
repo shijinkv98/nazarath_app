@@ -278,12 +278,12 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                     ),
                     Row(
                       children: [
-                        Text('$currency${item.amount}',style: TextStyle(
+                        Text('$currency${" "}${item.amount}',style: TextStyle(
                             color: colorRed,fontSize: 11,fontWeight: FontWeight.w800)),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('$currency${item.amount}',style: TextStyle(
+                        Text('$currency${" "}${item.amount}',style: TextStyle(
                             color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
                       ],
                     ),

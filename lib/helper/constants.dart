@@ -21,7 +21,8 @@ const Color primaryIconColor = Color(0xFF45ccc1);
 
 const String productThumbUrl = '${BASE_URL}images/product/thumbnail/';
 const String categoryThumbUrl = '${BASE_URL}images/category/thumbnail/';
-
+const String bannerThumbUrl = '${BASE_URL}images/banner/';
+const String offerThumbUrl = '${BASE_URL}images/offer/';
 const double padding = 10.0;
 const contryCode = 971;
 const double appTabIconSize=20.0;
