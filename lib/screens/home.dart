@@ -97,26 +97,24 @@ SingleChildScrollView getFullView(
     ),
   );
 }
-// Container getMiddleBanner() {
-//   return Container(
-//     height: 130,
-//     width: double.infinity,
-//     child: Image(
-//       image: new AssetImage('assets/icons/banner1.png'),
-//       fit: BoxFit.cover,
-//     ),
-//   );
-// }
-// Container getBottomBanner() {
-//   return Container(
-//     height: 130,
-//     width: double.infinity,
-//     child: Image(
-//       image: new AssetImage('assets/icons/banner2.png'),
-//       fit: BoxFit.cover,
-//     ),
-//   );
-// }
+Container getBottomSlider() {
+  return Container(
+      height: 150,
+      width: double.infinity,
+      child: Carousel(
+        dotBgColor: Colors.transparent,
+        images: [
+          AssetImage('assets/icons/banner2.png'),
+          // NetworkImage('imageurl'),
+          AssetImage("assets/icons/banner1.png"),
+          NetworkImage(
+              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+          AssetImage("assets/image3.jpeg"),
+          NetworkImage(
+              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
+        ],
+      ));
+}
 Container getCategory(List<Categories> categories) {
   if (categories == null)
     return Container();
@@ -514,6 +512,23 @@ Container getRecommended() {
 }
 
 Container getMiddleSlider() {
+  return Container(
+      height: 150,
+      width: double.infinity,
+      child: Carousel(
+        dotBgColor: Colors.transparent, // onImageTap: ,
+        images: [
+          AssetImage('assets/icons/banner1.png'),
+          // NetworkImage('imageurl'),
+          AssetImage("assets/icons/banner2.png"),
+          NetworkImage(
+              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+          AssetImage("assets/image3.jpeg"),
+          NetworkImage(
+              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
+        ],
+      ));
+}
 
 InkWell getWishListIcon(bool condition )
 {
@@ -561,21 +576,3 @@ Container getBottomBanner() {
       ));
 }
 
-Container getBottomSlider() {
-  return Container(
-      height: 150,
-      width: double.infinity,
-      child: Carousel(
-        dotBgColor: Colors.transparent,
-        images: [
-          AssetImage('assets/icons/banner2.png'),
-          // NetworkImage('imageurl'),
-          AssetImage("assets/icons/banner1.png"),
-          NetworkImage(
-              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
-          AssetImage("assets/image3.jpeg"),
-          NetworkImage(
-              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
-        ],
-      ));
-}
