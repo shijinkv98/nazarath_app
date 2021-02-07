@@ -107,7 +107,6 @@ class _ProductsState extends State<ProductsScreen> {
           children: [
             getTopContainer(),
             getSortFilter(),
-            // getItems(),
 
           ],
         ),
@@ -190,21 +189,144 @@ class getSortFilter extends StatelessWidget{
    );
  }
 }
-class getItems extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    return Container(
-        child: GridView.builder(
-      itemCount:5,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3),
-      itemBuilder: (BuildContext context, int index) {
-        return new Card(
-
+Container getItems() {
+  return Container(
+    color: product_bg,
+    child:GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10.0,
+      mainAxisSpacing: 10.0,
+      shrinkWrap: true,
+      children: List.generate(20, (index) {
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            width: 160,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0)),
+              ),
+              color: Colors.white,
+              elevation: 2,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 5, left: 5, right: 5),
+                      child: Container(
+                        height: 70,
+                        child: Image(image: new AssetImage('assets/icons/product1.png'),
+                          // image: new NetworkImage(
+                          //     '$productThumbUrl${featured[index].image}'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 5, left: 10, right: 6),
+                        child: Text(
+                          'test test',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 35,
+                          alignment: Alignment.bottomLeft,
+                          decoration: BoxDecoration(
+                              color: colorPrimary,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
+                          child: Center(
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
+                                onPressed: () {
+                                  // Do something
+                                  // addtoCart(featured[index].slug, featured[index].store, context, widget,"1");
+                                },
+                              )),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                                alignment: Alignment.topRight,
+                                child: InkWell(
+                                  onTap:(){
+                                    // addtoWishList(featured[index].slug, featured[index].store, context, widget);
+                                  } ,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8),
+                                    child: ImageIcon(
+                                      AssetImage(
+                                          'assets/icons/favourite.png'),
+                                      size: 20,
+                                      color: colorPrimary,
+                                    ),
+                                  ),
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 5,
+                                  right: 10,
+                                  top: 3,
+                                  bottom: 8
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '230',
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '298',
+                                    style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontSize: 8,
+                                        decoration: TextDecoration
+                                            .lineThrough),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ]),
+            ),
+          ),
         );
-      },
+      },),
     ),
-    );
-  }
+  
+  );
 }
+
