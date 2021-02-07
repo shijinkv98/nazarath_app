@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/screens/products.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
@@ -148,7 +149,12 @@ class SideDrawer extends StatelessWidget{
                           SizedBox(width: 10),
                           Text('My Wallet',style:TextStyle(color:Colors.white),)
                         ],
-                      ), onPressed: () {},
+                      ), onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProductsScreen("Add Your First Product")),
+                      );
+                    },
                     ),
                   ),
                   ListTile(

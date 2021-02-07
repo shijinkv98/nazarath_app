@@ -125,7 +125,6 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
               ),
               getTools(),
               getProductDescription(),
-              getTools(),
               getRecommended(homeResponse.newarrivals,widget),
             ],
           ),
@@ -617,7 +616,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
           Container(
             padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
             color: Color(0xFFe5eeef),
-            height: 210,
+            height: 200,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -626,7 +625,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Container(
-                      width: 160,
+                      width: 140,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),
                         child: Card(
@@ -656,11 +655,11 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10,right: 5,left: 5),
+                                      padding: const EdgeInsets.only(top: 10,right: 5,left: 10),
                                       child: Container(
                                         height: 25,
                                         child: Row(
@@ -676,7 +675,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
                                                   style: TextStyle(
                                                       color: Colors.red,
-                                                      fontSize: 10,
+                                                      fontSize: 9  ,
                                                       fontWeight: FontWeight.bold),
                                                 ),
                                               ),
@@ -688,14 +687,16 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                                 padding: const EdgeInsets.only(top: 10,right: 5),
                                                 child: Text(
                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
+                                                  textAlign: TextAlign.start,
                                                   style: TextStyle(
                                                       color: Colors.grey[700],
-                                                      fontSize: 8,
+                                                      fontSize: 6,
                                                       decoration:
                                                       TextDecoration.lineThrough),
                                                 ),
                                               ),
                                             ),
+
                                             InkWell(
                                               onTap: (){
                                               //  addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
@@ -723,7 +724,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 10),
+                                          fontSize: 8),
                                     ),
                                   ),
                                 ),
