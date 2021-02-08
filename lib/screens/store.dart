@@ -6,6 +6,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/newsDetails.dart';
 import 'package:nazarath_app/screens/order.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreScreen extends StatefulWidget {
   String title;
@@ -156,41 +157,103 @@ Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
         child: Container(
           width: MediaQuery.of(context).size.width,
           color:Colors.white,
-          child: Container(
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/images/no_image.png',
-                      image: '',
-                      width: 100
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15,right: 15,top: 15),
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('New Delhi',style:TextStyle(color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text('Gate No 2,5,6 & 10, Block B, Rajiv Chowk Metro Station,New Delhi,110001',style:TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.normal)),
                   ),
-                ),
-                Flexible(
-                  child: Container(
-                      color: Colors.white,
-                      child:Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('item.createdAt',style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
-                            Text('item.productName',style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
-                          ],
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey)
+                          ),
+                          child: RaisedButton.icon(
+                              onPressed: () async {
+                                String phone ='+916238839396'
+                                    // widget.orderItems.orderData.shippingPhone
+                                ;
+                                if (phone != null && phone.trim().isNotEmpty) {
+                                  phone = 'tel:$phone';
+                                  if (await canLaunch(phone)) {
+                                    await launch(phone);
+                                  }
+                                }
+                              },
+                              elevation: 0,
+                              color: Colors.white,
+                              hoverColor: colorPrimary,
+                              icon: Icon(
+                                Icons.call,color: Colors.black,
+                                size: 18,
+                              ),
+                              // padding: EdgeInsets.only(left: 5, right: 5),
+                              textColor: Colors.black,
+                              label: Text(
+                                'Call',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w400),
+                              )),
                         ),
-                      )
-                  ),
-                ),
-              ],
-            ),
+                      ),Padding(
+                        padding: const EdgeInsets.only(top: 10,left: 10),
+                        child: Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey)
+                          ),
+                          child: RaisedButton.icon(
+                              onPressed: ()  {
+                                // String phone ='+916238839396'
+                                //     // widget.orderItems.orderData.shippingPhone
+                                // ;
+                                // if (phone != null && phone.trim().isNotEmpty) {
+                                //   phone = 'tel:$phone';
+                                //   if (await canLaunch(phone)) {
+                                //     await launch(phone);
+                                //   }
+                                // }
+                              },
+                              elevation: 0,
+                              color: Colors.white,
+                              hoverColor: colorPrimary,
+                              icon: Icon(
+                                Icons.location_on_outlined,color: Colors.black,
+                                size: 18,
+                              ),
+                              // padding: EdgeInsets.only(left: 5, right: 5),
+                              textColor: Colors.black,
+                              label: Text(
+                                'Map',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w400),
+                              )),
+                        ),
+                      ),
+                    ],
+                  )
+
+
+                ],
+              ),
+
+
+              ),
+          ),
           ),
         ),
       ),
-    ),
+
   );
 }
