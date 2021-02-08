@@ -293,7 +293,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                     children: [
                       Container(
                           alignment: Alignment.topRight,
-                          child: getWishListIcon(product.wishlist)),
+                          child: getWishListIcon(product.wishlist,product.slug,product.store,context,widget)),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 5,
@@ -383,25 +383,32 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
   }
   return "Success!";
 }
-InkWell getWishListIcon(int wish )
+InkWell getWishListIcon(int wish,String slug,String store,BuildContext context,Widget widget )
 {
   if(wish==1) {
     return InkWell(
 // onTap: ,
       child: Padding(
-        padding: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.only(right: 0),
         child: ImageIcon(
           AssetImage('assets/icons/fav_active.png'),
           size: 16,
           color: colorPrimary,
         ),
       ),
+      onTap: ()
+      {
+        addtoWishList(slug, store, context, widget);
+      },
     );
   }
   return InkWell(
-// onTap: ,
+    onTap: ()
+    {
+      removefromWishList(slug, store, context, widget);
+    },
     child:  Padding(
-      padding: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.only(right: 0),
       child: ImageIcon(
         AssetImage('assets/icons/favourite.png'),
         size: 18,
