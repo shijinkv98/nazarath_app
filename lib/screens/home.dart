@@ -9,11 +9,14 @@ import 'package:nazarath_app/network/response/HomeResponse.dart';
 // import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
+
+import 'ProductList.dart';
 // import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
 HomeResponse homeResponse;
 class Home extends StatefulWidget {
   final appTitle = 'Home';
+
   @override
   HomePage createState() => new HomePage();
   // @override
@@ -121,8 +124,16 @@ Container getBottomSlider() {
 }
 Container getCategory(List<Categories> categories) {
   if (categories == null)
-    return Container();
-  else if (categories.length == 0) return Container();
+    return Container(
+      child:SizedBox(
+        height: 0.01,
+      ),
+    );
+  else if (categories.length == 0) return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
   return Container(
     child: Container(
       width: double.infinity,
@@ -144,23 +155,32 @@ Container getCategory(List<Categories> categories) {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
-                    child: Container(
-                        child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: NetworkImage(
-                              '$categoryThumbUrl${categories[index].category.image}'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text(
-                            categories[index].category.name,
-                            style: TextStyle(fontSize: 11, color: Colors.black),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProductScreen(categories[index].category.slug,"category")),
+                        );
+
+                      },
+                      child: Container(
+                          child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: NetworkImage(
+                                '$categoryThumbUrl${categories[index].category.image}'),
                           ),
-                        ),
-                      ],
-                    )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              categories[index].category.name,
+                              style: TextStyle(fontSize: 11, color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      )),
+                    ),
                   );
                 }),
           ),
@@ -172,8 +192,16 @@ Container getCategory(List<Categories> categories) {
 
 Container getFeatured(List<Newarrivals> featured,Widget widget) {
   if (featured == null)
-    return Container();
-  else if (featured.length == 0) return Container();
+     return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
+  else if (featured.length == 0)  return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
   return Container(
     child: Container(
       width: double.infinity,
@@ -405,26 +433,27 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 7),
             child: Text("Recommended Products",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 13,
                     color: Colors.grey[600],
                     fontWeight: FontWeight.bold)),
           ),
           Container(
-            padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+            padding: EdgeInsets.only(top: 0, left: 5, right: 5, bottom: 10),
             color: Color(0xFFe5eeef),
-            height: 210,
+            height: 150,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: recommended.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Container(
-                      width: 160,
+                      height:140,
+                      width: 140,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),
                         child: Card(
@@ -458,50 +487,50 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10,right: 5,left: 5),
+                                      padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
                                       child: Container(
-                                        height: 25,
+
                                         child: Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Container(
-                                              height: 25,
+
                                               child: Padding(
-                                                padding: const EdgeInsets.only(top: 8,right: 3),
+                                                padding: const EdgeInsets.only(top: 5,right: 3),
                                                 child: Text(
                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
                                                   style: TextStyle(
                                                       color: Colors.red,
-                                                      fontSize: 10,
+                                                      fontSize: 8,
                                                       fontWeight: FontWeight.bold),
                                                 ),
                                               ),
                                             ),
 
                                             Container(
-                                                height: 25,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 10,right: 5),
-                                                  child: Text(
-                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
-                                                    style: TextStyle(
-                                                        color: Colors.grey[700],
-                                                        fontSize: 8,
-                                                        decoration:
-                                                            TextDecoration.lineThrough),
-                                                  ),
+
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 5,right: 10),
+                                                child: Text(
+                                                  '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
+                                                  style: TextStyle(
+                                                      color: Colors.grey[700],
+                                                      fontSize: 8,
+                                                      decoration:
+                                                      TextDecoration.lineThrough),
                                                 ),
                                               ),
+                                            ),
                                             InkWell(
-                                               onTap: (){
-                                                 addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
-                                               } ,
+                                              onTap: (){
+                                                addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
+                                              } ,
                                               child: ImageIcon(
                                                 AssetImage(
                                                     'assets/icons/favourite.png'),
-                                                size: 20,
+                                                size: 14,
                                                 color: colorPrimary,
                                               ),
                                             ),
@@ -516,12 +545,12 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 5, left: 10,right: 5),
-                                    child: AutoSizeText(
+                                    child: Text(
                                       recommended[index].name,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 10),
+                                          fontSize:9),
                                     ),
                                   ),
                                 ),
@@ -558,7 +587,14 @@ Container getMainSlider(List<Banners> banners) {
 Widget getMiddleSlider(List<Banners> banners) {
   return
     CarouselSlider(
-      options: CarouselOptions(height: 150.0),
+      options: CarouselOptions(height: 150.0,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 1.0,),
       items: banners.map((i) {
         return Builder(
           builder: (BuildContext context) {

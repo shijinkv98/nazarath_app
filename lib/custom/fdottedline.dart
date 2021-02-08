@@ -62,7 +62,11 @@ class _FDottedLineState extends State<FDottedLine> {
   Widget build(BuildContext context) {
     if (_isEmpty(widget.width) &&
         _isEmpty(widget.height) &&
-        widget.child == null) return Container();
+        widget.child == null)  return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
     if (widget.child != null) {
       tryToGetChildSize();
       List<Widget> children = [];

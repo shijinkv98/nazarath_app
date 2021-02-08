@@ -163,8 +163,8 @@ DefaultTabController getTabController(BuildContext context)
         children: <Widget>[
           Home(),
           CheckUpScreen("checkup"),
-          ProductScreen(),
-         // StoreScreen(""),
+          //ProductScreen("s"),
+          StoreScreen(""),
 
           Profile(),
           NewsScreen("news"),
