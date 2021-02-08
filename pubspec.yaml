@@ -40,6 +40,7 @@ dependencies:
   google_maps_flutter: ^1.0.6
   geolocator: ^6.1.13
   geocoding: ^1.0.5
+  spinner_input: ^0.1.2
   geocoder: ^0.2.1
   carousel_slider: ^3.0.0
   dio: ^3.0.10
@@ -80,6 +81,7 @@ flutter:
     - assets/icons/log_out.png
     - assets/icons/my_address.png
     - assets/icons/my_orders.png
+    - assets/icons/men.png
     - assets/icons/nazarath_logo.png
     - assets/icons/privacy_policy.png
     - assets/icons/refer_to_friend.png

@@ -20,6 +20,8 @@ import 'notification.dart';
 //   ));
 // }
 class CheckoutScreen extends StatefulWidget {
+  CheckoutScreen(String s);
+
   @override
   _CheckoutState createState() => new _CheckoutState();
 }
@@ -124,23 +126,24 @@ class _CheckoutState extends State<CheckoutScreen> {
         ],
       ),
       body:Container(
-        child:FutureBuilder<CheckoutResponse>(
-          future: ApiCall()
-              .execute<CheckoutResponse, Null>('Checkout/en', null),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              debugPrint('products size: ${snapshot.data?.orderId?.items?.length}');
-              return _listview(snapshot.data?.orderId?.items
-                  ?.where((element) =>
-              element != null )
-                  ?.toList(),context,super.widget);
-            } else if (snapshot.hasError) {
-              return errorScreen('Error: ${snapshot.error}');
-            } else {
-              return progressBar;
-            }
-          },
-        ),
+        child:Container()
+        // FutureBuilder<CheckoutResponse>(
+        //   future: ApiCall()
+        //       .execute<CheckoutResponse, Null>('Checkout/en', null),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.hasData) {
+        //       debugPrint('products size: ${snapshot.data?.orderId?.items?.length}');
+        //       return _listview(snapshot.data?.orderId?.items
+        //           ?.where((element) =>
+        //       element != null )
+        //           ?.toList(),context,super.widget);
+        //     } else if (snapshot.hasError) {
+        //       return errorScreen('Error: ${snapshot.error}');
+        //     } else {
+        //       return progressBar;
+        //     }
+        //   },
+        // ),
       )
           // SingleChildScrollView(
           // child: Column(
@@ -209,131 +212,131 @@ class _CheckoutState extends State<CheckoutScreen> {
   }
 }
 
-Widget _listview(List<Items> products,BuildContext context,Widget widget) => ListView.builder(
-    padding: EdgeInsets.only(bottom: 70),
-    itemBuilder: (context, index) =>
-        _itemsBuilder(products[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
-    itemCount: products.length);
-
-Widget _itemsBuilder(Items product,BuildContext context,Widget widget) {
-  bool status = false;
-
-  return Container(
-    margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(0),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 3.0,
-        ),
-      ],
-    ),
-    child: Column(
-      children: [
-        Padding(
-          padding:
-          EdgeInsets.fromLTRB(padding, padding, 0, 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/images/no_image.png',
-                // image: '$productThumbUrl${product.i}',
-                width: 100,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      product.productName,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        // Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
-                        //     color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
-                        // SizedBox(
-                        //   width: 10,
-                        // ),
-                        // Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
-                        //     color: Colors.grey,fontSize: 12,decoration: TextDecoration.lineThrough)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/Checkout.png'),color: Colors.white,size: 12),
-                          label: Text('Move to Bag',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          onPressed: (){
-                        //    movetoWishList(product.slug,product.seller,context,widget);
-                          },
-                          color: colorPrimary,
-                          padding: const EdgeInsets.only(bottom: 2, top: 2,left: 4.0,right: 4.0),
-                          textColor: Colors.white,
-
-                        ),
-
-                        SizedBox(
-                          width: 2,
-                        ),
-                        RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/favorite.png'),color: Colors.white,size: 12,),
-                          label: Text('Remove',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          onPressed: (){
-                           // removeFromCheckout(product.slug,product.seller,context,widget);
-                          },
-                          color: colorPrimary,
-                          padding: EdgeInsets.all(2),
-                          textColor: Colors.white,
-
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-
-            ],
-
-          ),
-
-        ),
-
-
-        Divider(
-          height: 2,
-          color: Colors.grey,
-        ),
-
-      ],
-    ),
-  );
-
-}
+// Widget _listview(List<Items> products,BuildContext context,Widget widget) => ListView.builder(
+//     padding: EdgeInsets.only(bottom: 70),
+//     itemBuilder: (context, index) =>
+//         _itemsBuilder(products[index],context,widget),
+//     // separatorBuilder: (context, index) => Divider(
+//     //       color: Colors.grey,
+//     //       height: 1,
+//     //     ),
+//     itemCount: products.length);
+//
+// Widget _itemsBuilder(Items product,BuildContext context,Widget widget) {
+//   bool status = false;
+//
+//   return Container(
+//     margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(0),
+//       color: Colors.white,
+//       boxShadow: [
+//         BoxShadow(
+//           color: Colors.grey,
+//           blurRadius: 3.0,
+//         ),
+//       ],
+//     ),
+//     child: Column(
+//       children: [
+//         Padding(
+//           padding:
+//           EdgeInsets.fromLTRB(padding, padding, 0, 2),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               FadeInImage.assetNetwork(
+//                 placeholder: 'assets/images/no_image.png',
+//                 // image: '$productThumbUrl${product.i}',
+//                 width: 100,
+//               ),
+//               SizedBox(
+//                 width: 5,
+//               ),
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     Text(
+//                       product.productName,
+//                       style: TextStyle(
+//                           color: Colors.black, fontWeight: FontWeight.w500),
+//                     ),
+//                     SizedBox(
+//                       height: 5,
+//                     ),
+//                     Row(
+//                       children: [
+//                         // Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
+//                         //     color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
+//                         // SizedBox(
+//                         //   width: 10,
+//                         // ),
+//                         // Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
+//                         //     color: Colors.grey,fontSize: 12,decoration: TextDecoration.lineThrough)),
+//                       ],
+//                     ),
+//                     Row(
+//                       children: [
+//                         RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/Checkout.png'),color: Colors.white,size: 12),
+//                           label: Text('Move to Bag',
+//                               textAlign: TextAlign.center,
+//                               style: TextStyle(
+//                                   fontSize: 9,
+//                                   color: Colors.white,
+//                                   fontWeight: FontWeight.bold)),
+//                           onPressed: (){
+//                         //    movetoWishList(product.slug,product.seller,context,widget);
+//                           },
+//                           color: colorPrimary,
+//                           padding: const EdgeInsets.only(bottom: 2, top: 2,left: 4.0,right: 4.0),
+//                           textColor: Colors.white,
+//
+//                         ),
+//
+//                         SizedBox(
+//                           width: 2,
+//                         ),
+//                         RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/favorite.png'),color: Colors.white,size: 12,),
+//                           label: Text('Remove',
+//                               textAlign: TextAlign.center,
+//                               style: TextStyle(
+//                                   fontSize: 9,
+//                                   color: Colors.white,
+//                                   fontWeight: FontWeight.bold)),
+//                           onPressed: (){
+//                            // removeFromCheckout(product.slug,product.seller,context,widget);
+//                           },
+//                           color: colorPrimary,
+//                           padding: EdgeInsets.all(2),
+//                           textColor: Colors.white,
+//
+//                         ),
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//
+//             ],
+//
+//           ),
+//
+//         ),
+//
+//
+//         Divider(
+//           height: 2,
+//           color: Colors.grey,
+//         ),
+//
+//       ],
+//     ),
+//   );
+//
+// }
 
 // Future<String>removeFromCheckout(String slug,String store,BuildContext context,Widget widget) async {
 //
@@ -372,7 +375,7 @@ Widget _itemsBuilder(Items product,BuildContext context,Widget widget) {
 //             builder: (BuildContext context) => widget));
 //   }
 //   return "Success!";
-// }
+// }/**/
 
 
 
