@@ -113,6 +113,7 @@ flutter:
     - assets/icons/notification.png
     - assets/icons/mail.png
     - assets/icons/favorite.png
+    - assets/icons/fav_active.png
     - assets/icons/cart.png
     - assets/icons/call.png
     - assets/icons/inner_banner.png

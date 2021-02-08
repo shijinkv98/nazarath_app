@@ -12,6 +12,8 @@ import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import 'home.dart';
+
 // void main() {
 //   runApp(Product(
 //     items: List<ListItem>.generate(
@@ -63,12 +65,12 @@ class _ProductState extends State<ProductScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             debugPrint('products size: ${snapshot.data?.products?.data?.length}');
-            return _listview(snapshot.data?.products?.data
+            return getProductViews(snapshot.data?.products?.data
                 ?.where((element) =>
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
+            return getEmptyContainer(context, "Product List is empty", "empty_cart");
           } else {
             return progressBar;
           }
@@ -88,20 +90,123 @@ class _ProductState extends State<ProductScreen> {
     // );
   }
 }
+Widget getProductViews(List<Data> products,BuildContext context,Widget widget)
+{
+  if(products.length==0)
+    return getEmptyContainer(context, "Product List is empty", "empty_cart");
+  else
+    return Container(
+      child: Column(
+        children: [
+          getTopContainer(),
+          SizedBox(
+            height: 5,
+          ),
+          getButtonContainer(context),
+          SizedBox(
+            height: 5,
+          ),
+          Flexible(
+            child: _gridView(products,context,widget),
 
+          ),
+        ],
+      ),
+    );
+
+}
+Widget getButtonContainer(BuildContext context)
+{
+ return  Padding(
+    padding: const EdgeInsets.only(left: 10,right: 10),
+    child: Container(
+      height:36,
+      width:double.infinity,
+      color: product_bg,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: 36,
+            width: MediaQuery.of(context).size.width / 2.2,
+            decoration: BoxDecoration(
+                border: Border.all(color: colorPrimary)
+            ),
+            child: Center(child: Text('Sort')),
+          ),
+          // SizedBox(width: 10,),
+          Container(
+            height: 36,
+            width: MediaQuery.of(context).size.width/ 2.2,
+            color: colorPrimary,
+            child: Center(child: Text('Filter')),
+          )
+        ],
+      ),
+
+    ),
+  );
+}
+
+Widget getTopContainer() {
+  return Container(
+    color: product_bg,
+    child: Column(
+      children: [
+        Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: colorPrimary,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(100.0),
+                      bottomLeft: Radius.circular(100.0)),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                child: Container(
+                    height: 100,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new AssetImage(
+                              "assets/icons/inner_banner.png"),
+                          fit: BoxFit.fill,
+                        ))),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+      ],
+    ),
+  );
+}
 Widget _listview(List<Data> products,BuildContext context,Widget widget) => ListView.builder(
     padding: EdgeInsets.only(bottom: 70),
     itemBuilder: (context, index) =>
         _itemsBuilder(products[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
     itemCount: products.length);
 
+Widget _gridView(List<Data> products,BuildContext context,Widget widget)=>GridView.count(
+  crossAxisCount: 3,
+  shrinkWrap: true,
+  scrollDirection: Axis.vertical,
+  childAspectRatio: 0.75,
+  children: List.generate(products.length, (index) {
+    return Center(
+      child: _itemsBuilder(products[index],context,widget),
+    );
+  }),
+);
 Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
   bool status = false;
-
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -110,121 +215,138 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
       );
     },
     child: Container(
-      margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(0),
+      margin: const EdgeInsets.only(bottom: 5.0,left: 2.0,top:5.0,right:2),
+      child:Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+              topLeft: Radius.circular(10.0),
+              bottomLeft: Radius.circular(10.0)),
+        ),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 3.0,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding:
-            EdgeInsets.fromLTRB(padding, padding, 0, 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/no_image.png',
-                  image: '$productThumbUrl${product.image}',
-                  width: 100,
+        elevation: 2,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 5, left: 2, right: 2),
+                child: Container(
 
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        product.name,
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
-                              color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
-                              color: Colors.grey,fontSize: 12,decoration: TextDecoration.lineThrough)),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/cart.png'),color: Colors.white,size: 12),
-                            label: Text('Move to Bag',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 9,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                            onPressed: (){
-                              addtoWishList(product.slug,product.store,context,widget);
-                            },
-                            color: colorPrimary,
-                            padding: const EdgeInsets.only(bottom: 2, top: 2,left: 4.0,right: 4.0),
-                            textColor: Colors.white,
-
-                          ),
-
-                          SizedBox(
-                            width: 2,
-                          ),
-                          RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/favorite.png'),color: Colors.white,size: 12,),
-                            label: Text('Remove',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 9,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                            onPressed: (){
-                              removefromWishList(product.slug,product.store,context,widget);
-                            },
-                            color: colorPrimary,
-                            padding: EdgeInsets.all(2),
-                            textColor: Colors.white,
-
-                          ),
-                        ],
-                      )
-                    ],
+                  height: 50,
+                  child: Image(
+                    image: new NetworkImage(
+                        '$productThumbUrl${product.image}'),
+                    fit: BoxFit.cover,
                   ),
                 ),
+              ),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 0, left: 10, right: 6),
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9),
+                  ),
+                ),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 25,
 
-              ],
+                    alignment: Alignment.bottomLeft,
+                    decoration: BoxDecoration(
+                        color: colorPrimary,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(3),
+                            bottomLeft: Radius.circular(3))),
+                     child: Center(
+                       widthFactor: 0.5,
+                         child: new Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: <Widget>[
+                               new IconButton(
+                                   icon: Icon(
+                                     Icons.add,
+                                     color: Colors.white,
+                                     size: 10,
 
-            ),
-
-          ),
-
-
-          Divider(
-            height: 2,
-            color: Colors.grey,
-          ),
-
-        ],
-      ),
+                                   ),
+                                 onPressed: (){
+                                     addtoCart(product.slug, product.store, context, widget,"1");}
+                               ),
+                             ]
+                         ))
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                          alignment: Alignment.topRight,
+                          child: getWishListIcon(product.wishlist)),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5,
+                            right: 10,
+                            top: 3,
+                            bottom: 8
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              '${product.symbolLeft}${" "}${product.price}${product.symbolRight}',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',
+                              style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 8,
+                                  decoration: TextDecoration
+                                      .lineThrough),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ]),
+      ) , 
     ),
-  );;
+  );
 
 }
-
+Widget getaddIcon()
+{
+  return   Center(
+    child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+        new IconButton(
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 10,
+        )),
+      ]
+  ));
+}
 Future<String>addtoWishList(String slug,String store,BuildContext context,Widget widget) async {
   Map body = {
     "slug": slug,
@@ -261,15 +383,15 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
   }
   return "Success!";
 }
-InkWell getWishListIcon(bool condition )
+InkWell getWishListIcon(int wish )
 {
-  if(condition) {
+  if(wish==1) {
     return InkWell(
 // onTap: ,
       child: Padding(
         padding: const EdgeInsets.only(right: 8),
         child: ImageIcon(
-          AssetImage('assets/icons/favourite.png'),
+          AssetImage('assets/icons/fav_active.png'),
           size: 16,
           color: colorPrimary,
         ),
