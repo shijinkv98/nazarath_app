@@ -129,6 +129,12 @@ flutter:
     - assets/icons/remove.png
     - assets/icons/banner1.png
     - assets/icons/banner2.png
+    - assets/icons/time.png
+    - assets/icons/mobile.png
+    - assets/icons/location.png
+    - assets/icons/house.png
+    - assets/icons/calendar.png
+    - assets/icons/emailicon.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -5,18 +5,18 @@ import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
 
-class CheckUpScreen extends StatefulWidget {
+class ReferScreen extends StatefulWidget {
   String title;
-  CheckUpScreen(String title)
+  ReferScreen(String title)
   {
     this.title=title;
   }
   @override
-  _CheckUpState createState() => new _CheckUpState(title: title);
+  _ReferScreenState createState() => new _ReferScreenState(title: title);
 }
-class _CheckUpState extends State<CheckUpScreen> {
+class _ReferScreenState extends State<ReferScreen> {
   String title;
-  _CheckUpState({ this.title}) ;
+  _ReferScreenState({ this.title}) ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,79 +35,19 @@ class _CheckUpState extends State<CheckUpScreen> {
         ),
         backgroundColor: colorPrimary,
         elevation: 0,
-        actions: <Widget>[
-          // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(
-                    AssetImage("assets/icons/search.png"),
-                  ),
-                ),
-              )),
-
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            NotificationScreen("notification")),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(
-                    AssetImage("assets/icons/notification.png"),
-                  ),
-                ),
-              )),
-
-          Padding(
-            padding: const EdgeInsets.only(right: appTabIconPad),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CartScreen()),
-                );
-              },
-              child: Container(
-                height: appTabIconSize,
-                width: appTabIconSize,
-                child: ImageIcon(
-                  AssetImage("assets/icons/cart.png"),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       backgroundColor: Colors.white,
-      body: getCheckUp(),
+      body: getReferFriend(),
     );
   }
 }
-Container getCheckUp()
+Container getReferFriend()
 {
   return Container(
     child: Container(width: double.infinity,
       child: Column(
 
         children: [
-          getTopContainer(),
           getForms(),
 
 
@@ -127,10 +67,7 @@ Widget getForms(){
       child: Column(
         children: [
           mobileNumberField,
-          addressField,
-          locationField,
-          dateField,
-          timeField,
+
           RaisedButton.icon(
               onPressed: () async {},
               elevation: 0,
@@ -139,7 +76,7 @@ Widget getForms(){
               // padding: EdgeInsets.only(left: 5, right: 5),
               textColor: Colors.white,
               label: Text(
-                'Book an Appoinment',
+                'Refer',
                 style: TextStyle(
                     fontSize: 12, fontWeight: FontWeight.w400),
               )),
@@ -148,12 +85,12 @@ Widget getForms(){
     ),
   );
 }
-String mobileNmber;
+String email;
 final mobileNumberField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onSaved: (value) {
-    mobileNmber = value;
+    email = value;
   },
   // style: style,
   validator: (value) {
@@ -167,8 +104,8 @@ final mobileNumberField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Mobile Number", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'MOBILE NUMBER',
+    hintText: "Enter friend email id", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'EMAIL',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
@@ -180,7 +117,7 @@ final mobileNumberField = TextFormField(
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
-        'assets/icons/mobile.png',
+        'assets/icons/emailicon.png',
         width: register_icon_size,
         height: register_icon_size,
       ),
