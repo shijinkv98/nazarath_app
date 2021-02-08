@@ -6,7 +6,6 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
-import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkup.dart';
@@ -164,8 +163,8 @@ DefaultTabController getTabController(BuildContext context)
         children: <Widget>[
           Home(),
           CheckUpScreen("checkup"),
-          StoreScreen("strore"),
-         // StoreScreen(""),
+          //ProductScreen("s"),
+          StoreScreen(""),
 
           Profile(),
           NewsScreen("news"),

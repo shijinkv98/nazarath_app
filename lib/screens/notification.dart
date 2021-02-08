@@ -171,11 +171,23 @@ Widget _listview(List<Notifications> products,BuildContext context,Widget widget
     itemCount: products.length);
 Widget _itemsBuilder(Notifications notification,BuildContext context,Widget widget) {
   if(notification.notification==null)
-    return Container();
+     return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
   else if (notification.notification.languages==null)
-    return Container();
+     return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
   else if (notification.notification.languages.length==0)
-    return Container();
+     return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
   return Container(
       margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
     decoration: BoxDecoration(
