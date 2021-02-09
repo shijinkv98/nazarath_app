@@ -434,6 +434,7 @@ Container getBottomNav(BuildContext context)
 }
 
 Widget _individualTab(String imagePath) {
+
   return Container(
       height: 70,
       width: double.infinity,
@@ -447,15 +448,21 @@ Widget _individualTab(String imagePath) {
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),
-              text: 'HOME',
+              icon: ImageIcon(AssetImage(imagePath),
+                size: 20,),
+              child: Text(
+                "HOME",
+                style: TextStyle(fontSize: 12),
+              ),
+              //text: 'STORES',
+
             ),
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[300],
-              width: 1,
+              color: Colors.grey,
+              width: 0.5,
               height: 50,
             ),
           )
@@ -464,6 +471,7 @@ Widget _individualTab(String imagePath) {
 }
 
 Widget _individualTab2(String imagePath) {
+
   return Container(
       height: 70,
       width: double.infinity,
@@ -477,15 +485,21 @@ Widget _individualTab2(String imagePath) {
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),
-              text: 'CHECKUP',
+              icon: ImageIcon(AssetImage(imagePath),
+                size: 20,),
+              child: Text(
+                "CHECKUP",
+                style: TextStyle(fontSize: 12),
+              ),
+              //text: 'STORES',
+
             ),
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[300],
-              width: 1,
+              color: Colors.grey,
+              width: 0.5,
               height: 50,
             ),
           )
@@ -507,15 +521,21 @@ Widget _individualTab3(String imagePath) {
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),
-              text: 'STORES',
+              icon: ImageIcon(AssetImage(imagePath),
+              size: 20,),
+              child: Text(
+                "STORES",
+                style: TextStyle(fontSize: 12),
+              ),
+              //text: 'STORES',
+
             ),
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[300],
-              width: 1,
+              color: Colors.grey,
+              width: 0.5,
               height: 50,
             ),
           )
@@ -524,6 +544,7 @@ Widget _individualTab3(String imagePath) {
 }
 
 Widget _individualTab4(String imagePath) {
+
   return Container(
       height: 70,
       width: double.infinity,
@@ -537,20 +558,27 @@ Widget _individualTab4(String imagePath) {
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),
-              text: 'PROFILE',
+              icon: ImageIcon(AssetImage(imagePath),
+                size: 20,),
+              child: Text(
+                "PROFILE",
+                style: TextStyle(fontSize: 12),
+              ),
+              //text: 'STORES',
+
             ),
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              color: Colors.grey[300],
-              width: 1,
+              color: Colors.grey,
+              width: 0.5,
               height: 50,
             ),
           )
         ],
       ));
+
 }
 
 Future<void> logout(BuildContext context)
@@ -582,19 +610,28 @@ Widget _individualTab5(String imagePath) {
         children: <Widget>[
           Center(
             child: Tab(
-              icon: ImageIcon(AssetImage(imagePath)),
-              text: 'NEWS',
+              icon: ImageIcon(AssetImage(imagePath),
+                size: 20,),
+              child: Text(
+                "NEWS",
+                style: TextStyle(fontSize: 12),
+              ),
+              //text: 'STORES',
+
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              color: Colors.grey[300],
-              width: 1,
-              height: 50,
-            ),
-          )
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: Container(
+          //     color: Colors.grey,
+          //     width: 0.5,
+          //     height: 50,
+          //   ),
+          // )
         ],
       ));
+
+
+
 }
 

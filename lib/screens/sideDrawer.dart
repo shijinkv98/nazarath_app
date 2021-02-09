@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/screens/checkout.dart';
+import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/products.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
+import 'changePassword.dart';
 import 'notification.dart';
 import 'order.dart';
 
@@ -101,7 +103,7 @@ class SideDrawer extends StatelessWidget{
                       ), onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CheckoutScreen('Add First item')),
+                        MaterialPageRoute(builder: (context) => PersonalInfoScreen("")),
                       );
                     },
                     ),
@@ -174,7 +176,10 @@ class SideDrawer extends StatelessWidget{
                           Text('Change Password',style:TextStyle(color:Colors.white),)
                         ],
                       ), onPressed: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
+                      );
                     },
                     ),
                   ),

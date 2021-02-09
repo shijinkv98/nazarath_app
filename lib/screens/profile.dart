@@ -8,8 +8,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/screens/address.dart';
+import 'package:nazarath_app/screens/personalinformation.dart';
+import 'package:nazarath_app/screens/refertofriends.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'DashBoard.dart';
+import 'changePassword.dart';
 import 'order.dart';
 
 
@@ -124,7 +127,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Edit Profile',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PersonalInfoScreen("")),
+                        );
+                  },
                   ),
 
                   FlatButton(
@@ -192,7 +200,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Refer to Friend',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ReferScreen("")),
+                    );
+                  },
 
 
                   ),
@@ -222,7 +235,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Change Password',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
+                    );
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,
@@ -244,7 +262,9 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Logout',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                      logout(context);
+                  },
                   )
                 ],
               ),
