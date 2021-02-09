@@ -266,10 +266,10 @@ Future<String>removeFromCart(String slug,String store,BuildContext context,Widge
 
   if (cartResponse != null) {
     ApiCall().showToast(cartResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => widget));
   }
   return "Success!";
 }

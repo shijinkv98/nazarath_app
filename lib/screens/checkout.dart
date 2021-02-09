@@ -264,51 +264,7 @@ Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
       SliverToBoxAdapter(
         child:    _tabSection(context,widget,cartResponse),
       ),
-      SliverToBoxAdapter(
-        child:    Padding(
-          padding: const EdgeInsets.only(top: 25),
-          child: Divider(
-            color: product_bg,
-            thickness: 2,
-          ),
-        ),
-      ),
-      SliverToBoxAdapter(
-        child:   getAdress("Delivery Address")
-      ),
-      SliverToBoxAdapter(
-        child:    Padding(
-          padding: const EdgeInsets.only(top: 25),
-          child: Divider(
-            color: product_bg,
-            thickness: 2,
-          ),
-        ),
-      ),
-      SliverToBoxAdapter(
-          child:   getAdress("Shipping Address")
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-        child:    getPaymentOptions(),
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-        child:    getDetails(context, widget, cartResponse)
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-          child:    getButtonContinue()
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
+
     ],
   );
 }
@@ -396,80 +352,176 @@ Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse)
         ),
         Container(
           //Add this to give height
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*0.6,
           child: TabBarView(children: [
-            Container(
-              child: Container(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25, top: 25),
-                        child: Row(
-                          children: [
-                            Container(
-                              child: SizedBox(
-                                width: 140,
-                                height: 40,
-                                child: RaisedButton(
-                                  color: colorPrimary,
-                                  elevation: 0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text('Upload',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.white)),
-                                  ),
-                                  onPressed: () async {},
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: Text(
-                                'myprescription.pdf',
-                                style:
-                                    TextStyle(color: textColor, fontSize: 12),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, left: 40),
-                        child: Text(
-                          '(upload pdf,jpg,png format)',
-                          style: TextStyle(color: textColor, fontSize: 9),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Divider(
-                          color: product_bg,
-                          thickness: 2,
-                        ),
-                      ),
+            getTabSection1(context, widget, cartResponse),
+            getTabSection2(context, widget, cartResponse)
 
-
-
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            getContainerEyePower()
           ]),
         ),
       ],
     ),
   );
 }
+Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartResponse)
+{
+    return Container(
+      child: Container(
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25, top: 25),
+                child: Row(
+                  children: [
+                    Container(
+                      child: SizedBox(
+                        width: 140,
+                        height: 40,
+                        child: RaisedButton(
+                          color: colorPrimary,
+                          elevation: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text('Upload',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white)),
+                          ),
+                          onPressed: () async {},
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        'myprescription.pdf',
+                        style:
+                        TextStyle(color: textColor, fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, left: 40),
+                child: Text(
+                  '(upload pdf,jpg,png format)',
+                  style: TextStyle(color: textColor, fontSize: 9),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Divider(
+                  color: product_bg,
+                  thickness: 2,
+                ),
+              ),
 
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+}
+Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartResponse)
+{
+  return CustomScrollView(
+    slivers: <Widget>[
+      SliverToBoxAdapter(
+        child:    getTabSectionNormal(context,widget,cartResponse),
+      ),
+      SliverToBoxAdapter(
+          child:   getAdress("Delivery Address")
+      ),
+      SliverToBoxAdapter(
+        child:    Padding(
+          padding: const EdgeInsets.only(top: 25),
+          child: Divider(
+            color: product_bg,
+            thickness: 2,
+          ),
+        ),
+      ),
+      SliverToBoxAdapter(
+          child:   getAdress("Shipping Address")
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:    getPaymentOptions(),
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+          child:    getDetails(context, widget, cartResponse)
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+          child:    getButtonContinue()
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 50.0),
+      ),
+    ],
+  );
+}
+Widget getTabSection2(BuildContext context,Widget widget,CartResponse cartResponse)
+{
+  return CustomScrollView(
+    slivers: <Widget>[
+      SliverToBoxAdapter(
+        child:    getContainerEyePower(),
+      ),
+
+      SliverToBoxAdapter(
+          child:   getAdress("Delivery Address")
+      ),
+      SliverToBoxAdapter(
+        child:    Padding(
+          padding: const EdgeInsets.only(top: 25),
+          child: Divider(
+            color: product_bg,
+            thickness: 2,
+          ),
+        ),
+      ),
+      SliverToBoxAdapter(
+          child:   getAdress("Shipping Address")
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:    getPaymentOptions(),
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+          child:    getDetails(context, widget, cartResponse)
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+          child:    getButtonContinue()
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 50.0),
+      ),
+    ],
+  );
+}
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
 

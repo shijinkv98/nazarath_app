@@ -10,6 +10,7 @@ import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 
+import 'ProductDetails.dart';
 import 'ProductList.dart';
 // import 'package:nazarath_app/network/ApiCall.dart';
 void main() => runApp(Home());
@@ -227,127 +228,135 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      width: 160,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                              topLeft: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0)),
-                        ),
-                        color: Colors.white,
-                        elevation: 2,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5, left: 5, right: 5),
-                                child: Container(
-                                  height: 70,
-                                  child: Image(
-                                    image: new NetworkImage(
-                                        '$productThumbUrl${featured[index].image}'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Padding(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProductDetailsScreen(featured[index].slug)),
+                        );
+                      },
+                      child: Container(
+                        width: 160,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0)),
+                          ),
+                          color: Colors.white,
+                          elevation: 2,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 5, left: 10, right: 6),
-                                  child: Text(
-                                    featured[index].name,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12),
+                                      top: 5, left: 5, right: 5),
+                                  child: Container(
+                                    height: 70,
+                                    child: Image(
+                                      image: new NetworkImage(
+                                          '$productThumbUrl${featured[index].image}'),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 35,
-                                    alignment: Alignment.bottomLeft,
-                                    decoration: BoxDecoration(
-                                        color: colorPrimary,
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10))),
-                                    child: Center(
-                                        child: IconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                        size: 22,
-                                      ),
-                                      onPressed: () {
-                                        // Do something
-                                        addtoCart(featured[index].slug, featured[index].store, context, widget,"1");
-                                      },
-                                    )),
+                                Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, left: 10, right: 6),
+                                    child: Text(
+                                      featured[index].name,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                          alignment: Alignment.topRight,
-                                          child: InkWell(
-                                            onTap:(){
-                                              addtoWishList(featured[index].slug, featured[index].store, context, widget);
-                                            } ,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8),
-                                              child: ImageIcon(
-                                                AssetImage(
-                                                    'assets/icons/favourite.png'),
-                                                size: 20,
-                                                color: colorPrimary,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: 35,
+                                      alignment: Alignment.bottomLeft,
+                                      decoration: BoxDecoration(
+                                          color: colorPrimary,
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10))),
+                                      child: Center(
+                                          child: IconButton(
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 22,
+                                        ),
+                                        onPressed: () {
+                                          // Do something
+                                          addtoCart(featured[index].slug, featured[index].store, context, widget,"1");
+                                        },
+                                      )),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                            alignment: Alignment.topRight,
+                                            child: InkWell(
+                                              onTap:(){
+                                                addtoWishList(featured[index].slug, featured[index].store, context, widget);
+                                              } ,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 8),
+                                                child: ImageIcon(
+                                                  AssetImage(
+                                                      'assets/icons/favourite.png'),
+                                                  size: 20,
+                                                  color: colorPrimary,
+                                                ),
                                               ),
-                                            ),
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 5,
-                                          right: 10,
-                                          top: 3,
-                                          bottom: 8
+                                            )),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 5,
+                                            right: 10,
+                                            top: 3,
+                                            bottom: 8
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              SizedBox(width: 5),
+                                              Text(
+                                                '${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',
+                                                style: TextStyle(
+                                                    color: Colors.grey[700],
+                                                    fontSize: 8,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              '${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',
-                                              style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            SizedBox(width: 5),
-                                            Text(
-                                              '${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',
-                                              style: TextStyle(
-                                                  color: Colors.grey[700],
-                                                  fontSize: 8,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )
-                            ]),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ]),
+                        ),
                       ),
                     ),
                   );
@@ -487,112 +496,120 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                 scrollDirection: Axis.horizontal,
                 itemCount: recommended.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Container(
-                      height:140,
-                      width: 140,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 2, right: 2),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                topLeft: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0)),
-                          ),
-                          color: Colors.white,
-                          elevation: 2,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 5, left: 5, right: 5),
-                                  child: Container(
-                                    height: 70,
-                                    child: Image(
-                                      image: new NetworkImage(
-                                          '$productThumbUrl${recommended[index].image}'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
-                                      child: Container(
-
-                                        child: Row(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(top: 5,right: 3),
-                                                child: Text(
-                                                  '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 8,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-
-                                            Container(
-
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(top: 5,right: 10),
-                                                child: Text(
-                                                  '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
-                                                  style: TextStyle(
-                                                      color: Colors.grey[700],
-                                                      fontSize: 8,
-                                                      decoration:
-                                                      TextDecoration.lineThrough),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: (){
-                                                addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
-                                              } ,
-                                              child: ImageIcon(
-                                                AssetImage(
-                                                    'assets/icons/favourite.png'),
-                                                size: 14,
-                                                color: colorPrimary,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProductDetailsScreen(recommended[index].slug)),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Container(
+                        height:140,
+                        width: 140,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 2, right: 2),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  topLeft: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0)),
+                            ),
+                            color: Colors.white,
+                            elevation: 2,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, left: 5, right: 5),
+                                    child: Container(
+                                      height: 70,
+                                      child: Image(
+                                        image: new NetworkImage(
+                                            '$productThumbUrl${recommended[index].image}'),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
+                                        child: Container(
 
-                                  ],
-                                ),
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, left: 10,right: 5),
-                                    child: Text(
-                                      recommended[index].name,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:9),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Container(
+
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 5,right: 3),
+                                                  child: Text(
+                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
+                                                    style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Container(
+
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 5,right: 10),
+                                                  child: Text(
+                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
+                                                    style: TextStyle(
+                                                        color: Colors.grey[700],
+                                                        fontSize: 8,
+                                                        decoration:
+                                                        TextDecoration.lineThrough),
+                                                  ),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: (){
+                                                  addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
+                                                } ,
+                                                child: ImageIcon(
+                                                  AssetImage(
+                                                      'assets/icons/favourite.png'),
+                                                  size: 14,
+                                                  color: colorPrimary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                  Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 10,right: 5),
+                                      child: Text(
+                                        recommended[index].name,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize:9),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ]),
+                                ]),
+                          ),
                         ),
                       ),
                     ),
