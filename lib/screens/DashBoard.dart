@@ -171,7 +171,7 @@ DefaultTabController getTabController(BuildContext context)
           StoreScreen(""),
 
           Profile(),
-          CheckoutScreen("checkout"),
+          NewsScreen("checkout"),
         ],
       ),
       // drawer:Drawer(

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/screens/checkout.dart';
+import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/products.dart';
@@ -163,7 +164,7 @@ class SideDrawer extends StatelessWidget{
                       ), onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CheckoutScreen("Add Your First Product")),
+                        MaterialPageRoute(builder: (context) => CheckUpScreen("Add Your First Product")),
                       );
                     },
                     ),

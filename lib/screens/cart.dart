@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:spinner_input/spinner_input.dart';
 
@@ -365,7 +366,7 @@ Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-        child:   getPlaceOrderButton(context,widget),
+        child:   getPlaceOrderButton(context,widget,cartResponse),
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 30.0),
@@ -594,7 +595,7 @@ final couponField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-Widget getPlaceOrderButton(BuildContext context,Widget widget)
+Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response)
 {
   return Container(
     color: product_bg,
@@ -609,7 +610,7 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget)
             onTap: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WishListScreen()),
+                MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
               );
             },
               child: Text(
