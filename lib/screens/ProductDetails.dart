@@ -9,6 +9,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:spinner_input/spinner_input.dart';
 
 import 'ProductList.dart';
 import 'cart.dart';
@@ -24,7 +25,7 @@ class ProductDetailsScreen extends StatefulWidget {
   @override
   _ProductDetailsState createState() => new _ProductDetailsState(slug: title);
 }
-
+double spinner = 1;
 class _ProductDetailsState extends State<ProductDetailsScreen> {
   String slug;
   _ProductDetailsState({this.slug});
@@ -376,38 +377,72 @@ Container getStarRating(double rating) {
   );
 }
 
-Container getCount() {
-  return Container(
-    width: 110,
-    height: 45,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: Colors.grey[300]),
-      borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(2.0),
-          topRight: Radius.circular(2.0),
-          topLeft: Radius.circular(2.0),
-          bottomLeft: Radius.circular(2.0)),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-            icon: Icon(
-              Icons.remove,
-              size: 15,
-            ),
-            onPressed: () {}),
-        Text('1'),
-        IconButton(
-            icon: Icon(
-              Icons.add,
-              size: 15,
-            ),
-            onPressed: () {}),
-      ],
-    ),
-  );
+  Widget  getCount() {
+    return Container(
+      padding:EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2) ,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 0.5, color:item_text_gray_light),
+        borderRadius:
+        BorderRadius.only(bottomRight: Radius.circular(0.0)),
+      ),
+      child: SpinnerInput(
+        spinnerValue: spinner,
+        minValue: 1,
+        maxValue: 200,
+        step: 1,
+        disabledLongPress: true,
+        disabledPopup: true,
+        middleNumberStyle: TextStyle(fontSize: 12),
+        middleNumberBackground: Colors.white,
+        plusButton: SpinnerButtonStyle(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(0),
+            textColor: Colors.black,
+
+          elevation: 0
+        ),
+        minusButton: SpinnerButtonStyle(elevation: 0,
+            color: Colors.white, borderRadius: BorderRadius.circular(0),
+            textColor: Colors.black,
+
+        ),
+        onChange: (newValue) {
+          spinner = newValue;
+        },
+      ),
+    );
+  // return Container(
+  //   width: 110,
+  //   height: 45,
+  //   decoration: BoxDecoration(
+  //     color: Colors.white,
+  //     border: Border.all(color: Colors.grey[300]),
+  //     borderRadius: BorderRadius.only(
+  //         bottomRight: Radius.circular(2.0),
+  //         topRight: Radius.circular(2.0),
+  //         topLeft: Radius.circular(2.0),
+  //         bottomLeft: Radius.circular(2.0)),
+  //   ),
+  //   child: Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       IconButton(
+  //           icon: Icon(
+  //             Icons.remove,
+  //             size: 15,
+  //           ),
+  //           onPressed: () {}),
+  //       Text('1'),
+  //       IconButton(
+  //           icon: Icon(
+  //             Icons.add,
+  //             size: 15,
+  //           ),
+  //           onPressed: () {}),
+  //     ],
+  //   ),
+  // );
 }
 
 Container getStock() {

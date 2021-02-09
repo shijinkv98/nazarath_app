@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:spinner_input/spinner_input.dart';
 
 import 'DashBoard.dart';
 import 'home.dart';
@@ -435,6 +436,42 @@ Container getEmptyContainerCart(BuildContext context)
 
 
 }
+Widget getSpinner(String store,String slug,Widget widget,BuildContext context)
+{
+  Container(
+    padding:EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2) ,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(width: 0.5, color:item_text_gray_light),
+      borderRadius:
+      BorderRadius.only(bottomRight: Radius.circular(0.0)),
+    ),
+    child: SpinnerInput(
+      spinnerValue: 1,
+      minValue: 1,
+      maxValue: 200,
+      step: 1,
+      disabledLongPress: true,
+      disabledPopup: true,
+      middleNumberStyle: TextStyle(fontSize: 12),
+      middleNumberBackground: Colors.white,
+      plusButton: SpinnerButtonStyle(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(0),
+          textColor: Colors.black,
 
+          elevation: 0
+      ),
+      minusButton: SpinnerButtonStyle(elevation: 0,
+        color: Colors.white, borderRadius: BorderRadius.circular(0),
+        textColor: Colors.black,
+
+      ),
+      onChange: (newValue) {
+          addtoCart(slug, store, context, widget, newValue.toString());
+      },
+    ),
+  );
+}
 
 ///
