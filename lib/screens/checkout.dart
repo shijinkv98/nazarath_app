@@ -790,7 +790,7 @@ Widget getContainerEyePower()
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 10),
                     child: Container(
                       color: Colors.white,
                       child: Column(
@@ -799,6 +799,7 @@ Widget getContainerEyePower()
                           Padding(
                             padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                     'RX.OD(left)',
@@ -820,6 +821,48 @@ Widget getContainerEyePower()
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10,bottom: 10),
                                   child: addFieldleft,
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    'RX.OD(Right)',
+                                    style:
+                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: sphereFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: cylFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: axixFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                  child: addFieldright,
                                 )
                               ],
                             ),
