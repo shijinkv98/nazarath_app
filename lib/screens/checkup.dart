@@ -96,7 +96,8 @@ class _CheckUpState extends State<CheckUpScreen> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: getCheckUp(),
+      body: SingleChildScrollView(child:
+      getCheckUp()),
     );
   }
 }
@@ -123,26 +124,44 @@ Widget getForms(){
   return Container(
     width: double.infinity,
     child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
+      padding: const EdgeInsets.only(top: 5,left: 20,right: 20,bottom: 20),
       child: Column(
         children: [
-          mobileNumberField,
-          addressField,
-          locationField,
-          dateField,
-          timeField,
-          RaisedButton.icon(
-              onPressed: () async {},
-              elevation: 0,
-              color: colorPrimary,
-              hoverColor: colorPrimary,
-              // padding: EdgeInsets.only(left: 5, right: 5),
-              textColor: Colors.white,
-              label: Text(
-                'Book an Appoinment',
-                style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              )),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: mobileNumberField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: addressField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: locationField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: dateField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: timeField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Container(
+              width: double.infinity,
+              height: 40,
+              child: RaisedButton(
+
+                color: colorPrimary,
+                elevation: 0,
+                child: Text('Book an Appoinment', style: TextStyle(
+                    fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
+                onPressed: () async {},
+              ),
+            ),
+          ),
         ],
       ),
     ),
@@ -253,8 +272,8 @@ final locationField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ADDRESS',
+    hintText: "Location", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'LOCATION',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
