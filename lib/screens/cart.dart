@@ -347,9 +347,20 @@ Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
       //     childCount: products.length,
       //   ),
       // ),
+
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:   getDiscountButton(context,widget),
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
       SliverToBoxAdapter(
         child:   getDetails(context,widget,cartResponse),
       ),
+
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
@@ -505,19 +516,84 @@ Widget getSpinner(String store,String slug,Widget widget,BuildContext context)
 Widget getDiscountButton(BuildContext context,Widget widget)
 {
   return Container(
-    color: Colors.white,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+
+    ),
     margin: EdgeInsets.only(left: 10,right: 10),
     child:Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+          width: 250,
+          child: couponField,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            GestureDetector(
+              onTap: (){
 
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),
+                        bottomRight:Radius.circular(10) ),
+                    color: colorPrimary,
 
+                  ),
+                height: 50,
+                padding: EdgeInsets.only(left: 15 ,right: 15),
+                child: Center(child: Text(
+                    "Apply",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 11)),
+                )
+              ),
+            ),
+          ],
+        )
       ],
     ),
   );
 }
+String coupon;
+final couponField = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    coupon = value;
+  },
+  // style: style,
+  // validator: (value) {
+  //   if (value.trim().isEmpty) {
+  //     return 'This field is required';
+  //   } else {
+  //     return null;
+  //   }
+  // },
+  keyboardType: TextInputType.text,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Discount code ", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Discount code',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
 Widget getPlaceOrderButton(BuildContext context,Widget widget)
 {
   return Container(
@@ -530,7 +606,12 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget)
           color: colorPrimary,
           child: GestureDetector(
 
-            onTap: (){},
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishListScreen()),
+              );
+            },
               child: Text(
                         "Place Order",
                         style: TextStyle(
