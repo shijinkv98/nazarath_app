@@ -925,34 +925,48 @@ Widget getContainerEyePower()
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
-                    child: Container(
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    'Support(Assist)',
-                                    style:
-                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: supportassistField,
-                                ),
+                  Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10,left: 0,right: 0,bottom: 25),
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Support(Assist)',
+                                      style:
+                                      TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Container(
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: colorPrimary)
+                                          ),
+                                          child: Center(child: Padding(
+                                            padding: const EdgeInsets.only(left: 25,right: 25),
+                                            child: supportassistField,
+                                          ))),
+                                    ),
+                                  ),
 
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
 
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
