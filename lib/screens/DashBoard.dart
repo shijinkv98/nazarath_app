@@ -8,6 +8,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
+import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
@@ -167,7 +168,7 @@ DefaultTabController getTabController(BuildContext context)
           StoreScreen(""),
 
           Profile(),
-          NewsScreen("news"),
+          CheckoutScreen("checkout"),
         ],
       ),
       // drawer:Drawer(
