@@ -230,6 +230,23 @@ class Login extends StatelessWidget {
                         ),
 
                         loginButon,
+                        MaterialButton(
+                          minWidth: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DashBoard()),);
+                          },
+
+                          child: Text("Guest",
+                              textAlign: TextAlign.center,
+                              style: style.copyWith(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal)),
+                        ),
+
 
                       ],
                     )

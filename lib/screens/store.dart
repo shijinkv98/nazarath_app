@@ -71,6 +71,7 @@ Container getNewsScreen(BuildContext context,Widget widget){
       children: [
         getTopContainer(),
         getNews(),
+        getRegion(),
         Flexible(child: _listview(items, context, widget))
 
       ],
@@ -125,19 +126,54 @@ Container getTopContainer() {
     ),
   );
 }
-Container getNews(){
+
+Container getStoreName(){
   return Container(
     width: double.infinity,
     color: product_bg,
     child: Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Center(child: Text('News',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
+      child: Center(child: Text('Stores',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
     ),
   );
 }
 Widget getRegion(){
-  return Container(
+  return Padding(
+    padding: const EdgeInsets.only(left: 20,right: 20,top: 15),
+    child: Container(
+      width: double.infinity,
+      height: 40,
 
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: colorPrimary)
+      ),
+      // child:DropdownButton<Item>(
+      //   hint:  Text("Select item"),
+      //   value: selectedUser,
+      //   onChanged: (Item Value) {
+      //     setState(() {
+      //       selectedUser = Value;
+      //     });
+      //   },
+      //   items: users.map((Item user) {
+      //     return  DropdownMenuItem<Item>(
+      //       value: user,
+      //       child: Row(
+      //         children: <Widget>[
+      //           user.icon,
+      //           SizedBox(width: 10,),
+      //           Text(
+      //             user.name,
+      //             style:  TextStyle(color: Colors.black),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   }).toList(),
+      // ),
+
+    ),
   );
 }
 Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
@@ -177,7 +213,13 @@ Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
                         child: Container(
                           height: 35,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(2.0),
+                                bottomLeft: Radius.circular(2.0),
+                                topRight: Radius.circular(2.0),
+                                topLeft: Radius.circular(2.0)),
+
                           ),
                           child: RaisedButton.icon(
                               onPressed: () async {
@@ -211,7 +253,12 @@ Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
                         child: Container(
                           height: 35,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(2.0),
+                            bottomLeft: Radius.circular(2.0),
+                            topRight: Radius.circular(2.0),
+                            topLeft: Radius.circular(2.0)),
                           ),
                           child: RaisedButton.icon(
                               onPressed: ()  {

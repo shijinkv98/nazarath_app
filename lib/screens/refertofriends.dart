@@ -117,7 +117,7 @@ final mobileNumberField = TextFormField(
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
-        'assets/icons/emailicon.png',
+        'assets/icons/mailicon.png',
         width: register_icon_size,
         height: register_icon_size,
       ),
