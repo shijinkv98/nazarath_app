@@ -10,55 +10,53 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StoreScreen extends StatefulWidget {
   String title;
-  StoreScreen(String title)
-  {
-    this.title=title;
+  StoreScreen(String title) {
+    this.title = title;
   }
   @override
   _StoreScreenState createState() => new _StoreScreenState(title: title);
 }
+
 class _StoreScreenState extends State<StoreScreen> {
   String title;
-  _StoreScreenState({ this.title}) ;
+  _StoreScreenState({this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBarMain(context),
-      backgroundColor: Colors.white,
-      body:
-      // FutureBuilder<OrderResponse>(
-      //   future: ApiCall()
-      //       .execute<OrderResponse, Null>('my-orders/en', null),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       debugPrint('products size: ${snapshot.data?.result.data?.length}');
-      //       return
-      //         getNewsScreen(snapshot.data?.result?.data
-      //           ?.where((element) =>
-      //       element != null )
-      //           ?.toList(),context,super.widget);
-      //     } else if (snapshot.hasError) {
-      //       return getEmptyContainerOrder(context);
-      //     } else {
-      //       return progressBar;
-      //     }
-      //   },
-      // ),
+        appBar: getAppBarMain(context),
+        backgroundColor: Colors.white,
+        body:
+            // FutureBuilder<OrderResponse>(
+            //   future: ApiCall()
+            //       .execute<OrderResponse, Null>('my-orders/en', null),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       debugPrint('products size: ${snapshot.data?.result.data?.length}');
+            //       return
+            //         getNewsScreen(snapshot.data?.result?.data
+            //           ?.where((element) =>
+            //       element != null )
+            //           ?.toList(),context,super.widget);
+            //     } else if (snapshot.hasError) {
+            //       return getEmptyContainerOrder(context);
+            //     } else {
+            //       return progressBar;
+            //     }
+            //   },
+            // ),
 
-      // Column(
-      //   children: [
-      //     getTopContainer(),
-      //     getFeatured()
-      //   ],
-      // )
-      getNewsScreen( context, widget)
-    );
+            // Column(
+            //   children: [
+            //     getTopContainer(),
+            //     getFeatured()
+            //   ],
+            // )
+            getNewsScreen(context, widget));
   }
-
 }
-Container getNewsScreen(BuildContext context,Widget widget){
-  List
-  <ItemsNew> items=new List<ItemsNew>();
+
+Container getNewsScreen(BuildContext context, Widget widget) {
+  List<ItemsNew> items = new List<ItemsNew>();
   // for(int i=0;i<orders.length;i++)
   // {
   //   for(int j=0;j<orders[i].itemsNew.length;j++)
@@ -70,23 +68,23 @@ Container getNewsScreen(BuildContext context,Widget widget){
     child: Column(
       children: [
         getTopContainer(),
-        getNews(),
+        getStoreName(),
         getRegion(),
         Flexible(child: _listview(items, context, widget))
-
       ],
     ),
   );
 }
-Widget _listview(List<ItemsNew> items,BuildContext context,Widget widget) => ListView.builder(
-  // padding: EdgeInsets.only(bottom: 70),
-    itemBuilder: (context, index) =>
-        getListView(null,context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
-    itemCount: 10);
+
+Widget _listview(List<ItemsNew> items, BuildContext context, Widget widget) =>
+    ListView.builder(
+        // padding: EdgeInsets.only(bottom: 70),
+        itemBuilder: (context, index) => getListView(null, context, widget),
+        // separatorBuilder: (context, index) => Divider(
+        //       color: Colors.grey,
+        //       height: 1,
+        //     ),
+        itemCount: 10);
 Container getTopContainer() {
   return Container(
     color: product_bg,
@@ -112,9 +110,9 @@ Container getTopContainer() {
                     height: 100,
                     decoration: new BoxDecoration(
                         image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
-                        ))),
+                      image: new AssetImage("assets/icons/inner_banner.png"),
+                      fit: BoxFit.fill,
+                    ))),
               ),
             )
           ],
@@ -127,27 +125,30 @@ Container getTopContainer() {
   );
 }
 
-Container getStoreName(){
+Container getStoreName() {
   return Container(
     width: double.infinity,
     color: product_bg,
     child: Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Center(child: Text('Stores',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
+      child: Center(
+          child: Text(
+        'Stores',
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
+      )),
     ),
   );
 }
-Widget getRegion(){
+
+Widget getRegion() {
   return Padding(
-    padding: const EdgeInsets.only(left: 20,right: 20,top: 15),
+    padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
     child: Container(
       width: double.infinity,
       height: 40,
 
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: colorPrimary)
-      ),
+          color: Colors.white, border: Border.all(color: colorPrimary)),
       // child:DropdownButton<Item>(
       //   hint:  Text("Select item"),
       //   value: selectedUser,
@@ -172,135 +173,148 @@ Widget getRegion(){
       //     );
       //   }).toList(),
       // ),
-
     ),
   );
 }
-Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
+
+Widget getListView(ItemsNew item, BuildContext context, Widget widget) {
   // if (featured == null)
   //   return Container();
   // else if (featured.length == 0) return Container();
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       // Navigator.push(
       //   context,
-        // MaterialPageRoute(
-        //     builder: (BuildContext context) =>NewsDetailsScreen(item)));
+      // MaterialPageRoute(
+      //     builder: (BuildContext context) =>NewsDetailsScreen(item)));
     },
     child: Container(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5,right: 5),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color:Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15,right: 15,top: 15),
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('New Delhi',style:TextStyle(color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold)),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text('Gate No 2,5,6 & 10, Block B, Rajiv Chowk Metro Station,New Delhi,110001',style:TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.normal)),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(2.0),
-                                bottomLeft: Radius.circular(2.0),
-                                topRight: Radius.circular(2.0),
-                                topLeft: Radius.circular(2.0)),
-
-                          ),
-                          child: RaisedButton.icon(
-                              onPressed: () async {
-                                String phone ='+916238839396'
-                                    // widget.orderItems.orderData.shippingPhone
-                                ;
-                                if (phone != null && phone.trim().isNotEmpty) {
-                                  phone = 'tel:$phone';
-                                  if (await canLaunch(phone)) {
-                                    await launch(phone);
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(width: 1.5, color:product_bg),
+        ),
+      ),
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 5, right: 5),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('New Delhi',
+                        style: TextStyle(
+                            color: colorPrimary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Text(
+                          'Gate No 2,5,6 & 10, Block B, Rajiv Chowk Metro Station,New Delhi,110001',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal)),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15,bottom: 20),
+                          child: Container(
+                            height: 35,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(2.0),
+                                  bottomLeft: Radius.circular(2.0),
+                                  topRight: Radius.circular(2.0),
+                                  topLeft: Radius.circular(2.0)),
+                            ),
+                            child: RaisedButton.icon(
+                                onPressed: () async {
+                                  String phone = '+916238839396'
+                                      // widget.orderItems.orderData.shippingPhone
+                                      ;
+                                  if (phone != null && phone.trim().isNotEmpty) {
+                                    phone = 'tel:$phone';
+                                    if (await canLaunch(phone)) {
+                                      await launch(phone);
+                                    }
                                   }
-                                }
-                              },
-                              elevation: 0,
-                              color: Colors.white,
-                              hoverColor: colorPrimary,
-                              icon: Icon(
-                                Icons.call,color: Colors.black,
-                                size: 18,
-                              ),
-                              // padding: EdgeInsets.only(left: 5, right: 5),
-                              textColor: Colors.black,
-                              label: Text(
-                                'Call',
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w400),
-                              )),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.only(top: 10,left: 10),
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(2.0),
-                            bottomLeft: Radius.circular(2.0),
-                            topRight: Radius.circular(2.0),
-                            topLeft: Radius.circular(2.0)),
+                                },
+                                elevation: 0,
+                                color: Colors.white,
+                                hoverColor: colorPrimary,
+                                icon: Icon(
+                                  Icons.call,
+                                  color: Colors.black,
+                                  size: 18,
+                                ),
+                                // padding: EdgeInsets.only(left: 5, right: 5),
+                                textColor: Colors.black,
+                                label: Text(
+                                  'Call',
+                                  style: TextStyle(
+                                      fontSize: 12, fontWeight: FontWeight.w400),
+                                )),
                           ),
-                          child: RaisedButton.icon(
-                              onPressed: ()  {
-                                // String phone ='+916238839396'
-                                //     // widget.orderItems.orderData.shippingPhone
-                                // ;
-                                // if (phone != null && phone.trim().isNotEmpty) {
-                                //   phone = 'tel:$phone';
-                                //   if (await canLaunch(phone)) {
-                                //     await launch(phone);
-                                //   }
-                                // }
-                              },
-                              elevation: 0,
-                              color: Colors.white,
-                              hoverColor: colorPrimary,
-                              icon: Icon(
-                                Icons.location_on_outlined,color: Colors.black,
-                                size: 18,
-                              ),
-                              // padding: EdgeInsets.only(left: 5, right: 5),
-                              textColor: Colors.black,
-                              label: Text(
-                                'Map',
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w400),
-                              )),
                         ),
-                      ),
-                    ],
-                  )
-
-
-                ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15,bottom: 20, left: 10),
+                          child: Container(
+                            height: 35,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(2.0),
+                                  bottomLeft: Radius.circular(2.0),
+                                  topRight: Radius.circular(2.0),
+                                  topLeft: Radius.circular(2.0)),
+                            ),
+                            child: RaisedButton.icon(
+                                onPressed: () {
+                                  // String phone ='+916238839396'
+                                  //     // widget.orderItems.orderData.shippingPhone
+                                  // ;
+                                  // if (phone != null && phone.trim().isNotEmpty) {
+                                  //   phone = 'tel:$phone';
+                                  //   if (await canLaunch(phone)) {
+                                  //     await launch(phone);
+                                  //   }
+                                  // }
+                                },
+                                elevation: 0,
+                                color: Colors.white,
+                                hoverColor: colorPrimary,
+                                icon: Icon(
+                                  Icons.location_on_outlined,
+                                  color: Colors.black,
+                                  size: 18,
+                                ),
+                                // padding: EdgeInsets.only(left: 5, right: 5),
+                                textColor: Colors.black,
+                                label: Text(
+                                  'Map',
+                                  style: TextStyle(
+                                      fontSize: 12, fontWeight: FontWeight.w400),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-
-
-              ),
-          ),
+            ),
           ),
         ),
       ),
-
+    ),
   );
 }
