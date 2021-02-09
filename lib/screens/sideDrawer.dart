@@ -163,7 +163,7 @@ class SideDrawer extends StatelessWidget{
                       ), onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProductsScreen("Add Your First Product")),
+                        MaterialPageRoute(builder: (context) => CheckoutScreen("Add Your First Product")),
                       );
                     },
                     ),
