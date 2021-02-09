@@ -13,6 +13,7 @@ import 'package:spinner_input/spinner_input.dart';
 
 import 'ProductList.dart';
 import 'cart.dart';
+import 'custom/spinner_product.dart';
 import 'home.dart';
 import 'notification.dart';
 
@@ -378,40 +379,7 @@ Container getStarRating(double rating) {
 }
 
   Widget  getCount() {
-    return Container(
-      padding:EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2) ,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(width: 0.5, color:item_text_gray_light),
-        borderRadius:
-        BorderRadius.only(bottomRight: Radius.circular(0.0)),
-      ),
-      child: SpinnerInput(
-        spinnerValue: spinner,
-        minValue: 1,
-        maxValue: 200,
-        step: 1,
-        disabledLongPress: true,
-        disabledPopup: true,
-        middleNumberStyle: TextStyle(fontSize: 12),
-        middleNumberBackground: Colors.white,
-        plusButton: SpinnerButtonStyle(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(0),
-            textColor: Colors.black,
-
-          elevation: 0
-        ),
-        minusButton: SpinnerButtonStyle(elevation: 0,
-            color: Colors.white, borderRadius: BorderRadius.circular(0),
-            textColor: Colors.black,
-
-        ),
-        onChange: (newValue) {
-          spinner = newValue;
-        },
-      ),
-    );
+    return SpinnerProduct();
   // return Container(
   //   width: 110,
   //   height: 45,
@@ -582,7 +550,7 @@ Container getButtons(BuildContext context,Widget widget,String slug,String store
             padding: const EdgeInsets.only(top: 20, left: 15),
             child: GestureDetector(
               onTap: () {
-                addtoCart(slug, store, context, widget, quantity);
+                addtoCart(slug, store, context, widget, spinner_product.toString());
               },
               child: Container(
                 width: 140,

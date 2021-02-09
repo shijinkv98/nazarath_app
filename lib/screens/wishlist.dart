@@ -173,7 +173,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
       onTap: () {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.name)),
+      MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.slug)),
     );
   },
   child:
