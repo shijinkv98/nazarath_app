@@ -27,8 +27,10 @@ import 'package:nazarath_app/network/response/SignupResponse.dart';
 import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
 import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
+import 'LogoutResponse.dart';
 
 class ApiCall{
   static const API_URL = "${BASE_URL}api/";
@@ -131,6 +133,7 @@ class ApiCall{
         await saveUser("");
         Navigator.of(context).pushReplacementNamed('/login');
       } else if (success == '3') {
+        logout(context);
         // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
         //     false;
         return fromJson<T, K>(jsonResponse);
@@ -227,7 +230,11 @@ class ApiCall{
       return AddressResponse.fromJson(json) as T;
     } else if (T == ReviewResponse) {
       return ReviewResponse.fromJson(json) as T;
-    } else {
+    }
+    else if (T == LogoutResponse) {
+      return LogoutResponse.fromJson(json) as T;
+    }
+    else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");
       // Future.error(Exception('Unknown class'));
