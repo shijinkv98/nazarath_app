@@ -872,7 +872,38 @@ Widget getContainerEyePower()
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    'Support(Assist)',
+                                    style:
+                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: supportassistField,
+                                ),
+
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -1039,6 +1070,41 @@ final sphereFieldright = TextFormField(
     hintText: "Sphere",
     hintStyle: TextStyle(color: textColorSecondary),
     labelText: 'Sphere',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String supportassist;
+final supportassistField = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    supportassist = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Type Here",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Type Here',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
