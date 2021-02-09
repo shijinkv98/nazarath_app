@@ -92,12 +92,12 @@ Widget getForms() {
   );
 }
 
-String email;
+String mobile;
 final mobileNumberField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onSaved: (value) {
-    email = value;
+    mobile = value;
   },
   // style: style,
   validator: (value) {

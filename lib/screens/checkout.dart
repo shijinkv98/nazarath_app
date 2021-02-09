@@ -462,7 +462,7 @@ Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse)
               ),
             ),
 
-            MyStatefulWidget()
+            getContainerEyePower()
           ]),
         ),
       ],
@@ -704,8 +704,408 @@ Widget getButtonContinue()
     ],
   );
 }
-// Widget getUpload(){
-//   return Container
-// }
+Widget getContainerEyePower()
+{
+  return Container(
+    child: Container(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 25, top: 25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      'Upload Prescription',
+                      style:
+                      TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 140,
+                          height: 40,
+                          child: RaisedButton(
+                            color: colorPrimary,
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text('Upload',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white)),
+                            ),
+                            onPressed: () async {},
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          'myprescription.pdf',
+                          style:
+                          TextStyle(color: textColor, fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
+              child: Text(
+                '(upload pdf,jpg,png format)',
+                style: TextStyle(color: textColor, fontSize: 9),
+              ),
+            ),
 
-///
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 30),
+            //   child: Divider(
+            //     color: product_bg,
+            //     thickness: 2,
+            //   ),
+            // ),
+            Container(
+              width: double.infinity,
+              color: product_bg,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25),
+                    child: Text(
+                      'Eye Power enter manually',
+                      style:
+                      TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                            child: Column(
+                              children: [
+                                Text(
+                                    'RX.OD(left)',
+                                    style:
+                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: sphereFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: cylFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: axixFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                  child: addFieldleft,
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+String sphereleft;
+final sphereFieldleft = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    sphereleft = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Sphere",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Sphere',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+
+String cylleft;
+final cylFieldleft = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    cylleft = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "CYL",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'CYL',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String axixleft;
+final axixFieldleft = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    axixleft = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Axix",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Axix',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String addleft;
+final addFieldleft = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    addleft = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Add",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Add',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String sphereright;
+final sphereFieldright = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    sphereright = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Sphere",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Sphere',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+
+String cylright;
+final cylFieldright = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    cylright = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "CYL",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'CYL',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String axixright;
+final axixFieldright = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    axixright = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Axix",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Axix',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+String addright;
+final addFieldright = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    addright = value;
+  },
+  // style: style,
+  validator: (value) {
+    if (value.trim().isEmpty) {
+      return 'This field is required';
+    } else {
+      return null;
+    }
+  },
+  keyboardType: TextInputType.name,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Add",
+    hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Add',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
