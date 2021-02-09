@@ -9,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
+import 'package:nazarath_app/screens/privacy_policy.dart';
 import 'package:nazarath_app/screens/refertofriends.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'DashBoard.dart';
@@ -251,7 +252,12 @@ class Profile extends StatelessWidget {
                         SizedBox(width: 10),
                         Text('Privacy Policy',style:TextStyle(color:Colors.grey[700] ),)
                       ],
-                    ), onPressed: () {},
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicyScreen("https://ranna.ae/en/privacy-policy")),
+                    );
+                  },
                   ),
                   FlatButton(
                     color: Colors.white,

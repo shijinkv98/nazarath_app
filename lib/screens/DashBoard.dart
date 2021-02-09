@@ -23,13 +23,14 @@ import 'order.dart';
 import 'profile.dart';
 import 'register/register.dart';
 DefaultTabController controller;
+TabController _controller;
 class DashBoard extends StatefulWidget {
   @override
   _DashBoard createState() => _DashBoard();
 
 }
 
-int tbPosition = 1;
+int tbPosition = 0;
 
 //var homeResponse;
 var customer;
@@ -39,7 +40,6 @@ class _DashBoard extends State<DashBoard> {
   void initState() {
     customer=new UserData();
     super.initState();
-
     getHomeData(context);
   }
   Future<void> getHomeData(BuildContext context)
@@ -68,6 +68,7 @@ DefaultTabController getTabController(BuildContext context)
 {
  return  DefaultTabController(
     length: 5,
+   initialIndex: tbPosition,
     child: Scaffold(
 
       appBar:AppBar(

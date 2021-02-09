@@ -47,6 +47,7 @@ dependencies:
   path_provider: ^1.6.24
   auth_buttons: ^0.0.4
   uuid: ^2.2.2
+  webview_flutter: ^1.0.7
   location_permissions: ^3.0.0+1
   #  camera: ^0.6.4+5
   json_annotation:

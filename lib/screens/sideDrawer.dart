@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/screens/checkout.dart';
+import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/products.dart';
+import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
@@ -194,7 +196,11 @@ class SideDrawer extends StatelessWidget{
                           Text('Stores',style:TextStyle(color:Colors.white),)
                         ],
                       ), onPressed: () {
-
+                        tbPosition=2;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashBoard()),
+                        );
                     },
                     ),
                   ),
@@ -227,7 +233,11 @@ class SideDrawer extends StatelessWidget{
                           Text('News',style:TextStyle(color:Colors.white),)
                         ],
                       ), onPressed: () {
-
+                      tbPosition=4;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => DashBoard()),
+                      );
 
                     },
                     ),
