@@ -100,12 +100,13 @@ class SideDrawer extends StatelessWidget{
                         children: <Widget>[
                           ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
                           SizedBox(width: 10),
-                          Text('Edit Profile',style:TextStyle(color:Colors.white),)
+                          Text('My Profile',style:TextStyle(color:Colors.white),)
                         ],
                       ), onPressed: () {
-                      Navigator.push(
+                      tbPosition=3;
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => PersonalInfoScreen("")),
+                        MaterialPageRoute(builder: (context) => DashBoard()),
                       );
                     },
                     ),
