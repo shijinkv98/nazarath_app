@@ -173,16 +173,6 @@ Container getTopContainer() {
     ),
   );
 }
-Container getNews(){
-  return Container(
-    width: double.infinity,
-    color: product_bg,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Center(child: Text('News',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
-    ),
-  );
-}
 Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
   return Container(
     child: Column(

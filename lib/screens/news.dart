@@ -64,7 +64,7 @@ Container getNewsScreen(List<Data> orders,BuildContext context,Widget widget){
     child: Column(
       children: [
         getTopContainer(),
-       getNews(),
+        getNews(),
         Flexible(child: _listview(items, context, widget))
 
       ],
