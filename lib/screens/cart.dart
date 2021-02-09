@@ -6,10 +6,13 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 
 import 'package:nazarath_app/network/response/CartResponse.dart';
+import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:spinner_input/spinner_input.dart';
 
 import 'DashBoard.dart';
+import 'ProductDetails.dart';
+import 'custom/spinner_cart.dart';
 import 'home.dart';
 import 'notification.dart';
 // void main() {
@@ -133,10 +136,7 @@ class _CartState extends State<CartScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               debugPrint('products size: ${snapshot.data?.products?.length}');
-              return getCartFull(snapshot.data?.products
-                  ?.where((element) =>
-              element != null )
-                  ?.toList(),context,super.widget);
+              return getCartFull(snapshot.data,context,super.widget);
             } else if (snapshot.hasError) {
               return getEmptyContainerCart(context);
             } else {
@@ -162,119 +162,96 @@ Widget _listview(List<Products> products,BuildContext context,Widget widget) => 
 
 Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
   bool status = false;
+  return GestureDetector(
+          onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.slug)),
+        );
+      },
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 2.0,
 
-  return Container(
-    margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(0),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 3.0,
-        ),
-      ],
-    ),
-    child: Column(
-      children: [
-        Padding(
-          padding:
-          EdgeInsets.fromLTRB(padding, padding, 0, 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/images/no_image.png',
-                image: '$productThumbUrl${product.image}',
-                width: 100,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+            )]
+      ),
+      child: Container(
+          child:
+              Padding(
+              padding:
+              EdgeInsets.fromLTRB(padding, padding, 0, 2),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      product.name,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
+                    FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/no_image.png',
+                      image: '$productThumbUrl${product.image}',
+                      width: 120,
                     ),
                     SizedBox(
-                      height: 5,
+                      width: 5,
                     ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
-                            color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
-                            color: Colors.grey,fontSize: 12,decoration: TextDecoration.lineThrough)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/cart.png'),color: Colors.white,size: 12),
-                          label: Text('Move to Bag',
-                              textAlign: TextAlign.center,
+                        Container(
+                          width: 180,
+                          child:Flexible(
+                            child: Text(
+                              product.name,
                               style: TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          onPressed: (){
-                            movetoWishList(product.slug,product.seller,context,widget);
-                          },
-                          color: colorPrimary,
-                          padding: const EdgeInsets.only(bottom: 2, top: 2,left: 4.0,right: 4.0),
-                          textColor: Colors.white,
-
-                        ),
-
+                                  color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
+                            )) ,)
+                        ,
                         SizedBox(
-                          width: 2,
+                          height: 8,
                         ),
-                        RaisedButton.icon(icon: ImageIcon(AssetImage('assets/icons/favorite.png'),color: Colors.white,size: 12,),
-                          label: Text('Remove',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          onPressed: (){
-                            removeFromCart(product.slug,product.seller,context,widget);
-                          },
-                          color: colorPrimary,
-                          padding: EdgeInsets.all(2),
-                          textColor: Colors.white,
+                        Row(
+                          children: [
+                            Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
+                                color: colorRed,fontSize: 11,fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
+                                color: Colors.grey,fontSize: 11,decoration: TextDecoration.lineThrough)),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SpinnerCart(product.slug,product.storeslug,product.quantity),
 
-                        ),
+                          ],
+                        )
+
                       ],
                     )
                   ],
-                ),
-              ),
+                )
+              )
 
-            ],
-
-          ),
-
-        ),
-
-
-        Divider(
-          height: 2,
-          color: Colors.grey,
-        ),
-
-      ],
+      ),
     ),
   );
 
+
 }
+// Widget getSpinner(String slug,String store)
+// {
+//   return SpinnerCart(slug,store);
+// }
 
 Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
 
@@ -314,8 +291,14 @@ Future<String> movetoWishList(String slug,String store,BuildContext context,Widg
   }
   return "Success!";
 }
-Container getCartFull(List<Products> products,BuildContext context,Widget widget)
+Container getCartFull(CartResponse cartResponse,BuildContext context,Widget widget)
 {
+  if(cartResponse==null)
+    return getEmptyContainerCart(context);
+  else if(cartResponse.products==null)
+    return getEmptyContainerCart(context);
+  else if(cartResponse.products.length==0)
+    return getEmptyContainerCart(context);
   return Container(
     child: Container(width: double.infinity,
       child: Column(
@@ -323,9 +306,11 @@ Container getCartFull(List<Products> products,BuildContext context,Widget widget
         children: [
           getTopContainer(),
           Flexible(
-            child: _listview(products,context,widget),
+            child: customView(context, widget, cartResponse)
+            //_listview(cartResponse.products,context,widget),
 
           ),
+          //getDetails(context,widget,cartResponse)
         ],
       ),
 
@@ -334,6 +319,61 @@ Container getCartFull(List<Products> products,BuildContext context,Widget widget
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
 }
+Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
+{
+  final _itemExtent = 140.0;
+  return CustomScrollView(
+    slivers: <Widget>[
+      SliverFixedExtentList(
+        itemExtent: _itemExtent,  // I'm forcing item heights
+        delegate: SliverChildBuilderDelegate(
+              (context, index) => _itemsBuilder(cartResponse.products[index],context,widget),
+          childCount: cartResponse.products.length,
+        ),
+      ),
+    // SliverToBoxAdapter(
+    //   child:Flexible(child:  _listview(cartResponse.products,context,widget)),
+    // ),
+      // SliverGrid(
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 1,
+      //       childAspectRatio: 2.5,
+      //       mainAxisSpacing: 0.0,
+      //       crossAxisSpacing: 0.0),
+      //   delegate: SliverChildBuilderDelegate(
+      //         (context, index) {
+      //       return _itemsBuilder(products[index],context,widget);
+      //     },
+      //     childCount: products.length,
+      //   ),
+      // ),
+
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:   getDiscountButton(context,widget),
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:   getDetails(context,widget,cartResponse),
+      ),
+
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+      ),
+      SliverToBoxAdapter(
+        child:   getPlaceOrderButton(context,widget),
+      ),
+      SliverPadding(
+        padding: const EdgeInsets.only(bottom: 30.0),
+      )
+    ],
+  );
+}
+
 Container getTopContainer()
 {
   return Container(
@@ -468,10 +508,220 @@ Widget getSpinner(String store,String slug,Widget widget,BuildContext context)
 
       ),
       onChange: (newValue) {
-          addtoCart(slug, store, context, widget, newValue.toString());
+          addtoCartReferesh(slug, store, context, widget, newValue.toString());
       },
     ),
   );
 }
+Widget getDiscountButton(BuildContext context,Widget widget)
+{
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
 
+    ),
+    margin: EdgeInsets.only(left: 10,right: 10),
+    child:Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 250,
+          child: couponField,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            GestureDetector(
+              onTap: (){
+
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),
+                        bottomRight:Radius.circular(10) ),
+                    color: colorPrimary,
+
+                  ),
+                height: 50,
+                padding: EdgeInsets.only(left: 15 ,right: 15),
+                child: Center(child: Text(
+                    "Apply",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 11)),
+                )
+              ),
+            ),
+          ],
+        )
+      ],
+    ),
+  );
+}
+String coupon;
+final couponField = TextFormField(
+  cursorColor: colorPrimary,
+  obscureText: false,
+  onSaved: (value) {
+    coupon = value;
+  },
+  // style: style,
+  // validator: (value) {
+  //   if (value.trim().isEmpty) {
+  //     return 'This field is required';
+  //   } else {
+  //     return null;
+  //   }
+  // },
+  keyboardType: TextInputType.text,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    hintText: "Discount code ", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Discount code',
+    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey[200]),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colorPrimary),
+    ),
+
+
+    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+  ),
+);
+Widget getPlaceOrderButton(BuildContext context,Widget widget)
+{
+  return Container(
+    color: product_bg,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: EdgeInsets.only(left: 40,right: 40,top:15,bottom: 15),
+          color: colorPrimary,
+          child: GestureDetector(
+
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishListScreen()),
+              );
+            },
+              child: Text(
+                        "Place Order",
+                        style: TextStyle(
+                            color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
+
+          ),
+        ),
+      ],
+    ),
+  );
+  // return Container(
+  //
+  //   child: GestureDetector(
+  //       onTap: () {
+  //
+  //       },
+  //       child: Container(
+  //         padding: EdgeInsets.fromLTRB(10, 10,10, 10),
+  //         width:200,
+  //         decoration: BoxDecoration(
+  //             color: colorPrimary,
+  //             borderRadius:  BorderRadius.circular(3)),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             Center(child:  Text(
+  //               "Place Order",
+  //               style: TextStyle(
+  //                   color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+  //             )
+  //           ],
+  //         ),
+  //       )
+  //   ),
+  // );
+}
+Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
+{
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.only(left:10),
+            child: Text(
+              "Order Summary",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                  color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          getTextContainer("Sub Total", '${cartResponse.symbolLeft}${" "}${cartResponse.netTotal}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer("Shipping", '${cartResponse.symbolLeft}${" "}${cartResponse.deliveryCharge.toString()}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer("Total", '${cartResponse.symbolLeft}${" "}${cartResponse.grandTotal}', "bold", text_tilte_page, colorRed, "title")
+        ],
+
+      ),
+    );
+}
+Widget getTextContainer(String title, String value,String style,Color color1,Color color2,String type)
+{
+
+  return Container(
+
+    padding:EdgeInsets.only(left: 10,right: 10,top: 15) ,
+    color: Colors.white,
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            getText(title, color1, 12, type, style,TextAlign.start),
+            getText(value, color2, 12, type, style,TextAlign.end)
+
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Divider(
+          height: 1,
+        )
+      ],
+    ),
+  );
+}
+Text getText(String title,Color color,double size,String type,String style,TextAlign alignment)
+{
+  if(type=="title")
+    size=14.0;
+  if(style=="bold") {
+    return
+      Text(
+          title,
+          textAlign: alignment,
+          style: TextStyle(
+            color: color, fontSize: size, fontWeight: FontWeight.bold));
+  }
+  return
+    Text(
+        title,
+        style: TextStyle(
+          color: color, fontSize: size));
+}
 ///

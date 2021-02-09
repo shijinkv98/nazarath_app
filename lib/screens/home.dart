@@ -377,6 +377,25 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
   }
   return "Success!";
 }
+Future<String>addtoCartReferesh(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":quantity,
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+   // ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
 Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
 
   Map body = {
@@ -393,6 +412,25 @@ Future<String>addtoCart(String slug,String store,BuildContext context,Widget wid
     //     context,
     //     MaterialPageRoute(
     //         builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":"0",
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
   }
   return "Success!";
 }
