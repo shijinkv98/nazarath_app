@@ -7,84 +7,91 @@ import 'cart.dart';
 
 class ReferScreen extends StatefulWidget {
   String title;
-  ReferScreen(String title)
-  {
-    this.title=title;
+  ReferScreen(String title) {
+    this.title = title;
   }
   @override
   _ReferScreenState createState() => new _ReferScreenState(title: title);
 }
+
 class _ReferScreenState extends State<ReferScreen> {
   String title;
-  _ReferScreenState({ this.title}) ;
+  _ReferScreenState({this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        title: SafeArea(
-          child: Padding(
-            padding:
-            const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-            child: ImageIcon(
-              AssetImage("assets/icons/nazarath_logo.png"),
-              size: appTabImageSize,
-            ),
-          ),
-        ),
         backgroundColor: colorPrimary,
-        elevation: 0,
+        centerTitle: false,
+        automaticallyImplyLeading: true,
+        title:  Text('Refer to Friend',style:TextStyle(fontSize:15,color: Colors.white),
+        ),
       ),
       backgroundColor: Colors.white,
-      body: getReferFriend(),
+      body: SingleChildScrollView(child: Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Column(
+          children: [
+            getReferFriend(),
+            getButton()
+          ],
+        ),
+      )),
     );
   }
 }
-Container getReferFriend()
-{
-  return Container(
-    child: Container(width: double.infinity,
-      child: Column(
 
+Widget getButton() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
+    child: Container(
+      width: double.infinity,
+      height: 40,
+      child: RaisedButton(
+        color: colorPrimary,
+        elevation: 0,
+        child: Text('Refer',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white)),
+        onPressed: () async {},
+      ),
+    ),
+  );
+}
+
+Container getReferFriend() {
+  return Container(
+    child: Container(
+      width: double.infinity,
+      child: Column(
         children: [
           getForms(),
-
-
         ],
       ),
-
     ),
   );
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-
 }
-Widget getForms(){
+
+Widget getForms() {
   return Container(
     width: double.infinity,
     child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
+      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 15),
       child: Column(
         children: [
-          mobileNumberField,
-
-          RaisedButton.icon(
-              onPressed: () async {},
-              elevation: 0,
-              color: colorPrimary,
-              hoverColor: colorPrimary,
-              // padding: EdgeInsets.only(left: 5, right: 5),
-              textColor: Colors.white,
-              label: Text(
-                'Refer',
-                style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              )),
-        ],
+          Padding(
+            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+            child: mobileNumberField,
+          ),
+         ],
       ),
     ),
   );
 }
+
 String email;
 final mobileNumberField = TextFormField(
   cursorColor: colorPrimary,
@@ -104,7 +111,8 @@ final mobileNumberField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Enter friend email id", hintStyle: TextStyle(color: textColorSecondary),
+    hintText: "Enter friend email id",
+    hintStyle: TextStyle(color: textColorSecondary),
     labelText: 'EMAIL',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
@@ -113,7 +121,6 @@ final mobileNumberField = TextFormField(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: colorPrimary),
     ),
-
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
@@ -157,7 +164,6 @@ final addressField = TextFormField(
       borderSide: BorderSide(color: colorPrimary),
     ),
 
-
     prefixIcon: new IconButton(
       icon: new Image.asset(
         'assets/icons/home.png',
@@ -199,7 +205,6 @@ final locationField = TextFormField(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: colorPrimary),
     ),
-
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
@@ -243,7 +248,6 @@ final dateField = TextFormField(
       borderSide: BorderSide(color: colorPrimary),
     ),
 
-
     prefixIcon: new IconButton(
       icon: new Image.asset(
         'assets/icons/calendar.png',
@@ -286,7 +290,6 @@ final timeField = TextFormField(
       borderSide: BorderSide(color: colorPrimary),
     ),
 
-
     prefixIcon: new IconButton(
       icon: new Image.asset(
         'assets/icons/time.png',
@@ -301,8 +304,7 @@ final timeField = TextFormField(
   ),
 );
 
-Container getTopContainer()
-{
+Container getTopContainer() {
   return Container(
     child: Column(
       children: [
@@ -313,23 +315,22 @@ Container getTopContainer()
                 height: 80,
                 decoration: BoxDecoration(
                   color: colorPrimary,
-                  borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(100.0),
+                      bottomLeft: Radius.circular(100.0)),
                 ),
               ),
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                 child: Container(
                     height: 100,
                     decoration: new BoxDecoration(
                         image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
-                        )
-                    )
-                ),
+                      image: new AssetImage("assets/icons/inner_banner.png"),
+                      fit: BoxFit.fill,
+                    ))),
               ),
             )
           ],
@@ -341,7 +342,9 @@ Container getTopContainer()
           child: Text(
             "How it works",
             style: TextStyle(
-                color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+                color: text_tilte_page,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(
@@ -350,5 +353,4 @@ Container getTopContainer()
       ],
     ),
   );
-
 }

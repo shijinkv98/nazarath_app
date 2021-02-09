@@ -20,27 +20,47 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: true,
-      //   title: SafeArea(
-      //     child: Padding(
-      //       padding:
-      //       const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-      //       child: ImageIcon(
-      //         AssetImage("assets/icons/nazarath_logo.png"),
-      //         size: appTabImageSize,
-      //       ),
-      //     ),
-      //   ),
-      //   backgroundColor: colorPrimary,
-      //   elevation: 0,
-      // ),
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+        centerTitle: false,
+        automaticallyImplyLeading: true,
+        title:  Text('Personal Information',style:TextStyle(fontSize:15,color: Colors.white),
+        ),
+      ),
       backgroundColor: Colors.white,
-      body: getPersonalInfo(),
+      body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Column(
+              children: [
+                getPersonalInfo(),
+                getButton()
+              ],
+            ),
+          )),
     );
   }
 }
+Widget getButton() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
+    child: Container(
+      width: double.infinity,
+      height: 40,
+      child: RaisedButton(
+        color: colorPrimary,
+        elevation: 0,
+        child: Text('Refer',
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white)),
+        onPressed: () async {},
+      ),
+    ),
+  );
+}
+
 Container getPersonalInfo()
 {
   return Container(
@@ -63,25 +83,23 @@ Widget getForms(){
   return Container(
     width: double.infinity,
     child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
+      padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
       child: Column(
         children: [
-          usernameField,
-          emailField,
-          phonenumberField,
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: usernameField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: emailField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: phonenumberField,
+          ),
 
-          RaisedButton.icon(
-              onPressed: () async {},
-              elevation: 0,
-              color: colorPrimary,
-              hoverColor: colorPrimary,
-              // padding: EdgeInsets.only(left: 5, right: 5),
-              textColor: Colors.white,
-              label: Text(
-                'Refer',
-                style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              )),
+
         ],
       ),
     ),

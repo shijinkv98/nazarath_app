@@ -20,24 +20,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: true,
-      //   title: SafeArea(
-      //     child: Padding(
-      //       padding:
-      //       const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-      //       child: ImageIcon(
-      //         AssetImage("assets/icons/nazarath_logo.png"),
-      //         size: appTabImageSize,
-      //       ),
-      //     ),
-      //   ),
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+        centerTitle: false,
+        automaticallyImplyLeading: true,
+        title:  Text('Change Password',style:TextStyle(fontSize:15,color: Colors.white),
+          ),
+        ),
       //   backgroundColor: colorPrimary,
       //   elevation: 0,
       // ),
       backgroundColor: Colors.white,
-      body: getPassword(),
+      body: SingleChildScrollView(child: getPassword()),
     );
   }
 }
@@ -48,7 +42,17 @@ Container getPassword()
       child: Column(
 
         children: [
-          getForms(),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Column(
+              children: [
+                getForms(),
+                getForgotPasssword(),
+                getButton()
+
+              ],
+            ),
+          ),
 
 
         ],
@@ -63,25 +67,54 @@ Widget getForms(){
   return Container(
     width: double.infinity,
     child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
+      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 15),
       child: Column(
         children: [
-          currentpasswordField,
-          newpasswordField,
-          confirmpasswordField,
+          Padding(
+            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+            child: currentpasswordField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+            child: newpasswordField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+            child: confirmpasswordField,
+          ),
 
-          RaisedButton.icon(
-              onPressed: () async {},
-              elevation: 0,
-              color: colorPrimary,
-              hoverColor: colorPrimary,
-              // padding: EdgeInsets.only(left: 5, right: 5),
-              textColor: Colors.white,
-              label: Text(
-                'Update',
-                style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              )),
+        ],
+      ),
+    ),
+  );
+}
+Widget getButton(){
+  return Padding(
+    padding: const EdgeInsets.only(top: 70,left: 25,right: 25),
+    child: Container(
+      width: double.infinity,
+      height: 40,
+      child: RaisedButton(
+
+        color: colorPrimary,
+        elevation: 0,
+        child: Text('Update', style: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
+        onPressed: () async {},
+      ),
+    ),
+  );
+}
+Container getForgotPasssword(){
+  return Container(
+    child: Padding(
+      padding: const EdgeInsets.only(right: 30),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+
+        children: [
+          Text('Forgot your password',style: TextStyle(fontSize: 12,color: textColor),),
         ],
       ),
     ),
@@ -191,7 +224,7 @@ final confirmpasswordField = TextFormField(
   keyboardType: TextInputType.visiblePassword,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+    // contentPadding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
     hintText: "Re-enter the new password", hintStyle: TextStyle(color: textColorSecondary),
     labelText: 'CONFIRM PASSWORD',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
