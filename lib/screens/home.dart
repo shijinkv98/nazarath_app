@@ -220,14 +220,14 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
           Container(
             padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
             color: Color(0xFFe5eeef),
-            height: 210,
+            height: 170,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: featured.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 5),
                     child: GestureDetector(
                       onTap: (){
                         Navigator.push(
@@ -236,7 +236,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                         );
                       },
                       child: Container(
-                        width: 160,
+                        width: 120,
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -246,16 +246,17 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                 bottomLeft: Radius.circular(10.0)),
                           ),
                           color: Colors.white,
-                          elevation: 2,
+
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 5, left: 5, right: 5),
+                                      top: 5, left: 2, right: 2),
                                   child: Container(
-                                    height: 70,
+
+                                    height: 50,
                                     child: Image(
                                       image: new NetworkImage(
                                           '$productThumbUrl${featured[index].image}'),
@@ -266,13 +267,13 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 5, left: 10, right: 6),
+                                        top: 0, left: 10, right: 6),
                                     child: Text(
                                       featured[index].name,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12),
+                                          fontSize: 9),
                                     ),
                                   ),
                                 ),
@@ -281,54 +282,44 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                   mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      height: 40,
-                                      width: 35,
-                                      alignment: Alignment.bottomLeft,
-                                      decoration: BoxDecoration(
-                                          color: colorPrimary,
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10))),
-                                      child: Center(
-                                          child: IconButton(
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                          size: 22,
-                                        ),
-                                        onPressed: () {
-                                          // Do something
-                                          addtoCart(featured[index].slug, featured[index].store, context, widget,"1");
-                                        },
-                                      )),
+                                        height: 30,
+                                        alignment: Alignment.bottomLeft,
+                                        decoration: BoxDecoration(
+                                            color: colorPrimary,
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(3),
+                                                bottomLeft: Radius.circular(5))),
+                                        child: Center(
+                                            widthFactor: 0.5,
+                                            child: new Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  new IconButton(
+                                                      icon: Icon(
+                                                        Icons.add,
+                                                        color: Colors.white,
+                                                        size: 10,
+
+                                                      ),
+                                                      onPressed: (){
+                                                        addtoCart(featured[index].slug, featured[index].store, context, widget,"1");}
+                                                  ),
+                                                ]
+                                            ))
                                     ),
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Container(
-                                            alignment: Alignment.topRight,
-                                            child: InkWell(
-                                              onTap:(){
-                                                addtoWishList(featured[index].slug, featured[index].store, context, widget);
-                                              } ,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 8),
-                                                child: ImageIcon(
-                                                  AssetImage(
-                                                      'assets/icons/favourite.png'),
-                                                  size: 20,
-                                                  color: colorPrimary,
-                                                ),
-                                              ),
-                                            )),
+                                          //alignment: Alignment.topRight,
+                                            child: getWishListIcon(false)),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                            left: 5,
-                                            right: 10,
-                                            top: 3,
-                                            bottom: 8
+                                              left: 0,
+                                              right: 5,
+                                              top: 3,
+                                              bottom: 8
                                           ),
                                           child: Row(
                                             children: [
@@ -336,15 +327,15 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                                 '${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',
                                                 style: TextStyle(
                                                     color: Colors.red,
-                                                    fontSize: 10,
+                                                    fontSize: 7,
                                                     fontWeight: FontWeight.bold),
                                               ),
-                                              SizedBox(width: 5),
+                                              SizedBox(width: 2),
                                               Text(
                                                 '${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
-                                                    fontSize: 8,
+                                                    fontSize: 7,
                                                     decoration: TextDecoration
                                                         .lineThrough),
                                               ),
@@ -356,7 +347,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                   ],
                                 )
                               ]),
-                        ),
+                        )
                       ),
                     ),
                   );
