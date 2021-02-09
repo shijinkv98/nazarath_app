@@ -5,6 +5,7 @@ import 'package:nazarath_app/helper/common.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/LogoutResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
@@ -12,6 +13,7 @@ import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home.dart';
 import 'news.dart';
@@ -551,6 +553,21 @@ Widget _individualTab4(String imagePath) {
       ));
 }
 
+Future<void> logout(BuildContext context)
+async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  await preferences.clear();
+  LogoutResponse logoutResponse = await ApiCall()
+      .execute<LogoutResponse, Null>("logout/en", null);
+    if(logoutResponse!=null)
+      {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => Login()));
+      }
+
+}
 Widget _individualTab5(String imagePath) {
   return Container(
       height: 70,

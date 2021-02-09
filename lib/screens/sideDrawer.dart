@@ -237,7 +237,9 @@ class SideDrawer extends StatelessWidget{
                           SizedBox(width: 10),
                           Text('Logout',style:TextStyle(color:Colors.white),)
                         ],
-                      ), onPressed: () {},
+                      ), onPressed: () {
+                        logout(context);
+                    },
                     ),
                   )
                 ]),

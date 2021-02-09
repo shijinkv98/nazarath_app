@@ -566,6 +566,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
     ),
   );
 }
+
 Container getMainSlider(List<Banners> banners) {
   return Container(
       height: 150,
