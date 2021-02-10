@@ -39,7 +39,7 @@ class HomePage extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor:Color(0xFFe5eeef),
+        backgroundColor:home_bg,
         // drawer: SideDrawer(),
         body: FutureBuilder<HomeResponse>(
           future: ApiCall().execute<HomeResponse, Null>('home/en', null),
@@ -82,7 +82,8 @@ SingleChildScrollView getFullView(
                 child: Container(
                     height: 180,
                     // width: 320,
-                      child: getOfferSlider(homeResponse.offers,180),
+                      child: //getBannerSlider(homeResponse.banners,180)
+                      getOfferSlider(homeResponse.offers,180),
                     // decoration: new BoxDecoration(
                     //     image: new DecorationImage(
                     //   image: new AssetImage("assets/icons/homebanner.png"),
@@ -138,6 +139,8 @@ Container getCategory(List<Categories> categories) {
   return Container(
     child: Container(
       width: double.infinity,
+      color: home_bg,
+      padding: EdgeInsets.only(top:10),
       child: Column(
         children: [
           Text("Categories",
@@ -147,7 +150,7 @@ Container getCategory(List<Categories> categories) {
                   fontWeight: FontWeight.bold)),
           Container(
             padding: EdgeInsets.only(left: 5, right: 5),
-            color: Colors.white,
+            color: home_bg,
             height: 120,
             width: double.infinity,
             child: ListView.builder(
@@ -206,7 +209,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
   return Container(
     child: Container(
       width: double.infinity,
-      color: Color(0xFFe5eeef),
+      color: featured_bg,
       child: Column(
         children: [
           Padding(
@@ -285,7 +288,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                                         height: 30,
                                         alignment: Alignment.bottomLeft,
                                         decoration: BoxDecoration(
-                                            color: colorPrimary,
+                                            color: button_cart_bg,
                                             borderRadius: BorderRadius.only(
                                                 topRight: Radius.circular(3),
                                                 bottomLeft: Radius.circular(5))),
@@ -467,7 +470,7 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
   return Container(
     child: Container(
       width: double.infinity,
-      color: Color(0xFFe5eeef),
+      color: featured_bg,
       child: Column(
         children: [
           Padding(
@@ -707,7 +710,7 @@ Widget getOfferSlider(List<Offers> offers,double height) {
       options: CarouselOptions(
         enlargeCenterPage: true,
         autoPlay: true,
-        height: 300,
+
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
@@ -751,11 +754,11 @@ Widget getImageBanner(String url)
 Widget getImageOffer(String url)
 {
   return Container(
-color: colorPrimary,
+
     child: FadeInImage.assetNetwork(
       placeholder: 'assets/images/no_image.png',
       image: '$offerThumbUrl$url',
-      fit: BoxFit.fill,
+      fit: BoxFit.fitWidth,
 
     ) ,
   );

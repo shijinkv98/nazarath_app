@@ -26,7 +26,7 @@ class SideDrawer extends StatelessWidget{
 
           Expanded(
               child: Container(
-                color: colorPrimary,
+                color: slider_bg,
                 child: ListView(children: [
                   Expanded(
                       child: Container(
@@ -95,7 +95,7 @@ class SideDrawer extends StatelessWidget{
                   SizedBox(height: 20,),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -117,7 +117,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -135,7 +135,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -153,7 +153,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -171,7 +171,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -189,7 +189,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title: FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -208,7 +208,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title:FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -226,7 +226,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title:FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -246,7 +246,7 @@ class SideDrawer extends StatelessWidget{
                   ),
                   ListTile(
                     title:FlatButton(
-                      color: colorPrimary,
+                      color: slider_bg,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[

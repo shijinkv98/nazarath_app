@@ -20,22 +20,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: true,
-      //   title: SafeArea(
-      //     child: Padding(
-      //       padding:
-      //       const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-      //       child: ImageIcon(
-      //         AssetImage("assets/icons/nazarath_logo.png"),
-      //         size: appTabImageSize,
-      //       ),
-      //     ),
-      //   ),
-      //   backgroundColor: colorPrimary,
-      //   elevation: 0,
-      // ),
+      appBar: AppBar(
+        title: Text("Edit Address",style: TextStyle(
+            color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold)),
+        backgroundColor:colorPrimary ,
+      ),
       backgroundColor: Colors.white,
       body: getEditAdress(),
     );
@@ -44,6 +33,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 Container getEditAdress()
 {
   return Container(
+    padding: EdgeInsets.only(top:15),
     child: Container(width: double.infinity,
       child: Column(
 
@@ -70,14 +60,14 @@ Widget getForms(){
           stateField,
           postalField,
 
-          RaisedButton.icon(
-              onPressed: () async {},
+          RaisedButton(
+              onPressed: ()  {},
               elevation: 0,
               color: colorPrimary,
               hoverColor: colorPrimary,
               // padding: EdgeInsets.only(left: 5, right: 5),
               textColor: Colors.white,
-              label: Text(
+              child: Text(
                 'Update',
                 style: TextStyle(
                     fontSize: 12, fontWeight: FontWeight.w400),
@@ -123,7 +113,7 @@ final addressField = TextFormField(
         width: register_icon_size,
         height: register_icon_size,
       ),
-      onPressed: null,
+      onPressed: (){},
       color: colorPrimary,
     ),
 
@@ -166,7 +156,7 @@ final stateField = TextFormField(
         width: register_icon_size,
         height: register_icon_size,
       ),
-      onPressed: null,
+      onPressed: (){},
       color: colorPrimary,
     ),
 
@@ -209,7 +199,7 @@ final postalField = TextFormField(
         width: register_icon_size,
         height: register_icon_size,
       ),
-      onPressed: null,
+      onPressed: (){},
       color: colorPrimary,
     ),
 

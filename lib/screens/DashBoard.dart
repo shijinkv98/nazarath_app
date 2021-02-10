@@ -414,7 +414,7 @@ Container getBottomNav(BuildContext context)
 {
 
   return Container(
-    color: colorPrimary,
+    color: bottom_nav_bg,
     child: TabBar(
       tabs: [
         _individualTab('assets/icons/home_white.png'),
@@ -444,7 +444,7 @@ Widget _individualTab(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: colorPrimary, width: 0, style: BorderStyle.solid),
+              color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
@@ -481,7 +481,7 @@ Widget _individualTab2(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: colorPrimary, width: 0, style: BorderStyle.solid),
+              color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
@@ -517,7 +517,7 @@ Widget _individualTab3(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: colorPrimary, width: 0, style: BorderStyle.solid),
+              color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
@@ -554,7 +554,7 @@ Widget _individualTab4(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: colorPrimary, width: 0, style: BorderStyle.solid),
+              color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(
@@ -610,7 +610,7 @@ Widget _individualTab5(String imagePath) {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: colorPrimary, width: 0, style: BorderStyle.solid),
+              color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
         ),
       ),
       child: Stack(

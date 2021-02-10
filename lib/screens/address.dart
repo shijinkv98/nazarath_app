@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
+import 'package:nazarath_app/screens/editaddress.dart';
 
 import 'DashBoard.dart';
 
@@ -40,7 +41,7 @@ class _AddressState extends State<AddressScreen> {
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return getEmptyContainer(context,"Address is empty","empty_cart");
+            return getEmptyContainerAddress(context,"Address is empty","empty_cart");
           } else {
             return progressBar;
           }
@@ -52,11 +53,13 @@ class _AddressState extends State<AddressScreen> {
 
 
 }
-GestureDetector updateButton(BuildContext context)
+GestureDetector updateButton(BuildContext context,String title)
 {
   return GestureDetector(
       onTap: () {
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EditAddressScreen("")),);
       },
       child: Container(
         width: double.infinity,
@@ -70,7 +73,7 @@ GestureDetector updateButton(BuildContext context)
           mainAxisSize: MainAxisSize.min,
           children: [
            Center(child:  Text(
-             "Update",
+             title,
              style: TextStyle(
                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
             )
@@ -93,7 +96,7 @@ Widget getAdressFull(List<Addresses> adresses, BuildContext context, AddressScre
           SizedBox(
             height: 10,
           ),
-          updateButton(context)
+          updateButton(context,"Update")
         ],
       ),
 
@@ -311,25 +314,7 @@ Container getEmptyContainerAddress(BuildContext context,String emptyText,String 
             SizedBox(
               height: 10,
             ),
-            Material(
-                elevation: 0.0,
-                borderRadius: BorderRadius.circular(5.0),
-                color: colorPrimary,
-                child: MaterialButton(
-                  minWidth: 100,
-                  padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DashBoard()),);
-                  },
-
-                  child: Text("Continue Shopping",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
-                )
-            ),
+            updateButton(context, "Add Address")
           ],),
       )
   );

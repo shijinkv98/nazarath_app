@@ -1,5 +1,5 @@
 class UserData {
-  String id, mobile, name, email, locationDetails, token;
+  String id, mobile, name, email, locationDetails, token,guest_id;
   int status, otpVerificationStatus, emailVerificationStatus;
   String otp,referral_code;
   UserData()
@@ -11,7 +11,7 @@ class UserData {
     status =0;
     token = "";
     referral_code = "";
-
+    guest_id="";
     otpVerificationStatus = 0;
     emailVerificationStatus = 0;
   }
@@ -23,7 +23,13 @@ class UserData {
     status = json['status'];
     token = json['token'];
     referral_code = json['token'];
-
+    guest_id= json['guest_id'];
+    if(guest_id!="")
+      {
+        name="Guest";
+      }
+    // if(name.isEmpty)
+    //   name="USER";
     otpVerificationStatus = json['otpverificationstatus'];
      emailVerificationStatus = json['emailverificationstatus'];
   }

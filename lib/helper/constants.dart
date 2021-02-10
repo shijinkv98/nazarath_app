@@ -6,12 +6,18 @@ import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
-const Color colorPrimary = Color(0xFF45ccc1);
+const Color colorPrimary = const Color.fromRGBO(72, 212, 201, 1.0);
+const Color bottom_nav_bg = const Color.fromRGBO(68, 204, 192, 1.0);
+const Color slider_bg = const Color.fromRGBO(55, 192, 182, 1.0);
+const Color button_cart_bg = const Color.fromRGBO(77, 219, 207, 1.0);
 const Color colorRed =const Color.fromRGBO(239, 89, 30, 1.0);
-const Color product_bg =const Color.fromRGBO(233, 233, 233, 1.0);
+const Color product_bg =const Color.fromRGBO(245, 245, 245, 1.0);
+const Color home_bg =const Color.fromRGBO(255, 255, 255, 1.0);
+const Color featured_bg =const Color.fromRGBO(228, 238, 239, 1.0);
 const Color text_tilte_page =const Color.fromRGBO(108, 108, 108, 1.0);
 const Color item_text_gray =const Color.fromRGBO(174, 174, 174, 1.0);
 const Color item_text_gray_light =const Color.fromRGBO(201, 201, 201, 1.0);
+
 
 const Color textColor = Color(0xFF616161);
 const Color textColorSecondary = Color(0xFF999999);
