@@ -50,7 +50,7 @@ Widget getButton() {
       child: RaisedButton(
         color: colorPrimary,
         elevation: 0,
-        child: Text('Refer',
+        child: Text('Update',
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
