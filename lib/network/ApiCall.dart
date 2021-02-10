@@ -130,10 +130,14 @@ class ApiCall{
     } else {
       showToast(jsonResponse['message'] ?? "Something went wrong!");
       if (success == '2' && context != null) {
-        await saveUser("");
-        Navigator.of(context).pushReplacementNamed('/login');
-      } else if (success == '3') {
-        logout(context);
+        //await saveUser("");
+        gotoLogin(context);
+        //Navigator.of(context).pushReplacementNamed('/login');
+      }
+
+      else if (success == '3') {
+       // await saveUser("");
+        gotoLogin(context);
         // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
         //     false;
         return fromJson<T, K>(jsonResponse);

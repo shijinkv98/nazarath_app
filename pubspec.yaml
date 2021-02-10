@@ -48,6 +48,7 @@ dependencies:
   auth_buttons: ^0.0.4
   uuid: ^2.2.2
   webview_flutter: ^1.0.7
+  flutter_signin_button: ^1.1.0
   location_permissions: ^3.0.0+1
   file_picker: ^2.1.6
   #  camera: ^0.6.4+5
@@ -137,6 +138,7 @@ flutter:
     - assets/icons/house.png
     - assets/icons/calendar.png
     - assets/icons/mailicon.png
+    - assets/icons/google.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

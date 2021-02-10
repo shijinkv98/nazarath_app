@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/screens/register/register.dart';
 
 import 'DashBoard.dart';
 import 'home.dart';
@@ -18,7 +20,7 @@ import 'home.dart';
 
 class Login extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 14.0);
+  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 12);
   // CheckBoxNotifier _checkBoxNotifier;
 
   @override
@@ -42,10 +44,10 @@ class Login extends StatelessWidget {
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
         labelText: 'USERNAME',
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey[200]),
           ),
@@ -57,8 +59,8 @@ class Login extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/user.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -93,10 +95,10 @@ class Login extends StatelessWidget {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "Password", hintStyle: TextStyle(color: textColorSecondary),
         labelText: "PASSWORD",
-        labelStyle: TextStyle(fontSize: 12, color: textColor),
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
         ),
@@ -107,8 +109,8 @@ class Login extends StatelessWidget {
         prefixIcon: new IconButton(
           icon: new Image.asset(
             'assets/icons/password.png',
-            width: 20.0,
-            height: 20.0,
+            width: register_icon_size,
+            height: register_icon_size,
           ),
           onPressed: null,
           color: colorPrimary,
@@ -124,7 +126,7 @@ class Login extends StatelessWidget {
       color: colorPrimary,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
         onPressed: () {
 
           if (_formKey.currentState.validate()) {
@@ -137,7 +139,7 @@ class Login extends StatelessWidget {
         child: Text("Sign In",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                fontSize: 18,
+                fontSize: 16,
                 color: Colors.white,
                 fontWeight: FontWeight.normal)),
       ),
@@ -160,11 +162,15 @@ class Login extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
+              height: 40,
+              color: colorPrimary,
+            ),
+            Container(
               color: colorPrimary,
               child: ImageIcon(
                 AssetImage("assets/icons/nazarath_logo.png"),
                 color: Colors.white,
-                size: 80,
+                size: 70,
               ),
             ),
             Container(
@@ -172,13 +178,16 @@ class Login extends StatelessWidget {
               color: colorPrimary,
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 110),
+                margin: EdgeInsets.only(top: 50),
                 height: 50,
+
                 decoration: BoxDecoration(
                   color: Colors.white,
+
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(65.0),
                       topRight: Radius.circular(65.0)),
+
                 ),
               ),
             ),
@@ -193,11 +202,11 @@ class Login extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Create Account",
+                            "Login",
                             style: TextStyle(
                                 color: textColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 18),
                           ),
                         ),
                         SizedBox(
@@ -226,7 +235,7 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 30,
                         ),
 
                         loginButon,
@@ -234,20 +243,60 @@ class Login extends StatelessWidget {
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => DashBoard()),);
+                            guestLogin(context);
                           },
 
                           child: Text("Guest",
                               textAlign: TextAlign.center,
                               style: style.copyWith(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                                  fontSize: 14,
+                                  color: colorPrimary,
+                                  decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.normal)),
                         ),
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Don't have an account?",
+                                style: style.copyWith(
+                                    fontSize: 14,
+                                    color: item_text_gray_light,
+                                    fontWeight: FontWeight.normal)),
+                            TextButton(onPressed: (){
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) => Register()));
+                            }, child: Text("Creat an Account", style: style.copyWith(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold)))
+                            // MaterialButton(
+                            //   minWidth: MediaQuery.of(context).size.width,
+                            //   onPressed: () {
 
-
+                            //   },
+                            //
+                            //   child: Text("  Creat an Account?",
+                            //       textAlign: TextAlign.center,
+                            //       style: style.copyWith(
+                            //           fontSize: 14,
+                            //           color: Colors.black,
+                            //           fontWeight: FontWeight.bold)),
+                            // )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Or Sign in with",
+                            textAlign: TextAlign.center,
+                            style: style.copyWith(
+                                fontSize: 12,color: item_text_gray)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        getSocialMediaContainer(context)
                       ],
                     )
 
@@ -261,6 +310,46 @@ class Login extends StatelessWidget {
       ),
     );
     
+  }
+  Widget getSocialMediaContainer(BuildContext context)
+  {
+        return Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            MaterialButton(
+            minWidth:  35.0,
+            height: 35,
+            elevation: 2.0,
+            padding: EdgeInsets.all(0),
+            color:Colors.white,
+            child:Image.asset('assets/icons/google.png',width: 25,),
+            onPressed: (){
+
+            },
+
+            shape: ButtonTheme.of(context).shape,
+            ),
+              // SignInButtonBuilder(
+              //   icon:  ImageIcon( AssetImage('icons/google.png')),//new Image.asset('icons/google.png'),
+              //   text: "",
+              //   backgroundColor: Colors.white,
+              //   mini: true,
+              //   onPressed: () {},
+              // ),
+              SignInButton(
+                Buttons.Facebook,
+                mini: true,
+                onPressed: () {},
+              ),
+              SignInButton(
+                Buttons.Twitter,
+                mini: true,
+                onPressed: () {},
+              ),
+            ],
+          ),
+        );
   }
   Future<void> guestLogin(BuildContext context)
   async {

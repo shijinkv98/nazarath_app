@@ -44,6 +44,7 @@ class _DashBoard extends State<DashBoard> {
   }
   Future<void> getHomeData(BuildContext context)
   async {
+    ApiCall().context=context;
     customer=await ApiCall().getUser();
 
     // Map body = {
@@ -585,18 +586,22 @@ Widget _individualTab4(String imagePath) {
 
 Future<void> logout(BuildContext context)
 async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  await preferences.clear();
+
   LogoutResponse logoutResponse = await ApiCall()
       .execute<LogoutResponse, Null>("logout/en", null);
     if(logoutResponse!=null)
       {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => Login()));
+        gotoLogin(context);
       }
 
+}
+Future<void> gotoLogin(BuildContext context)
+async {
+  await ApiCall().saveUser("");
+  Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Login()));
 }
 Widget _individualTab5(String imagePath) {
   return Container(
