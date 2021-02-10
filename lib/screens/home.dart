@@ -39,7 +39,7 @@ class HomePage extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor:Color(0xFFe5eeef),
         // drawer: SideDrawer(),
         body: FutureBuilder<HomeResponse>(
           future: ApiCall().execute<HomeResponse, Null>('home/en', null),
@@ -82,7 +82,7 @@ SingleChildScrollView getFullView(
                 child: Container(
                     height: 180,
                     // width: 320,
-                      child: getBannerSlider(homeResponse.banners,180),
+                      child: getOfferSlider(homeResponse.offers,180),
                     // decoration: new BoxDecoration(
                     //     image: new DecorationImage(
                     //   image: new AssetImage("assets/icons/homebanner.png"),
@@ -634,8 +634,10 @@ Container getMainSlider(List<Banners> banners) {
 Widget getMiddleSlider(List<Banners> banners) {
   return
     CarouselSlider(
-      options: CarouselOptions(height: 150.0,
-        enlargeCenterPage: true,
+      options: CarouselOptions(
+        // height: 150.0,
+        // enlargeCenterPage: true,
+        disableCenter: true,
         autoPlay: true,
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
@@ -657,7 +659,7 @@ Widget getBannerSlider(List<Banners> banners,double height) {
   return
     CarouselSlider(
       options: CarouselOptions(
-        height: 180.0,
+        // height: 160.0,
         enlargeCenterPage: true,
         autoPlay: true,
         aspectRatio: 16 / 9,
@@ -681,7 +683,7 @@ Widget getBannerSlider(List<Banners> banners,double height) {
 Widget getSlider(List<HomeSlider> sliders,double height) {
   return
     CarouselSlider(
-      options: CarouselOptions(height: height,
+      options: CarouselOptions(
         enlargeCenterPage: true,
         autoPlay: true,
         aspectRatio: 16 / 9,
@@ -702,9 +704,10 @@ Widget getSlider(List<HomeSlider> sliders,double height) {
 Widget getOfferSlider(List<Offers> offers,double height) {
   return
     CarouselSlider(
-      options: CarouselOptions(height:  height,
+      options: CarouselOptions(
         enlargeCenterPage: true,
         autoPlay: true,
+        height: 300,
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
@@ -725,9 +728,11 @@ Widget getOfferSlider(List<Offers> offers,double height) {
 Widget getImage(String url)
 {
   return Container(
+    color: Color(0xFFe5eeef),
     child: FadeInImage.assetNetwork(
       placeholder: 'assets/images/no_image.png',
       image: '$bannerThumbUrl$url',
+
 
     ) ,
   );
@@ -735,6 +740,7 @@ Widget getImage(String url)
 Widget getImageBanner(String url)
 {
   return Container(
+    color: Color(0xFFe5eeef),
     child: FadeInImage.assetNetwork(
       placeholder: 'assets/images/no_image.png',
       image: '$bannerThumbUrl$url',
@@ -745,9 +751,11 @@ Widget getImageBanner(String url)
 Widget getImageOffer(String url)
 {
   return Container(
+color: colorPrimary,
     child: FadeInImage.assetNetwork(
       placeholder: 'assets/images/no_image.png',
       image: '$offerThumbUrl$url',
+      fit: BoxFit.fill,
 
     ) ,
   );

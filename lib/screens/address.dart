@@ -28,7 +28,7 @@ class _AddressState extends State<AddressScreen> {
         backgroundColor:colorPrimary ,
       )
       ,
-      backgroundColor: product_bg,
+      backgroundColor: Colors.white,
       body: FutureBuilder<AddressResponse>(
         future: ApiCall()
             .execute<AddressResponse, Null>('customer-addresses/en', null),
@@ -113,25 +113,174 @@ Widget _itemsBuilder(Addresses address,BuildContext context,Widget widget) {
         onTap: () {
 
         },
-            child: Container(
-            margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
-              padding:const EdgeInsets.only(bottom: 15.0,left: 10.0,top:15,right:20),
-              decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(0),
-              color: Colors.white,
-              boxShadow: [
-              BoxShadow(
-              color: Colors.grey,
-              blurRadius: 3.0,
-              ),
+            child: Column(
+              children: [
+                Container(
+                // margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
+                  padding:const EdgeInsets.only(bottom: 15.0,left: 10.0,top:15,right:20),
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: Colors.white,
+                  boxShadow: [
+
+                  ],
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(address.name,
+                                        style: TextStyle(
+                                            color: colorPrimary,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold)),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: SizedBox(
+                                          height: 10,
+                                          child: VerticalDivider(width: 1,color: Colors.black,)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text(address.mobile,
+                                          style: TextStyle(
+                                              color: colorPrimary,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 30,
+                                  height: 30,
+
+                                  child:Checkbox(
+                                    value: true,
+                                    activeColor: colorPrimary,
+                                    focusColor: colorPrimary,
+                                    onChanged: (value) {
+                                      // setState(() {
+                                      //   _value = value;
+                                      // });
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                 address.address,
+                                  style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15,bottom: 20),
+                                  child: Container(
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(2.0),
+                                          bottomLeft: Radius.circular(2.0),
+                                          topRight: Radius.circular(2.0),
+                                          topLeft: Radius.circular(2.0)),
+                                    ),
+                                    child: RaisedButton.icon(
+                                        onPressed: ()  {
+
+
+                                        },
+                                        elevation: 0,
+                                        color: Colors.white,
+                                        hoverColor: colorPrimary,
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.black,
+                                          size: 18,
+                                        ),
+                                        // padding: EdgeInsets.only(left: 5, right: 5),
+                                        textColor: Colors.black,
+                                        label: Text(
+                                          'Edit',
+                                          style: TextStyle(
+                                              fontSize: 12, fontWeight: FontWeight.w400),
+                                        )),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15,bottom: 20, left: 10),
+                                  child: Container(
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(2.0),
+                                          bottomLeft: Radius.circular(2.0),
+                                          topRight: Radius.circular(2.0),
+                                          topLeft: Radius.circular(2.0)),
+                                    ),
+                                    child: RaisedButton.icon(
+                                        onPressed: () {
+                                          // String phone ='+916238839396'
+                                          //     // widget.orderItems.orderData.shippingPhone
+                                          // ;
+                                          // if (phone != null && phone.trim().isNotEmpty) {
+                                          //   phone = 'tel:$phone';
+                                          //   if (await canLaunch(phone)) {
+                                          //     await launch(phone);
+                                          //   }
+                                          // }
+                                        },
+                                        elevation: 0,
+                                        color: Colors.white,
+                                        hoverColor: colorPrimary,
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.black,
+                                          size: 18,
+                                        ),
+                                        // padding: EdgeInsets.only(left: 5, right: 5),
+                                        textColor: Colors.black,
+                                        label: Text(
+                                          'Delete',
+                                          style: TextStyle(
+                                              fontSize: 12, fontWeight: FontWeight.w400),
+                                        )),
+                                  ),
+
+                                ),
+                              ],
+                            ),
+
+                          ],
+                        ),
+
+                      ),
+
+                    ),
+
+                  ),
+                ),
+                Divider(thickness: 1,)
+
               ],
-              ),
-              child: Column(
-                children: [
-                  Text(address.address,style: TextStyle(
-                      color: Colors.black26,fontSize: 12)),
-                ],
-              ),
             )
       );
 
