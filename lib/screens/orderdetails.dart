@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
@@ -9,6 +10,7 @@ import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import 'cart.dart';
 import 'notification.dart';
 // void main() {
 //   runApp(OrderDetails(
@@ -170,7 +172,9 @@ Widget customScrollView(BuildContext context,Widget widget,Data response)
       ),
       SliverToBoxAdapter(
           child: getDeliveryPanel(response,context,widget)
-      )
+      ),
+      SliverToBoxAdapter(child: getOrderSummaryDetails(context, widget, response)),
+
     ],
   );
 }
@@ -223,10 +227,19 @@ Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
           ),
         ),
         getAllButton(context, widget, orderData),
+        getProductReview(context, widget, orderData),
         getAdress("Delivery Address",orderData.billingAddress,orderData.billingName,orderData.billingPhone),
-        Divider(thickness: 1,),
+        Container(
+          color: item_text_gray,
+          height:1,
+          width:double.infinity
+        ),
         getAdress("Shipping Address",orderData.shippingAddress,orderData.shippingName,orderData.shippingPhone),
-        Divider(thickness: 1,),
+        Container(
+            color: item_text_gray,
+            height:1,
+            width:double.infinity
+        ),
 
 
       ],
@@ -235,9 +248,11 @@ Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
 }
 Widget getAdress(String title,String address,String name,String mobile)
 {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, left: 20),
+  return Container(
+    color: product_bg,
+    padding: const EdgeInsets.only(top: 10, left: 20,bottom: 10),
     child: Container(
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,19 +305,51 @@ Widget getAdress(String title,String address,String name,String mobile)
     ),
   );
 }
+Widget getOrderSummaryDetails(BuildContext context,Widget widget,Data orderData)
+{
+  return Container(
+    color: Colors.white,
+    padding: EdgeInsets.only(bottom: 40,top:10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.only(left:10),
+          child: Text(
+            "Order Summary",
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        getTextContainer("Sub Total", '${"AED  "}${orderData.orderNetTotalAmount}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+        getTextContainer("Shipping", '${"AED "}${orderData.orderShippingCharge}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+        getTextContainer("Total", '${"AED "}${orderData.orderTotalAmount}', "bold", text_tilte_page, colorRed, "title")
+      ],
+
+    ),
+  );
+}
 Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
 {
   return Container(
 
     decoration: BoxDecoration(
 
-        color: product_bg,
+        color: tab_bg,
         border: Border.all( color: item_text_gray,width: 1),
 
     ),
 
     child: Column(
-      
+
       children: [
         Container(
 
@@ -327,6 +374,70 @@ Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
         ),
       ],
     ),
+  );
+}
+Widget getProductReview(BuildContext context,Widget widget, Data orderdata)
+{
+  return GestureDetector(
+    onTap: (){
+
+    },
+    child: Container(
+
+      decoration: BoxDecoration(
+        color: product_bg,
+      ),
+
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Rate Product",
+                    textAlign: TextAlign.start,
+                    style: new TextStyle(
+                        color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
+                  ),
+                  getStarRating(3.5)
+                ],
+              ),
+              getButtonDelivery(context, widget, 0, "Return", "assets/icons/cart.png", orderdata),
+             // getSa,
+            ],
+          ),
+          Divider(thickness: 1,)
+        ],
+      ),
+    ),
+  );
+}
+Widget getStarRating(double rating) {
+  return Container(
+    height: 10,
+    child: RatingBar(
+        initialRating: rating,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemSize: 15,
+        ratingWidget: RatingWidget(
+            full: Icon(Icons.star, color: colorPrimary),
+            half: Icon(
+              Icons.star_half,
+              color: colorPrimary,
+            ),
+            empty: Icon(
+              Icons.star_outline,
+              color: colorPrimary,
+            )),
+        onRatingUpdate: (value) {
+          // setState(() {
+          //   _ratingValue = value;
+          // });
+        }),
   );
 }
 Widget getButtonDelivery(BuildContext context,Widget widget,int type,String title,String icon,Data orderdata)

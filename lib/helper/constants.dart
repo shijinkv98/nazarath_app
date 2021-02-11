@@ -12,6 +12,7 @@ const Color slider_bg = const Color.fromRGBO(55, 192, 182, 1.0);
 const Color button_cart_bg = const Color.fromRGBO(77, 219, 207, 1.0);
 const Color colorRed =const Color.fromRGBO(239, 89, 30, 1.0);
 const Color product_bg =const Color.fromRGBO(245, 245, 245, 1.0);
+const Color tab_bg =const Color.fromRGBO(239, 239, 239, 1.0);
 const Color home_bg =const Color.fromRGBO(255, 255, 255, 1.0);
 const Color featured_bg =const Color.fromRGBO(228, 238, 239, 1.0);
 const Color text_tilte_page =const Color.fromRGBO(108, 108, 108, 1.0);
