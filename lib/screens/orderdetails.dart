@@ -199,7 +199,7 @@ Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
           child: Row(
             children: [
               Image(
-                image: new AssetImage("assets/icons/cart.png"),
+                image: new AssetImage("assets/icons/delivery_icon.png"),
                 width: 20,
                 height: 20,
               ),
@@ -329,9 +329,9 @@ Widget getOrderSummaryDetails(BuildContext context,Widget widget,Data orderData)
         SizedBox(
           height: 5,
         ),
-        getTextContainer("Sub Total", '${"AED  "}${orderData.orderNetTotalAmount}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+        getTextContainer("Sub Total", '${"AED  "}${orderData.orderTotalAmount}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
         getTextContainer("Shipping", '${"AED "}${orderData.orderShippingCharge}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
-        getTextContainer("Total", '${"AED "}${orderData.orderTotalAmount}', "bold", text_tilte_page, colorRed, "title")
+        getTextContainer("Total", '${"AED "}${orderData.orderNetTotalAmount}', "bold", text_tilte_page, colorRed, "title")
       ],
 
     ),
@@ -356,7 +356,7 @@ Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              getButtonDelivery(context, widget, 0, "Return", "assets/icons/cart.png", orderdata),
+              getButtonDelivery(context, widget, 0, "Return", "assets/icons/return.png", orderdata),
               Container(
                 width: 1,
                 height:40,
@@ -390,23 +390,37 @@ Widget getProductReview(BuildContext context,Widget widget, Data orderdata)
 
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Rate Product",
-                    textAlign: TextAlign.start,
-                    style: new TextStyle(
-                        color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
-                  ),
-                  getStarRating(3.5)
-                ],
-              ),
-              getButtonDelivery(context, widget, 0, "Return", "assets/icons/cart.png", orderdata),
-             // getSa,
-            ],
+          Container(
+            padding: EdgeInsets.only(top:10,bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      "Rate Product",
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(
+                          color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width:10),
+                    getStarRating(3.5)
+                  ],
+                ),
+                Text(
+                  "Tell us more",
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(
+                      color: colorPrimary,fontSize: 14,fontWeight: FontWeight.bold),
+                ),
+               // getSa,
+              ],
+            ),
           ),
           Divider(thickness: 1,)
         ],
@@ -416,13 +430,14 @@ Widget getProductReview(BuildContext context,Widget widget, Data orderdata)
 }
 Widget getStarRating(double rating) {
   return Container(
-    height: 10,
+    height: 20,
     child: RatingBar(
         initialRating: rating,
         direction: Axis.horizontal,
+        wrapAlignment: WrapAlignment.start,
         allowHalfRating: true,
         itemCount: 5,
-        itemSize: 15,
+        itemSize: 18,
         ratingWidget: RatingWidget(
             full: Icon(Icons.star, color: colorPrimary),
             half: Icon(

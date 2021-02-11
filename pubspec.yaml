@@ -139,6 +139,8 @@ flutter:
     - assets/icons/calendar.png
     - assets/icons/mailicon.png
     - assets/icons/google.png
+    - assets/icons/return.png
+    - assets/icons/delivery_icon.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
