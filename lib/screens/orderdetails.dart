@@ -6,6 +6,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'notification.dart';
@@ -47,6 +48,7 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: product_bg,
       appBar: AppBar(
         centerTitle: true,
         // titleSpacing: 100,
@@ -118,11 +120,12 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
 
         ],
       ),
-      body:  _listview(orderresponse?.itemsNew?.
-          where((element) =>
-        element != null )
-        ?.toList(),context,super.widget),
-    );
+      body:  getOrderDetails(orderresponse, context, widget)
+      // _listview(orderresponse?.itemsNew?.
+      //     where((element) =>
+      //   element != null )
+      //   ?.toList(),context,super.widget),
+    //);
     // return new Scaffold(
     //   appBar: new AppBar(
     //     title: new Text("Listviews"),
@@ -134,94 +137,316 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
     //     },
     //   ),
     // );
+    );
   }
 }
+Widget getOrderDetails(Data response,BuildContext context,Widget widget)
+{
+  return Container(width: double.infinity,
+    child: Column(
 
-Widget _listview(List<ItemsNew> products,BuildContext context,Widget widget) => ListView.builder(
-    padding: EdgeInsets.only(bottom: 70),
-    itemBuilder: (context, index) =>
-        _itemsBuilder(products[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
-    itemCount: products.length);
-
-Widget _itemsBuilder(ItemsNew product,BuildContext context,Widget widget) {
-  bool status = false;
-
-  return Container(
-    margin: const EdgeInsets.only(bottom: 8.0,left: 10.0,top:10,right:20),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(0),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 3.0,
+      children: [
+        getTopContainerOrder(),
+        Flexible(
+            child: customScrollView(context, widget, response)
         ),
       ],
     ),
+
+  );
+}
+
+Widget customScrollView(BuildContext context,Widget widget,Data response)
+{
+  final _itemExtent = 100.0;
+  return CustomScrollView(
+    slivers: <Widget>[
+      SliverFixedExtentList(
+        itemExtent: _itemExtent,  // I'm forcing item heights
+        delegate: SliverChildBuilderDelegate(
+              (context, index) => _itemsBuilder(response.itemsNew[index],context,widget,response),
+          childCount: response.itemsNew.length,
+        ),
+      ),
+      SliverToBoxAdapter(
+          child: getDeliveryPanel(response,context,widget)
+      )
+    ],
+  );
+}
+// Widget _listview(List<ItemsNew> products,BuildContext context,Widget widget) => ListView.builder(
+//     padding: EdgeInsets.only(bottom: 70),
+//     itemBuilder: (context, index) =>
+//         _itemsBuilder(products[index],context,widget),
+//     // separatorBuilder: (context, index) => Divider(
+//     //       color: Colors.grey,
+//     //       height: 1,
+//     //     ),
+//     itemCount: products.length);
+Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
+{
+  return Container(
+    color: Colors.white,
     child: Column(
       children: [
-        Padding(
-          padding:
-          EdgeInsets.fromLTRB(padding, padding, 0, 2),
+        Container(
+          color: colorPrimary,
+          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/images/no_image.png',
-                image: '$productThumbUrl${product.image}',
-                width: 100,
+              Image(
+                image: new AssetImage("assets/icons/cart.png"),
+                width: 20,
+                height: 20,
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      product.productName,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Text('${product.amount}',style: TextStyle(
-                            color: colorRed,fontSize: 12,fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ),
+              SizedBox(width: 10,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    orderData.orderStatus,
+                    style: TextStyle(
+                        color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    orderData.updatedAt,
+                    style: TextStyle(
+                        color: Colors.white,fontSize: 10),
+                  )
 
-                  ],
-                ),
-              ),
+                ],
+              )
 
             ],
-
           ),
-
         ),
+        getAllButton(context, widget, orderData),
+        getAdress("Delivery Address",orderData.billingAddress,orderData.billingName,orderData.billingPhone),
+        Divider(thickness: 1,),
+        getAdress("Shipping Address",orderData.shippingAddress,orderData.shippingName,orderData.shippingPhone),
+        Divider(thickness: 1,),
 
-
-        Divider(
-          height: 2,
-          color: Colors.grey,
-        ),
 
       ],
     ),
   );
+}
+Widget getAdress(String title,String address,String name,String mobile)
+{
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, left: 20),
+    child: Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
+          ),
+          Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    VerticalDivider(
+                      thickness: 1,
+                    ),
+                    Text(
+                      mobile,
+                      style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    )
+                  ],
+                ),
+              )),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              address,
+              style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12),
+            ),
+          ),
 
+        ],
+      ),
+    ),
+  );
+}
+Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
+{
+  return Container(
+
+    decoration: BoxDecoration(
+
+        color: product_bg,
+        border: Border.all( color: item_text_gray,width: 1),
+
+    ),
+
+    child: Column(
+      
+      children: [
+        Container(
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              getButtonDelivery(context, widget, 0, "Return", "assets/icons/cart.png", orderdata),
+              Container(
+                width: 1,
+                height:40,
+                color: item_text_gray,
+              ),
+              getButtonDelivery(context, widget, 1, "Cancel", "assets/icons/remove.png", orderdata),
+              Container(
+                width: 1,
+                height:40,
+                color: item_text_gray,
+              ),
+              getButtonDelivery(context, widget, 2, "Tracking", "assets/icons/location.png", orderdata),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+Widget getButtonDelivery(BuildContext context,Widget widget,int type,String title,String icon,Data orderdata)
+{
+  return GestureDetector(
+    onTap:(){},
+    child: Container(
+      padding: EdgeInsets.only(top:10,bottom: 10,left: 10,right: 10),
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Image(
+            image: new AssetImage(icon),
+            width: 18,
+            height: 18,
+            color: item_text_gray,
+          ),
+          SizedBox(width:5),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: new TextStyle(
+                color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    ),
+  );
+}
+Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data orderData) {
+  return  GestureDetector(
+      onTap: () {
+      },
+      child:Container(
+       // margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
+              )]
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding:
+              EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/no_image.png',
+                    image: '$productThumbUrl${item.image}',
+                    height:80,
+                    width:120
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          orderData.invoiceNumber,
+                          style: TextStyle(
+                              color: item_text_gray,fontSize: 8),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Flexible(
+
+                          child: Container(
+                            width: 200,
+                            child: Text(
+                              item.productName,
+                              style: TextStyle(
+                                  color: Colors.black, fontWeight: FontWeight.w500,fontSize: 10),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text('$currency${" "}${item.amount}',style: TextStyle(
+                                color: colorRed,fontSize: 11,fontWeight: FontWeight.w800)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text('$currency${" "}${item.amount}',style: TextStyle(
+                                color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ],
+
+              ),
+
+            ),
+
+
+          ],
+        ),
+      )
+  );
 }
 
 

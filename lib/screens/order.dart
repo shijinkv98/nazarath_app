@@ -196,7 +196,7 @@ Widget getFullOrderScreen(List<Data> orders,BuildContext context,Widget widget)
       child: Column(
 
         children: [
-          getTopContainer(),
+          getTopContainerOrder(),
           Flexible(
             child: _listview(items,context,widget),
 
@@ -337,7 +337,7 @@ GestureDetector viewDetailsButton(Data orderData,BuildContext context)
   );
 
 }
-Container getTopContainer()
+Container getTopContainerOrder()
 {
   return Container(
     child: Column(
