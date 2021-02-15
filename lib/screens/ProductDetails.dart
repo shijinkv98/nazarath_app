@@ -3,6 +3,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
@@ -493,7 +494,16 @@ Container getSizeChart() {
     ),
   );
 }
+Widget getHtmlValue(String text)
+{
+  return Center(
+      child: SingleChildScrollView(
+      child: Html(
+        data: text,
+      )
+  ));
 
+}
 Widget _itemsBuilder(Options specifications, BuildContext context, Widget widget) {
   return Container(
     width: double.infinity,
@@ -625,60 +635,61 @@ Container getProductDescription( String description) {
             style: TextStyle(color: Colors.grey[900], fontSize: 15),
           ),
           SizedBox(height: 12),
-          Text(
-            description,
-            style: TextStyle(color: Colors.grey[700], fontSize: 13),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 8,
-                itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Colors.grey[300]),
-                            left: BorderSide(color: Colors.grey[300]),
-                          ),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'Gender',
-                          style: TextStyle(fontSize: 14),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.72,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Colors.grey[300]),
-                            left: BorderSide(color: Colors.grey[300]),
-                            right: BorderSide(color: Colors.grey[300]),
-                          ),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'Male',
-                          style: TextStyle(fontSize: 14),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                      Divider(
-                        color: Colors.grey[300],
-                      )
-                    ],
-                  );
-                }),
-          )
+          getHtmlValue(description)
+          // Text(
+          //   description,
+          //   style: TextStyle(color: Colors.grey[700], fontSize: 13),
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
+          // Expanded(
+          //   child: ListView.builder(
+          //       physics: NeverScrollableScrollPhysics(),
+          //       itemCount: 8,
+          //       itemBuilder: (BuildContext context, int index) {
+          //         return Row(
+          //           children: [
+          //             Container(
+          //               width: MediaQuery.of(context).size.width / 3,
+          //               height: 35,
+          //               decoration: BoxDecoration(
+          //                 border: Border(
+          //                   top: BorderSide(color: Colors.grey[300]),
+          //                   left: BorderSide(color: Colors.grey[300]),
+          //                 ),
+          //               ),
+          //               child: Center(
+          //                   child: Text(
+          //                 'Gender',
+          //                 style: TextStyle(fontSize: 14),
+          //                 textAlign: TextAlign.center,
+          //               )),
+          //             ),
+          //             Container(
+          //               width: MediaQuery.of(context).size.width / 1.72,
+          //               height: 35,
+          //               decoration: BoxDecoration(
+          //                 border: Border(
+          //                   top: BorderSide(color: Colors.grey[300]),
+          //                   left: BorderSide(color: Colors.grey[300]),
+          //                   right: BorderSide(color: Colors.grey[300]),
+          //                 ),
+          //               ),
+          //               child: Center(
+          //                   child: Text(
+          //                 'Male',
+          //                 style: TextStyle(fontSize: 14),
+          //                 textAlign: TextAlign.center,
+          //               )),
+          //             ),
+          //             Divider(
+          //               color: Colors.grey[300],
+          //             )
+          //           ],
+          //         );
+          //       }),
+          //)
         ],
       ),
     ),
