@@ -239,7 +239,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
                         );
                       },
                       child: Container(
-                        width: 120,
+                        width: 130,
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -500,8 +500,8 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Container(
-                        height:140,
-                        width: 140,
+                        height:190,
+                        width: 160,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 2, right: 2),
                           child: Card(
@@ -522,7 +522,8 @@ Container getRecommended(List<Newarrivals> recommended,Widget widget) {
                                     padding: const EdgeInsets.only(
                                         top: 5, left: 5, right: 5),
                                     child: Container(
-                                      height: 70,
+
+                                      height: 80,
                                       child: Image(
                                         image: new NetworkImage(
                                             '$productThumbUrl${recommended[index].image}'),

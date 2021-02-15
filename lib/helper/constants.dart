@@ -22,8 +22,9 @@ const Color item_text_gray_light =const Color.fromRGBO(201, 201, 201, 1.0);
 
 const Color textColor = Color(0xFF616161);
 const Color textColorSecondary = Color(0xFF999999);
-const String BASE_URL = "https://alranna.alisonsdemo.tk/";
-const Color gradientEnd = Color(0xFF45ccc1);
+// const String BASE_URL = "https://alranna.alisonsdemo.tk/";
+const String BASE_URL = "https://nazarath.webdemos.cf/";
+ const Color gradientEnd = Color(0xFF45ccc1);
 const Color primaryTextColor = Color(0xFF45ccc1);
 const Color primaryIconColor = Color(0xFF45ccc1);
 
