@@ -84,11 +84,7 @@ SingleChildScrollView getFullView(
                     // width: 320,
                       child: //getBannerSlider(homeResponse.banners,180)
                       getOfferSlider(homeResponse.offers,180),
-                    // decoration: new BoxDecoration(
-                    //     image: new DecorationImage(
-                    //   image: new AssetImage("assets/icons/homebanner.png"),
-                    //   fit: BoxFit.fill,
-                    // ))
+
                 ),
               ),
             )
@@ -98,10 +94,10 @@ SingleChildScrollView getFullView(
           padding: const EdgeInsets.only(top: 10),
           child: Center(child: getCategory(homeResponse.categories)),
         ),
-        getFeatured(homeResponse.newarrivals,widget),
-        getSlider(homeResponse.slider,190),
-        getRecommended(homeResponse.newarrivals,widget),
-        getBannerSlider(homeResponse.banners,180)
+         getFeatured(homeResponse.newarrivals,widget),
+         getSlider(homeResponse.slider,190),
+         getRecommended(homeResponse.newarrivals,widget),
+         getBannerSlider(homeResponse.banners,180)
       ],
     ),
   );
@@ -149,43 +145,15 @@ Container getCategory(List<Categories> categories) {
                   color: Colors.grey[600],
                   fontWeight: FontWeight.bold)),
           Container(
-            padding: EdgeInsets.only(left: 5, right: 5),
+            padding: EdgeInsets.only(left: 5, right: 5,top: 10),
             color: home_bg,
-            height: 120,
+            height: 150,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProductScreen(categories[index].category.slug,"category")),
-                        );
-
-                      },
-                      child: Container(
-                          child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundImage: NetworkImage(
-                                '$categoryThumbUrl${categories[index].category.image}'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(
-                              categories[index].category.name,
-                              style: TextStyle(fontSize: 11, color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      )),
-                    ),
-                  );
+                  return getCategoryIem(categories[index], context);
                 }),
           ),
         ],
@@ -193,8 +161,85 @@ Container getCategory(List<Categories> categories) {
     ),
   );
 }
-
-Container getFeatured(List<Newarrivals> featured,Widget widget) {
+Widget getCategoryIem(Categories category,BuildContext context)
+{
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              ProductScreen(category.category.slug, "category")),
+        );
+      },
+    child: Container(
+     padding: EdgeInsets.only(left: 8, right: 5,top:10,bottom: 10),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                  '$categoryThumbUrl${category.category.image}'),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 5),
+              width:100,
+              child: Text(
+                category.category.name,
+               overflow: TextOverflow.ellipsis,
+               maxLines: 1,
+               textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 11, color: Colors.black),
+              ),
+            ),
+          ],
+        )
+    ),
+  );
+}
+Widget getRecommended(List<Newarrivals> recoomended,Widget widget) {
+  if (recoomended == null)
+    return Container(
+      child:SizedBox(
+        height: 0.01,
+      ),
+    );
+  else if (recoomended.length == 0)  return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
+  return Container(
+    child: Container(
+      width: double.infinity,
+      color: featured_bg,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 15,bottom: 5),
+            child: Text("Recommended Products",
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+            color: Color(0xFFe5eeef),
+            height: 190,
+            width: double.infinity,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: recoomended.length,
+                itemBuilder: (context, index) {
+                  return getRecommendItem(recoomended[index], context, widget);
+                }),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+Widget getFeatured(List<Newarrivals> featured,Widget widget) {
   if (featured == null)
      return Container(
     child:SizedBox(
@@ -213,7 +258,7 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 15,bottom: 5),
             child: Text("Featured Products",
                 style: TextStyle(
                     fontSize: 15,
@@ -223,137 +268,13 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
           Container(
             padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
             color: Color(0xFFe5eeef),
-            height: 170,
+            height: 190,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: featured.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProductDetailsScreen(featured[index].slug)),
-                        );
-                      },
-                      child: Container(
-                        width: 130,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                topLeft: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0)),
-                          ),
-                          color: Colors.white,
-
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 5, left: 2, right: 2),
-                                  child: Container(
-
-                                    height: 50,
-                                    child: Image(
-                                      image: new NetworkImage(
-                                          '$productThumbUrl${featured[index].image}'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0, left: 10, right: 6),
-                                    child: Text(
-                                      featured[index].name,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 9),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        height: 30,
-                                        alignment: Alignment.bottomLeft,
-                                        decoration: BoxDecoration(
-                                            color: button_cart_bg,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(3),
-                                                bottomLeft: Radius.circular(5))),
-                                        child: Center(
-                                            widthFactor: 0.5,
-                                            child: new Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  new IconButton(
-                                                      icon: Icon(
-                                                        Icons.add,
-                                                        color: Colors.white,
-                                                        size: 10,
-
-                                                      ),
-                                                      onPressed: (){
-                                                        addtoCart(featured[index].slug, featured[index].store, context, widget,"1");}
-                                                  ),
-                                                ]
-                                            ))
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          //alignment: Alignment.topRight,
-                                            child: getWishListIcon(false)),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 0,
-                                              right: 5,
-                                              top: 3,
-                                              bottom: 8
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                '${featured[index].symbolLeft}${" "}${featured[index].price}${featured[index].symbolRight}',
-                                                style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 7,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              SizedBox(width: 2),
-                                              Text(
-                                                '${featured[index].symbolLeft}${" "}${featured[index].oldprice}${featured[index].symbolRight}',
-                                                style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                    fontSize: 7,
-                                                    decoration: TextDecoration
-                                                        .lineThrough),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ]),
-                        )
-                      ),
-                    ),
-                  );
+                  return getFeatureItem(featured[index], context, widget);
                 }),
           ),
         ],
@@ -361,7 +282,268 @@ Container getFeatured(List<Newarrivals> featured,Widget widget) {
     ),
   );
 }
+Widget getFeatureItem(Newarrivals item,BuildContext context,Widget widget)
+{
+  return Container(
+    padding: EdgeInsets.only(top: 5),
+    child: GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetailsScreen(item.slug)),
+        );
+      },
+      child: Container(
+          width: 140,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                  topLeft: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(10.0)),
+            ),
+            color: Colors.white,
 
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 0, right: 0),
+                    child: Container(
+
+                      width: 120,
+                      child: Image(
+                        image: new NetworkImage(
+                            '$productThumbUrl${item.image}'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 0, left: 15, right: 5),
+                      child: Text(
+                        item.name,
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.bottomLeft,
+                          decoration: BoxDecoration(
+                              color: button_cart_bg,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                  bottomLeft: Radius.circular(5))),
+                          child: Center(
+                              widthFactor: 0.6,
+                              child: new Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    new IconButton(
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 13,
+
+                                        ),
+                                        onPressed: (){
+                                          addtoCart(item.slug, item.store, context, widget,"1");}
+                                    ),
+                                  ]
+                              ))
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            //alignment: Alignment.topRight,
+                              child: getWishListIcon(false)),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0,
+                                right: 5,
+                                top: 3,
+                                bottom: 8
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.price}${item.symbolRight}',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize:
+                                      9,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(width: 2),
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
+                                  style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 7,
+                                      decoration: TextDecoration
+                                          .lineThrough),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ]),
+          )
+      ),
+    ),
+  );
+}
+Widget getRecommendItem(Newarrivals item,BuildContext context,Widget widget)
+{
+  return Container(
+    padding: EdgeInsets.only(top: 5),
+    child: GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetailsScreen(item.slug)),
+        );
+      },
+      child: Container(
+          width: 140,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                  topLeft: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(10.0)),
+            ),
+            color: Colors.white,
+
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 0, right: 0),
+                    child: Container(
+
+                      width: 120,
+                      child: Image(
+                        image: new NetworkImage(
+                            '$productThumbUrl${item.image}'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 0, left: 15, right: 5),
+                      child: Text(
+                        item.name,
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.bottomLeft,
+                          decoration: BoxDecoration(
+                              color: button_cart_bg,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                  bottomLeft: Radius.circular(5))),
+                          child: Center(
+                              widthFactor: 0.6,
+                              child: new Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    new IconButton(
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 13,
+
+                                        ),
+                                        onPressed: (){
+                                          addtoCart(item.slug, item.store, context, widget,"1");}
+                                    ),
+                                  ]
+                              ))
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            //alignment: Alignment.topRight,
+                              child: getWishListIcon(false)),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0,
+                                right: 5,
+                                top: 3,
+                                bottom: 8
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.price}${item.symbolRight}',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize:
+                                      9,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(width: 2),
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
+                                  style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 7,
+                                      decoration: TextDecoration
+                                          .lineThrough),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ]),
+          )
+      ),
+    ),
+  );
+}
 Future<String>removefromWishList(String slug,String store,BuildContext context,Widget widget) async {
   Map body = {
     "slug": slug,
@@ -466,156 +648,157 @@ Container getMiddleBanner() {
   );
 }
 
-Container getRecommended(List<Newarrivals> recommended,Widget widget) {
-  return Container(
-    child: Container(
-      width: double.infinity,
-      color: featured_bg,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 7),
-            child: Text("Recommended Products",
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.bold)),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 0, left: 5, right: 5, bottom: 10),
-            color: Color(0xFFe5eeef),
-            height: 150,
-            width: double.infinity,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: recommended.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProductDetailsScreen(recommended[index].slug)),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Container(
-                        height:190,
-                        width: 160,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 2, right: 2),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                  topLeft: Radius.circular(10.0),
-                                  bottomLeft: Radius.circular(10.0)),
-                            ),
-                            color: Colors.white,
-                            elevation: 2,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, left: 5, right: 5),
-                                    child: Container(
-
-                                      height: 80,
-                                      child: Image(
-                                        image: new NetworkImage(
-                                            '$productThumbUrl${recommended[index].image}'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
-                                        child: Container(
-
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Container(
-
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 5,right: 3),
-                                                  child: Text(
-                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
-                                                    style: TextStyle(
-                                                        color: Colors.red,
-                                                        fontSize: 8,
-                                                        fontWeight: FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Container(
-
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 5,right: 10),
-                                                  child: Text(
-                                                    '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
-                                                    style: TextStyle(
-                                                        color: Colors.grey[700],
-                                                        fontSize: 8,
-                                                        decoration:
-                                                        TextDecoration.lineThrough),
-                                                  ),
-                                                ),
-                                              ),
-                                              InkWell(
-                                                onTap: (){
-                                                  addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
-                                                } ,
-                                                child: ImageIcon(
-                                                  AssetImage(
-                                                      'assets/icons/favourite.png'),
-                                                  size: 14,
-                                                  color: colorPrimary,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                  Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5, left: 10,right: 5),
-                                      child: Text(
-                                        recommended[index].name,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize:9),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Container getRecommended(List<Newarrivals> recommended,Widget widget) {
+//   return Container(
+//     child: Container(
+//       width: double.infinity,
+//       color: featured_bg,
+//       child: Column(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(top: 7),
+//             child: Text("Recommended Products",
+//                 style: TextStyle(
+//                     fontSize: 15,
+//                     color: Colors.grey[600],
+//                     fontWeight: FontWeight.bold)),
+//           ),
+//           Container(
+//             padding: EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
+//             color: Color(0xFFe5eeef),
+//             height: 150,
+//             width: double.infinity,
+//             child: ListView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 itemCount: recommended.length,
+//                 itemBuilder: (context, index) {
+//                   return GestureDetector(
+//                     onTap: (){
+//                       Navigator.push(
+//                         context,
+//                         MaterialPageRoute(builder: (context) => ProductDetailsScreen(recommended[index].slug)),
+//                       );
+//                     },
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(top: 5),
+//                       child: Container(
+//                         height:190,
+//                         width: 160,
+//                         child: Padding(
+//                           padding: const EdgeInsets.only(left: 2, right: 2),
+//                           child: Card(
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.only(
+//                                   bottomRight: Radius.circular(10.0),
+//                                   topRight: Radius.circular(10.0),
+//                                   topLeft: Radius.circular(10.0),
+//                                   bottomLeft: Radius.circular(10.0)),
+//                             ),
+//                             color: Colors.white,
+//                             elevation: 2,
+//                             child: Column(
+//                                 mainAxisAlignment: MainAxisAlignment.start,
+//                                 crossAxisAlignment: CrossAxisAlignment.center,
+//                                 children: [
+//                                   Padding(
+//                                     padding: const EdgeInsets.only(
+//                                         top: 5, left: 5, right: 5),
+//                                     child: Container(
+//
+//                                       height: 80,
+//                                       child: Image(
+//                                         image: new NetworkImage(
+//                                             '$productThumbUrl${recommended[index].image}'),
+//                                         fit: BoxFit.cover,
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   Row(
+//                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                     crossAxisAlignment: CrossAxisAlignment.center,
+//                                     children: [
+//                                       Padding(
+//                                         padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
+//                                         child: Container(
+//
+//                                           child: Row(
+//                                             crossAxisAlignment:
+//                                             CrossAxisAlignment.center,
+//                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                             children: [
+//                                               Container(
+//
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.only(top: 5,right: 3),
+//                                                   child: Text(
+//                                                     '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
+//                                                     style: TextStyle(
+//                                                         color: Colors.red,
+//                                                         fontSize: 8,
+//                                                         fontWeight: FontWeight.bold),
+//                                                   ),
+//                                                 ),
+//                                               ),
+//
+//                                               Container(
+//
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.only(top: 5,right: 10),
+//                                                   child: Text(
+//                                                     '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
+//                                                     style: TextStyle(
+//                                                         color: Colors.grey[700],
+//                                                         fontSize: 8,
+//                                                         decoration:
+//                                                         TextDecoration.lineThrough),
+//                                                   ),
+//                                                 ),
+//                                               ),
+//                                               InkWell(
+//                                                 onTap: (){
+//                                                   addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
+//                                                 } ,
+//                                                 child: ImageIcon(
+//                                                   AssetImage(
+//                                                       'assets/icons/favourite.png'),
+//                                                   size: 14,
+//                                                   color: colorPrimary,
+//                                                 ),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//
+//                                     ],
+//                                   ),
+//                                   Container(
+//                                     child: Padding(
+//                                       padding: const EdgeInsets.only(
+//                                           top: 5, left: 10,right: 5),
+//                                       child: Text(
+//                                         recommended[index].name,
+//                                         overflow: TextOverflow.ellipsis,
+//                                         textAlign: TextAlign.start,
+//                                         style: TextStyle(
+//                                             fontWeight: FontWeight.bold,
+//                                             fontSize:11),
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ]),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 }),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 Container getMainSlider(List<Banners> banners) {
   return Container(
@@ -660,15 +843,18 @@ Widget getMiddleSlider(List<Banners> banners) {
 }
 
 Widget getBannerSlider(List<Banners> banners,double height) {
+  bool autoPlay=false;
+  if(banners.length>1)
+    autoPlay=true;
   return
     CarouselSlider(
       options: CarouselOptions(
         // height: 160.0,
         enlargeCenterPage: true,
-        autoPlay: true,
-        aspectRatio: 16 / 9,
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
+        autoPlay: autoPlay,
+        aspectRatio: 1000 / 382,
+        autoPlayCurve: Curves.easeIn,
+        enableInfiniteScroll: autoPlay,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         viewportFraction: 1.0,
       ),
@@ -685,36 +871,45 @@ Widget getBannerSlider(List<Banners> banners,double height) {
 }
 
 Widget getSlider(List<HomeSlider> sliders,double height) {
+  bool autoPlay=false;
+  if(sliders.length>1)
+    autoPlay=true;
   return
-    CarouselSlider(
-      options: CarouselOptions(
-        enlargeCenterPage: true,
-        autoPlay: true,
-        aspectRatio: 16 / 9,
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        viewportFraction: 1.0,),
-      items: sliders.map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return getImage(i.image);
-          },
-        );
-      }).toList(),
+    Container(
+      padding: EdgeInsets.only(top: 10),
+      color: featured_bg,
+      child: CarouselSlider(
+        options: CarouselOptions(
+          enlargeCenterPage: true,
+          autoPlay: autoPlay,
+          aspectRatio: 1000 / 382,
+          autoPlayCurve: Curves.easeIn,
+          enableInfiniteScroll: autoPlay,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 1.0,),
+        items: sliders.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return getImage(i.image);
+            },
+          );
+        }).toList(),
+      ),
     );
 
 }
 Widget getOfferSlider(List<Offers> offers,double height) {
+  bool autoPlay=false;
+  if(offers.length>1)
+    autoPlay=true;
   return
     CarouselSlider(
       options: CarouselOptions(
         enlargeCenterPage: true,
-        autoPlay: true,
-
+        autoPlay: autoPlay,
         aspectRatio: 16 / 9,
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
+        autoPlayCurve: Curves.ease,
+        enableInfiniteScroll: autoPlay,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         viewportFraction: 1.0,),
       items: offers.map((i) {
@@ -782,10 +977,10 @@ InkWell getWishListIcon(bool condition )
     return InkWell(
 // onTap: ,
       child: Padding(
-        padding: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.only(right: 10),
         child: ImageIcon(
           AssetImage('assets/icons/favourite.png'),
-          size: 16,
+          size: 20,
           color: colorPrimary,
         ),
       ),
