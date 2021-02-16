@@ -75,7 +75,8 @@ class _ProductState extends State<ProductScreen> {
       appBar: AppBar(
         centerTitle: true,
         // titleSpacing: 100,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {}),
+        automaticallyImplyLeading: true,
+       // leading: IconButton(icon: Icon(Icons.arrow_back_ios)),
         title: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
@@ -228,9 +229,9 @@ Widget customView(List<Data> products,BuildContext context,Widget widget)
       SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            childAspectRatio: 0.8,
-            mainAxisSpacing: 0.0,
-            crossAxisSpacing: 0.0),
+            childAspectRatio: 0.75,
+            mainAxisSpacing: 1.0,
+            crossAxisSpacing: 1.0),
         delegate: SliverChildBuilderDelegate(
               (context, index) {
             return _itemsBuilder(products[index],context,widget);
@@ -489,7 +490,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
       );
     },
     child: Container(
-      margin: const EdgeInsets.only(bottom: 5.0,left: 2.0,top:5.0,right:2),
+      margin: const EdgeInsets.only(bottom: 5.0,left: 0.0,top:5.0,right:0),
       child:Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -506,7 +507,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 5, left: 2, right: 2),
+                    top: 10, left: 2, right: 2),
                 child: Container(
 
                   height: 50,
@@ -523,10 +524,12 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                       top: 0, left: 10, right: 6),
                   child: Text(
                     product.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 9),
+                        fontSize: 10),
                   ),
                 ),
               ),
@@ -535,7 +538,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    height: 30,
+                    height: 33,
                     alignment: Alignment.bottomLeft,
                     decoration: BoxDecoration(
                         color: colorPrimary,
@@ -543,7 +546,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                             topRight: Radius.circular(3),
                             bottomLeft: Radius.circular(5))),
                      child: Center(
-                       widthFactor: 0.5,
+                       widthFactor: 0.6,
                          child: new Row(
                              mainAxisAlignment: MainAxisAlignment.center,
                              children: <Widget>[
@@ -551,7 +554,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                                    icon: Icon(
                                      Icons.add,
                                      color: Colors.white,
-                                     size: 10,
+                                     size: 13,
 
                                    ),
                                  onPressed: (){
@@ -575,12 +578,14 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                             bottom: 8
                         ),
                         child: Row(
+
                           children: [
                             Text(
                               '${product.symbolLeft}${" "}${product.price}${product.symbolRight}',
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.red,
-                                  fontSize: 7,
+                                  fontSize: 8.5,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(width: 2),
@@ -588,7 +593,7 @@ Widget _itemsBuilder(Data product,BuildContext context,Widget widget) {
                               '${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',
                               style: TextStyle(
                                   color: Colors.grey[700],
-                                  fontSize: 7,
+                                  fontSize: 6.3,
                                   decoration: TextDecoration
                                       .lineThrough),
                             ),
@@ -665,7 +670,7 @@ Widget getWishListIcon(int wish,String slug,String store,BuildContext context,Wi
         padding: const EdgeInsets.only(right: 10),
         child: ImageIcon(
           AssetImage('assets/icons/fav_active.png'),
-          size: 14,
+          size: 18,
           color: colorPrimary,
         ),
       ),
@@ -684,7 +689,7 @@ Widget getWishListIcon(int wish,String slug,String store,BuildContext context,Wi
       padding: const EdgeInsets.only(right: 10),
       child: ImageIcon(
         AssetImage('assets/icons/favourite.png'),
-        size: 14,
+        size: 18,
         color: colorPrimary,
       ),
     ),

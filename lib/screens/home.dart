@@ -342,7 +342,7 @@ Widget getFeatureItem(Newarrivals item,BuildContext context,Widget widget)
                     mainAxisAlignment:MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                          height: 40,
+                          height: 35,
                           alignment: Alignment.bottomLeft,
                           decoration: BoxDecoration(
                               color: button_cart_bg,
@@ -473,7 +473,7 @@ Widget getRecommendItem(Newarrivals item,BuildContext context,Widget widget)
                     mainAxisAlignment:MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                          height: 40,
+                          height: 35,
                           alignment: Alignment.bottomLeft,
                           decoration: BoxDecoration(
                               color: button_cart_bg,

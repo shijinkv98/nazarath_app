@@ -160,15 +160,17 @@ Widget getImageProduct(String url)
   );
 }
 Widget getProductImageSlider(List<Images> images) {
-
+  bool autoPlay=false;
+  if(images.length>1)
+    autoPlay=true;
   return
     CarouselSlider(
       options: CarouselOptions(height: 150.0,
         enlargeCenterPage: true,
-        autoPlay: true,
+        autoPlay: autoPlay,
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
+        enableInfiniteScroll: autoPlay,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         viewportFraction: 1.0,
       ),
