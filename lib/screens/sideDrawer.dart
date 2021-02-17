@@ -19,249 +19,265 @@ class SideDrawer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
+
     child:Drawer(
 
-      child: Column(
-        children: [
+      child: Container(
+        color: slider_bg,
+        height: double.infinity,
 
-          Expanded(
-              child: Container(
-                color: slider_bg,
-                child: ListView(children: [
-                  Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(45.0)),
-                        ),
-                        height: 150,
-                        child: ListTile(
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.only( left: 5),
+        child: SingleChildScrollView(
+
+          child: Container(
+            color: slider_bg,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+
+                Container(
+                    child: Container(
+
+                      child:Container(
+
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.only(bottomRight: Radius.circular(45.0)),
+                            ),
+                            height: 150,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 45, top: 30, bottom: 10),
                                   child: CircleAvatar(
-                                    radius: 38,
+                                    radius: 35,
                                     backgroundColor: Colors.grey[300],
-                                    child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: Colors.grey[300],
-                                      backgroundImage:
-                                      AssetImage('assets/icons/no_image.png'),
-
+                                    backgroundImage: AssetImage('assets/icons/no_image.png'
+                                      // NetworkImage(''
+                                      // profileData.user.getImage()
                                     ),
-                                  )
-
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 180,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 6),
-                                      child: Text(customer.name,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15)),
-                                    ),
+                                    // child: _image != null
+                                    //     ? ClipRRect(
+                                    //   borderRadius:
+                                    //   BorderRadius.circular(55),
+                                    //   child: Image.file(
+                                    //     _image,
+                                    //     width: 110,
+                                    //     height: 110,
+                                    //     fit: BoxFit.cover,
+                                    //   ),
+                                    // )
+                                    //     : Container(
+                                    //   decoration: BoxDecoration(
+                                    //       color: Colors.transparent,
+                                    //       borderRadius:
+                                    //       BorderRadius.circular(55)),
+                                    //   width: 115,
+                                    //   height: 115,
+                                    //   child: Icon(
+                                    //     Icons.camera_alt,
+                                    //     color: Colors.white,
+                                    //   ),
+                                    // ),
                                   ),
-                                  SizedBox(
-                                    width: 180,
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
 
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 6),
-                                      child: AutoSizeText(customer.email,
-                                          style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 15)),
-                                    ),
+                                    children: [
+                                      SizedBox(
+                                        width: 180,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 6),
+                                          child: Text(customer.name,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15)),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 180,
+
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 6),
+                                          child: AutoSizeText(customer.email,
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 15)),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            // Navigator.of(context).pop();
-                          },
-                        ),
-                      )),
-                  SizedBox(height: 20,),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('My Profile',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      tbPosition=3;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => DashBoard()),
-                      );
-                    },
-                    ),
-                    // onTap: () {
-                    //   Navigator.of(context).pop();
-                    // },
-                  ),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('My Orders',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => OrderScreen()),
-                      );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('Wishlist',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WishListScreen()),
-                      );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('My Wallet',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CheckUpScreen("Add Your First Product")),
-                      );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('Change Password',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
-                      );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title: FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('Stores',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
+                                ),
+                              ],
+                            ),
+                          ))
+
+                    )),
+                SizedBox(height: 20,),
+                Container(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Column(
+                    children: [
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('My Profile',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        tbPosition=3;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashBoard()),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('My Orders',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OrderScreen()),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('Wishlist',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => WishListScreen()),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('My Wallet',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CheckUpScreen("Add Your First Product")),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('Change Password',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('Stores',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
                         tbPosition=2;
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => DashBoard()),
                         );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title:FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('Notifications',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NotificationScreen("Notification is empty")),
-                      );
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title:FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('News',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
-                      tbPosition=4;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => DashBoard()),
-                      );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('Notifications',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NotificationScreen("Notification is empty")),
+                        );
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('News',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
+                        tbPosition=4;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashBoard()),
+                        );
 
-                    },
-                    ),
-                  ),
-                  ListTile(
-                    title:FlatButton(
-                      color: slider_bg,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
-                          SizedBox(width: 10),
-                          Text('Logout',style:TextStyle(color:Colors.white),)
-                        ],
-                      ), onPressed: () {
+                      },
+                      ),
+                      FlatButton(
+                        color: slider_bg,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text('Logout',style:TextStyle(color:Colors.white),)
+                          ],
+                        ), onPressed: () {
                         logout(context);
-                    },
-                    ),
-                  )
-                ]),
-              ))
-        ],
+                      },
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     ),
     );
