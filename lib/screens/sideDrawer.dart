@@ -59,29 +59,7 @@ class SideDrawer extends StatelessWidget{
                                       // NetworkImage(''
                                       // profileData.user.getImage()
                                     ),
-                                    // child: _image != null
-                                    //     ? ClipRRect(
-                                    //   borderRadius:
-                                    //   BorderRadius.circular(55),
-                                    //   child: Image.file(
-                                    //     _image,
-                                    //     width: 110,
-                                    //     height: 110,
-                                    //     fit: BoxFit.cover,
-                                    //   ),
-                                    // )
-                                    //     : Container(
-                                    //   decoration: BoxDecoration(
-                                    //       color: Colors.transparent,
-                                    //       borderRadius:
-                                    //       BorderRadius.circular(55)),
-                                    //   width: 115,
-                                    //   height: 115,
-                                    //   child: Icon(
-                                    //     Icons.camera_alt,
-                                    //     color: Colors.white,
-                                    //   ),
-                                    // ),
+
                                   ),
                                 ),
                                 Container(
