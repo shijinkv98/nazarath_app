@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
@@ -28,19 +30,57 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(child: Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: Column(
-          children: [
-            getContainerEyePower()
-          ],
-        ),
-      )),
-    );
+      body:FutureBuilder<EyePowerResponse>(
+      future: ApiCall()
+        .execute<EyePowerResponse, Null>('eye-power/en', null),
+    builder: (context, snapshot) {
+    if (snapshot.hasData) {
+    return getSavedEyePower(snapshot.data.data,context,widget);
+    } else if (snapshot.hasError) {
+      Data data=new Data(id: 0,customerId: 1,prescription: "");
+      return getContainerEyePower(data,context,widget);
+    } else {
+    return progressBar;
+    }
+    },
+    ));
   }
 }
-Widget getContainerEyePower()
+Widget getSavedEyePower(Data data,BuildContext context,Widget widget)
 {
+
+  return SingleChildScrollView(child: Padding(
+    padding: const EdgeInsets.only(top: 30),
+    child: Column(
+      children: [
+        getContainerEyePower(data,context,widget)
+      ],
+    ),
+  ));
+}
+void setData(Data data)
+{
+  if(data.rxOdReAxis!=null)
+    axixright=data.rxOdReAxis;
+  if(data.rxOdReAddv!=null)
+    addright=data.rxOdReAddv;
+  if(data.rxOdReCyi!=null)
+    cylright=data.rxOdReCyi;
+  if(data.rxOdReSphere!=null)
+    sphereright=data.rxOdReSphere;
+
+  if(data.rxOsLeAxis!=null)
+    axixleft=data.rxOsLeAxis;
+  if(data.rxOsLeAddv!=null)
+    addleft=data.rxOsLeAddv;
+  if(data.rxOsLeCyi!=null)
+    cylleft=data.rxOsLeCyi;
+  if(data.rxOsLeSphere!=null)
+    sphereleft=data.rxOsLeSphere;
+}
+Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
+{
+  setData(data);
   return Container(
     child: Container(
       child: Container(
@@ -84,10 +124,15 @@ Widget getContainerEyePower()
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          'myprescription.pdf',
-                          style:
-                          TextStyle(color: textColor, fontSize: 12),
+                        child: Container(
+                          width: 150,
+                          child: Text(
+                            data.prescription,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                            TextStyle(color: textColor, fontSize: 12),
+                          ),
                         ),
                       ),
                     ],
@@ -252,7 +297,30 @@ Widget getContainerEyePower()
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.white)),
-                                        onPressed: () async {},
+                                        onPressed: () async {
+                                            Map body={
+                                            "right_eye_sphere":sphereright,
+                                            "right_eye_cyi":cylright,
+                                            "right_eye_axis":axixright,
+                                            "right_eye_addv":addright,
+                                            "left_eye_sphere":sphereleft,
+                                            "left_eye_cyi":cylleft,
+                                            "left_eye_axis":axixleft,
+                                            "left_eye_addv":addleft,
+                                          };
+                                            FocusScope.of(context).requestFocus(FocusNode());
+                                            var response = await ApiCall()
+                                                .execute<EyePowerResponse, Null>("eye-power/store/en", body);
+
+                                            if (response?.data != null) {
+                                              // Navigator.of(context)
+                                              //     .pushReplacementNamed('HomePage', arguments: '');
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => widget),);
+                                            }
+
+                                        },
                                       ),
                                     ),
                                   ),
@@ -281,9 +349,10 @@ String sphereleft;
 final sphereFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     sphereleft = value;
   },
+
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -292,6 +361,7 @@ final sphereFieldleft = TextFormField(
       return null;
     }
   },
+  initialValue: sphereleft,
   keyboardType: TextInputType.name,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
@@ -317,9 +387,10 @@ String cylleft;
 final cylFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     cylleft = value;
   },
+  initialValue: cylleft,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -350,9 +421,10 @@ String axixleft;
 final axixFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     axixleft = value;
   },
+  initialValue: axixleft,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -383,7 +455,7 @@ String addleft;
 final addFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     addleft = value;
   },
   // style: style,
@@ -394,6 +466,7 @@ final addFieldleft = TextFormField(
       return null;
     }
   },
+  initialValue: addleft,
   keyboardType: TextInputType.name,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
@@ -416,9 +489,10 @@ String sphereright;
 final sphereFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     sphereright = value;
   },
+  initialValue: sphereright,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -451,9 +525,10 @@ String supportassist;
 final supportassistField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     supportassist = value;
   },
+
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -487,7 +562,7 @@ String cylright;
 final cylFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     cylright = value;
   },
   // style: style,
@@ -498,6 +573,7 @@ final cylFieldright = TextFormField(
       return null;
     }
   },
+  initialValue: cylright,
   keyboardType: TextInputType.name,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
@@ -520,9 +596,10 @@ String axixright;
 final axixFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     axixright = value;
   },
+  initialValue: axixright,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -553,9 +630,11 @@ String addright;
 final addFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     addright = value;
   },
+
+  initialValue: addright,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
