@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/NewsResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/network/response/StoreResponse.dart';
 import 'package:nazarath_app/screens/newsDetails.dart';
 import 'package:nazarath_app/screens/order.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,37 +28,28 @@ class _StoreScreenState extends State<StoreScreen> {
         appBar: getAppBarMain(context),
         backgroundColor: Colors.white,
         body:
-            // FutureBuilder<OrderResponse>(
-            //   future: ApiCall()
-            //       .execute<OrderResponse, Null>('my-orders/en', null),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       debugPrint('products size: ${snapshot.data?.result.data?.length}');
-            //       return
-            //         getNewsScreen(snapshot.data?.result?.data
-            //           ?.where((element) =>
-            //       element != null )
-            //           ?.toList(),context,super.widget);
-            //     } else if (snapshot.hasError) {
-            //       return getEmptyContainerOrder(context);
-            //     } else {
-            //       return progressBar;
-            //     }
-            //   },
-            // ),
+            FutureBuilder<StoreResponse>(
+              future: ApiCall()
+                  .execute<StoreResponse, Null>('stores/en', null),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  debugPrint('products size: ${snapshot.data?.stores?.length}');
+                  return
+                    getStoreScreen(snapshot.data.stores,context,super.widget);
+                } else if (snapshot.hasError) {
+                  return errorScreen('Error: ${snapshot.error}');
+                } else {
+                  return progressBar;
+                }
+              },
+            ),);
 
-            // Column(
-            //   children: [
-            //     getTopContainer(),
-            //     getFeatured()
-            //   ],
-            // )
-            getNewsScreen(context, widget));
+           // getNewsScreen(context, widget));
   }
 }
 
-Container getNewsScreen(BuildContext context, Widget widget) {
-  List<ItemsNew> items = new List<ItemsNew>();
+Container getStoreScreen(List<Stores> stores,BuildContext context, Widget widget) {
+  //List<ItemsNew> items = new List<ItemsNew>();
   // for(int i=0;i<orders.length;i++)
   // {
   //   for(int j=0;j<orders[i].itemsNew.length;j++)
@@ -69,22 +62,22 @@ Container getNewsScreen(BuildContext context, Widget widget) {
       children: [
         getTopContainer(),
         getStoreName(),
-        getRegion(),
-        Flexible(child: _listview(items, context, widget))
+       // getRegion(),
+        Flexible(child: _listview(stores, context, widget))
       ],
     ),
   );
 }
 
-Widget _listview(List<ItemsNew> items, BuildContext context, Widget widget) =>
+Widget _listview(List<Stores> items, BuildContext context, Widget widget) =>
     ListView.builder(
         // padding: EdgeInsets.only(bottom: 70),
-        itemBuilder: (context, index) => getListView(null, context, widget),
+        itemBuilder: (context, index) => getListView(items[index], context, widget),
         // separatorBuilder: (context, index) => Divider(
         //       color: Colors.grey,
         //       height: 1,
         //     ),
-        itemCount: 10);
+        itemCount: items.length);
 Container getTopContainer() {
   return Container(
     color: product_bg,
@@ -177,7 +170,7 @@ Widget getRegion() {
   );
 }
 
-Widget getListView(ItemsNew item, BuildContext context, Widget widget) {
+Widget getListView(Stores item, BuildContext context, Widget widget) {
   // if (featured == null)
   //   return Container();
   // else if (featured.length == 0) return Container();
@@ -208,7 +201,7 @@ Widget getListView(ItemsNew item, BuildContext context, Widget widget) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('New Delhi',
+                    Text(item.name,
                         style: TextStyle(
                             color: colorPrimary,
                             fontSize: 12,
@@ -216,7 +209,7 @@ Widget getListView(ItemsNew item, BuildContext context, Widget widget) {
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Text(
-                          'Gate No 2,5,6 & 10, Block B, Rajiv Chowk Metro Station,New Delhi,110001',
+                          item.address,
                           style: TextStyle(
                               color: textColor,
                               fontSize: 12,
@@ -238,7 +231,7 @@ Widget getListView(ItemsNew item, BuildContext context, Widget widget) {
                             ),
                             child: RaisedButton.icon(
                                 onPressed: () async {
-                                  String phone = '+916238839396'
+                                  String phone = '$country_code${item.phoneNumber}'
                                       // widget.orderItems.orderData.shippingPhone
                                       ;
                                   if (phone != null && phone.trim().isNotEmpty) {

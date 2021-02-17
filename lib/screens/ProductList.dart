@@ -240,7 +240,7 @@ Widget customView(List<Data> products,BuildContext context,Widget widget)
         ),
       ),
       SliverToBoxAdapter(
-        child:  getRecommended(homeResponse.newarrivals, widget),
+        child:  getRecommended(homeResponse.recommendedProducts, widget),
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 30.0),

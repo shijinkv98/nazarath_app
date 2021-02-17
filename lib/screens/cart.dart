@@ -139,7 +139,8 @@ class _CartState extends State<CartScreen> {
               debugPrint('products size: ${snapshot.data?.products?.length}');
               return getCartFull(snapshot.data,context,super.widget);
             } else if (snapshot.hasError) {
-              return getEmptyContainerCart(context);
+              return errorScreen('Error: ${snapshot.error}');
+              //return getEmptyContainerCart(context);
             } else {
               return progressBar;
             }

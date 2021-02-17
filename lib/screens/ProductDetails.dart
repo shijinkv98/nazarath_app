@@ -144,7 +144,7 @@ Widget getProductDetailsValue(ProductDetailsResponse response,BuildContext conte
         ),
         getButtons(context, widget, slug, response.product.store, "1"),
         getProductDescription(response.product.description),
-        getRecommended(homeResponse.newarrivals,widget),
+        getRecommended(homeResponse.recommendedProducts,widget),
       ],
     ),
   );

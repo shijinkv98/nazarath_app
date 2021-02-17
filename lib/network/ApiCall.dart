@@ -11,9 +11,11 @@ import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CategoryResponse.dart';
 import 'package:nazarath_app/network/response/CouponResponse.dart';
+import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/network/response/NewsResponse.dart';
 import 'package:nazarath_app/network/response/NotificationResponse.dart';
 import 'package:nazarath_app/network/response/OrderCancelesponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
@@ -24,6 +26,7 @@ import 'package:nazarath_app/network/response/RefferalResponse.dart';
 import 'package:nazarath_app/network/response/ReviewResponse.dart';
 import 'package:nazarath_app/network/response/SearchResponse.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
+import 'package:nazarath_app/network/response/StoreResponse.dart';
 import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
 import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
@@ -234,11 +237,15 @@ class ApiCall{
       return AddressResponse.fromJson(json) as T;
     } else if (T == ReviewResponse) {
       return ReviewResponse.fromJson(json) as T;
-    }
-    else if (T == LogoutResponse) {
+    } else if (T == LogoutResponse) {
       return LogoutResponse.fromJson(json) as T;
-    }
-    else {
+    } else if (T == NewsResponse) {
+      return NewsResponse.fromJson(json) as T;
+    } else if (T == StoreResponse) {
+      return StoreResponse.fromJson(json) as T;
+    } else if (T == EyePowerResponse) {
+      return EyePowerResponse.fromJson(json) as T;
+    } else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");
       // Future.error(Exception('Unknown class'));

@@ -9,6 +9,8 @@ class HomeResponse {
   List<Recentviews> recentviews;
   List<Newarrivals> newarrivals;
   List<Featuredbrands> featuredbrands;
+  List<RecommendedProducts> recommendedProducts;
+  List<FeaturedProducts> featuredProducts;
   int cartcount;
   int wishlistcount;
   Currency currency;
@@ -26,6 +28,8 @@ class HomeResponse {
         this.recentviews,
         this.newarrivals,
         this.featuredbrands,
+        this.recommendedProducts,
+        this.featuredProducts,
         this.cartcount,
         this.wishlistcount,
         this.currency,
@@ -83,6 +87,18 @@ class HomeResponse {
         featuredbrands.add(new Featuredbrands.fromJson(v));
       });
     }
+    if (json['recommended_products'] != null) {
+      recommendedProducts = new List<RecommendedProducts>();
+      json['recommended_products'].forEach((v) {
+        recommendedProducts.add(new RecommendedProducts.fromJson(v));
+      });
+    }
+    if (json['featured_products'] != null) {
+      featuredProducts = new List<FeaturedProducts>();
+      json['featured_products'].forEach((v) {
+        featuredProducts.add(new FeaturedProducts.fromJson(v));
+      });
+    }
     cartcount = json['cartcount'];
     wishlistcount = json['wishlistcount'];
     currency = json['currency'] != null
@@ -129,6 +145,14 @@ class HomeResponse {
     }
     if (this.address != null) {
       data['address'] = this.address.toJson();
+    }
+    if (this.recommendedProducts != null) {
+      data['recommended_products'] =
+          this.recommendedProducts.map((v) => v.toJson()).toList();
+    }
+    if (this.featuredProducts != null) {
+      data['featured_products'] =
+          this.featuredProducts.map((v) => v.toJson()).toList();
     }
     data['notification_count'] = this.notificationCount;
     return data;
@@ -833,6 +857,160 @@ class Newarrivals {
     data['price'] = this.price;
     data['discount'] = this.discount;
     data['image'] = this.image;
+    return data;
+  }
+}
+
+class RecommendedProducts {
+  String slug;
+  String code;
+  String name;
+  String description;
+  String appDescription;
+  String store;
+  String manufacturer;
+  String symbolLeft;
+  String symbolRight;
+  String oldprice;
+  String price;
+  String discount;
+  String rating;
+  String image;
+  int cart;
+  int wishlist;
+
+  RecommendedProducts(
+      {this.slug,
+        this.code,
+        this.name,
+        this.description,
+        this.appDescription,
+        this.store,
+        this.manufacturer,
+        this.symbolLeft,
+        this.symbolRight,
+        this.oldprice,
+        this.price,
+        this.discount,
+        this.rating,
+        this.image,
+        this.cart,
+        this.wishlist});
+
+  RecommendedProducts.fromJson(Map<String, dynamic> json) {
+    slug = json['slug'];
+    code = json['code'];
+    name = json['name'];
+    description = json['description'];
+    appDescription = json['app_description'];
+    store = json['store'];
+    manufacturer = json['manufacturer'];
+    symbolLeft = json['symbol_left'];
+    symbolRight = json['symbol_right'];
+    oldprice = json['oldprice'];
+    price = json['price'];
+    discount = json['discount'];
+    rating = json['rating'];
+    image = json['image'];
+    cart = json['cart'];
+    wishlist = json['wishlist'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['slug'] = this.slug;
+    data['code'] = this.code;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['app_description'] = this.appDescription;
+    data['store'] = this.store;
+    data['manufacturer'] = this.manufacturer;
+    data['symbol_left'] = this.symbolLeft;
+    data['symbol_right'] = this.symbolRight;
+    data['oldprice'] = this.oldprice;
+    data['price'] = this.price;
+    data['discount'] = this.discount;
+    data['rating'] = this.rating;
+    data['image'] = this.image;
+    data['cart'] = this.cart;
+    data['wishlist'] = this.wishlist;
+    return data;
+  }
+}
+
+class FeaturedProducts {
+  String slug;
+  String code;
+  String name;
+  String description;
+  String appDescription;
+  String store;
+  String manufacturer;
+  String symbolLeft;
+  String symbolRight;
+  String oldprice;
+  String price;
+  String discount;
+  String rating;
+  String image;
+  int cart;
+  int wishlist;
+
+  FeaturedProducts(
+      {this.slug,
+        this.code,
+        this.name,
+        this.description,
+        this.appDescription,
+        this.store,
+        this.manufacturer,
+        this.symbolLeft,
+        this.symbolRight,
+        this.oldprice,
+        this.price,
+        this.discount,
+        this.rating,
+        this.image,
+        this.cart,
+        this.wishlist});
+
+  FeaturedProducts.fromJson(Map<String, dynamic> json) {
+    slug = json['slug'];
+    code = json['code'];
+    name = json['name'];
+    description = json['description'];
+    appDescription = json['app_description'];
+    store = json['store'];
+    manufacturer = json['manufacturer'];
+    symbolLeft = json['symbol_left'];
+    symbolRight = json['symbol_right'];
+    oldprice = json['oldprice'];
+    price = json['price'];
+    discount = json['discount'];
+    rating = json['rating'];
+    image = json['image'];
+    cart = json['cart'];
+    wishlist = json['wishlist'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['slug'] = this.slug;
+    data['code'] = this.code;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['app_description'] = this.appDescription;
+    data['store'] = this.store;
+    data['manufacturer'] = this.manufacturer;
+    data['symbol_left'] = this.symbolLeft;
+    data['symbol_right'] = this.symbolRight;
+    data['oldprice'] = this.oldprice;
+    data['price'] = this.price;
+    data['discount'] = this.discount;
+    data['rating'] = this.rating;
+    data['image'] = this.image;
+    data['cart'] = this.cart;
+    data['wishlist'] = this.wishlist;
     return data;
   }
 }

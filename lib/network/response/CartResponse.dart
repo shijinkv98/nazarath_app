@@ -255,9 +255,9 @@ class Product {
   int orderNumber;
   String rewardPoint;
   String purchaseReward;
-  Null metaTitle;
-  Null metaDescription;
-  Null metaKeywords;
+  String metaTitle;
+  String metaDescription;
+  String metaKeywords;
   String cgst;
   String sgst;
   String igst;
@@ -351,7 +351,7 @@ class Product {
     data['purchase_reward'] = this.purchaseReward;
     data['meta_title'] = this.metaTitle;
     data['meta_description'] = this.metaDescription;
-    data['meta_keywords'] = this.metaKeywords;
+    data['meta_keywords'] = this.metaKeywords.toString();
     data['cgst'] = this.cgst;
     data['sgst'] = this.sgst;
     data['igst'] = this.igst;

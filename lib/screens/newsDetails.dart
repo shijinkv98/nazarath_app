@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/NewsResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/home.dart';
 import 'package:nazarath_app/screens/news.dart';
@@ -13,8 +14,8 @@ import 'cart.dart';
 import 'notification.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
-  ItemsNew title;
-  NewsDetailsScreen(ItemsNew title)
+  News title;
+  NewsDetailsScreen(News title)
   {
     this.title=title;
   }
@@ -22,7 +23,7 @@ class NewsDetailsScreen extends StatefulWidget {
   _NewsDetailsScreenState createState() => new _NewsDetailsScreenState(item: title);
 }
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
-  ItemsNew item;
+  News item;
   _NewsDetailsScreenState({ this.item}) ;
   @override
   Widget build(BuildContext context) {
@@ -119,7 +120,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
   }
 
 }
-Container getNewsScreen(ItemsNew item,BuildContext context,Widget widget){
+Container getNewsScreen(News item,BuildContext context,Widget widget){
 
   return Container(
     child: Column(
@@ -173,7 +174,7 @@ Container getTopContainer() {
     ),
   );
 }
-Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
+Container getNewsDetails(News item,BuildContext context,Widget widget){
   return Container(
     child: Column(
       children: [
@@ -188,7 +189,7 @@ Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.only(top: 5,left: 20),
-            child: Text(item.productName,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
+            child: Text(item.title,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
           ),
         ),
         Padding(
@@ -212,8 +213,8 @@ Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text('Hangouts bring conversations to life with photos, emoji, and even group video calls for free. Connect with friends across computers, Android and Apple devices'
-            ,style: TextStyle(color: textColor,fontSize: 12),
+            child: Text(item.details,
+            style: TextStyle(color: textColor,fontSize: 12),
             ),
           ),
         ),
@@ -222,7 +223,7 @@ Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text(item.productName ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
+            child: Text(item.name ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -231,8 +232,8 @@ Container getNewsDetails(ItemsNew item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text('Hangouts bring conversations to life with photos, emoji, and even group video calls for free. Connect with friends across computers, Android and Apple devices'
-              ,style: TextStyle(color: textColor,fontSize: 12),
+            child: Text(item.description,
+              style: TextStyle(color: textColor,fontSize: 12),
             ),
           ),
         ),

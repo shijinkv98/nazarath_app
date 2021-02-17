@@ -29,6 +29,8 @@ const Color primaryTextColor = Color(0xFF45ccc1);
 const Color primaryIconColor = Color(0xFF45ccc1);
 
 const String productThumbUrl = '${BASE_URL}images/product/thumbnail/';
+const String newsThumbUrl = '${BASE_URL}images/dtore/thumbnail/';
+const String newsImageUrl = '${BASE_URL}images/news/';
 const String categoryThumbUrl = '${BASE_URL}images/category/thumbnail/';
 const String bannerThumbUrl = '${BASE_URL}images/banner/';
 const String offerThumbUrl = '${BASE_URL}images/offer/';
@@ -59,6 +61,7 @@ const double button_text_size=14.0;
 String deviceToken = "";
 String deviceId = "";
 String currency = "AED";
+String country_code="+971";
 
 // public static final String PRODUCT_URL = MAIN_URL + "images/product/";
 // public static final String BANNER_URL = MAIN_URL + "images/banner/";

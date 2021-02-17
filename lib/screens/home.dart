@@ -94,9 +94,9 @@ SingleChildScrollView getFullView(
           padding: const EdgeInsets.only(top: 10),
           child: Center(child: getCategory(homeResponse.categories)),
         ),
-         getFeatured(homeResponse.newarrivals,widget),
+         getFeatured(homeResponse.featuredProducts,widget),
          getSlider(homeResponse.slider,190),
-         getRecommended(homeResponse.newarrivals,widget),
+         getRecommended(homeResponse.recommendedProducts,widget),
          getBannerSlider(homeResponse.banners,180)
       ],
     ),
@@ -196,7 +196,7 @@ Widget getCategoryIem(Categories category,BuildContext context)
     ),
   );
 }
-Widget getRecommended(List<Newarrivals> recoomended,Widget widget) {
+Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
   if (recoomended == null)
     return Container(
       child:SizedBox(
@@ -239,7 +239,7 @@ Widget getRecommended(List<Newarrivals> recoomended,Widget widget) {
     ),
   );
 }
-Widget getFeatured(List<Newarrivals> featured,Widget widget) {
+Widget getFeatured(List<FeaturedProducts> featured,Widget widget) {
   if (featured == null)
      return Container(
     child:SizedBox(
@@ -282,7 +282,7 @@ Widget getFeatured(List<Newarrivals> featured,Widget widget) {
     ),
   );
 }
-Widget getFeatureItem(Newarrivals item,BuildContext context,Widget widget)
+Widget getFeatureItem(FeaturedProducts item,BuildContext context,Widget widget)
 {
   return Container(
     padding: EdgeInsets.only(top: 5),
@@ -373,7 +373,7 @@ Widget getFeatureItem(Newarrivals item,BuildContext context,Widget widget)
                         children: [
                           Container(
                             //alignment: Alignment.topRight,
-                              child: getWishListIcon(false)),
+                              child: getWishListIcon(item.wishlist)),
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 0,
@@ -413,7 +413,7 @@ Widget getFeatureItem(Newarrivals item,BuildContext context,Widget widget)
     ),
   );
 }
-Widget getRecommendItem(Newarrivals item,BuildContext context,Widget widget)
+Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget widget)
 {
   return Container(
     padding: EdgeInsets.only(top: 5),
@@ -504,7 +504,7 @@ Widget getRecommendItem(Newarrivals item,BuildContext context,Widget widget)
                         children: [
                           Container(
                             //alignment: Alignment.topRight,
-                              child: getWishListIcon(false)),
+                              child: getWishListIcon(item.wishlist)),
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 0,
@@ -971,16 +971,16 @@ Widget getImageOffer(String url)
 //     itemBuilder: (context, index) =>
 //         getImage(banners[index].image),
 //     itemCount: banners.length);
-InkWell getWishListIcon(bool condition )
+InkWell getWishListIcon(int condition )
 {
-  if(condition) {
+  if(condition==1) {
     return InkWell(
 // onTap: ,
       child: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: ImageIcon(
-          AssetImage('assets/icons/favourite.png'),
-          size: 20,
+          AssetImage('assets/icons/fav_active.png'),
+          size: 18,
           color: colorPrimary,
         ),
       ),
@@ -991,7 +991,7 @@ InkWell getWishListIcon(bool condition )
     child:  Padding(
       padding: const EdgeInsets.only(right: 8),
       child: ImageIcon(
-        AssetImage('assets/icons/favourite.png'),
+        AssetImage('assets/icons/favorite.png'),
         size: 18,
         color: colorPrimary,
       ),

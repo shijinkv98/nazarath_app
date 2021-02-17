@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/NewsResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/newsDetails.dart';
 import 'package:nazarath_app/screens/order.dart';
@@ -24,13 +25,13 @@ class _NewsState extends State<NewsScreen> {
     return Scaffold(
       appBar: getAppBarMain(context),
       backgroundColor: Colors.white,
-      body:FutureBuilder<OrderResponse>(
+      body:FutureBuilder<NewsResponse>(
         future: ApiCall()
-            .execute<OrderResponse, Null>('my-orders/en', null),
+            .execute<NewsResponse, Null>('news/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data?.result.data?.length}');
-            return getNewsScreen(snapshot.data?.result?.data
+            debugPrint('products size: ${snapshot.data?.news?.length}');
+            return getNewsScreen(snapshot.data?.news
                 ?.where((element) =>
             element != null )
                 ?.toList(),context,super.widget);
@@ -51,27 +52,20 @@ class _NewsState extends State<NewsScreen> {
   }
 
 }
-Container getNewsScreen(List<Data> orders,BuildContext context,Widget widget){
-  List<ItemsNew> items=new List<ItemsNew>();
-  for(int i=0;i<orders.length;i++)
-  {
-    for(int j=0;j<orders[i].itemsNew.length;j++)
-    {
-      items.add(orders[i].itemsNew[j]);
-    }
-  }
+Container getNewsScreen(List<News> news,BuildContext context,Widget widget){
+
   return Container(
     child: Column(
       children: [
         getTopContainer(),
         getNews(),
-        Flexible(child: _listview(items, context, widget))
+        Flexible(child: _listview(news, context, widget))
 
       ],
     ),
   );
 }
-Widget _listview(List<ItemsNew> items,BuildContext context,Widget widget) => ListView.builder(
+Widget _listview(List<News> items,BuildContext context,Widget widget) => ListView.builder(
     // padding: EdgeInsets.only(bottom: 70),
     itemBuilder: (context, index) =>
         getListView(items[index],context,widget),
@@ -129,7 +123,7 @@ Container getNews(){
     ),
   );
 }
-Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
+Widget getListView(News item,BuildContext context,Widget widget) {
   // if (featured == null)
   //   return Container();
   // else if (featured.length == 0) return Container();
@@ -154,7 +148,7 @@ Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
                 Container(
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/images/no_image.png',
-                    image: '$productThumbUrl${item.image}',
+                    image: '$newsThumbUrl${item.image}',
                     width: 100
                   ),
                 ),
@@ -169,7 +163,7 @@ Widget getListView(ItemsNew item,BuildContext context,Widget widget) {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(item.createdAt,style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
-                          Text(item.productName,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
+                          Text(item.title,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
                         ],
                       ),
                     )
