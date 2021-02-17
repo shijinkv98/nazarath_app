@@ -6,19 +6,22 @@ import 'package:nazarath_app/screens/notification.dart';
 import 'cart.dart';
 
 class EditAddressScreen extends StatefulWidget {
-  String title;
-  EditAddressScreen(String title)
+  String from;
+  EditAddressScreen(String from)
   {
-    this.title=title;
+    this.from=from;
   }
   @override
-  _EditAddressScreenState createState() => new _EditAddressScreenState(title: title);
+  _EditAddressScreenState createState() => new _EditAddressScreenState(from: from);
 }
 class _EditAddressScreenState extends State<EditAddressScreen> {
-  String title;
-  _EditAddressScreenState({ this.title}) ;
+  String from;
+  _EditAddressScreenState({ this.from}) ;
   @override
   Widget build(BuildContext context) {
+    String title="Add Adress";
+    if(from=="edit")
+      title="Edit Address";
     return Scaffold(
       appBar: AppBar(
         title: Text("Edit Address",style: TextStyle(

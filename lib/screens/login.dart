@@ -296,7 +296,7 @@ class Login extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        getSocialMediaContainer(context)
+                       // getSocialMediaContainer(context)
                       ],
                     )
 

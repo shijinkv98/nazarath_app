@@ -309,15 +309,17 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                                             "left_eye_addv":addleft,
                                           };
                                             FocusScope.of(context).requestFocus(FocusNode());
+
                                             var response = await ApiCall()
                                                 .execute<EyePowerResponse, Null>("eye-power/store/en", body);
 
                                             if (response?.data != null) {
-                                              // Navigator.of(context)
+                                              // Navigator.of(context)111111
                                               //     .pushReplacementNamed('HomePage', arguments: '');
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => widget),);
+
+                                              // Navigator.pushReplacement(
+                                              //   context,
+                                              //   MaterialPageRoute(builder: (context) => widget),);
                                             }
 
                                         },
