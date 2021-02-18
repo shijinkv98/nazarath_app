@@ -14,6 +14,7 @@ import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:nazarath_app/custom/namedicon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home.dart';
@@ -24,6 +25,7 @@ import 'profile.dart';
 import 'register/register.dart';
 DefaultTabController controller;
 TabController _controller;
+
 class DashBoard extends StatefulWidget {
   @override
   _DashBoard createState() => _DashBoard();
@@ -31,7 +33,6 @@ class DashBoard extends StatefulWidget {
 }
 
 int tbPosition = 0;
-
 //var homeResponse;
 var customer;
 
@@ -67,6 +68,7 @@ class _DashBoard extends State<DashBoard> {
 }
 DefaultTabController getTabController(BuildContext context)
 {
+
  return  DefaultTabController(
     length: 5,
    initialIndex: tbPosition,
@@ -156,6 +158,7 @@ DefaultTabController getTabController(BuildContext context)
               ),
             ),
           ),
+
 
         ],
       ),

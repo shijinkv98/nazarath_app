@@ -27,7 +27,7 @@ const String BASE_URL = "https://nazarath.webdemos.cf/";
  const Color gradientEnd = Color(0xFF45ccc1);
 const Color primaryTextColor = Color(0xFF45ccc1);
 const Color primaryIconColor = Color(0xFF45ccc1);
-
+int wish_c=0,cart_c=0,noti_c=0;
 const String productThumbUrl = '${BASE_URL}images/product/thumbnail/';
 const String newsThumbUrl = '${BASE_URL}images/dtore/thumbnail/';
 const String newsImageUrl = '${BASE_URL}images/news/';
@@ -36,10 +36,10 @@ const String bannerThumbUrl = '${BASE_URL}images/banner/';
 const String offerThumbUrl = '${BASE_URL}images/offer/';
 const double padding = 10.0;
 const contryCode = 971;
-const double appTabIconSize=20.0;
+const double appTabIconSize=25.0;
 const double appTabTop=0;
 const double appTabBottom=20;
-const double appTabIconPad=3;
+const double appTabIconPad=5;
 
 const double appTabLeft=0;
 const double appTabRight=0;
@@ -62,7 +62,7 @@ String deviceToken = "";
 String deviceId = "";
 String currency = "AED";
 String country_code="+971";
-
+const double home_wish_size=24;
 // public static final String PRODUCT_URL = MAIN_URL + "images/product/";
 // public static final String BANNER_URL = MAIN_URL + "images/banner/";
 
@@ -88,6 +88,12 @@ Widget errorScreen(String errorTitle) => Center(
     ],
   ),
 );
+void setCounts(int wish,int cart, int noti)
+{
+  cart_c=cart;
+  wish_c=wish;
+  noti_c=noti;
+}
 Widget progressBar = InkWell(
   child: SafeArea(
     child: Center(
