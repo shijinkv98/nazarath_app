@@ -669,14 +669,15 @@ Widget getTopContainer() {
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 10, right: 10),
+
                 child: Container(
-                    height: 100,
+                  height: 120,
                     decoration: new BoxDecoration(
                         image: new DecorationImage(
                           image: new AssetImage(
                               "assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         ))),
               ),
             )
