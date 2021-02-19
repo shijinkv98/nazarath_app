@@ -208,9 +208,9 @@ class Profile extends StatelessWidget {
                         Text('Wallet',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    // if(customer.guest_id==null||!customer.guest_id.isEmpty())
-                    //   gotoLogin(context);
-                    // else
+                    if(customer.guest_id==null||!customer.guest_id.isEmpty())
+                      gotoLogin(context);
+                    else
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => WalletScreen("")),

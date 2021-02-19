@@ -2,12 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/products.dart';
 import 'package:nazarath_app/screens/store.dart';
+import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
@@ -169,10 +171,10 @@ class SideDrawer extends StatelessWidget{
                         if(customer.guest_id==null||!customer.guest_id.isEmpty())
                           gotoLogin(context);
                         else
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CheckUpScreen("Add Your First Product")),
-                        );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WalletScreen("")),
+                          );
                       },
                       ),
                       FlatButton(
