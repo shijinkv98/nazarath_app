@@ -133,8 +133,8 @@ class SideDrawer extends StatelessWidget{
                             Text('My Orders',style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
-                        if(customer.guest_id==null||!customer.guest_id.isEmpty())
-                          gotoLogin(context);
+                        if(customer.guest_id.isEmpty())
+                            gotoLogin(context);
                         else
                         Navigator.push(
                           context,
@@ -168,7 +168,7 @@ class SideDrawer extends StatelessWidget{
                             Text('My Wallet',style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
-                        if(customer.guest_id==null||!customer.guest_id.isEmpty())
+                        if(!customer.guest_id.isEmpty())
                           gotoLogin(context);
                         else
                           Navigator.push(
@@ -187,7 +187,7 @@ class SideDrawer extends StatelessWidget{
                             Text('Change Password',style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
-                        if(customer.guest_id==null||!customer.guest_id.isEmpty())
+                        if(!customer.guest_id.isEmpty())
                           gotoLogin(context);
                         else
                         Navigator.push(
@@ -257,7 +257,7 @@ class SideDrawer extends StatelessWidget{
                             Text('Logout',style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
-                        if(customer.guest_id==null||!customer.guest_id.isEmpty())
+                        if(!customer.guest_id.isEmpty())
                           gotoLogin(context);
                         else
                         logout(context);

@@ -596,7 +596,7 @@ class Address {
   String createdAt;
   String updatedAt;
   String buildingNumber;
-  int areaNumber;
+  String areaNumber;
   String streetNumber;
   String location;
   Country country;
@@ -638,7 +638,7 @@ class Address {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     buildingNumber = json['building_number'];
-    areaNumber = json['area_number'];
+    areaNumber = json['area_number'].toString();
     streetNumber = json['street_number'];
     location = json['location'];
     country =
