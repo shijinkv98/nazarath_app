@@ -104,8 +104,8 @@ Widget getButton(BuildContext context){
         child: Text('Update', style: TextStyle(
             fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
         onPressed: () async {
-          if (_formKey_chang.currentState.validate()) {
-            _formKey_chang.currentState.save();
+          // if (_formKey_chang.currentState.validate()) {
+          //   _formKey_chang.currentState.save();
             Map body={
               "new_password":newpassword,
               "old_password":currentpassword,
@@ -113,11 +113,12 @@ Widget getButton(BuildContext context){
             FocusScope.of(context).requestFocus(FocusNode());
 
             var response = await ApiCall()
-                .execute<ChangePasswordResponse, Null>("eye-power/store/en", body);
+                .execute<ChangePasswordResponse, Null>("change-password/en", body);
 
-            if (response?.message != null) {
+            if (response!= null) {
+                ApiCall().showToast(response.message);
             }
-          }
+        //  }
         },
       ),
     ),
@@ -142,7 +143,7 @@ String currentpassword;
 final currentpasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     currentpassword = value;
   },
   // style: style,
@@ -185,8 +186,7 @@ String newpassword;
 final newpasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  key: _formKey_chang,
-  onSaved: (value) {
+  onChanged: (value) {
     newpassword = value;
 
   },
@@ -198,8 +198,7 @@ final newpasswordField = TextFormField(
       return null;
     }
   },
-  keyboardType: TextInputType.visiblePassword,
-  textInputAction: TextInputAction.next,
+  textInputAction: TextInputAction.done,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
     hintText: "Enter a new password", hintStyle: TextStyle(color: textColorSecondary),
@@ -230,7 +229,6 @@ String confirmpassword;
 final confirmpasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  key: _formKey_chang,
   onChanged: (value) {
     confirmpassword = value;
     if(newpassword!=confirmpassword)

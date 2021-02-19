@@ -206,12 +206,14 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                       children: [
                         Container(
                           width: 180,
-                          child:Flexible(
-                            child: Text(
-                              product.name,
-                              style: TextStyle(
-                                  color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
-                            )) ,)
+                          child:Text(
+                            product.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              height: 1.3,
+                                color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
+                          ) ,)
                         ,
                         SizedBox(
                           height: 8,
@@ -395,13 +397,13 @@ Container getTopContainer()
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                padding: const EdgeInsets.only(top: 0,left: 15,right: 15),
                 child: Container(
-                    height: 100,
+                    height: 125,
                     decoration: new BoxDecoration(
                         image: new DecorationImage(
                           image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         )
                     )
                 ),

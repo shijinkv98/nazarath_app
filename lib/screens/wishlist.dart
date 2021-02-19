@@ -179,6 +179,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
   child:
   Container(
     margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+    padding: EdgeInsets.only(bottom: 10),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
@@ -210,10 +211,15 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      product.name,
-                      style: TextStyle(
-                          color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
+                    Container(
+                      padding:EdgeInsets.only(right:10),
+                      child: Text(
+                        product.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500,height: 1.3),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
@@ -338,13 +344,13 @@ Container getTopContainer()
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
                 child: Container(
-                    height: 100,
+                    height: 130,
                     decoration: new BoxDecoration(
                         image: new DecorationImage(
                           image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         )
                     )
                 ),

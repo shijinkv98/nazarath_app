@@ -279,10 +279,12 @@ Container getProductDetails(Product product) {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         width: 240,
-                        child:Flexible(child: Text(
+                        child:Text(
                           product.name,
-                          style: TextStyle(color: Colors.black, fontSize: 15),
-                        ),)
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.black, fontSize: 15, height: 1.3,),
+                        )
                       ),
                       Container(
                         padding: EdgeInsets.only(left: 10),
@@ -294,13 +296,15 @@ Container getProductDetails(Product product) {
                               getStarRating(double.parse(product.rating)),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),
-                                child: Flexible(child:Text(
+                                child: Text(
                                   '${product.ratingcount.toString()}${" reviews"}',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
-                                )),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ],
                           ),
@@ -316,7 +320,7 @@ Container getProductDetails(Product product) {
                         child: Flexible(child:Text(
                           '${product.symbolLeft}${" "}${product.price}${product.symbolRight}',
                           style: TextStyle(
-                              color: Colors.red,
+                              color: colorRed,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),)
