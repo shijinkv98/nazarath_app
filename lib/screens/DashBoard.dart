@@ -606,10 +606,17 @@ async {
       }
 
 }
-Future<void> gotoLogin(BuildContext context)
+Future<void> gotoLogout(BuildContext context)
 async {
   await ApiCall().saveUser("");
   Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Login()));
+}
+void gotoLogin(BuildContext context) {
+
+  Navigator.push(
       context,
       MaterialPageRoute(
           builder: (BuildContext context) => Login()));

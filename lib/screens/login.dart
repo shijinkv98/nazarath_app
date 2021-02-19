@@ -289,13 +289,13 @@ class Login extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Text("Or Sign in with",
-                            textAlign: TextAlign.center,
-                            style: style.copyWith(
-                                fontSize: 12,color: item_text_gray)),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // Text("Or Sign in with",
+                        //     textAlign: TextAlign.center,
+                        //     style: style.copyWith(
+                        //         fontSize: 12,color: item_text_gray)),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                        // getSocialMediaContainer(context)
                       ],
                     )

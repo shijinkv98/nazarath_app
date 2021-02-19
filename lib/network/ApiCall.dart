@@ -134,9 +134,10 @@ class ApiCall{
     } else {
      // showToast(jsonResponse['message'] ?? "Something went wrong!");
       if (success == '2' && context != null) {
-        showToast(jsonResponse['message'] ?? "Something went wrong!");
+        //showToast(jsonResponse['message'] ?? "Something went wrong!");
         //await saveUser("");
-        gotoLogin(context);
+
+        gotoLogout(context);
         //Navigator.of(context).pushReplacementNamed('/login');
       }
 
