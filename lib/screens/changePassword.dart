@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/ChangePasswordResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
@@ -14,6 +16,7 @@ class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => new _ChangePasswordScreenState(title: title);
 }
+ final GlobalKey<FormState> _formKey_chang = GlobalKey<FormState>();
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   String title;
   _ChangePasswordScreenState({ this.title}) ;
@@ -31,11 +34,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       //   elevation: 0,
       // ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(child: getPassword()),
+      body: SingleChildScrollView(child: getPassword(context)),
     );
   }
 }
-Container getPassword()
+Container getPassword(BuildContext context)
 {
   return Container(
     child: Container(width: double.infinity,
@@ -48,7 +51,7 @@ Container getPassword()
               children: [
                 getForms(),
                 getForgotPasssword(),
-                getButton()
+                getButton(context)
 
               ],
             ),
@@ -88,7 +91,7 @@ Widget getForms(){
     ),
   );
 }
-Widget getButton(){
+Widget getButton(BuildContext context){
   return Padding(
     padding: const EdgeInsets.only(top: 70,left: 25,right: 25),
     child: Container(
@@ -100,7 +103,22 @@ Widget getButton(){
         elevation: 0,
         child: Text('Update', style: TextStyle(
             fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
-        onPressed: () async {},
+        onPressed: () async {
+          if (_formKey_chang.currentState.validate()) {
+            _formKey_chang.currentState.save();
+            Map body={
+              "new_password":newpassword,
+              "old_password":currentpassword,
+            };
+            FocusScope.of(context).requestFocus(FocusNode());
+
+            var response = await ApiCall()
+                .execute<ChangePasswordResponse, Null>("eye-power/store/en", body);
+
+            if (response?.message != null) {
+            }
+          }
+        },
       ),
     ),
   );
@@ -167,8 +185,10 @@ String newpassword;
 final newpasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
+  key: _formKey_chang,
   onSaved: (value) {
     newpassword = value;
+
   },
   // style: style,
   validator: (value) {
@@ -210,8 +230,11 @@ String confirmpassword;
 final confirmpasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  key: _formKey_chang,
+  onChanged: (value) {
     confirmpassword = value;
+    if(newpassword!=confirmpassword)
+      confirmpasswordField.validator("password do not match");
   },
   // style: style,
   validator: (value) {

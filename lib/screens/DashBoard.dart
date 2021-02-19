@@ -11,6 +11,7 @@ import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
+import 'package:nazarath_app/screens/custom/notificationbadge.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
@@ -35,16 +36,22 @@ class DashBoard extends StatefulWidget {
 int tbPosition = 0;
 //var homeResponse;
 var customer;
+final ValueNotifier<int> notificationCounterValueNotifer=ValueNotifier(0);
 
 class _DashBoard extends State<DashBoard> {
+
   @override
   void initState() {
+
     customer=new UserData();
+
     super.initState();
+
     getHomeData(context);
   }
   Future<void> getHomeData(BuildContext context)
   async {
+
     ApiCall().context=context;
     customer=await ApiCall().getUser();
 
@@ -62,6 +69,7 @@ class _DashBoard extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     debugPrint('MJM HomeScreen build()');
+    //notificationCounterValueNotifer=ValueNotifier(0);
     controller =getTabController(context);
     return controller;
   }
@@ -108,7 +116,7 @@ DefaultTabController getTabController(BuildContext context)
                 ),
               )
           ),
-
+         // NotificationBadge(notificationCounterValueNotifer),
           Padding(
               padding: const EdgeInsets.only(right: appTabIconPad),
               child: GestureDetector(

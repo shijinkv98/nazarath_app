@@ -233,7 +233,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SpinnerCart(product.slug,product.storeslug,product.quantity),
+                            SpinnerCart(product.slug,product.storeslug,product.quantity,widget),
 
                           ],
                         )

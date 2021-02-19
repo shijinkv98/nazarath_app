@@ -90,6 +90,10 @@ Widget errorScreen(String errorTitle) => Center(
 );
 void setCounts(int wish,int cart, int noti)
 {
+  // notificationCounterValueNotifer =
+  //     ValueNotifier(cart);
+  notificationCounterValueNotifer.value=10;
+  notificationCounterValueNotifer.notifyListeners();
   cart_c=cart;
   wish_c=wish;
   noti_c=noti;

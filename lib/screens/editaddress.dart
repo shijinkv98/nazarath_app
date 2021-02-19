@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
 
 class EditAddressScreen extends StatefulWidget {
   String from;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   EditAddressScreen(String from)
   {
     this.from=from;
@@ -84,6 +87,7 @@ String address;
 final addressField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
+
   onSaved: (value) {
     address = value;
   },
@@ -116,7 +120,20 @@ final addressField = TextFormField(
         width: register_icon_size,
         height: register_icon_size,
       ),
-      onPressed: (){},
+      onPressed: () async {
+        Map body={
+          "address":address,
+          "zipcode":postal,
+          "state":state,
+        };
+       // FocusScope.of(context).requestFocus(FocusNode());
+
+        var response = await ApiCall()
+            .execute<AddressResponse, Null>("customer-addresses/add/en", body);
+
+        if (response?.addresses!= null) {
+        }
+      },
       color: colorPrimary,
     ),
 

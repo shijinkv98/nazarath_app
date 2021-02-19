@@ -10,6 +10,7 @@ import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CategoryResponse.dart';
+import 'package:nazarath_app/network/response/ChangePasswordResponse.dart';
 import 'package:nazarath_app/network/response/CouponResponse.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
@@ -245,6 +246,8 @@ class ApiCall{
       return StoreResponse.fromJson(json) as T;
     } else if (T == EyePowerResponse) {
       return EyePowerResponse.fromJson(json) as T;
+    } else if (T == ChangePasswordResponse) {
+      return ChangePasswordResponse.fromJson(json) as T;
     } else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");

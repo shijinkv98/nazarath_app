@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/screens/home.dart';
 import 'package:spinner_input/spinner_input.dart';
+
+import '../cart.dart';
 
 class SpinnerCart extends StatefulWidget {
   String slug, store;
   double count;
-    SpinnerCart(String slug,String store,String count)
+  Widget superWidget;
+    SpinnerCart(String slug,String store,String count,Widget superWidget)
     {
       this.store=store;
       this.slug=slug;
       this.count=double.parse(count);
+      this.superWidget=superWidget;
     }
   @override
-  _SpinnerCartState createState() => _SpinnerCartState(slug:this.slug,store:this.store,spinner_cart: this.count);
+  _SpinnerCartState createState() => _SpinnerCartState(slug:this.slug,store:this.store,spinner_cart: this.count,superWidget: this.superWidget);
 }
 
 
 class _SpinnerCartState extends State<SpinnerCart> {
   double spinner_cart = 1;
   String slug, store;
-  _SpinnerCartState({this.slug,this.store,this.spinner_cart});
+  Widget superWidget;
+  _SpinnerCartState({this.slug,this.store,this.spinner_cart,this.superWidget});
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -70,7 +77,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
                       onChange: (newValue) {
                         setState(() {
                           spinner_cart = newValue;
-                          addtoCart(slug, store, context, widget, spinner_cart.toString());
+                          addtoCart(slug, store, context, superWidget, spinner_cart.toString());
                         });
 
                         },
@@ -86,6 +93,25 @@ class _SpinnerCartState extends State<SpinnerCart> {
     );
 
   }
+}
+Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":quantity,
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
 }
 GestureDetector removeButtonCart(String slug,String store,BuildContext context,Widget widget)
 {
@@ -107,4 +133,23 @@ GestureDetector removeButtonCart(String slug,String store,BuildContext context,W
       )
   );
 
+}
+Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":"0",
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => CartScreen()));
+  }
+  return "Success!";
 }
