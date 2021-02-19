@@ -12,6 +12,7 @@ import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/privacy_policy.dart';
 import 'package:nazarath_app/screens/refertofriends.dart';
 import 'package:nazarath_app/screens/savedpower.dart';
+import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'DashBoard.dart';
 import 'changePassword.dart';
@@ -188,9 +189,9 @@ class Profile extends StatelessWidget {
                         Text('Saved Power',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id==null||!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id==null||!customer.guest_id.isEmpty())
+                    //   gotoLogin(context);
+                    // else
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
@@ -212,7 +213,7 @@ class Profile extends StatelessWidget {
                     // else
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReferScreen("")),
+                        MaterialPageRoute(builder: (context) => WalletScreen("")),
                       );
                   },
                   ),
