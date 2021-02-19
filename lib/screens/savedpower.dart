@@ -1,8 +1,11 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
+import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
@@ -19,6 +22,8 @@ class SavedPowerScreen extends StatefulWidget {
 class _SavedPowerScreenState extends State<SavedPowerScreen> {
   String title;
   _SavedPowerScreenState({this.title});
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +86,7 @@ void setData(Data data)
 Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
 {
   setData(data);
+  FileModel _regstraionDoc;
   return Container(
     child: Container(
       child: Container(
@@ -118,7 +124,24 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white)),
                             ),
-                            onPressed: () async {},
+                            onPressed: () async {
+
+
+                              final _allowedDocuments = ['docx', 'pdf', 'doc'];
+                              FilePickerResult result =
+                              await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: _allowedDocuments,
+                              );
+                              if (result != null) {
+                                _regstraionDoc = FileModel(
+                                    fileName: result.files.single.name,
+                                    imageStr: result.files.single.path,
+                                    imageU8L: result.files.single.bytes);
+                                DocsAddedNotifier _docsAddedNotifier;
+                                _docsAddedNotifier.docAdded();
+                              }
+                            },
                           ),
                         ),
                       ),
@@ -126,13 +149,15 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                         padding: const EdgeInsets.only(left: 15),
                         child: Container(
                           width: 150,
-                          child: Text(
-                            data.prescription,
+                          child: _regstraionDoc  != null
+                              ? Text(
+                            _regstraionDoc.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                            TextStyle(color: textColor, fontSize: 12),
-                          ),
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red),
+                          ):Container(),
                         ),
                       ),
                     ],
