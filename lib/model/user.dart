@@ -24,11 +24,11 @@ class UserData {
     token = json['token'];
     referral_code = json['token'];
     guest_id= json['guest_id'];
-    otp= json['otp'];
-    if(!guest_id.isEmpty&&guest_id.length>1)
-      {
-        name="Guest";
-      }
+    // otp= json['otp'];
+    // if(!guest_id.isEmpty&&guest_id.length>1)
+    //   {
+    //     name="Guest";
+    //   }
     // if(name.isEmpty)
     //   name="USER";
     otpVerificationStatus = json['otpverificationstatus'];

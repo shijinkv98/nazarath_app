@@ -131,9 +131,9 @@ class Profile extends StatelessWidget {
                         Text('Edit Profile',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                          if(!customer.guest_id.isEmpty())
-                              gotoLogin(context);
-                          else
+                          // if(customer.guest_id!="")
+                          //     gotoLogin(context);
+                          // else
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PersonalInfoScreen("")),
@@ -151,9 +151,9 @@ class Profile extends StatelessWidget {
                         Text('My Orders',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => OrderScreen()),
@@ -170,9 +170,9 @@ class Profile extends StatelessWidget {
                         Text('My Addresses',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AddressScreen("Notification is empty")),
@@ -189,7 +189,7 @@ class Profile extends StatelessWidget {
                         Text('Saved Power',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    // if(!customer.guest_id.isEmpty())
+                    // if(customer.guest_id!="")
                     //   gotoLogin(context);
                     // else
                       Navigator.push(
@@ -208,9 +208,9 @@ class Profile extends StatelessWidget {
                         Text('Wallet',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => WalletScreen("")),
@@ -227,9 +227,9 @@ class Profile extends StatelessWidget {
                         Text('Refer to Friend',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ReferScreen("")),
@@ -265,9 +265,9 @@ class Profile extends StatelessWidget {
                         Text('Change Password',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
@@ -300,9 +300,9 @@ class Profile extends StatelessWidget {
                         Text('Logout',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(!customer.guest_id.isEmpty())
-                      gotoLogin(context);
-                    else
+                    // if(customer.guest_id!="")
+                    //   gotoLogin(context);
+                    // else
                       logout(context);
                   },
                   )

@@ -611,7 +611,7 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse respo
           child: GestureDetector(
 
             onTap: (){
-              if(!customer.guest_id.isEmpty())
+              if(customer.guest_id!="")
                 gotoLogin(context);
               else
               Navigator.push(
