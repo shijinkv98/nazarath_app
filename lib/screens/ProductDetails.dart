@@ -317,17 +317,17 @@ Container getProductDetails(Product product) {
                     children: [
                       Container(
                         padding: EdgeInsets.only(right: 10),
-                        child: Flexible(child:Text(
+                        child: Text(
                           '${product.symbolLeft}${" "}${product.price}${product.symbolRight}',
                           style: TextStyle(
                               color: colorRed,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
-                        ),)
+                        )
                       ),
                       Container(
                         padding: EdgeInsets.only(right: 10),
-                        child:  Flexible(child:Text(
+                        child:  Text(
                           '${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',
                           textAlign:TextAlign.end,
                           style: TextStyle(
@@ -335,7 +335,7 @@ Container getProductDetails(Product product) {
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                               decoration: TextDecoration.lineThrough),
-                        ),)
+                        )
                       )
                     ],
                   )
