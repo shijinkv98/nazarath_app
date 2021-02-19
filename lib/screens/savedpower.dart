@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,7 +9,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/notification.dart';
-
+import 'package:http/http.dart' as http;
 import 'cart.dart';
 
 class SavedPowerScreen extends StatefulWidget {
@@ -323,30 +325,10 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.white)),
                                         onPressed: () async {
-                                            Map body={
-                                            "right_eye_sphere":sphereright,
-                                            "right_eye_cyi":cylright,
-                                            "right_eye_axis":axixright,
-                                            "right_eye_addv":addright,
-                                            "left_eye_sphere":sphereleft,
-                                            "left_eye_cyi":cylleft,
-                                            "left_eye_axis":axixleft,
-                                            "left_eye_addv":addleft,
-                                          };
-                                            FocusScope.of(context).requestFocus(FocusNode());
-
-                                            var response = await ApiCall()
-                                                .execute<EyePowerResponse, Null>("eye-power/store/en", body);
-
-                                            if (response?.data != null) {
-                                              // Navigator.of(context)111111
-                                              //     .pushReplacementNamed('HomePage', arguments: '');
-
-                                              // Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(builder: (context) => widget),);
-                                            }
-
+                                           if(_regstraionDoc!=null)
+                                             updatePrescriptionWithPdf(context);
+                                            else
+                                             updatePrescriptionWithoutPdf(context,_regstraionDoc);
                                         },
                                       ),
                                     ),
@@ -371,6 +353,47 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
       ),
     ),
   );
+}
+Future<void> updatePrescriptionWithoutPdf(BuildContext context)
+async {
+  Map body={
+    "right_eye_sphere":sphereright,
+    "right_eye_cyi":cylright,
+    "right_eye_axis":axixright,
+    "right_eye_addv":addright,
+    "left_eye_sphere":sphereleft,
+    "left_eye_cyi":cylleft,
+    "left_eye_axis":axixleft,
+    "left_eye_addv":addleft,
+  };
+  FocusScope.of(context).requestFocus(FocusNode());
+
+  var response = await ApiCall()
+      .execute<EyePowerResponse, Null>("eye-power/store/en", body);
+
+  if (response?.data != null) {
+    ApiCall().showToast(response.message);
+  }
+}
+void updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
+{
+  var request =
+  ApiCall().getMultipartRequest("eye-power/store/en");
+  request.fields['right_eye_sphere'] = sphereright;
+  request.fields['right_eye_cyi'] = cylright;
+  request.fields['right_eye_axis'] = axixright;
+  request.fields['right_eye_addv'] = addright;
+  request.fields['left_eye_sphere'] = sphereleft;
+  request.fields['left_eye_cyi'] = cylleft;
+  request.fields['left_eye_axis'] = axixleft;
+  request.fields['left_eye_addv'] = addleft;
+  if (_regstraionDoc != null) {
+    request.files.add(http.MultipartFile.fromBytes(
+        'registration_copy',
+        File(_regstraionDoc.imageStr).readAsBytesSync(),
+        filename: _regstraionDoc.name,
+        contentType: MimeTypes.getContentType(_regstraionDoc)));
+  }
 }
 String sphereleft="";
 final sphereFieldleft = TextFormField(
