@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/helper/mime_type.dart';
 import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
@@ -326,9 +327,9 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                                                 color: Colors.white)),
                                         onPressed: () async {
                                            if(_regstraionDoc!=null)
-                                             updatePrescriptionWithPdf(context);
+                                             updatePrescriptionWithPdf(context,_regstraionDoc);
                                             else
-                                             updatePrescriptionWithoutPdf(context,_regstraionDoc);
+                                             updatePrescriptionWithoutPdf(context);
                                         },
                                       ),
                                     ),
@@ -375,8 +376,8 @@ async {
     ApiCall().showToast(response.message);
   }
 }
-void updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
-{
+Future<void> updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
+async {
   var request =
   ApiCall().getMultipartRequest("eye-power/store/en");
   request.fields['right_eye_sphere'] = sphereright;
@@ -389,10 +390,16 @@ void updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
   request.fields['left_eye_addv'] = addleft;
   if (_regstraionDoc != null) {
     request.files.add(http.MultipartFile.fromBytes(
-        'registration_copy',
+        'prescription',
         File(_regstraionDoc.imageStr).readAsBytesSync(),
         filename: _regstraionDoc.name,
         contentType: MimeTypes.getContentType(_regstraionDoc)));
+  }
+  var response = await ApiCall()
+      .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request);
+
+  if (response?.data != null) {
+    ApiCall().showToast(response.message);
   }
 }
 String sphereleft="";
