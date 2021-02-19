@@ -220,7 +220,7 @@ class Register extends StatelessWidget {
                 'email': email.trim(),
                 'password': password.trim(),
                 'phone_number': phoneNo,
-                'phone_country_code':'971',
+                'phone_country_code':'+91',
                 'referral_code':'',
                 'guest_id':'',
         'device_token': deviceToken,

@@ -24,6 +24,7 @@ class UserData {
     token = json['token'];
     referral_code = json['token'];
     guest_id= json['guest_id'];
+    otp= json['otp'];
     if(guest_id!="")
       {
         name="Guest";
@@ -43,6 +44,7 @@ class UserData {
     data['token'] = this.token;
     data['referral_code'] = this.referral_code;
     data['email'] = this.email;
+    data['otp'] = this.otp;
     data['otpverificationstatus'] = this.otpVerificationStatus;
     data['emailverificationstatus'] = this.emailVerificationStatus;
     return data;
