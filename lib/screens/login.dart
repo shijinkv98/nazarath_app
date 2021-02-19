@@ -255,7 +255,7 @@ class Login extends StatelessWidget {
                                   fontWeight: FontWeight.normal)),
                         ),
                         Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Don't have an account?",
                                 style: style.copyWith(
