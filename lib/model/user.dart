@@ -1,5 +1,5 @@
 class UserData {
-  String id, mobile, name, email, locationDetails, token,guest_id;
+  String id, mobile, name, email, locationDetails, token,guest_id="";
   int status, otpVerificationStatus, emailVerificationStatus;
   String otp,referral_code;
   UserData()

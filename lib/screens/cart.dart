@@ -611,10 +611,10 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse respo
           child: GestureDetector(
 
             onTap: (){
-              if(customer.guest_id!="")
-                gotoLogin(context);
+              if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                          gotoLogin(context);
               else
-              Navigator.push(
+                Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
               );
