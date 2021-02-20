@@ -11,7 +11,10 @@ import 'package:nazarath_app/network/response/CheckoutResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import 'DashBoard.dart';
 import 'cart.dart';
+import 'editaddress.dart';
+import 'home.dart';
 import 'notification.dart';
 
 // void main() {
@@ -437,7 +440,7 @@ Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartRespon
         child:    getTabSectionNormal(context,widget,cartResponse),
       ),
       SliverToBoxAdapter(
-          child:   getAdress("Delivery Address")
+          child:   getAdress("Delivery Address",context,widget)
       ),
       SliverToBoxAdapter(
         child:    Padding(
@@ -449,7 +452,7 @@ Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartRespon
         ),
       ),
       SliverToBoxAdapter(
-          child:   getAdress("Shipping Address")
+          child:   getAdress("Shipping Address",context,widget)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -467,7 +470,7 @@ Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartRespon
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-          child:    getButtonContinue()
+          child:    getButtonContinue(context,widget,cartResponse)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 50.0),
@@ -484,7 +487,7 @@ Widget getTabSection2(BuildContext context,Widget widget,CartResponse cartRespon
       ),
 
       SliverToBoxAdapter(
-          child:   getAdress("Delivery Address")
+          child:   getAdress("Delivery Address",context,widget)
       ),
       SliverToBoxAdapter(
         child:    Padding(
@@ -496,7 +499,7 @@ Widget getTabSection2(BuildContext context,Widget widget,CartResponse cartRespon
         ),
       ),
       SliverToBoxAdapter(
-          child:   getAdress("Shipping Address")
+          child:   getAdress("Shipping Address",context,widget)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -514,7 +517,7 @@ Widget getTabSection2(BuildContext context,Widget widget,CartResponse cartRespon
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-          child:    getButtonContinue()
+          child:    getButtonContinue(context,widget,cartResponse)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 50.0),
@@ -649,7 +652,7 @@ Widget getShippingAdress()
 {
 
 }
-Widget getAdress(String title)
+Widget getAdress(String title,BuildContext context,Widget widget)
 {
   return Padding(
     padding: const EdgeInsets.only(top: 10, left: 25),
@@ -671,7 +674,7 @@ Widget getAdress(String title)
                 child: Row(
                   children: [
                     Text(
-                      'Muhd.Shafeeque',
+                      homeResponse.address.name,
                       style: TextStyle(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -681,7 +684,7 @@ Widget getAdress(String title)
                       thickness: 1,
                     ),
                     Text(
-                      '+9845561223',
+                      homeResponse.address.mobile,
                       style: TextStyle(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -693,7 +696,7 @@ Widget getAdress(String title)
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'Delivery Address Muhd.Shafeeque Muhd.ShafeequeMuhd.Shafeeque Muhd.Shafeeque',
+              homeResponse.address.address,
               style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.normal,
@@ -716,7 +719,12 @@ Widget getAdress(String title)
                             fontWeight: FontWeight.w400,
                             color: Colors.white)),
                   ),
-                  onPressed: () async {},
+                  onPressed: ()  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditAddressScreen("edit")),
+                    );
+                  },
                 ),
               ),
             ),
@@ -726,7 +734,88 @@ Widget getAdress(String title)
     ),
   );
 }
-Widget getButtonContinue()
+Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget widget)
+{
+  return showDialog(context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("Confirm Order"),
+        content: Text("Do you want to place order?"),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Cancel"),
+          ),
+          FlatButton(
+            onPressed: () {
+              checkoutWithoutPdf(response, context, widget);
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ));
+}
+void checkoutWithoutPdf(CartResponse response,BuildContext context,Widget widget)
+{
+  Map body={
+    "right_eye_sphere":sphereright,
+    "right_eye_cyi":cylright,
+    "right_eye_axis":axixright,
+    "right_eye_addv":addright,
+    "left_eye_sphere":sphereleft,
+    "left_eye_cyi":cylleft,
+    "left_eye_axis":axixleft,
+    "left_eye_addv":addleft,
+    "payment_mode": 4,
+    "billing_address_id":homeResponse.address.id,
+    "shipping_address_id":homeResponse.address.id,
+    "coupon_code":""
+  };
+  FocusScope.of(context).requestFocus(FocusNode());
+
+  var response = await ApiCall()
+      .execute<CheckoutResponse, Null>("checkout/en", body);
+
+  if (response!= null) {
+    ApiCall().showToast(response.message);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashBoard()),
+    );
+  }
+}
+Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget)
+async {
+  Map body={
+    "right_eye_sphere":sphereright,
+    "right_eye_cyi":cylright,
+    "right_eye_axis":axixright,
+    "right_eye_addv":addright,
+    "left_eye_sphere":sphereleft,
+    "left_eye_cyi":cylleft,
+    "left_eye_axis":axixleft,
+    "left_eye_addv":addleft,
+    "payment_mode": 4,
+    "billing_address_id":homeResponse.address.id,
+    "shipping_address_id":homeResponse.address.id,
+    "coupon_code":""
+  };
+  FocusScope.of(context).requestFocus(FocusNode());
+
+  var response = await ApiCall()
+      .execute<CheckoutResponse, Null>("checkout/en", body);
+
+  if (response!= null) {
+    ApiCall().showToast(response.message);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashBoard()),
+    );
+  }
+}
+Widget getButtonContinue(BuildContext context,Widget widget,CartResponse response)
 {
   return Row(
     mainAxisAlignment: MainAxisAlignment.end,
@@ -748,7 +837,9 @@ Widget getButtonContinue()
                         fontWeight: FontWeight.w400,
                         color: Colors.white)),
               ),
-              onPressed: () async {},
+              onPressed: ()  {
+                showDialogueBox(response, context, widget);
+              },
             ),
           ),
         ),
@@ -983,7 +1074,7 @@ String sphereleft;
 final sphereFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     sphereleft = value;
   },
   // style: style,
@@ -1019,7 +1110,7 @@ String cylleft;
 final cylFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     cylleft = value;
   },
   // style: style,
@@ -1052,7 +1143,7 @@ String axixleft;
 final axixFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     axixleft = value;
   },
   // style: style,
@@ -1085,7 +1176,7 @@ String addleft;
 final addFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     addleft = value;
   },
   // style: style,
@@ -1118,7 +1209,7 @@ String sphereright;
 final sphereFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     sphereright = value;
   },
   // style: style,
@@ -1189,7 +1280,7 @@ String cylright;
 final cylFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     cylright = value;
   },
   // style: style,
@@ -1222,7 +1313,7 @@ String axixright;
 final axixFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     axixright = value;
   },
   // style: style,
@@ -1255,7 +1346,7 @@ String addright;
 final addFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     addright = value;
   },
   // style: style,

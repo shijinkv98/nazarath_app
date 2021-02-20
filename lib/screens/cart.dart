@@ -14,6 +14,7 @@ import 'package:spinner_input/spinner_input.dart';
 import 'DashBoard.dart';
 import 'ProductDetails.dart';
 import 'custom/spinner_cart.dart';
+import 'editaddress.dart';
 import 'home.dart';
 import 'notification.dart';
 // void main() {
@@ -614,10 +615,21 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse respo
               if(customer.guest_id != null && customer.guest_id.trim().length()>0)
                           gotoLogin(context);
               else
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
-              );
+                {
+                  if(homeResponse.address==null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditAddressScreen("")),
+                    );
+                  }
+                  else
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
+                      );
+                    }
+                }
             },
               child: Text(
                         "Place Order",

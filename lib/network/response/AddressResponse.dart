@@ -54,10 +54,10 @@ class Addresses {
   String longtitude;
   String createdAt;
   String updatedAt;
-  Null buildingNumber;
-  int areaNumber;
-  Null streetNumber;
-  Null location;
+  String buildingNumber;
+  String areaNumber;
+  String streetNumber;
+  String location;
   Country country;
 
   Addresses(
@@ -96,10 +96,10 @@ class Addresses {
     longtitude = json['longtitude'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    buildingNumber = json['building_number'];
-    areaNumber = json['area_number'];
-    streetNumber = json['street_number'];
-    location = json['location'];
+    buildingNumber = json['building_number'].toString();
+    areaNumber = json['area_number'].toString();
+    streetNumber = json['street_number'].toString();
+    location = json['location'].toString();
     country =
     json['country'] != null ? new Country.fromJson(json['country']) : null;
   }

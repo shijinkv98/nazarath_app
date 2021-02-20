@@ -26,6 +26,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String shopName;
+    bool isLoading = false;
     // _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
     final shopNameField = TextFormField(
       cursorColor: colorPrimary,
@@ -127,11 +128,29 @@ class Login extends StatelessWidget {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
-        onPressed: () {
+        onPressed: () async {
 
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            login(shopName, "", "", password, context);
+            Map body = {
+              // name,email,phone_number,password
+              'email_phone': shopName,
+              'password': password.trim(),
+              'referral_code': "",
+              'guest_id':'',
+            };
+            isLoading=true;
+            var response = await ApiCall()
+                .execute<LoginResponse, Null>("login/en", body);
+
+            if (response?.customerData != null) {
+              isLoading=false;
+              await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoard()),);
+            }
+            //login(shopName, "", "", password, context);
           }
          // guestLogin(context);
         },
@@ -242,8 +261,22 @@ class Login extends StatelessWidget {
                         MaterialButton(
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                          onPressed: () {
-                            guestLogin(context);
+                          onPressed: () async {
+                            isLoading=true;
+                            Map body = {
+                              // name,email,phone_number,password
+                            };
+                            var response = await ApiCall()
+                                .execute<LoginResponse, Null>("guest-login/en", body);
+
+                            if (response?.customerData != null) {
+                              isLoading=false;
+                              await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => DashBoard()),);
+                            }
+                           // guestLogin(context);
                           },
 
                           child: Text("Guest",
@@ -267,7 +300,7 @@ class Login extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) => Register()));
-                            }, child: Text("Creat an Account", style: style.copyWith(
+                            }, child: Text("Creat Account", style: style.copyWith(
                                         fontSize: 14,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)))
@@ -286,9 +319,14 @@ class Login extends StatelessWidget {
                             // )
                           ],
                         ),
+                        isLoading
+                            ? Center(
+                          child: CircularProgressIndicator(),
+                        ):
                         SizedBox(
                           height: 10,
                         ),
+
                         // Text("Or Sign in with",
                         //     textAlign: TextAlign.center,
                         //     style: style.copyWith(
