@@ -137,7 +137,8 @@ class _OrderState extends State<OrderScreen> {
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return getEmptyContainerOrder(context);
+            return errorScreen('Error: ${snapshot.error}');
+           // return getEmptyContainerOrder(context);
           } else {
             return progressBar;
           }

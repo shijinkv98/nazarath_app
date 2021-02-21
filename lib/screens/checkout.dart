@@ -768,9 +768,9 @@ async{
     "left_eye_cyi":cylleft,
     "left_eye_axis":axixleft,
     "left_eye_addv":addleft,
-    "payment_mode": 4,
-    "billing_address_id":homeResponse.address.id,
-    "shipping_address_id":homeResponse.address.id,
+    "payment_mode": "4",
+    "billing_address_id":homeResponse.address.id.toString(),
+    "shipping_address_id":homeResponse.address.id.toString(),
     "coupon_code":""
   };
   FocusScope.of(context).requestFocus(FocusNode());
@@ -1070,7 +1070,7 @@ Widget getContainerEyePower()
     ),
   );
 }
-String sphereleft;
+String sphereleft="";
 final sphereFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1106,7 +1106,7 @@ final sphereFieldleft = TextFormField(
   ),
 );
 
-String cylleft;
+String cylleft="";
 final cylFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1139,7 +1139,7 @@ final cylFieldleft = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String axixleft;
+String axixleft="";
 final axixFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1172,7 +1172,7 @@ final axixFieldleft = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String addleft;
+String addleft="";
 final addFieldleft = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1205,7 +1205,7 @@ final addFieldleft = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String sphereright;
+String sphereright="";
 final sphereFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1240,7 +1240,7 @@ final sphereFieldright = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String supportassist;
+String supportassist="";
 final supportassistField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1276,7 +1276,7 @@ final supportassistField = TextFormField(
   ),
 );
 
-String cylright;
+String cylright="";
 final cylFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1309,7 +1309,7 @@ final cylFieldright = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String axixright;
+String axixright="";
 final axixFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
@@ -1342,7 +1342,7 @@ final axixFieldright = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String addright;
+String addright="";
 final addFieldright = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,

@@ -56,7 +56,7 @@ class OrderId {
   String shippingLongitude;
   String comments;
   int cartId;
-  double totalAmount;
+  int totalAmount;
   String couponId;
   String couponCode;
   String couponDiscount;
@@ -65,7 +65,7 @@ class OrderId {
   int walletAmount;
   String shippingCharge;
   String totalTaxAmount;
-  double netTotalAmount;
+  int netTotalAmount;
   int paymentMode;
   String deliveryMode;
   String pickupStoreId;
@@ -79,20 +79,17 @@ class OrderId {
   int paymentStatus;
   String orderCancelReason;
   String orderCancelDescription;
+  String otherDetails;
   String createdAt;
   String updatedAt;
-  int isExpress;
-  String pickupdates;
-  String pickuptime;
-  String billingAreaNumber1;
-  String shippingAreaNumber1;
-  String billingAreaNumber;
-  String shippingAreaNumber;
   String orderWalletAmount;
   String orderTotalAmount;
   String orderNetTotalAmount;
   String orderShippingCharge;
   List<Items> items;
+  // List<Null> walletUsed;
+  // List<Null> walletCancelled;
+  // List<Null> walletReturned;
 
   OrderId(
       {this.id,
@@ -149,20 +146,18 @@ class OrderId {
         this.paymentStatus,
         this.orderCancelReason,
         this.orderCancelDescription,
+        this.otherDetails,
         this.createdAt,
         this.updatedAt,
-        this.isExpress,
-        this.pickupdates,
-        this.pickuptime,
-        this.billingAreaNumber1,
-        this.shippingAreaNumber1,
-        this.billingAreaNumber,
-        this.shippingAreaNumber,
         this.orderWalletAmount,
         this.orderTotalAmount,
         this.orderNetTotalAmount,
         this.orderShippingCharge,
-        this.items});
+        this.items,
+        // this.walletUsed,
+        // this.walletCancelled,
+        // this.walletReturned
+  });
 
   OrderId.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -197,9 +192,9 @@ class OrderId {
     comments = json['comments'];
     cartId = json['cart_id'];
     totalAmount = json['total_amount'];
-    couponId = json['coupon_id'];
-    couponCode = json['coupon_code'];
-    couponDiscount = json['coupon_discount'];
+    couponId = json['coupon_id'].toString();
+    couponCode = json['coupon_code'].toString();
+    couponDiscount = json['coupon_discount'].toString();
     couponDiscountType = json['coupon_discount_type'];
     discountAmount = json['discount_amount'];
     walletAmount = json['wallet_amount'];
@@ -208,26 +203,20 @@ class OrderId {
     netTotalAmount = json['net_total_amount'];
     paymentMode = json['payment_mode'];
     deliveryMode = json['delivery_mode'];
-    pickupStoreId = json['pickup_store_id'];
+    pickupStoreId = json['pickup_store_id'].toString();
     languageId = json['language_id'];
     currencyId = json['currency_id'];
     currencyValue = json['currency_value'];
-    ip = json['ip'];
+    ip = json['ip'].toString();
     userAgent = json['user_agent'];
     orderStatusId = json['order_status_id'];
     orderStatus = json['order_status'];
     paymentStatus = json['payment_status'];
     orderCancelReason = json['order_cancel_reason'];
     orderCancelDescription = json['order_cancel_description'];
+    otherDetails = json['other_details'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    isExpress = json['is_express'];
-    pickupdates = json['pickupdates'];
-    pickuptime = json['pickuptime'];
-    billingAreaNumber1 = json['billing_area_number1'];
-    shippingAreaNumber1 = json['shipping_area_number1'];
-    billingAreaNumber = json['billing_area_number'];
-    shippingAreaNumber = json['shipping_area_number'];
     orderWalletAmount = json['order_wallet_amount'];
     orderTotalAmount = json['order_total_amount'];
     orderNetTotalAmount = json['order_net_total_amount'];
@@ -238,6 +227,24 @@ class OrderId {
         items.add(new Items.fromJson(v));
       });
     }
+    // if (json['wallet_used'] != null) {
+    //   walletUsed = new List<Null>();
+    //   json['wallet_used'].forEach((v) {
+    //     walletUsed.add(new Null.fromJson(v));
+    //   });
+    // }
+    // if (json['wallet_cancelled'] != null) {
+    //   walletCancelled = new List<Null>();
+    //   json['wallet_cancelled'].forEach((v) {
+    //     walletCancelled.add(new Null.fromJson(v));
+    //   });
+    // }
+    // if (json['wallet_returned'] != null) {
+    //   walletReturned = new List<Null>();
+    //   json['wallet_returned'].forEach((v) {
+    //     walletReturned.add(new Null.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -296,15 +303,9 @@ class OrderId {
     data['payment_status'] = this.paymentStatus;
     data['order_cancel_reason'] = this.orderCancelReason;
     data['order_cancel_description'] = this.orderCancelDescription;
+    data['other_details'] = this.otherDetails;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['is_express'] = this.isExpress;
-    data['pickupdates'] = this.pickupdates;
-    data['pickuptime'] = this.pickuptime;
-    data['billing_area_number1'] = this.billingAreaNumber1;
-    data['shipping_area_number1'] = this.shippingAreaNumber1;
-    data['billing_area_number'] = this.billingAreaNumber;
-    data['shipping_area_number'] = this.shippingAreaNumber;
     data['order_wallet_amount'] = this.orderWalletAmount;
     data['order_total_amount'] = this.orderTotalAmount;
     data['order_net_total_amount'] = this.orderNetTotalAmount;
@@ -312,6 +313,17 @@ class OrderId {
     if (this.items != null) {
       data['items'] = this.items.map((v) => v.toJson()).toList();
     }
+    // if (this.walletUsed != null) {
+    //   data['wallet_used'] = this.walletUsed.map((v) => v.toJson()).toList();
+    // }
+    // if (this.walletCancelled != null) {
+    //   data['wallet_cancelled'] =
+    //       this.walletCancelled.map((v) => v.toJson()).toList();
+    // }
+    // if (this.walletReturned != null) {
+    //   data['wallet_returned'] =
+    //       this.walletReturned.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }
@@ -422,12 +434,12 @@ class Items {
     shippingCess = json['shipping_cess'];
     productId = json['product_id'];
     storeId = json['store_id'];
-    paidToSellerReference = json['paid_to_seller_reference'];
-    sellerRefundAmount = json['seller_refund_amount'];
-    paidAmountToAdmin = json['paid_amount_to_admin'];
+    paidToSellerReference = json['paid_to_seller_reference'].toString();
+    sellerRefundAmount = json['seller_refund_amount'].toString();
+    paidAmountToAdmin = json['paid_amount_to_admin'].toString();
     paidToAdmin = json['paid_to_admin'];
-    paidToAdminDate = json['paid_to_admin_date'];
-    paidToAdminReference = json['paid_to_admin_reference'];
+    paidToAdminDate = json['paid_to_admin_date'].toString();
+    paidToAdminReference = json['paid_to_admin_reference'].toString();
     productName = json['product_name'];
     quantity = json['quantity'];
     amount = json['amount'];
@@ -436,11 +448,11 @@ class Items {
     itemStatus = json['item_status'];
     shippingCharge = json['shipping_charge'];
     returnPeriod = json['return_period'];
-    refundPayable = json['refund_payable'];
-    refundPayed = json['refund_payed'];
-    refundBankId = json['refund_bank_id'];
-    refundBankDetails = json['refund_bank_details'];
-    itemCancelReason = json['item_cancel_reason'];
+    refundPayable = json['refund_payable'].toString();
+    refundPayed = json['refund_payed'].toString();
+    refundBankId = json['refund_bank_id'].toString();
+    refundBankDetails = json['refund_bank_details'].toString();
+    itemCancelReason = json['item_cancel_reason'].toString();
     itemCancelDescription = json['item_cancel_description'];
     cgst = json['cgst'];
     sgst = json['sgst'];
@@ -590,7 +602,7 @@ class Product {
     updatedAt = json['updated_at'];
     isLatest = json['is_latest'];
     if (json['this_options'] != null) {
-      thisOptions = new List<ThisOptions>();
+      thisOptions = new List<Null>();
       json['this_options'].forEach((v) {
         thisOptions.add(new ThisOptions.fromJson(v));
       });
@@ -631,7 +643,6 @@ class Product {
     return data;
   }
 }
-
 class ThisOptions {
   int optionId;
   String name;

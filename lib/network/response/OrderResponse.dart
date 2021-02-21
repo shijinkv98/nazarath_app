@@ -141,22 +141,20 @@ class Data {
   int paymentStatus;
   String orderCancelReason;
   String orderCancelDescription;
+  OtherDetails otherDetails;
   String createdAt;
   String updatedAt;
-  int isExpress;
-  String pickupdates;
-  String pickuptime;
-  String billingAreaNumber1;
-  String shippingAreaNumber1;
-  String billingAreaNumber;
-  String shippingAreaNumber;
   String orderWalletAmount;
   String orderTotalAmount;
   String orderNetTotalAmount;
   String orderShippingCharge;
   List<ItemsNew> itemsNew;
   Currency currency;
+  // List<Null> walletUsed;
+  // List<Null> walletCancelled;
+  // List<Null> walletReturned;
   List<Items> items;
+
   Data(
       {this.id,
         this.invoiceNumber,
@@ -212,21 +210,18 @@ class Data {
         this.paymentStatus,
         this.orderCancelReason,
         this.orderCancelDescription,
+        this.otherDetails,
         this.createdAt,
         this.updatedAt,
-        this.isExpress,
-        this.pickupdates,
-        this.pickuptime,
-        this.billingAreaNumber1,
-        this.shippingAreaNumber1,
-        this.billingAreaNumber,
-        this.shippingAreaNumber,
         this.orderWalletAmount,
         this.orderTotalAmount,
         this.orderNetTotalAmount,
         this.orderShippingCharge,
         this.itemsNew,
         this.currency,
+        // this.walletUsed,
+        // this.walletCancelled,
+        // this.walletReturned,
         this.items});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -262,14 +257,14 @@ class Data {
     comments = json['comments'];
     cartId = json['cart_id'];
     totalAmount = json['total_amount'].toString();
-    couponId = json['coupon_id'];
+    couponId = json['coupon_id'].toString();
     couponCode = json['coupon_code'];
     couponDiscount = json['coupon_discount'];
     couponDiscountType = json['coupon_discount_type'];
     discountAmount = json['discount_amount'];
     walletAmount = json['wallet_amount'];
     shippingCharge = json['shipping_charge'];
-    totalTaxAmount = json['total_tax_amount'].toString();
+    totalTaxAmount = json['total_tax_amount'];
     netTotalAmount = json['net_total_amount'].toString();
     paymentMode = json['payment_mode'] != null
         ? new PaymentMode.fromJson(json['payment_mode'])
@@ -286,15 +281,11 @@ class Data {
     paymentStatus = json['payment_status'];
     orderCancelReason = json['order_cancel_reason'];
     orderCancelDescription = json['order_cancel_description'];
+    otherDetails = json['other_details'] != null
+        ? new OtherDetails.fromJson(json['other_details'])
+        : null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    isExpress = json['is_express'];
-    pickupdates = json['pickupdates'];
-    pickuptime = json['pickuptime'];
-    billingAreaNumber1 = json['billing_area_number1'];
-    shippingAreaNumber1 = json['shipping_area_number1'];
-    billingAreaNumber = json['billing_area_number'];
-    shippingAreaNumber = json['shipping_area_number'];
     orderWalletAmount = json['order_wallet_amount'];
     orderTotalAmount = json['order_total_amount'];
     orderNetTotalAmount = json['order_net_total_amount'];
@@ -308,6 +299,24 @@ class Data {
     currency = json['currency'] != null
         ? new Currency.fromJson(json['currency'])
         : null;
+    // if (json['wallet_used'] != null) {
+    //   walletUsed = new List<Null>();
+    //   json['wallet_used'].forEach((v) {
+    //     walletUsed.add(new Null.fromJson(v));
+    //   });
+    // }
+    // if (json['wallet_cancelled'] != null) {
+    //   walletCancelled = new List<Null>();
+    //   json['wallet_cancelled'].forEach((v) {
+    //     walletCancelled.add(new Null.fromJson(v));
+    //   });
+    // }
+    // if (json['wallet_returned'] != null) {
+    //   walletReturned = new List<Null>();
+    //   json['wallet_returned'].forEach((v) {
+    //     walletReturned.add(new Null.fromJson(v));
+    //   });
+    // }
     if (json['items'] != null) {
       items = new List<Items>();
       json['items'].forEach((v) {
@@ -374,15 +383,11 @@ class Data {
     data['payment_status'] = this.paymentStatus;
     data['order_cancel_reason'] = this.orderCancelReason;
     data['order_cancel_description'] = this.orderCancelDescription;
+    if (this.otherDetails != null) {
+      data['other_details'] = this.otherDetails.toJson();
+    }
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['is_express'] = this.isExpress;
-    data['pickupdates'] = this.pickupdates;
-    data['pickuptime'] = this.pickuptime;
-    data['billing_area_number1'] = this.billingAreaNumber1;
-    data['shipping_area_number1'] = this.shippingAreaNumber1;
-    data['billing_area_number'] = this.billingAreaNumber;
-    data['shipping_area_number'] = this.shippingAreaNumber;
     data['order_wallet_amount'] = this.orderWalletAmount;
     data['order_total_amount'] = this.orderTotalAmount;
     data['order_net_total_amount'] = this.orderNetTotalAmount;
@@ -393,6 +398,17 @@ class Data {
     if (this.currency != null) {
       data['currency'] = this.currency.toJson();
     }
+    // if (this.walletUsed != null) {
+    //   data['wallet_used'] = this.walletUsed.map((v) => v.toJson()).toList();
+    // }
+    // if (this.walletCancelled != null) {
+    //   data['wallet_cancelled'] =
+    //       this.walletCancelled.map((v) => v.toJson()).toList();
+    // }
+    // if (this.walletReturned != null) {
+    //   data['wallet_returned'] =
+    //       this.walletReturned.map((v) => v.toJson()).toList();
+    // }
     if (this.items != null) {
       data['items'] = this.items.map((v) => v.toJson()).toList();
     }
@@ -433,6 +449,78 @@ class PaymentMode {
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class OtherDetails {
+  String powerOptionId;
+  String powerOptionText;
+  PowerOptionValue powerOptionValue;
+
+  OtherDetails(
+      {this.powerOptionId, this.powerOptionText, this.powerOptionValue});
+
+  OtherDetails.fromJson(Map<String, dynamic> json) {
+    powerOptionId = json['power_option_id'];
+    powerOptionText = json['power_option_text'];
+    powerOptionValue = json['power_option_value'] != null
+        &&json['power_option_value'] != ""? new PowerOptionValue.fromJson(json['power_option_value'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['power_option_id'] = this.powerOptionId;
+    data['power_option_text'] = this.powerOptionText;
+    if (this.powerOptionValue != null) {
+      data['power_option_value'] = this.powerOptionValue.toJson();
+    }
+    return data;
+  }
+}
+
+class PowerOptionValue {
+  String rightEyeSphere;
+  String rightEyeCyi;
+  String rightEyeAxis;
+  String rightEyeAddv;
+  String leftEyeSphere;
+  String leftEyeCyi;
+  String leftEyeAxis;
+  String leftEyeAddv;
+
+  PowerOptionValue(
+      {this.rightEyeSphere,
+        this.rightEyeCyi,
+        this.rightEyeAxis,
+        this.rightEyeAddv,
+        this.leftEyeSphere,
+        this.leftEyeCyi,
+        this.leftEyeAxis,
+        this.leftEyeAddv});
+
+  PowerOptionValue.fromJson(Map<String, dynamic> json) {
+    rightEyeSphere = json['right_eye_sphere'];
+    rightEyeCyi = json['right_eye_cyi'];
+    rightEyeAxis = json['right_eye_axis'];
+    rightEyeAddv = json['right_eye_addv'];
+    leftEyeSphere = json['left_eye_sphere'];
+    leftEyeCyi = json['left_eye_cyi'];
+    leftEyeAxis = json['left_eye_axis'];
+    leftEyeAddv = json['left_eye_addv'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['right_eye_sphere'] = this.rightEyeSphere;
+    data['right_eye_cyi'] = this.rightEyeCyi;
+    data['right_eye_axis'] = this.rightEyeAxis;
+    data['right_eye_addv'] = this.rightEyeAddv;
+    data['left_eye_sphere'] = this.leftEyeSphere;
+    data['left_eye_cyi'] = this.leftEyeCyi;
+    data['left_eye_axis'] = this.leftEyeAxis;
+    data['left_eye_addv'] = this.leftEyeAddv;
     return data;
   }
 }
@@ -486,7 +574,7 @@ class ItemsNew {
   String image;
   int possibleAction;
   String statusText;
-  String refund;
+  Refund refund;
   Product product;
 
   ItemsNew(
@@ -557,12 +645,12 @@ class ItemsNew {
     shippingCess = json['shipping_cess'];
     productId = json['product_id'];
     storeId = json['store_id'];
-    paidToSellerReference = json['paid_to_seller_reference'];
-    sellerRefundAmount = json['seller_refund_amount'];
-    paidAmountToAdmin = json['paid_amount_to_admin'];
+    paidToSellerReference = json['paid_to_seller_reference'].toString();
+    sellerRefundAmount = json['seller_refund_amount'].toString();
+    paidAmountToAdmin = json['paid_amount_to_admin'].toString();
     paidToAdmin = json['paid_to_admin'];
     paidToAdminDate = json['paid_to_admin_date'];
-    paidToAdminReference = json['paid_to_admin_reference'];
+    paidToAdminReference = json['paid_to_admin_reference'].toString();
     productName = json['product_name'];
     quantity = json['quantity'];
     amount = json['amount'];
@@ -590,7 +678,8 @@ class ItemsNew {
     image = json['image'];
     possibleAction = json['possible_action'];
     statusText = json['status_text'];
-    refund = json['refund'];
+    refund =
+    json['refund'] != null ? new Refund.fromJson(json['refund']) : null;
     product =
     json['product'] != null ? new Product.fromJson(json['product']) : null;
   }
@@ -645,10 +734,69 @@ class ItemsNew {
     data['image'] = this.image;
     data['possible_action'] = this.possibleAction;
     data['status_text'] = this.statusText;
-    data['refund'] = this.refund;
+    if (this.refund != null) {
+      data['refund'] = this.refund.toJson();
+    }
     if (this.product != null) {
       data['product'] = this.product.toJson();
     }
+    return data;
+  }
+}
+
+class Refund {
+  int id;
+  int orderId;
+  int orderItemId;
+  String itemAmount;
+  String shippingAmount;
+  String netAmount;
+  String walletAmount;
+  String description;
+  String createdAt;
+  String updatedAt;
+  int cashRefund;
+
+  Refund(
+      {this.id,
+        this.orderId,
+        this.orderItemId,
+        this.itemAmount,
+        this.shippingAmount,
+        this.netAmount,
+        this.walletAmount,
+        this.description,
+        this.createdAt,
+        this.updatedAt,
+        this.cashRefund});
+
+  Refund.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    orderId = json['order_id'];
+    orderItemId = json['order_item_id'];
+    itemAmount = json['item_amount'];
+    shippingAmount = json['shipping_amount'];
+    netAmount = json['net_amount'];
+    walletAmount = json['wallet_amount'];
+    description = json['description'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    cashRefund = json['cash_refund'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['order_id'] = this.orderId;
+    data['order_item_id'] = this.orderItemId;
+    data['item_amount'] = this.itemAmount;
+    data['shipping_amount'] = this.shippingAmount;
+    data['net_amount'] = this.netAmount;
+    data['wallet_amount'] = this.walletAmount;
+    data['description'] = this.description;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['cash_refund'] = this.cashRefund;
     return data;
   }
 }
@@ -738,12 +886,12 @@ class Product {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     isLatest = json['is_latest'];
-    if (json['this_options'] != null) {
-      thisOptions = new List<ThisOptions>();
-      json['this_options'].forEach((v) {
-        thisOptions.add(new ThisOptions.fromJson(v));
-      });
-    }
+    // if (json['this_options'] != null) {
+    //   thisOptions = new List<ThisOptions>();
+    //   json['this_options'].forEach((v) {
+    //     thisOptions.add(new ThisOptions.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
