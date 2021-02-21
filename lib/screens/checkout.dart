@@ -757,8 +757,8 @@ Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget w
         ],
       ));
 }
-void checkoutWithoutPdf(CartResponse response,BuildContext context,Widget widget)
-{
+Future<void> checkoutWithoutPdf(CartResponse response,BuildContext context,Widget widget)
+async{
   Map body={
     "right_eye_sphere":sphereright,
     "right_eye_cyi":cylright,
