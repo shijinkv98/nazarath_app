@@ -22,6 +22,7 @@ import 'cart.dart';
 import 'editaddress.dart';
 import 'home.dart';
 import 'notification.dart';
+import 'order.dart';
 
 // void main() {
 //   runApp(Checkout(
@@ -768,6 +769,32 @@ Widget getAdress(String title,BuildContext context,Widget widget)
     ),
   );
 }
+Future<void> showSucessDialogueBox(CheckoutResponse response,BuildContext context)
+{
+  return showDialog(context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("SUCCESS"),
+        content: Container(child:Column(
+          children: [
+            Text('"INVOICE_NUMBER"${response.orderId.invoiceNumber}'),
+            Text('"ORDER ID"${response.orderId.id}'),
+          ],
+        )),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => OrderScreen()),
+              );
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Continue"),
+          ),
+
+        ],
+      ));
+}
 Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget widget,FileModel doc)
 {
   return showDialog(context: context,
@@ -817,10 +844,7 @@ async{
 
   if (response!= null) {
     ApiCall().showToast(response.message);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => DashBoard()),
-    );
+    showSucessDialogueBox(response,context);
   }
 }
 Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget,FileModel doc)
@@ -851,10 +875,7 @@ async {
       .execute<CheckoutResponse, Null>("checkout/en", null,multipartRequest: request);
   if (response!= null) {
     ApiCall().showToast(response.message);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => DashBoard()),
-    );
+    showSucessDialogueBox(response,context);
   }
 }
 Widget getButtonContinue(BuildContext context,Widget widget,CartResponse response,FileModel doc)
