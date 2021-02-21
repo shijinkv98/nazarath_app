@@ -1,14 +1,20 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/helper/mime_type.dart';
+import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'dart:convert';
 
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
+import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
@@ -44,6 +50,7 @@ class _CheckoutState extends State<CheckoutScreen> {
   CheckoutResponse Checkoutresponse;
   CartResponse cartResponse;
   _CheckoutState({this.cartResponse});
+  FileModel prescription;
   Future<String> getData() async {
     Map body = {
       // name,email,phone_number,passwor
@@ -142,7 +149,7 @@ class _CheckoutState extends State<CheckoutScreen> {
             ),
           ],
         ),
-        body:customView(context, widget, cartResponse)
+        body:customView(context, widget, cartResponse,prescription)
 
             // FutureBuilder<CheckoutResponse>(
             //   future: ApiCall()
@@ -242,7 +249,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
 
 }
 
-Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
+Widget customView(BuildContext context,Widget widget,CartResponse cartResponse,FileModel doc)
 {
   final _itemExtent = 120.0;
   return CustomScrollView(
@@ -265,7 +272,7 @@ Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-        child:    _tabSection(context,widget,cartResponse),
+        child:    _tabSection(context,widget,cartResponse,doc),
       ),
 
     ],
@@ -339,7 +346,7 @@ Container getTopContainer() {
   );
 }
 
-Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse) {
+Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse,FileModel doc) {
   return DefaultTabController(
     length: 2,
     child: Column(
@@ -357,7 +364,7 @@ Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse)
           //Add this to give height
           height: MediaQuery.of(context).size.height*0.6,
           child: TabBarView(children: [
-            getTabSection1(context, widget, cartResponse),
+            getTabSection1(context, widget, cartResponse,doc),
             getTabSection2(context, widget, cartResponse)
 
           ]),
@@ -366,7 +373,7 @@ Widget _tabSection(BuildContext context,Widget widget,CartResponse cartResponse)
     ),
   );
 }
-Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartResponse)
+Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartResponse,FileModel doc)
 {
     return Container(
       child: Container(
@@ -394,18 +401,44 @@ Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartR
                                     fontWeight: FontWeight.w400,
                                     color: Colors.white)),
                           ),
-                          onPressed: () async {},
+                          onPressed: ()  async {
+                            final _allowedDocuments = ['png', 'pdf', 'jpg'];
+                            FilePickerResult result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: _allowedDocuments,
+                            );
+                            if (result != null) {
+                              doc = FileModel(
+                                  fileName: result.files.single.name,
+                                  imageStr: result.files.single.path,
+                                  imageU8L: result.files.single.bytes);
+                              DocsAddedNotifier _docsAddedNotifier;
+                              _docsAddedNotifier.docAdded();
+                            }
+                          },
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        'myprescription.pdf',
-                        style:
-                        TextStyle(color: textColor, fontSize: 12),
-                      ),
-                    ),
+                      child: doc  != null
+                          ? Text(
+                        doc.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red),
+                      ):Text(
+                        "",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red),
+                    )
+                    )
                   ],
                 ),
               ),
@@ -432,12 +465,12 @@ Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartR
       ),
     );
 }
-Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartResponse)
+Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartResponse,FileModel doc)
 {
   return CustomScrollView(
     slivers: <Widget>[
       SliverToBoxAdapter(
-        child:    getTabSectionNormal(context,widget,cartResponse),
+        child:    getTabSectionNormal(context,widget,cartResponse,doc),
       ),
       SliverToBoxAdapter(
           child:   getAdress("Delivery Address",context,widget)
@@ -470,7 +503,7 @@ Widget getTabSection1(BuildContext context,Widget widget,CartResponse cartRespon
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-          child:    getButtonContinue(context,widget,cartResponse)
+          child:    getButtonContinue(context,widget,cartResponse,doc)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 50.0),
@@ -517,7 +550,7 @@ Widget getTabSection2(BuildContext context,Widget widget,CartResponse cartRespon
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-          child:    getButtonContinue(context,widget,cartResponse)
+          child:    getButtonContinue(context,widget,cartResponse,null)
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 50.0),
@@ -559,68 +592,68 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Container(
-            height: 30,
-            child: ListTile(
-              title: const Text('Online Payment'),
-              leading: Radio(
-                activeColor: colorPrimary,
-                value: BestTutorSite.onlinepayment,
-                groupValue: _site,
-                onChanged: (BestTutorSite value) {
-                  setState(() {
-                    _site = value;
-                  });
-                },
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Container(
-            height: 30,
-            child: ListTile(
-              title: const Text('Debit/Credit Card'),
-              leading: Radio(
-                activeColor: colorPrimary,
-                value: BestTutorSite.debit,
-                groupValue: _site,
-                onChanged: (BestTutorSite value) {
-                  setState(() {
-                    _site = value;
-                  });
-                },
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Container(
-            height: 30,
-            child: ListTile(
-              title: const Text('Paytm'),
-              leading: Radio(
-                activeColor: colorPrimary,
-                value: BestTutorSite.paytm,
-                groupValue: _site,
-                onChanged: (BestTutorSite value) {
-                  setState(() {
-                    _site = value;
-                  });
-                },
-              ),
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10),
+        //   child: Container(
+        //     height: 30,
+        //     child: ListTile(
+        //       title: const Text('Online Payment'),
+        //       leading: Radio(
+        //         activeColor: colorPrimary,
+        //         value: BestTutorSite.onlinepayment,
+        //         groupValue: _site,
+        //         onChanged: (BestTutorSite value) {
+        //           setState(() {
+        //             _site = value;
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10),
+        //   child: Container(
+        //     height: 30,
+        //     child: ListTile(
+        //       title: const Text('Debit/Credit Card'),
+        //       leading: Radio(
+        //         activeColor: colorPrimary,
+        //         value: BestTutorSite.debit,
+        //         groupValue: _site,
+        //         onChanged: (BestTutorSite value) {
+        //           setState(() {
+        //             _site = value;
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10),
+        //   child: Container(
+        //     height: 30,
+        //     child: ListTile(
+        //       title: const Text('Paytm'),
+        //       leading: Radio(
+        //         activeColor: colorPrimary,
+        //         value: BestTutorSite.paytm,
+        //         groupValue: _site,
+        //         onChanged: (BestTutorSite value) {
+        //           setState(() {
+        //             _site = value;
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
 }
-Widget getPaymentOptions()
+Widget getPaymentOptions(/*CartResponse rsponse*/)
 {
   return
     Column(
@@ -703,38 +736,38 @@ Widget getAdress(String title,BuildContext context,Widget widget)
                   fontSize: 12),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              child: SizedBox(
-                height: 40,
-                child: RaisedButton(
-                  color: colorPrimary,
-                  elevation: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('Change or Add Address',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white)),
-                  ),
-                  onPressed: ()  {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EditAddressScreen("edit")),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 20),
+          //   child: Container(
+          //     child: SizedBox(
+          //       height: 40,
+          //       child: RaisedButton(
+          //         color: colorPrimary,
+          //         elevation: 0,
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(10.0),
+          //           child: Text('Change or Add Address',
+          //               style: TextStyle(
+          //                   fontSize: 15,
+          //                   fontWeight: FontWeight.w400,
+          //                   color: Colors.white)),
+          //         ),
+          //         onPressed: ()  {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => EditAddressScreen("checkout,""edit")),
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     ),
   );
 }
-Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget widget)
+Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget widget,FileModel doc)
 {
   return showDialog(context: context,
       builder: (ctx) => AlertDialog(
@@ -749,6 +782,9 @@ Future<void> showDialogueBox(CartResponse response,BuildContext context,Widget w
           ),
           FlatButton(
             onPressed: () {
+              if(doc!=null)
+                checkoutWithPdf(response, context, widget,doc);
+              else
               checkoutWithoutPdf(response, context, widget);
               Navigator.of(ctx).pop();
             },
@@ -786,27 +822,32 @@ async{
     );
   }
 }
-Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget)
+Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget,FileModel doc)
 async {
-  Map body={
-    "right_eye_sphere":sphereright,
-    "right_eye_cyi":cylright,
-    "right_eye_axis":axixright,
-    "right_eye_addv":addright,
-    "left_eye_sphere":sphereleft,
-    "left_eye_cyi":cylleft,
-    "left_eye_axis":axixleft,
-    "left_eye_addv":addleft,
-    "payment_mode": 4,
-    "billing_address_id":homeResponse.address.id,
-    "shipping_address_id":homeResponse.address.id,
-    "coupon_code":""
-  };
+  var request =
+  ApiCall().getMultipartRequest("eye-power/store/en");
+  request.fields['right_eye_sphere'] = sphereright;
+  request.fields['right_eye_cyi'] = cylright;
+  request.fields['right_eye_axis'] = axixright;
+  request.fields['right_eye_addv'] = addright;
+  request.fields['left_eye_sphere'] = sphereleft;
+  request.fields['left_eye_cyi'] = cylleft;
+  request.fields['left_eye_axis'] = axixleft;
+  request.fields['left_eye_addv'] = addleft;
+  request.fields['billing_address_id'] = homeResponse.address.id.toString();
+  request.fields['shipping_address_id'] = homeResponse.address.id.toString();
+  request.fields['coupon_code'] = "";
+  request.fields['payment_mode'] = "4";
+  if (doc != null) {
+    request.files.add(http.MultipartFile.fromBytes(
+        'prescription',
+        File(doc.imageStr).readAsBytesSync(),
+        filename: doc.name,
+        contentType: MimeTypes.getContentType(doc)));
+  }
   FocusScope.of(context).requestFocus(FocusNode());
-
   var response = await ApiCall()
-      .execute<CheckoutResponse, Null>("checkout/en", body);
-
+      .execute<CheckoutResponse, Null>("checkout/en", null,multipartRequest: request);
   if (response!= null) {
     ApiCall().showToast(response.message);
     Navigator.pushReplacement(
@@ -815,7 +856,7 @@ async {
     );
   }
 }
-Widget getButtonContinue(BuildContext context,Widget widget,CartResponse response)
+Widget getButtonContinue(BuildContext context,Widget widget,CartResponse response,FileModel doc)
 {
   return Row(
     mainAxisAlignment: MainAxisAlignment.end,
@@ -838,7 +879,7 @@ Widget getButtonContinue(BuildContext context,Widget widget,CartResponse respons
                         color: Colors.white)),
               ),
               onPressed: ()  {
-                showDialogueBox(response, context, widget);
+                showDialogueBox(response, context, widget,doc);
               },
             ),
           ),
@@ -856,60 +897,60 @@ Widget getContainerEyePower()
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 25, top: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      'Upload Prescription',
-                      style:
-                      TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        child: SizedBox(
-                          width: 140,
-                          height: 40,
-                          child: RaisedButton(
-                            color: colorPrimary,
-                            elevation: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text('Upload',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white)),
-                            ),
-                            onPressed: () async {},
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          'myprescription.pdf',
-                          style:
-                          TextStyle(color: textColor, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
-              child: Text(
-                '(upload pdf,jpg,png format)',
-                style: TextStyle(color: textColor, fontSize: 9),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 25, top: 25),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.only(bottom: 15),
+            //         child: Text(
+            //           'Upload Prescription',
+            //           style:
+            //           TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
+            //         ),
+            //       ),
+            //       Row(
+            //         children: [
+            //           Container(
+            //             child: SizedBox(
+            //               width: 140,
+            //               height: 40,
+            //               child: RaisedButton(
+            //                 color: colorPrimary,
+            //                 elevation: 0,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(5.0),
+            //                   child: Text('Upload',
+            //                       style: TextStyle(
+            //                           fontSize: 15,
+            //                           fontWeight: FontWeight.w400,
+            //                           color: Colors.white)),
+            //                 ),
+            //                 onPressed: () async {},
+            //               ),
+            //             ),
+            //           ),
+            //           Padding(
+            //             padding: const EdgeInsets.only(left: 15),
+            //             child: Text(
+            //               'myprescription.pdf',
+            //               style:
+            //               TextStyle(color: textColor, fontSize: 12),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
+            //   child: Text(
+            //     '(upload pdf,jpg,png format)',
+            //     style: TextStyle(color: textColor, fontSize: 9),
+            //   ),
+            // ),
 
             // Padding(
             //   padding: const EdgeInsets.only(top: 30),

@@ -130,7 +130,7 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                             onPressed: () async {
 
 
-                              final _allowedDocuments = ['docx', 'pdf', 'doc'];
+                              final _allowedDocuments = ['png', 'pdf', 'jpg'];
                               FilePickerResult result =
                               await FilePicker.platform.pickFiles(
                                 type: FileType.custom,
@@ -160,8 +160,15 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.red),
-                          ):Container(),
+                          ):Text(
+                           "",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red),
                         ),
+                        )
                       ),
                     ],
                   ),

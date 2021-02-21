@@ -619,7 +619,7 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse respo
                   if(homeResponse.address==null) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EditAddressScreen("")),
+                      MaterialPageRoute(builder: (context) => EditAddressScreen("cart","add",response,null)),
                     );
                   }
                   else

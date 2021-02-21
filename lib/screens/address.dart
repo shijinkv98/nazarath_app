@@ -59,7 +59,7 @@ GestureDetector updateButton(BuildContext context,String title)
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => EditAddressScreen("")),);
+          MaterialPageRoute(builder: (context) => EditAddressScreen("address","add",null,null)),);
       },
       child: Container(
         width: double.infinity,
@@ -207,7 +207,10 @@ Widget _itemsBuilder(Addresses address,BuildContext context,Widget widget) {
                                     ),
                                     child: RaisedButton.icon(
                                         onPressed: ()  {
-
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => EditAddressScreen("adress","edit",null,address)),
+                                          );
 
                                         },
                                         elevation: 0,
@@ -240,16 +243,23 @@ Widget _itemsBuilder(Addresses address,BuildContext context,Widget widget) {
                                           topLeft: Radius.circular(2.0)),
                                     ),
                                     child: RaisedButton.icon(
-                                        onPressed: () {
-                                          // String phone ='+916238839396'
-                                          //     // widget.orderItems.orderData.shippingPhone
-                                          // ;
-                                          // if (phone != null && phone.trim().isNotEmpty) {
-                                          //   phone = 'tel:$phone';
-                                          //   if (await canLaunch(phone)) {
-                                          //     await launch(phone);
-                                          //   }
-                                          // }
+                                        onPressed: () async {
+                                          Map body={
+                                           "address_id":address.id
+                                          };
+                                          FocusScope.of(context).requestFocus(FocusNode());
+
+                                          var response = await ApiCall()
+                                              .execute<AddressResponse, Null>("customer-addresses/delete/en", body);
+
+                                          if (response!= null) {
+                                            ApiCall().showToast(response.message);
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => AddressScreen("")),
+                                            );
+
+                                          }
                                         },
                                         elevation: 0,
                                         color: Colors.white,
