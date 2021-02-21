@@ -681,6 +681,7 @@ Widget getPaymentOptions(/*CartResponse rsponse*/)
 
     );
 }
+
 Widget getShippingAdress()
 {
 

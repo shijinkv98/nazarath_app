@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
-import 'package:nazarath_app/network/response/NewsResponse.dart';
-import 'package:nazarath_app/network/response/OrderResponse.dart';
-import 'package:nazarath_app/screens/newsDetails.dart';
+import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -33,30 +31,26 @@ class _WalletScreenState extends State<WalletScreen> {
         backgroundColor: Colors.white,
 
       body:
-        getWalletScreen(context)
-      // FutureBuilder<NewsResponse>(
-      //   future: ApiCall()
-      //       .execute<NewsResponse, Null>('wallet', null),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       debugPrint('products size: ${snapshot.data?.news?.length}');
-      //       return getWalletScreen(snapshot.data?.news
-      //           ?.where((element) =>
-      //       element != null )
-      //           ?.toList(),context,super.widget);
-      //     } else if (snapshot.hasError) {
-      //       return getEmptyContainerOrder(context);
-      //     } else {
-      //       return progressBar;
-      //     }
-      //   },
-      // ),
+      FutureBuilder<WalletResponse>(
+        future: ApiCall()
+            .execute<WalletResponse, Null>('wallet/en', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            debugPrint('products size: ${snapshot.data!=null}');
+            return getWalletScreen(snapshot.data,context,super.widget);
+          } else if (snapshot.hasError) {
+            return getEmptyContainerOrder(context);
+          } else {
+            return progressBar;
+          }
+        },
+      ),
 
     );
   }
 
 }
-Widget getWalletScreen(BuildContext context){
+Widget getWalletScreen(WalletResponse response,BuildContext context,Widget widget){
   return Container(
     child: Column(
       children: [

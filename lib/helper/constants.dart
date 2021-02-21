@@ -295,6 +295,7 @@ Container getEmptyContainer(BuildContext context,String emptyText,String imagena
                           color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
                 )
             ),
+           // getBottomTabPannel(context)
           ],),
       )
   );
@@ -303,3 +304,97 @@ Container getEmptyContainer(BuildContext context,String emptyText,String imagena
 
 }
 
+Widget getBottomTabPannel(BuildContext context )
+{
+  return Container(
+    color: colorPrimary,
+    height: 60,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        GestureDetector(
+          child: getIndividualTab('assets/icons/home_white.png', "HOME"),
+          onTap: (){
+            tbPosition=0;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoard()),
+            );
+          },
+        ),
+        GestureDetector(
+          child: getIndividualTab('assets/icons/check_up_white.png', "CHECKUP"),
+          onTap: (){
+            tbPosition=1;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoard()),
+            );
+          },
+        ),
+        GestureDetector(
+          child: getIndividualTab('assets/icons/stores_white.png', "STORES"),
+          onTap: (){
+            tbPosition=2;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoard()),
+            );
+          },
+        ),
+        GestureDetector(
+          child: getIndividualTab('assets/icons/profile_white.png', "PROFILE"),
+          onTap: (){
+            tbPosition=3;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoard()),
+            );
+          },
+        ),
+        GestureDetector(
+          child: getIndividualTab('assets/icons/news_white.png', "NEWS"),
+          onTap: (){
+            tbPosition=4;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoard()),
+            );
+          },
+        )
+      ],
+    ),
+  );
+}
+
+Widget getIndividualTab(String imagePath,String title)
+{
+  return
+    Container(
+        height: 70,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+                color: bottom_nav_bg, width: 0, style: BorderStyle.solid),
+          ),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Tab(
+                icon: ImageIcon(AssetImage(imagePath),
+                  size: 20,),
+                child: Text(
+                  title,
+                  style: TextStyle(fontSize: 12),
+                ),
+                //text: 'STORES',
+
+              ),
+            ),
+
+          ],
+        ));
+}

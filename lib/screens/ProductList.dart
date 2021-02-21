@@ -59,17 +59,17 @@ class _ProductState extends State<ProductScreen> {
   _ProductState({ this.slug,this.by,this.filter,this.sortOrder,this.query,this.sortBy}) ;
   Future<String> getData() async {
 
-    Map body = {
-      // name,email,phone_number,passwor
-    };
-    productresponse = await ApiCall()
-        .execute<ProductListResponse, Null>("products/en", body);
-
-    if (productresponse != null) {
-      products=productresponse.products.data;
-      ApiCall().showToast(productresponse.message);
-    }
-    return "Success!";
+    // Map body = {
+    //   // name,email,phone_number,passwor
+    // };
+    // productresponse = await ApiCall()
+    //     .execute<ProductListResponse, Null>("products/en", body);
+    //
+    // if (productresponse != null) {
+    //   products=productresponse.products.data;
+    //   ApiCall().showToast(productresponse.message);
+    // }
+    // return "Success!";
   }
 
   @override
@@ -195,6 +195,7 @@ class _ProductState extends State<ProductScreen> {
           }
         },
       ),
+      // bottomNavigationBar: get,
     );
     // return new Scaffold(
     //   appBar: new AppBar(
@@ -232,6 +233,8 @@ Widget getProductViews(List<Data> products,BuildContext context,Widget widget,St
           SizedBox(
             height: 5,
           ),
+         //getBottomTabPannel(context)
+
          // getRecommended(homeResponse.newarrivals, widget)
         ],
       ),
