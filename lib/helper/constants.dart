@@ -295,7 +295,7 @@ Container getEmptyContainer(BuildContext context,String emptyText,String imagena
                           color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
                 )
             ),
-            getBottomTabPannel(context)
+           // getBottomTabPannel(context)
           ],),
       )
   );

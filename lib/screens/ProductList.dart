@@ -232,7 +232,7 @@ Widget getProductViews(List<Data> products,BuildContext context,Widget widget,St
           SizedBox(
             height: 5,
           ),
-         getBottomTabPannel(context)
+         //getBottomTabPannel(context)
 
          // getRecommended(homeResponse.newarrivals, widget)
         ],
