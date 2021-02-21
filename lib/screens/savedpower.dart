@@ -161,12 +161,12 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                                 fontSize: 14,
                                 color: Colors.red),
                           ):Text(
-                           "",
+                           data.prescription,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.red),
+                                color: Colors.black),
                         ),
                         )
                       ),
@@ -407,6 +407,10 @@ async {
 
   if (response?.data != null) {
     ApiCall().showToast(response.message);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
+    );
   }
 }
 String sphereleft="";
