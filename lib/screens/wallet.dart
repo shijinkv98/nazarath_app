@@ -77,7 +77,30 @@ Widget  getTopWallet(BuildContext context){
         Container(
           color: colorPrimary,
           height: 90,
-        ),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Container(width: 50,height: 50,
+                child: ImageIcon(AssetImage('assets/icons/walleticon.png'),color: Colors.white,size: 30,),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Current Balance',style:TextStyle(color: Colors.white,fontSize: 10),),
+                    Text('1800 Dhs',style:TextStyle(color: Colors.white,fontSize: 20),),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     ),
   )
@@ -94,23 +117,26 @@ Widget _tabSection(BuildContext context) {
           TabBar(unselectedLabelColor: Colors.black,indicatorColor: Colors.transparent, tabs: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Container(color:colorPrimary,
-                      width: MediaQuery.of(context).size.width/3.5,
+                      width:120,
                       height:30,
                       child: Tab(text: "History",),
-                  )
-                  ,
+                  ),
+
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width/3.5,
+                  color: Colors.red,
+                    width:120,
                     height:30,
                     child: Tab(text: "Upcoming")),
               ],
@@ -122,12 +148,78 @@ Widget _tabSection(BuildContext context) {
           //Add this to give height
           height: MediaQuery.of(context).size.height*0.6,
           child: TabBarView(children: [
-            Text('page 1'),
-            Text('page 2'),
+            getHistory(),
+            getUpcoming()
 
           ]),
         ),
       ],
+    ),
+  );
+}
+Widget getHistory(){
+  return Padding(
+    padding: const EdgeInsets.only(top: 15),
+    child: Container(
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25,right: 25),
+            child: Divider(thickness: 1,),
+          ),
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25,right: 25,top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Transfer from reard point',style: TextStyle(fontSize: 10,color: textColor),),
+                  Text('18/11/2020, 10:12 am',style: TextStyle(fontSize: 10,color: textColor),),
+                  Text('AED 10.00',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+
+    ),
+  );
+}
+Widget getUpcoming(){
+  return Padding(
+    padding: const EdgeInsets.only(top: 15),
+    child: Container(
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25,right: 25),
+            child: Divider(thickness: 1,),
+          ),
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25,right: 25,top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Transfer from reard point',style: TextStyle(fontSize: 10,color: textColor),),
+                  Text('18/11/2020, 10:12 am',style: TextStyle(fontSize: 10,color: textColor),),
+                  Text('AED 10.00',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+
     ),
   );
 }

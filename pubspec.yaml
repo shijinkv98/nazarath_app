@@ -81,6 +81,7 @@ flutter:
   assets:
     - assets/icons/nazarath_logo.png
     - assets/icons/change_password.png
+    - assets/icons/walleticon.png
     - assets/icons/favourite.png
     - assets/icons/log_out.png
     - assets/icons/my_address.png

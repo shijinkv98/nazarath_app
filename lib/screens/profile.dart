@@ -7,11 +7,14 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
+import 'package:nazarath_app/screens/TrackingMain.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
 import 'package:nazarath_app/screens/privacy_policy.dart';
 import 'package:nazarath_app/screens/refertofriends.dart';
 import 'package:nazarath_app/screens/savedpower.dart';
+import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'DashBoard.dart';
@@ -232,7 +235,7 @@ class Profile extends StatelessWidget {
                         else
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ReferScreen("")),
+                      MaterialPageRoute(builder: (context) => TrackingMain()),
                     );
                   },
 
