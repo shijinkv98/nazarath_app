@@ -9,6 +9,7 @@ import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:nazarath_app/screens/writereview.dart';
 
 import 'cart.dart';
 import 'notification.dart';
@@ -160,7 +161,7 @@ Widget getOrderDetails(Data response,BuildContext context,Widget widget)
 
 Widget customScrollView(BuildContext context,Widget widget,Data response)
 {
-  final _itemExtent = 100.0;
+  final _itemExtent = 247.0;
   return CustomScrollView(
     slivers: <Widget>[
       SliverFixedExtentList(
@@ -194,7 +195,7 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int pay
       children: [
         Container(
           color: colorPrimary,
-          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
+          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 37),
           child: Row(
             children: [
               Image(
@@ -456,17 +457,23 @@ Widget getProductReview(BuildContext context,Widget widget, ItemsNew item)
                     getStarRating(1)
                   ],
                 ),
-                Text(
-                  "Tell us more",
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(
-                      color: colorPrimary,fontSize: 14,fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap:(){ Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WriteReviewScreen()),
+                  );},
+                  child: Text(
+                    "Tell us more",
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                        color: colorPrimary,fontSize: 14,fontWeight: FontWeight.bold),
+                  ),
                 ),
                // getSa,
               ],
             ),
           ),
-          Divider(thickness: 1,)
+          // Divider(thickness: 1,)
         ],
       ),
     ),
@@ -533,17 +540,13 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data order
        // margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
         decoration: BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 1.0,
-              )]
+
         ),
         child: Column(
           children: [
             Padding(
               padding:
-              EdgeInsets.fromLTRB(10, 10, 10, 10),
+              EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -596,10 +599,8 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data order
                                 color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
                           ],
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        getDeliveryPanel(item, context, widget,orderData.paymentStatus)
+
+
                       ],
                     ),
                   ),
@@ -609,6 +610,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data order
               ),
 
             ),
+            getDeliveryPanel(item, context, widget,orderData.paymentStatus),
 
 
           ],

@@ -257,7 +257,6 @@ Container getProductDetails(Product product) {
   return Container(
       color: product_bg,
       width: double.infinity,
-      height: 180,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -76,7 +76,7 @@ class _OrderState extends State<Order> with TickerProviderStateMixin {
               ),
             ),
 
-            TrackingScreen(),
+            TrackingScreen(''),
             SizedBox(height: 50),
 
             SizedBox(height: 50),

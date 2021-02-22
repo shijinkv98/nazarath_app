@@ -17,6 +17,7 @@ import 'package:nazarath_app/screens/savedpower.dart';
 import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:nazarath_app/screens/writereview.dart';
 import 'DashBoard.dart';
 import 'changePassword.dart';
 import 'order.dart';
@@ -235,7 +236,7 @@ class Profile extends StatelessWidget {
                         else
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TrackingMain()),
+                      MaterialPageRoute(builder: (context) => ReferScreen('')),
                     );
                   },
 
@@ -273,7 +274,7 @@ class Profile extends StatelessWidget {
                         else
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
+                      MaterialPageRoute(builder: (context) => ChangePasswordScreen('')),
                     );
                   },
                   ),

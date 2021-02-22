@@ -162,7 +162,7 @@ class AnimatedBar extends StatelessWidget {
               child: Container(
                 width: 10,
                 margin: EdgeInsets.only(top: 10),
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     // Text('${(controller.value * 100.0).toStringAsFixed(1)}%'),
@@ -224,7 +224,7 @@ class AnimatedBar extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 width: 20  ,
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
