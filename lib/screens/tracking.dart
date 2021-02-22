@@ -42,7 +42,7 @@ class _TrackingScreenState extends State<TrackingScreen>
     };
 
     return Scaffold(
-        backgroundColor: product_bg,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: true,
@@ -136,35 +136,64 @@ class _TrackingScreenState extends State<TrackingScreen>
   }
 
   Widget getTrackingFull(Data data, BuildContext context, Widget widget) {
-    return Container(color:product_bg,
+    return Container(color:Colors.white,
     child: Column(
       children: [
         getTopContainer(),
 
-        Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Text(
-                '${"TrackingNO: "}${data.trackingid}',
-                style: TextStyle(
-                    color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Flexible(
-                  child: getTrackOrderView(context, widget, data.timeline)
-              ),
-            ],
+        Flexible(
+            child: getTrackView(data, context, widget)
+          //getTrackOrderView(context, widget, data.timeline)
+        )
+
+      ],
+    ),);
+  }
+  Widget getTrackView(Data data, BuildContext context, Widget widget)
+  {
+    double _itemExtent=60;
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 10.0),
+        ),
+        SliverToBoxAdapter(
+          child:   Container(
+            color: Colors.white,
+            child: Column(
+
+              children: [
+                Text(
+                  '${"TrackingNO: "}${data.trackingid}',
+                  style: TextStyle(
+                      color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+
+              ],
+            ),
+          ),
+        ),
+
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+        ),
+        SliverFixedExtentList(
+          itemExtent: _itemExtent,  // I'm forcing item heights
+          delegate: SliverChildBuilderDelegate(
+                (context, index) => _itemsBuilder(data.timeline[index],context,widget,index,data.timeline.length),
+            childCount: data.timeline.length,
           ),
         ),
       ],
-    ),);
+    );
   }
   Widget getTopContainer()
   {
     return Container(
+      color: product_bg,
       child: Column(
         children: [
           Stack(
@@ -216,14 +245,41 @@ class _TrackingScreenState extends State<TrackingScreen>
 
   getTrackOrderView(BuildContext context, Widget widget, List<Timeline>timelines) => ListView.builder(
       itemBuilder: (context, index) =>
-          _itemsBuilder(timelines[index],context,widget),
+          _itemsBuilder(timelines[index],context,widget,index,timelines.length),
       itemCount: timelines.length);
 
-  _itemsBuilder(Timeline timeline, BuildContext context, Widget widget) {
+  _itemsBuilder(Timeline timeline, BuildContext context, Widget widget,int index,int length) {
     return Container(
-      child: Column(
-        children: [Text(timeline.statushistory.statusText),
-          Text(timeline.description),],
+      child: Row(
+        children: [
+          Column(
+            children: [
+              timeline.description!=""?Image(
+                image: new AssetImage("assets/icons/delivery_icon.png"),
+                width: 20,
+                height: 20,
+                color: colorPrimary,
+              ):Image(
+                image: new AssetImage("assets/icons/cart.png"),
+                width: 20,
+                height: 20,
+                color: colorPrimary,
+              ),
+              index!=length-1?Image(
+                image: new AssetImage("assets/icons/delivery_icon.png"),
+                width: 20,
+                height: 20,
+                color: colorPrimary,
+              ):  Container(),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(timeline.statushistory.statusText),
+              Text(timeline.description),],
+          ),
+        ],
       ),
     );
   }

@@ -161,7 +161,7 @@ Widget getOrderDetails(Data response,BuildContext context,Widget widget)
 
 Widget customScrollView(BuildContext context,Widget widget,Data response)
 {
-  final _itemExtent = 247.0;
+  final _itemExtent = 220.0;
   return CustomScrollView(
     slivers: <Widget>[
       SliverFixedExtentList(
@@ -195,7 +195,7 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int pay
       children: [
         Container(
           color: colorPrimary,
-          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 37),
+          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
           child: Row(
             children: [
               Image(
