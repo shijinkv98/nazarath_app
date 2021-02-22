@@ -7,6 +7,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
+import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'cart.dart';
@@ -225,6 +226,7 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int pay
           ),
         ),
         getAllButton(context, widget, item,payStatus),
+        getProductReview(context, widget, item),
       ],
     ),
   );
@@ -236,8 +238,6 @@ Widget getAddressPanel(Data orderData,BuildContext context,Widget widget)
     color: Colors.white,
     child: Column(
       children: [
-
-        getProductReview(context, widget, orderData),
         getAdress("Delivery Address",orderData.billingAddress,orderData.billingName,orderData.billingPhone),
         Container(
           color: item_text_gray,
@@ -367,7 +367,12 @@ Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int paySta
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               item.returnPeriod!=0?GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                  // );
+                },
                 child: Row(
                   children: [
                     getButtonDelivery(context, widget, 0, "Return", "assets/icons/return.png", item),
@@ -380,7 +385,12 @@ Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int paySta
                 ),
               ):Container(),
               payStatus==0?GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                  // );
+                },
                 child: Row(
                   children: [
                     getButtonDelivery(context, widget, 1, "Cancel", "assets/icons/remove.png", item),
@@ -393,7 +403,12 @@ Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int paySta
                 ),
               ):Container(),
               GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                    );
+                  },
                   child: getButtonDelivery(context, widget, 2, "Tracking", "assets/icons/location.png", item)),
             ],
           ),
@@ -402,11 +417,14 @@ Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int paySta
     ),
   );
 }
-Widget getProductReview(BuildContext context,Widget widget, Data orderdata)
+Widget getProductReview(BuildContext context,Widget widget, ItemsNew item)
 {
   return GestureDetector(
     onTap: (){
-
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+      // );
     },
     child: Container(
 
@@ -435,7 +453,7 @@ Widget getProductReview(BuildContext context,Widget widget, Data orderdata)
                           color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold),
                     ),
                     SizedBox(width:10),
-                    getStarRating(3.5)
+                    getStarRating(1)
                   ],
                 ),
                 Text(
@@ -464,7 +482,6 @@ Widget getStarRating(double rating) {
         allowHalfRating: true,
         itemCount: 5,
         itemSize: 18,
-        updateOnDrag: false,
         ratingWidget: RatingWidget(
             full: Icon(Icons.star, color: colorPrimary),
             half: Icon(

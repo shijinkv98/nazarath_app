@@ -4,15 +4,21 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'util.dart';
 
 class TrackingScreen extends StatefulWidget {
-  TrackingScreen({Key key}) : super(key: key);
+  String itemId;
+  TrackingScreen(String itemId)
+  {
+    this.itemId=itemId;
+  }
+ // TrackingScreen({Key key}) : super(key: key);
 
-  _TrackingScreenState createState() => _TrackingScreenState();
+  _TrackingScreenState createState() => _TrackingScreenState(itemId: this.itemId);
 }
 
 class _TrackingScreenState extends State<TrackingScreen>
     with TickerProviderStateMixin {
+  String itemId;
   AnimationController animationController;
-
+  _TrackingScreenState({this.itemId});
   @override
   void initState() {
     super.initState();
