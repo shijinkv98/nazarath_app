@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/custom/PinField.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
 import 'package:provider/provider.dart';
+
+import '../DashBoard.dart';
 
 class OTPNotifier extends ChangeNotifier {
   String _otp;
@@ -29,7 +34,7 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   //OTPNotifier _otpNotifier;
-
+String otp_value="";
   @override
   void initState() {
     super.initState();
@@ -100,6 +105,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       print("Completed: " + pin);
                     },
                     onChanged: (value) {
+                      otp_value=value;
                       // .otpWithoutNotify = value_otpNotifier;
                     },
                   ),
@@ -111,7 +117,8 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: RaisedButton(
                       onPressed: () async {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        var otp ="";
+                        var otp =otp_value;
+
                         if (otp != null &&
                             otp.trim().length == 6 &&
                             widget.userData != null) {
@@ -122,14 +129,16 @@ class _OtpScreenState extends State<OtpScreen> {
                             'id': widget.userData.id,
                             'mode': 'register', //register/change
                           };
-                          SignupResponse response = await ApiCall()
-                              .execute<SignupResponse, Null>("verify-otp", body);
-                          if (response?.success != null &&
-                              response.success == 1 &&
-                              response.customerData != null) {
-                            Navigator.popAndPushNamed(context, 'Dashboard',
-                                arguments: response.customerData);
+                          var  response = await ApiCall()
+                              .execute<LoginResponse, Null>("verify-otp", body);
+                          if (response?.customerData != null) {
+                            await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+                            await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DashBoard()),);
                           }
+
                         }
                       },
                       color: colorPrimary,
@@ -162,8 +171,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                     'id': widget.userData.id,
                                     'mode': 'register', //register/change
                                   };
-                                  await ApiCall()
-                                      .execute<Null, Null>("send-otp", body);
+                                  var response = await ApiCall()
+                                      .execute<LoginResponse, Null>("send-otp", body);
                                 }
                               },
                             style: TextStyle(

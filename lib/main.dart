@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/Splash.dart';
 
+import 'helper/constants.dart';
+
 void main() {
   // runApp(MyApp());
   runApp(new MaterialApp(
@@ -19,9 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Nazarath',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: colorPrimary,
       ),
       home: SplashScreen(),
     );

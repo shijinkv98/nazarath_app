@@ -96,9 +96,9 @@ Widget getForms(BuildContext context,Widget widget,CartResponse cartresponse,Add
                 Map body={
                   "name":customer.name,
                   "address":address,
-                  "country": "",
+                  "country": "0",
                   "state":state,
-                  "city":"",
+                  "city":"city",
                   "zipcode":postal,
                   "latitude":"0.0",
                   "longtitude":"0.0",
@@ -155,7 +155,7 @@ final addressField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
 
-  onSaved: (value) {
+  onChanged: (value) {
     address = value;
   },
   initialValue: address,
@@ -189,18 +189,18 @@ final addressField = TextFormField(
         height: register_icon_size,
       ),
       onPressed: () async {
-        Map body={
-          "address":address,
-          "zipcode":postal,
-          "state":state,
-        };
-       // FocusScope.of(context).requestFocus(FocusNode());
-
-        var response = await ApiCall()
-            .execute<AddressResponse, Null>("customer-addresses/add/en", body);
-
-        if (response?.addresses!= null) {
-        }
+       //  Map body={
+       //    "address":address,
+       //    "zipcode":postal,
+       //    "state":state,
+       //  };
+       // // FocusScope.of(context).requestFocus(FocusNode());
+       //
+       //  var response = await ApiCall()
+       //      .execute<AddressResponse, Null>("customer-addresses/add/en", body);
+       //
+       //  if (response?.addresses!= null) {
+       //  }
       },
       color: colorPrimary,
     ),
@@ -212,7 +212,7 @@ String state="";
 final stateField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     state = value;
   },
   // style: style,
