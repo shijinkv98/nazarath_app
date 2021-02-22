@@ -88,7 +88,7 @@ class Timeline {
         ? new Statushistory.fromJson(json['statushistory'])
         : null;
     if (json['trackingstatus'] != null) {
-      trackingstatus = new List<Trackingstatus>();
+      trackingstatus = new List<Null>();
       json['trackingstatus'].forEach((v) {
         trackingstatus.add(new Trackingstatus.fromJson(v));
       });
@@ -152,6 +152,7 @@ class Statushistory {
     return data;
   }
 }
+
 
 class Trackingstatus {
   int id;

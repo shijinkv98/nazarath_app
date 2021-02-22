@@ -67,13 +67,25 @@ class Values {
   int filterValueId;
   String name;
   int parentId;
+  List<FilterSpecificationValues> filterSpecificationValues;
 
-  Values({this.filterValueId, this.name, this.parentId});
+  Values(
+      {this.filterValueId,
+        this.name,
+        this.parentId,
+        this.filterSpecificationValues});
 
   Values.fromJson(Map<String, dynamic> json) {
     filterValueId = json['filter_value_id'];
     name = json['name'];
     parentId = json['parent_id'];
+    if (json['filter_specification_values'] != null) {
+      filterSpecificationValues = new List<FilterSpecificationValues>();
+      json['filter_specification_values'].forEach((v) {
+        filterSpecificationValues
+            .add(new FilterSpecificationValues.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +93,33 @@ class Values {
     data['filter_value_id'] = this.filterValueId;
     data['name'] = this.name;
     data['parent_id'] = this.parentId;
+    if (this.filterSpecificationValues != null) {
+      data['filter_specification_values'] =
+          this.filterSpecificationValues.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class FilterSpecificationValues {
+  int filterValueId;
+  String name;
+  int specificationId;
+
+  FilterSpecificationValues(
+      {this.filterValueId, this.name, this.specificationId});
+
+  FilterSpecificationValues.fromJson(Map<String, dynamic> json) {
+    filterValueId = json['filter_value_id'];
+    name = json['name'];
+    specificationId = json['specification_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['filter_value_id'] = this.filterValueId;
+    data['name'] = this.name;
+    data['specification_id'] = this.specificationId;
     return data;
   }
 }

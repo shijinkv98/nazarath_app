@@ -39,7 +39,7 @@ class _WalletScreenState extends State<WalletScreen> {
             debugPrint('products size: ${snapshot.data!=null}');
             return getWalletScreen(snapshot.data,context,super.widget);
           } else if (snapshot.hasError) {
-            return getEmptyContainerOrder(context);
+            return getEmptyWallet(context);
           } else {
             return progressBar;
           }
@@ -49,19 +49,23 @@ class _WalletScreenState extends State<WalletScreen> {
     );
   }
 
+  Widget getEmptyWallet(BuildContext context) {
+    return Container();
+  }
+
 }
 Widget getWalletScreen(WalletResponse response,BuildContext context,Widget widget){
   return Container(
     child: Column(
       children: [
-        getTopWallet(context),
-        _tabSection(context)
+        getTopWallet(context,response),
+        _tabSection(context, response)
 
       ],
     ),
   );
 }
-Widget  getTopWallet(BuildContext context){
+Widget  getTopWallet(BuildContext context,WalletResponse response){
   return Container(
     color: product_bg,
   child: Padding(
@@ -88,7 +92,7 @@ Widget  getTopWallet(BuildContext context){
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Current Balance',style:TextStyle(color: Colors.white,fontSize: 10),),
-                    Text('1800 Dhs',style:TextStyle(color: Colors.white,fontSize: 20),),
+                    Text('${response.currency.symbolLeft}${" "}${response.data.balance}',style:TextStyle(color: Colors.white,fontSize: 20),),
                   ],
                 ),
               ),
@@ -100,27 +104,23 @@ Widget  getTopWallet(BuildContext context){
   )
   );
 }
-Widget _tabSection(BuildContext context) {
+Widget _tabSection(BuildContext context,WalletResponse response) {
   return DefaultTabController(
     length: 2,
     child: Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Container(
           child:
           TabBar(unselectedLabelColor: Colors.black,indicatorColor: Colors.transparent, tabs: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Container(color:colorPrimary,
-                      width:120,
-                      height:30,
-                      child: Tab(text: "History",),
-                  ),
-
+                Container(color:colorPrimary,
+                  width:120,
+                    height:30,
+                    child: Tab(text: "History",),
                 ),
               ],
             ),
@@ -142,8 +142,8 @@ Widget _tabSection(BuildContext context) {
           //Add this to give height
           height: MediaQuery.of(context).size.height*0.6,
           child: TabBarView(children: [
-            getHistory(),
-            getUpcoming()
+            getHistoryData(response.data.history,response.currency.symbolLeft, context),
+            getUpcomingData(response.data.pendingHistory, response.currency.symbolLeft,context),
 
           ]),
         ),
@@ -151,7 +151,15 @@ Widget _tabSection(BuildContext context) {
     ),
   );
 }
-Widget getHistory(){
+Widget getHistoryData(List<Wallet> wallets,String currency,BuildContext context) => ListView.builder(
+    itemBuilder: (context, index) =>
+        getHistory(wallets[index], currency),
+    itemCount: wallets.length);
+Widget getUpcomingData(List<Wallet> wallets,String currency,BuildContext context) => ListView.builder(
+    itemBuilder: (context, index) =>
+        getUpcoming(wallets[index], currency),
+    itemCount: wallets.length);
+Widget getHistory(Wallet wallet,String Currency){
   return Padding(
     padding: const EdgeInsets.only(top: 15),
     child: Container(
@@ -171,9 +179,9 @@ Widget getHistory(){
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Transfer from reard point',style: TextStyle(fontSize: 10,color: textColor),),
-                  Text('18/11/2020, 10:12 am',style: TextStyle(fontSize: 10,color: textColor),),
-                  Text('AED 10.00',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
+                  Container(width:150,child: Text(wallet.type,maxLines:3,style: TextStyle(fontSize: 10,color: textColor),)),
+                  Container(width:100,child: Text(wallet.date,maxLines:2,style: TextStyle(fontSize: 10,color: textColor),)),
+                  Text('$currency${" "}${wallet.amount}',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
                 ],
               ),
             ),
@@ -184,7 +192,7 @@ Widget getHistory(){
     ),
   );
 }
-Widget getUpcoming(){
+Widget getUpcoming(Wallet wallet,String Currency){
   return Padding(
     padding: const EdgeInsets.only(top: 15),
     child: Container(
@@ -204,9 +212,9 @@ Widget getUpcoming(){
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Transfer from reard point',style: TextStyle(fontSize: 10,color: textColor),),
-                  Text('18/11/2020, 10:12 am',style: TextStyle(fontSize: 10,color: textColor),),
-                  Text('AED 10.00',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
+                  Container(width:150,child: Text(wallet.type,maxLines:3,style: TextStyle(fontSize: 10,color: textColor),)),
+                  Container(width:100,child: Text(wallet.date,maxLines:2,style: TextStyle(fontSize: 10,color: textColor),)),
+                  Text('$currency${" "}${wallet.amount}',style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.red),),
                 ],
               ),
             ),

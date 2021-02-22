@@ -100,8 +100,8 @@ Widget getForms(BuildContext context,Widget widget,CartResponse cartresponse,Add
                   "state":state,
                   "city":"",
                   "zipcode":postal,
-                  "latitude":"",
-                  "longtitude":"",
+                  "latitude":"0.0",
+                  "longtitude":"0.0",
                   "mobile":customer.mobile,
                 };
                 FocusScope.of(context).requestFocus(FocusNode());
