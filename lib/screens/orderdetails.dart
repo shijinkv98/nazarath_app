@@ -6,7 +6,6 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
-import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
@@ -171,7 +170,7 @@ Widget customScrollView(BuildContext context,Widget widget,Data response)
         ),
       ),
       SliverToBoxAdapter(
-          child: getDeliveryPanel(response,context,widget)
+          child: getAddressPanel(response,context,widget)
       ),
       SliverToBoxAdapter(child: getOrderSummaryDetails(context, widget, response)),
 
@@ -187,10 +186,9 @@ Widget customScrollView(BuildContext context,Widget widget,Data response)
 //     //       height: 1,
 //     //     ),
 //     itemCount: products.length);
-Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
+Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int payStatus)
 {
   return Container(
-    color: Colors.white,
     child: Column(
       children: [
         Container(
@@ -209,13 +207,13 @@ Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    orderData.orderStatus,
+                    item.statusText,
                     style: TextStyle(
                         color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 2),
                   Text(
-                    orderData.updatedAt,
+                   item.createdAt,
                     style: TextStyle(
                         color: Colors.white,fontSize: 10),
                   )
@@ -226,7 +224,19 @@ Widget getDeliveryPanel(Data orderData,BuildContext context,Widget widget)
             ],
           ),
         ),
-        getAllButton(context, widget, orderData),
+        getAllButton(context, widget, item,payStatus),
+      ],
+    ),
+  );
+
+}
+Widget getAddressPanel(Data orderData,BuildContext context,Widget widget)
+{
+  return Container(
+    color: Colors.white,
+    child: Column(
+      children: [
+
         getProductReview(context, widget, orderData),
         getAdress("Delivery Address",orderData.billingAddress,orderData.billingName,orderData.billingPhone),
         Container(
@@ -337,7 +347,7 @@ Widget getOrderSummaryDetails(BuildContext context,Widget widget,Data orderData)
     ),
   );
 }
-Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
+Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int payStatus)
 {
   return Container(
 
@@ -356,19 +366,35 @@ Widget getAllButton(BuildContext context,Widget widget, Data orderdata)
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              getButtonDelivery(context, widget, 0, "Return", "assets/icons/return.png", orderdata),
-              Container(
-                width: 1,
-                height:40,
-                color: item_text_gray,
-              ),
-              getButtonDelivery(context, widget, 1, "Cancel", "assets/icons/remove.png", orderdata),
-              Container(
-                width: 1,
-                height:40,
-                color: item_text_gray,
-              ),
-              getButtonDelivery(context, widget, 2, "Tracking", "assets/icons/location.png", orderdata),
+              item.returnPeriod!=0?GestureDetector(
+                onTap: (){},
+                child: Row(
+                  children: [
+                    getButtonDelivery(context, widget, 0, "Return", "assets/icons/return.png", item),
+                    Container(
+                      width: 1,
+                      height:40,
+                      color: item_text_gray,
+                    ),
+                  ],
+                ),
+              ):Container(),
+              payStatus==0?GestureDetector(
+                onTap: (){},
+                child: Row(
+                  children: [
+                    getButtonDelivery(context, widget, 1, "Cancel", "assets/icons/remove.png", item),
+                    Container(
+                      width: 1,
+                      height:40,
+                      color: item_text_gray,
+                    ),
+                  ],
+                ),
+              ):Container(),
+              GestureDetector(
+                  onTap: (){},
+                  child: getButtonDelivery(context, widget, 2, "Tracking", "assets/icons/location.png", item)),
             ],
           ),
         ),
@@ -438,6 +464,7 @@ Widget getStarRating(double rating) {
         allowHalfRating: true,
         itemCount: 5,
         itemSize: 18,
+        updateOnDrag: false,
         ratingWidget: RatingWidget(
             full: Icon(Icons.star, color: colorPrimary),
             half: Icon(
@@ -455,32 +482,29 @@ Widget getStarRating(double rating) {
         }),
   );
 }
-Widget getButtonDelivery(BuildContext context,Widget widget,int type,String title,String icon,Data orderdata)
+Widget getButtonDelivery(BuildContext context,Widget widget,int type,String title,String icon,ItemsNew orderdata)
 {
-  return GestureDetector(
-    onTap:(){},
-    child: Container(
-      padding: EdgeInsets.only(top:10,bottom: 10,left: 10,right: 10),
+  return Container(
+    padding: EdgeInsets.only(top:10,bottom: 10,left: 10,right: 10),
 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image(
-            image: new AssetImage(icon),
-            width: 18,
-            height: 18,
-            color: item_text_gray,
-          ),
-          SizedBox(width:5),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Image(
+          image: new AssetImage(icon),
+          width: 18,
+          height: 18,
+          color: item_text_gray,
+        ),
+        SizedBox(width:5),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+              color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
+        )
+      ],
     ),
   );
 }
@@ -558,6 +582,7 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data order
                         SizedBox(
                           height: 5,
                         ),
+                        getDeliveryPanel(item, context, widget,orderData.paymentStatus)
                       ],
                     ),
                   ),
