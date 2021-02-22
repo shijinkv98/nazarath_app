@@ -7,6 +7,7 @@ import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/LogoutResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
+import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkout.dart';
@@ -36,25 +37,26 @@ class DashBoard extends StatefulWidget {
 int tbPosition = 0;
 //var homeResponse;
 var customer;
+var login_data;
 final ValueNotifier<int> notificationCounterValueNotifer=ValueNotifier(0);
 
 class _DashBoard extends State<DashBoard> {
 
   @override
   void initState() {
-
     customer=new UserData();
-
+    login_data=new LoginResponse();
+    getHomeData(context);
     super.initState();
 
-    getHomeData(context);
+
   }
   Future<void> getHomeData(BuildContext context)
   async {
 
     ApiCall().context=context;
     customer=await ApiCall().getUser();
-
+    login_data=await ApiCall().getLoginResponse();
     // Map body = {
     //   // name,email,phone_number,passwor
     // };
@@ -609,6 +611,7 @@ async {
 Future<void> gotoLogout(BuildContext context)
 async {
   await ApiCall().saveUser("");
+  await ApiCall().saveLoginResponse("");
   Navigator.pushReplacement(
       context,
       MaterialPageRoute(

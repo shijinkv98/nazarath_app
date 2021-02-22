@@ -134,7 +134,7 @@ class Profile extends StatelessWidget {
                         Text('Edit Profile',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                          if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
                           gotoLogin(context);
                         else
                             Navigator.push(
@@ -154,7 +154,7 @@ class Profile extends StatelessWidget {
                         Text('My Orders',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                       gotoLogin(context);
                     else
                     Navigator.push(
@@ -173,7 +173,7 @@ class Profile extends StatelessWidget {
                         Text('My Addresses',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                       gotoLogin(context);
                     else
                     Navigator.push(
@@ -192,7 +192,7 @@ class Profile extends StatelessWidget {
                         Text('Saved Power',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.trim().length>0)
                       gotoLogin(context);
                     else
                       Navigator.push(
@@ -211,7 +211,7 @@ class Profile extends StatelessWidget {
                         Text('Wallet',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                           gotoLogin(context);
                         else
                       Navigator.push(
@@ -230,7 +230,7 @@ class Profile extends StatelessWidget {
                         Text('Refer to Friend',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                           gotoLogin(context);
                         else
                     Navigator.push(
@@ -268,7 +268,7 @@ class Profile extends StatelessWidget {
                         Text('Change Password',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                           gotoLogin(context);
                         else
                     Navigator.push(
@@ -303,7 +303,7 @@ class Profile extends StatelessWidget {
                         Text('Logout',style:TextStyle(color:Colors.grey[700] ),)
                       ],
                     ), onPressed: () {
-                    if(customer.guest_id != null && customer.guest_id.trim().length()>0)
+                    if(login_data.guest_id != null && login_data.guest_id.length>0)
                           gotoLogin(context);
                     else
                       logout(context);

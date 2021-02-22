@@ -1,6 +1,6 @@
 class UserData {
   String id, mobile, name, email, locationDetails, token,guest_id="";
-  int status, otpVerificationStatus, emailVerificationStatus;
+  int status,otpVerificationStatus,emailVerificationStatus;
   String otp,referral_code;
   UserData()
   {
@@ -23,16 +23,10 @@ class UserData {
     status = json['status'];
     token = json['token'];
     referral_code = json['token'];
-    guest_id= json['guest_id'];
-    // otp= json['otp'];
-    // if(!guest_id.isEmpty&&guest_id.length>1)
-    //   {
-    //     name="Guest";
-    //   }
-    // if(name.isEmpty)
-    //   name="USER";
-    otpVerificationStatus = json['otpverificationstatus'];
-     emailVerificationStatus = json['emailverificationstatus'];
+    otpVerificationStatus=status;
+    emailVerificationStatus=status;
+    //guest_id= json['guest_id'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -42,12 +36,8 @@ class UserData {
     data['name'] = this.name;
     data['status'] = this.status;
     data['token'] = this.token;
-    data['referral_code'] = this.referral_code;
     data['email'] = this.email;
-    data['guest_id']=this.guest_id;
-    //data['otp'] = this.otp;
-    data['otpverificationstatus'] = this.otpVerificationStatus;
-    data['emailverificationstatus'] = this.emailVerificationStatus;
-    return data;
+
+        return data;
   }
 }

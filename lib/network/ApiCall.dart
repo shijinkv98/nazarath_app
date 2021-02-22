@@ -160,6 +160,12 @@ class ApiCall{
     bool success = await prefs.setString('user', userResponse);
     return success;
   }
+  Future saveLoginResponse(String userResponse) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    debugPrint('save user resp: $userResponse');
+    bool success = await prefs.setString('login_response', userResponse);
+    return success;
+  }
   Future saveHome(String userResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     debugPrint('save user resp: $userResponse');
@@ -178,7 +184,15 @@ class ApiCall{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('admin_phone_no');
   }
-
+  Future<LoginResponse> getLoginResponse() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String user =
+    prefs.getString('login_response') == null ? "" : prefs.getString('login_response');
+    if (user == null || user.trim().isEmpty) {
+      return null;
+    }
+    return LoginResponse.fromJson(json.decode(user == null ? "" : user));
+  }
   Future<UserData> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String user =

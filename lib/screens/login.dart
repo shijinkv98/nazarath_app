@@ -132,25 +132,25 @@ class Login extends StatelessWidget {
 
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            Map body = {
-              // name,email,phone_number,password
-              'email_phone': shopName,
-              'password': password.trim(),
-              'referral_code': "",
-              'guest_id':'',
-            };
-            isLoading=true;
-            var response = await ApiCall()
-                .execute<LoginResponse, Null>("login/en", body);
-
-            if (response?.customerData != null) {
-              isLoading=false;
-              await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DashBoard()),);
-            }
-            //login(shopName, "", "", password, context);
+            // Map body = {
+            //   // name,email,phone_number,password
+            //   'email_phone': shopName,
+            //   'password': password.trim(),
+            //   'referral_code': "",
+            //   'guest_id':'',
+            // };
+            // isLoading=true;
+            // var response = await ApiCall()
+            //     .execute<LoginResponse, Null>("login/en", body);
+            //
+            // if (response?.customerData != null) {
+            //   isLoading=false;
+            //   await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => DashBoard()),);
+            // }
+            login(shopName, "", "", password, context);
           }
          // guestLogin(context);
         },
@@ -266,17 +266,8 @@ class Login extends StatelessWidget {
                             Map body = {
                               // name,email,phone_number,password
                             };
-                            var response = await ApiCall()
-                                .execute<LoginResponse, Null>("guest-login/en", body);
 
-                            if (response?.customerData != null) {
-                              isLoading=false;
-                              await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => DashBoard()),);
-                            }
-                           // guestLogin(context);
+                            guestLogin(context);
                           },
 
                           child: Text("Guest",
@@ -391,6 +382,8 @@ class Login extends StatelessWidget {
   }
   Future<void> guestLogin(BuildContext context)
   async {
+    await ApiCall().saveUser("");
+    await ApiCall().saveLoginResponse("");
     Map body = {
       // name,email,phone_number,password
     };
@@ -399,6 +392,7 @@ class Login extends StatelessWidget {
 
     if (response?.customerData != null) {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DashBoard()),);
@@ -406,18 +400,22 @@ class Login extends StatelessWidget {
   }
   Future<void> login(String email_phone,String referral_code,String guest_id,String password,BuildContext context)
   async {
+    await ApiCall().saveUser("");
+    await ApiCall().saveLoginResponse("");
     Map body = {
       // name,email,phone_number,password
       'email_phone': email_phone,
       'password': password.trim(),
       'referral_code': referral_code,
-      'guest_id':'guest_id',
+      'guest_id':'',
     };
     var response = await ApiCall()
         .execute<LoginResponse, Null>("login/en", body);
 
     if (response?.customerData != null) {
+
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DashBoard()),);
@@ -435,6 +433,7 @@ class Login extends StatelessWidget {
 
     if (response?.customerData != null) {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+      await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Home()),);
