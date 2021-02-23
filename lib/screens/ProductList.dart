@@ -12,6 +12,7 @@ import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/ProductDetails.dart';
 import 'package:nazarath_app/screens/cart.dart';
+import 'package:nazarath_app/screens/filterScreen.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
@@ -636,7 +637,10 @@ Widget getButtonContainer(BuildContext context,String by,String sortBy ,String s
           GestureDetector(
             onTap: ()
             {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FilterScreeen()),
+              );
             },
             child: Container(
               height: 36,
