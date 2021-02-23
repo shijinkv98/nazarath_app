@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
-import 'package:nazarath_app/network/response/NewsResponse.dart';
-import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/network/response/newsdetailsresponse.dart';
 import 'package:nazarath_app/screens/home.dart';
 import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/order.dart';
@@ -13,18 +12,19 @@ import 'package:nazarath_app/screens/order.dart';
 import 'cart.dart';
 import 'notification.dart';
 
+// ignore: must_be_immutable
 class NewsDetailsScreen extends StatefulWidget {
-  News title;
-  NewsDetailsScreen(News title)
+  String title;
+  NewsDetailsScreen(String title)
   {
     this.title=title;
   }
   @override
-  _NewsDetailsScreenState createState() => new _NewsDetailsScreenState(item: title);
+  _NewsDetailsScreenState createState() => new _NewsDetailsScreenState(slug: title);
 }
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
-  News item;
-  _NewsDetailsScreenState({ this.item}) ;
+  String slug;
+  _NewsDetailsScreenState({ this.slug}) ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,21 +113,36 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             ),
           ],
         ),      backgroundColor: Colors.white,
-      body:getNewsScreen(item,context,widget)
+      body:
+      FutureBuilder<NewsDetailsResponse>(
+        future: ApiCall()
+            .execute<NewsDetailsResponse, Null>('${"news/show/"}$slug${"/en"}', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return getNewsScreen(snapshot.data,context,super.widget);
+          } else if (snapshot.hasError) {
+            return errorScreen('Error: ${snapshot.error}');
+           // return getEmptyContainerOrder(context);
+          } else {
+            return progressBar;
+          }
+        },
+      )
+     // getNewsScreen(item,context,widget)
 
 
     );
   }
 
 }
-Container getNewsScreen(News item,BuildContext context,Widget widget){
+Container getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){
 
   return Container(
     child: Column(
       children: [
         getTopContainer(),
         getNews(),
-        getNewsDetails(item, context, widget),
+        getNewsDetails(response.news, context, widget),
 
 
       ],
@@ -182,14 +197,14 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.only(top: 25,left: 20),
-            child: Text(item.createdAt,style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
+            child: Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
           ),
         ),
         Container(
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.only(top: 5,left: 20),
-            child: Text(item.title,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
+            child: Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
           ),
         ),
         Padding(
@@ -201,7 +216,7 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
             child: Center(
               child: FadeInImage.assetNetwork(
                   placeholder: 'assets/images/no_image.png',
-                  image: '$productThumbUrl${item.image}',
+                  image: '$newsImageUrl${item.image}',
                   width: double.infinity,
                 fit: BoxFit.contain,
               ),
@@ -213,7 +228,7 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text(item.details,
+            child: Text(item.details!=null?item.details:"",
             style: TextStyle(color: textColor,fontSize: 12),
             ),
           ),
@@ -223,7 +238,7 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text(item.name ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
+            child: Text(item.name!=null?item.name:"" ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -232,7 +247,7 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: Text(item.description,
+            child: Text(item.description!=null?item.description:"",
               style: TextStyle(color: textColor,fontSize: 12),
             ),
           ),

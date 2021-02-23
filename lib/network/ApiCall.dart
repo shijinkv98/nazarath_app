@@ -36,6 +36,7 @@ import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
 import 'LogoutResponse.dart';
+import 'response/newsdetailsresponse.dart';
 
 class ApiCall{
   static const API_URL = "${BASE_URL}api/";
@@ -266,6 +267,8 @@ class ApiCall{
       return EyePowerResponse.fromJson(json) as T;
     } else if (T == ChangePasswordResponse) {
       return ChangePasswordResponse.fromJson(json) as T;
+    } else if (T == NewsDetailsResponse) {
+      return NewsDetailsResponse.fromJson(json) as T;
     } else if (T == CheckoutResponse) {
       return CheckoutResponse.fromJson(json) as T;
     } else {

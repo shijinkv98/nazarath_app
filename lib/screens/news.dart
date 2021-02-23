@@ -131,7 +131,7 @@ Widget getListView(News item,BuildContext context,Widget widget) {
     onTap: (){Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) =>NewsDetailsScreen(item)));
+            builder: (BuildContext context) =>NewsDetailsScreen(item.slug)));
     },
     child: Container(
       child: Padding(
@@ -162,8 +162,9 @@ Widget getListView(News item,BuildContext context,Widget widget) {
                         // mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(item.createdAt,style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
-                          Text(item.title,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
+
+                          Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
+                          Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
                         ],
                       ),
                     )

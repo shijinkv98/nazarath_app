@@ -251,7 +251,7 @@ packages:
       name: fluttertoast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.1.6"
+    version: "7.1.8"
   font_awesome_flutter:
     dependency: transitive
     description:
@@ -380,7 +380,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "4.0.0"
   json_rpc_2:
     dependency: transitive
     description:
@@ -422,7 +422,7 @@ packages:
       name: nested
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "1.0.0"
   node_interop:
     dependency: transitive
     description:
@@ -589,13 +589,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  slider:
-    dependency: "direct main"
-    description:
-      name: slider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   source_map_stack_trace:
     dependency: transitive
     description:

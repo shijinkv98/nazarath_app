@@ -68,17 +68,17 @@ class FilterScreeen extends StatelessWidget {
                     tabsContent('Flutter', 'www.fluttertutorial.in'),
                     tabsContent('Dart'),
                     Container(
-                      child: FlutterSlider(
-                        values: [30, 420],
-                        rangeSlider: true,
-                        max: 500,
-                        min: 0,
-                        onDragging: (handlerIndex, lowerValue, upperValue) {
-                          _lowerValue = lowerValue;
-                          _upperValue = upperValue;
-                          setState(() {});
-                        },
-                      ),
+                      // child: FlutterSlider(
+                      //   values: [30, 420],
+                      //   rangeSlider: true,
+                      //   max: 500,
+                      //   min: 0,
+                      //   onDragging: (handlerIndex, lowerValue, upperValue) {
+                      //     _lowerValue = lowerValue;
+                      //     _upperValue = upperValue;
+                      //     setState(() {});
+                      //   },
+                      // ),
                     )// tabsContent('NodeJS'),
                   ],
                 ),

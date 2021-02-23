@@ -272,15 +272,8 @@ Widget getListView(Stores item, BuildContext context, Widget widget) {
                             ),
                             child: RaisedButton.icon(
                                 onPressed: () {
-                                  // String phone ='+916238839396'
-                                  //     // widget.orderItems.orderData.shippingPhone
-                                  // ;
-                                  // if (phone != null && phone.trim().isNotEmpty) {
-                                  //   phone = 'tel:$phone';
-                                  //   if (await canLaunch(phone)) {
-                                  //     await launch(phone);
-                                  //   }
-                                  // }
+                                  navigateTo(item.latitude!=null?double.parse(item.latitude):0,
+                                      item.longtitude!=null?double.parse(item.longtitude):0);
                                 },
                                 elevation: 0,
                                 color: Colors.white,
@@ -310,4 +303,12 @@ Widget getListView(Stores item, BuildContext context, Widget widget) {
       ),
     ),
   );
+}
+ void navigateTo(double lat, double lng) async {
+  var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+  if (await canLaunch(uri.toString())) {
+  await launch(uri.toString());
+  } else {
+  throw 'Could not launch ${uri.toString()}';
+  }
 }

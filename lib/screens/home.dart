@@ -153,7 +153,7 @@ Container getCategory(List<Categories> categories) {
           Container(
             padding: EdgeInsets.only(left: 5, right: 5,top: 10),
             color: home_bg,
-            height: 150,
+            height: 120,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -182,19 +182,19 @@ Widget getCategoryIem(Categories category,BuildContext context)
         child: Column(
           children: [
             CircleAvatar(
-              radius: 50,
+              radius: 35,
               backgroundImage: NetworkImage(
                   '$categoryThumbUrl${category.category.image}'),
             ),
             Container(
               padding: const EdgeInsets.only(top: 5),
-              width:100,
+              width:70,
               child: Text(
                 category.category.name,
                overflow: TextOverflow.ellipsis,
                maxLines: 1,
                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 11, color: Colors.black),
+                style: TextStyle(fontSize: 10, color: Colors.black),
               ),
             ),
           ],
