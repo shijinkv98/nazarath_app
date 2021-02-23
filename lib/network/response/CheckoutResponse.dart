@@ -56,7 +56,7 @@ class OrderId {
   String shippingLongitude;
   String comments;
   int cartId;
-  int totalAmount;
+  String totalAmount;
   String couponId;
   String couponCode;
   String couponDiscount;
@@ -191,7 +191,7 @@ class OrderId {
     shippingLongitude = json['shipping_longitude'];
     comments = json['comments'];
     cartId = json['cart_id'];
-    totalAmount = json['total_amount'];
+    totalAmount = json['total_amount'].toString();
     couponId = json['coupon_id'].toString();
     couponCode = json['coupon_code'].toString();
     couponDiscount = json['coupon_discount'].toString();
@@ -602,7 +602,7 @@ class Product {
     updatedAt = json['updated_at'];
     isLatest = json['is_latest'];
     if (json['this_options'] != null) {
-      thisOptions = new List<Null>();
+      thisOptions = new List<ThisOptions>();
       json['this_options'].forEach((v) {
         thisOptions.add(new ThisOptions.fromJson(v));
       });

@@ -580,6 +580,9 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data order
                             width: 200,
                             child: Text(
                               item.productName,
+                              maxLines: 3,
+
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black, fontWeight: FontWeight.w500,fontSize: 10),
                             ),

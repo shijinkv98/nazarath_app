@@ -12,6 +12,7 @@ import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CategoryResponse.dart';
 import 'package:nazarath_app/network/response/ChangePasswordResponse.dart';
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
+import 'package:nazarath_app/network/response/CountryResponse.dart';
 import 'package:nazarath_app/network/response/CouponResponse.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
@@ -136,7 +137,7 @@ class ApiCall{
     } else {
      // showToast(jsonResponse['message'] ?? "Something went wrong!");
       if (success == '2' && context != null) {
-        //showToast(jsonResponse['message'] ?? "Something went wrong!");
+        showToast(jsonResponse['message'] ?? "Something went wrong!");
         //await saveUser("");
 
         gotoLogout(context);
@@ -271,7 +272,13 @@ class ApiCall{
       return NewsDetailsResponse.fromJson(json) as T;
     } else if (T == CheckoutResponse) {
       return CheckoutResponse.fromJson(json) as T;
-    } else {
+    } else if (T == CountryResponse) {
+      return CountryResponse.fromJson(json) as T;
+    } else if (T == String) {
+      return json.toString() as T;
+    }
+
+    else {
       showToast("Something went wrong!");
       throw Exception("Unknown class");
       // Future.error(Exception('Unknown class'));

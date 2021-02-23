@@ -74,7 +74,7 @@ class SideDrawer extends StatelessWidget{
                                         width: 180,
                                         child: Padding(
                                           padding: const EdgeInsets.only(left: 6),
-                                          child: Text(customer.name,
+                                          child: Text(customer.name!=null&&customer.name!=""?customer.name:"GUEST",
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class SideDrawer extends StatelessWidget{
 
                                         child: Padding(
                                           padding: const EdgeInsets.only(left: 6),
-                                          child: AutoSizeText(customer.email,
+                                          child: AutoSizeText(customer.email!=null&&customer.email!=""?customer.email:"",
                                               style: TextStyle(
                                                   color: Colors.grey[700],
                                                   fontWeight: FontWeight.normal,

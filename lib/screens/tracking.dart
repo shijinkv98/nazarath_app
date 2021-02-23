@@ -151,7 +151,7 @@ class _TrackingScreenState extends State<TrackingScreen>
   }
   Widget getTrackView(Data data, BuildContext context, Widget widget)
   {
-    double _itemExtent=60;
+    double _itemExtent=80;
     return CustomScrollView(
       slivers: <Widget>[
         SliverPadding(
@@ -160,13 +160,15 @@ class _TrackingScreenState extends State<TrackingScreen>
         SliverToBoxAdapter(
           child:   Container(
             color: Colors.white,
+            padding: EdgeInsets.only(left: 25),
             child: Column(
-
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${"TrackingNO: "}${data.trackingid}',
                   style: TextStyle(
-                      color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+                      color: text_tilte_page,fontSize: 14),
                 ),
                 SizedBox(
                   height: 10,
@@ -250,34 +252,45 @@ class _TrackingScreenState extends State<TrackingScreen>
 
   _itemsBuilder(Timeline timeline, BuildContext context, Widget widget,int index,int length) {
     return Container(
+      padding: EdgeInsets.only(left:20),
       child: Row(
         children: [
           Column(
             children: [
-              timeline.description!=""?Image(
-                image: new AssetImage("assets/icons/delivery_icon.png"),
+              timeline.description.isEmpty?Image(
+                image: new AssetImage("assets/icons/un_processed.png"),
                 width: 20,
                 height: 20,
-                color: colorPrimary,
+
               ):Image(
-                image: new AssetImage("assets/icons/cart.png"),
+                image: new AssetImage("assets/icons/processed.png"),
                 width: 20,
                 height: 20,
-                color: colorPrimary,
+
               ),
-              index!=length-1?Image(
-                image: new AssetImage("assets/icons/delivery_icon.png"),
-                width: 20,
-                height: 20,
-                color: colorPrimary,
+              index!=length-1?Container(
+                height: 60,
+                child: VerticalDivider(
+                  color: colorPrimary,
+                  thickness: 2,
+                ),
               ):  Container(),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(timeline.statushistory.statusText),
-              Text(timeline.description),],
+              Container(
+                padding: EdgeInsets.only(left:10),
+                child: Text('${timeline.statushistory.statusText}${" "}${timeline.statushistory.updatedAt}',style: TextStyle(
+                    color: text_tilte_page,fontSize: 12,fontWeight: FontWeight.bold)),
+              ),
+              Container(
+                padding: EdgeInsets.only(left:10,top:5),
+                child: Text('${timeline.description}${" "}${timeline.updatedAt}',style: TextStyle(
+                    color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold)),
+              )
+            ]
           ),
         ],
       ),

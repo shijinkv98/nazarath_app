@@ -137,8 +137,8 @@ class _OrderState extends State<OrderScreen> {
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
-           // return getEmptyContainerOrder(context);
+            // return errorScreen('Error: ${snapshot.error}');
+            return getEmptyContainerOrder(context);
           } else {
             return progressBar;
           }
@@ -271,6 +271,8 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget) {
                     ),
                     Text(
                       item.productName,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.w500,fontSize: 12),
                     ),

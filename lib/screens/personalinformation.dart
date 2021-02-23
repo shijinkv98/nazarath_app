@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/model/user.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
+import 'DashBoard.dart';
 import 'cart.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -19,6 +22,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   _PersonalInfoScreenState({ this.title}) ;
   @override
   Widget build(BuildContext context) {
+    email=customer.email;
+    username=customer.name;
+    phonenumber=customer.mobile;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
@@ -34,14 +40,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
             child: Column(
               children: [
                 getPersonalInfo(),
-                getButton()
+                getButton(context)
               ],
             ),
           )),
     );
   }
 }
-Widget getButton() {
+Widget getButton(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
     child: Container(
@@ -55,7 +61,26 @@ Widget getButton() {
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
-        onPressed: () async {},
+        onPressed: () async {
+          Map body={
+            "name":username,
+            "email":email,
+            "phone_number":phonenumber,
+          };
+          FocusScope.of(context).requestFocus(FocusNode());
+
+          var response = await ApiCall()
+              .execute<String, Null>("update-profile/en", body);
+
+          if (response!= null) {
+            customer.name=username;
+            customer.email=email;
+            customer.mobile=phonenumber;
+            print(response);
+            print(customer.toJson().toString());
+           //ApiCall().saveUser(customer.toJson().toString());
+          }
+        },
       ),
     ),
   );
@@ -105,13 +130,14 @@ Widget getForms(){
     ),
   );
 }
-String email;
+String email="";
 final emailField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     email = value;
   },
+  initialValue: email,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -148,13 +174,14 @@ final emailField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String username;
+String username="";
 final usernameField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     username = value;
   },
+  initialValue: username,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -191,13 +218,14 @@ final usernameField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String phonenumber;
+String phonenumber="";
 final phonenumberField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     phonenumber = value;
   },
+  initialValue: phonenumber,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {

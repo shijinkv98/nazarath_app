@@ -4,6 +4,7 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
+import 'package:nazarath_app/network/response/CountryResponse.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
@@ -46,11 +47,29 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         backgroundColor:colorPrimary ,
       ),
       backgroundColor: Colors.white,
-      body: getEditAdress(context,widget,cartresponse,address,type,from),
+      body:
+      FutureBuilder<CountryResponse>(
+        future: ApiCall()
+            .execute<CountryResponse, Null>('countries/en', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+
+            //debugPrint('products size: ${snapshot.data?.news?.length}');
+            return getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from);
+          } else if (snapshot.hasError) {
+            // return getEmptyContainerOrder(context);
+            //return getEditAdress(context,widget,cartresponse,address,type,from);
+            return errorScreen('Error: ${snapshot.error}');
+          } else {
+            return progressBar;
+          }
+        },
+      ),
+      //getEditAdress(context,widget,cartresponse,address,type,from),
     );
   }
 }
-Container getEditAdress(BuildContext context,Widget widget,CartResponse cartresponse,Addresses address,String type,String from)
+Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Addresses address,String type,String from)
 {
   return Container(
     padding: EdgeInsets.only(top:15),
@@ -58,7 +77,7 @@ Container getEditAdress(BuildContext context,Widget widget,CartResponse cartresp
       child: Column(
 
         children: [
-          getForms(context,widget,cartresponse,address,type,from),
+          getForms(countries,context,widget,cartresponse,address,type,from),
 
 
         ],
@@ -69,7 +88,8 @@ Container getEditAdress(BuildContext context,Widget widget,CartResponse cartresp
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
 }
-Widget getForms(BuildContext context,Widget widget,CartResponse cartresponse,Addresses addresses,String type,String from){
+Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Addresses addresses,String type,String from){
+  String country=countries[0].id.toString();
   if(addresses!=null)
     {
       address=addresses.address;
@@ -96,7 +116,7 @@ Widget getForms(BuildContext context,Widget widget,CartResponse cartresponse,Add
                 Map body={
                   "name":customer.name,
                   "address":address,
-                  "country": "0",
+                  "country": country,
                   "state":state,
                   "city":"city",
                   "zipcode":postal,

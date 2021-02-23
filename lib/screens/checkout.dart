@@ -9,6 +9,7 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/helper/mime_type.dart';
 import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/screens/ordersucess.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'dart:convert';
 
@@ -844,7 +845,10 @@ async{
 
   if (response!= null) {
     ApiCall().showToast(response.message);
-    showSucessDialogueBox(response,context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => orderSucessScreen(response)),
+    );
   }
 }
 Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget,FileModel doc)
@@ -875,7 +879,10 @@ async {
       .execute<CheckoutResponse, Null>("checkout/en", null,multipartRequest: request);
   if (response!= null) {
     ApiCall().showToast(response.message);
-    showSucessDialogueBox(response,context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => orderSucessScreen(response)),
+    );
   }
 }
 Widget getButtonContinue(BuildContext context,Widget widget,CartResponse response,FileModel doc)

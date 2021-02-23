@@ -1,11 +1,11 @@
-class CounryResponse {
+class CountryResponse {
   int success;
   String message;
   List<Countries> countries;
 
-  CounryResponse({this.success, this.message, this.countries});
+  CountryResponse({this.success, this.message, this.countries});
 
-  CounryResponse.fromJson(Map<String, dynamic> json) {
+  CountryResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
     if (json['countries'] != null) {

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/NewsResponse.dart';
@@ -37,6 +38,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   return
                     getStoreScreen(snapshot.data.stores,context,super.widget);
                 } else if (snapshot.hasError) {
+                  getEmptyContainer(context, "Store list is empty", "empty_cart");
                   return errorScreen('Error: ${snapshot.error}');
                 } else {
                   return progressBar;
@@ -272,8 +274,8 @@ Widget getListView(Stores item, BuildContext context, Widget widget) {
                             ),
                             child: RaisedButton.icon(
                                 onPressed: () {
-                                  navigateTo(item.latitude!=null?double.parse(item.latitude):0,
-                                      item.longtitude!=null?double.parse(item.longtitude):0);
+                                  navigateTo(item.latitude!=null?ParseLatLonValue(item.latitude):0,
+                                      item.longtitude!=null?ParseLatLonValue(item.longtitude):0,item.name);
                                 },
                                 elevation: 0,
                                 color: Colors.white,
@@ -304,11 +306,44 @@ Widget getListView(Stores item, BuildContext context, Widget widget) {
     ),
   );
 }
- void navigateTo(double lat, double lng) async {
-  var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
-  if (await canLaunch(uri.toString())) {
-  await launch(uri.toString());
-  } else {
-  throw 'Could not launch ${uri.toString()}';
+ void navigateTo(double lat, double lng,String name) async {
+   final availableMaps = await MapLauncher.installedMaps;
+   await availableMaps.first.showMarker(
+     coords: Coords(lat,lng),
+     title: name,
+   );
+  // var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+  // if (await canLaunch(uri.toString())) {
+  // await launch(uri.toString());
+  // } else {
+  // throw 'Could not launch ${uri.toString()}';
+  // }
+}
+
+double ParseLatLonValue(String value)
+{
+  // If it starts and finishes with a quote, strip them off
+  if (value.startsWith("\"") && value.endsWith("\""))
+  {
+    value = value.substring(1, value.length - 2).replaceAll("\"\"", "\"");
   }
+ var first=value.split("°");
+  double result=0;
+  double deg=0,min=0,sec=0;
+  if(first.length>1)
+    {
+       deg = double.parse(first[0]);
+      var second=first[1].split("'");
+      if(second.length>1)
+        {
+          min=double.parse(second[0]);
+          sec=double.parse(second[1]);
+        }
+
+    }
+  result = deg + (min / 60) + (sec / 3600);
+
+
+
+  return result;
 }
