@@ -5,6 +5,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/ChangePasswordResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
+import 'DashBoard.dart';
 import 'cart.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -109,6 +110,7 @@ Widget getButton(BuildContext context){
             Map body={
               "new_password":newpassword,
               "old_password":currentpassword,
+              "email":customer.email,
             };
             FocusScope.of(context).requestFocus(FocusNode());
 
@@ -117,6 +119,11 @@ Widget getButton(BuildContext context){
 
             if (response!= null) {
                 ApiCall().showToast(response.message);
+                tbPosition=3;
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashBoard()),
+                );
             }
         //  }
         },
