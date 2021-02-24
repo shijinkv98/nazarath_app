@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/forgotresponse.dart';
+import 'package:nazarath_app/screens/changePassword.dart';
 import 'package:nazarath_app/screens/login.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
@@ -10,17 +12,14 @@ import 'DashBoard.dart';
 import 'cart.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  String title;
-  ResetPasswordScreen(String title)
-  {
-    this.title=title;
-  }
+  String code, number;
+  ResetPasswordScreen({this.code,this.number});
   @override
-  _ResetPasswordScreenState createState() => new _ResetPasswordScreenState(title: title);
+  _ResetPasswordScreenState createState() => new _ResetPasswordScreenState(code: code,number: number);
 }
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  String title;
-  _ResetPasswordScreenState({ this.title}) ;
+  String code, number;
+  _ResetPasswordScreenState({ this.code,this.number}) ;
   @override
   Widget build(BuildContext context) {
 
@@ -40,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               children: [
                 getOtp(),
                 getPersonalInfo(),
-                getButton(context)
+                getButton(context,number,code)
               ],
             ),
           )),
@@ -56,7 +55,7 @@ Widget getOtp(){
     ),
   );
 }
-Widget getButton(BuildContext context) {
+Widget getButton(BuildContext context,String number,String code) {
   return Padding(
     padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
     child: Container(
@@ -71,24 +70,36 @@ Widget getButton(BuildContext context) {
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
         onPressed: () async {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => Login()));
-          // Map body={
-          //
-          // };
-          // FocusScope.of(context).requestFocus(FocusNode());
-          //
-          // var response = await ApiCall()
-          //     .execute<String, Null>("update-profile/en", body);
-          //
-          // if (response!= null) {
-          //
-          //   print(response);
-          //   print(customer.toJson().toString());
-            //ApiCall().saveUser(customer.toJson().toString());
-          // }
+
+          if(password==repassword)
+            {
+              Map body={
+                "email":number,
+                "phone_number_code":code,
+                "password":password,
+                "code":otp
+              };
+              FocusScope.of(context).requestFocus(FocusNode());
+
+              var response = await ApiCall()
+                  .execute<ForgotResponse, Null>("send-reset-password-code/en", body);
+
+              if (response!= null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Login()));
+              }
+            }
+          else
+            {
+              ApiCall().showToast("password not match");
+            }
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) => Login()));
+
         },
       ),
     ),
@@ -270,54 +281,4 @@ final otpField = TextFormField(
   ),
 );
 
-Container getTopContainer()
-{
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
-                child: Container(
-                    height: 100,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
-                        )
-                    )
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "How it works",
-            style: TextStyle(
-                color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    ),
-  );
 
-}

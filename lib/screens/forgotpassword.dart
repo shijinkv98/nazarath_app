@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/resetpasswordresponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/register/otp_reset.dart';
 import 'package:nazarath_app/screens/resetpassword.dart';
@@ -62,22 +63,22 @@ Widget getButton(BuildContext context) {
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
         onPressed: () async {
-          // Map body={
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => ResetPasswordScreen('')));
-          // };
-          // FocusScope.of(context).requestFocus(FocusNode());
-          //
-          // var response = await ApiCall()
-          //     .execute<String, Null>("update-profile/en", body);
-          //
-          // if (response!= null) {
-          //
-          //   print(response);
-          //   print(customer.toJson().toString());
-          //   //ApiCall().saveUser(customer.toJson().toString());
+
+          Map body={
+              "email":phone,
+              "phone_number_code":"+91"
+          };
+          FocusScope.of(context).requestFocus(FocusNode());
+
+          var response = await ApiCall()
+              .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
+
+            if (response!= null) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phone ,)));
+            }
           }
 
       ),
@@ -122,13 +123,13 @@ Widget getForms(){
   );
 }
 
-String phone;
+String phone="";
 bool isLoading = false;
 // _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
 final phoneField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     phone = value;
   },
   // style: style,
@@ -139,7 +140,7 @@ final phoneField = TextFormField(
       return null;
     }
   },
-  keyboardType: TextInputType.name,
+  keyboardType: TextInputType.phone,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
