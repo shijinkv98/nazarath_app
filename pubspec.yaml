@@ -49,6 +49,7 @@ dependencies:
   auth_buttons: ^0.0.4
   flutter_xlider: ^3.4.0
   footer: ^0.0.3
+  flutter_share: ^1.0.5
 #  uuid: ^2.2.2
   webview_flutter: ^1.0.7
   flutter_signin_button: ^1.1.0

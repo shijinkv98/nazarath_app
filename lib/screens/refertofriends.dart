@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/RefferalResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'cart.dart';
@@ -28,20 +31,37 @@ class _ReferScreenState extends State<ReferScreen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(child: Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: Column(
-          children: [
-            getReferFriend(),
-            getButton()
-          ],
-        ),
-      )),
+      body:  FutureBuilder<ReferalResponse>(
+        future: ApiCall()
+            .execute<ReferalResponse, Null>('referral-url/en', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+
+            //debugPrint('products size: ${snapshot.data?.news?.length}');
+            return SingleChildScrollView(child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Column(
+                children: [
+                  getReferFriend(snapshot.data),
+                  getButton(snapshot.data)
+                ],
+              ),
+            ));
+
+          } else if (snapshot.hasError) {
+            // return getEmptyContainerOrder(context);
+            //return getEditAdress(context,widget,cartresponse,address,type,from);
+            return errorScreen('Error: ${snapshot.error}');
+          } else {
+            return progressBar;
+          }
+        },
+      )
     );
   }
 }
 
-Widget getButton() {
+Widget getButton(ReferalResponse referal) {
   return Padding(
     padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
     child: Container(
@@ -55,19 +75,21 @@ Widget getButton() {
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
-        onPressed: () async {},
+        onPressed: () async {
+          share(referal);
+        },
       ),
     ),
   );
 }
 
-Container getReferFriend() {
+Container getReferFriend(ReferalResponse data) {
   return Container(
     child: Container(
       width: double.infinity,
       child: Column(
         children: [
-          getForms(),
+          getForms(data),
         ],
       ),
     ),
@@ -75,7 +97,8 @@ Container getReferFriend() {
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 }
 
-Widget getForms() {
+Widget getForms(ReferalResponse data) {
+  refer=data.referralUrl;
   return Container(
     width: double.infinity,
     child: Padding(
@@ -84,36 +107,44 @@ Widget getForms() {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
-            child: mobileNumberField,
+            child: referField,
           ),
          ],
       ),
     ),
   );
 }
+Future<void> share(ReferalResponse referal) async {
+  await FlutterShare.share(
+      title: referal.details.title,
+      text: referal.details.description,
+      linkUrl: referal.referralUrl,
+      chooserTitle: 'Nazarath'
+  );
+}
 
-String mobile;
-final mobileNumberField = TextFormField(
+// Future<void> shareFile() async {
+//   List<dynamic> docs = await DocumentsPicker.pickDocuments;
+//   if (docs == null || docs.isEmpty) return null;
+//
+//   await FlutterShare.shareFile(
+//     title: 'Example share',
+//     text: 'Example share text',
+//     filePath: docs[0] as String,
+//   );
+// }
+String refer="";
+final referField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
-    mobile = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return 'This field is required';
-    } else {
-      return null;
-    }
-  },
+  initialValue: refer,
+  focusNode: new AlwaysDisabledFocusNode(),
   keyboardType: TextInputType.name,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Enter friend email id",
     hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'EMAIL',
+    labelText: '',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
@@ -135,222 +166,3 @@ final mobileNumberField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String address;
-final addressField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (value) {
-    address = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return 'This field is required';
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ADDRESS',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/home.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String location;
-final locationField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (value) {
-    location = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return 'This field is required';
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ADDRESS',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/location.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String date;
-final dateField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (value) {
-    date = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return 'This field is required';
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Date", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'DATE',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/calendar.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String time;
-final timeField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (value) {
-    time = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return 'This field is required';
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Time", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'TIME',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/time.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-Container getTopContainer() {
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(100.0),
-                      bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: Container(
-                    height: 100,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                      image: new AssetImage("assets/icons/inner_banner.png"),
-                      fit: BoxFit.fill,
-                    ))),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "How it works",
-            style: TextStyle(
-                color: text_tilte_page,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    ),
-  );
-}
