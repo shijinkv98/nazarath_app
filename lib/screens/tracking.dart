@@ -285,11 +285,12 @@ class _TrackingScreenState extends State<TrackingScreen>
                 child: Text('${timeline.statushistory.statusText}${" "}${timeline.statushistory.updatedAt}',style: TextStyle(
                     color: text_tilte_page,fontSize: 12,fontWeight: FontWeight.bold)),
               ),
+              timeline.description!=""?
               Container(
                 padding: EdgeInsets.only(left:10,top:5),
                 child: Text('${timeline.description}${" "}${timeline.updatedAt}',style: TextStyle(
                     color: colorPrimary,fontSize: 12,fontWeight: FontWeight.bold)),
-              )
+              ):Container()
             ]
           ),
         ],
