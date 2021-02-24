@@ -1,7 +1,9 @@
+import 'HomeResponse.dart';
+
 class AddressResponse {
   int success;
   String message;
-  List<Addresses> addresses;
+  List<Address> addresses;
   //List<Zones> zones;
 
   AddressResponse({this.success, this.message, this.addresses
@@ -12,9 +14,9 @@ class AddressResponse {
     success = json['success'];
     message = json['message'];
     if (json['addresses'] != null) {
-      addresses = new List<Addresses>();
+      addresses = new List<Address>();
       json['addresses'].forEach((v) {
-        addresses.add(new Addresses.fromJson(v));
+        addresses.add(new Address.fromJson(v));
       });
     }
     // if (json['zones'] != null) {

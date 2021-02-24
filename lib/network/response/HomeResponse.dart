@@ -1,3 +1,5 @@
+import 'package:nazarath_app/network/response/AddressResponse.dart';
+
 class HomeResponse {
   int success;
   String message;

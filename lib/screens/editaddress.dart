@@ -5,20 +5,22 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CountryResponse.dart';
+import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'DashBoard.dart';
 import 'cart.dart';
 import 'checkout.dart';
+import 'home.dart';
 
 class EditAddressScreen extends StatefulWidget {
   String from;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String type;
   CartResponse response;
-  Addresses address;
-  EditAddressScreen(String from,String type,CartResponse response,Addresses address)
+  Address address;
+  EditAddressScreen(String from,String type,CartResponse response,Address address)
   {
     this.from=from;
     this.type=type;
@@ -33,7 +35,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   String from;
   String type;
   CartResponse cartresponse;
-  Addresses address;
+  Address address;
   _EditAddressScreenState({ this.from,this.address,this.type,this.cartresponse}) ;
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     );
   }
 }
-Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Addresses address,String type,String from)
+Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address address,String type,String from)
 {
   return Container(
     padding: EdgeInsets.only(top:15),
@@ -90,7 +92,7 @@ Container getEditAdress(List<Countries>countries,BuildContext context,Widget wid
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
 }
-Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Addresses addresses,String type,String from){
+Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address addresses,String type,String from){
   String country=countries[0].id.toString();
   if(addresses!=null)
     {
@@ -145,6 +147,7 @@ Widget getForms(List<Countries>countries,BuildContext context,Widget widget,Cart
                         .execute<AddressResponse, Null>(url, body);
 
                     if (response!= null) {
+                      homeResponse.address=response.addresses[0];
                       ApiCall().showToast(response.message);
                       if(from=="address")
                         {

@@ -4,9 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
+import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/screens/editaddress.dart';
 
 import 'DashBoard.dart';
+import 'home.dart';
 
 class AddressScreen extends StatefulWidget {
   String title;
@@ -91,7 +93,7 @@ GestureDetector updateButton(BuildContext context, String title) {
 }
 
 Widget getAdressFull(
-    List<Addresses> adresses, BuildContext context, AddressScreen widget) {
+    List<Address> adresses, BuildContext context, AddressScreen widget) {
   return Container(
     child: Container(
       width: double.infinity,
@@ -113,13 +115,13 @@ Widget getAdressFull(
 }
 
 Widget _listview(
-        List<Addresses> adresses, BuildContext context, Widget widget) =>
+        List<Address> adresses, BuildContext context, Widget widget) =>
     ListView.builder(
         padding: EdgeInsets.only(bottom: 70),
         itemBuilder: (context, index) =>
             _itemsBuilder(adresses[index], context, widget),
         itemCount: adresses.length);
-Widget _itemsBuilder(Addresses address, BuildContext context, Widget widget) {
+Widget _itemsBuilder(Address address, BuildContext context, Widget widget) {
   return GestureDetector(
       onTap: () {},
       child: Column(
@@ -340,12 +342,16 @@ Container getEmptyContainerAddress(
 }
 
 class CheckBoxItem extends StatefulWidget {
+  Address address;
+  CheckBoxItem({this.address});
   @override
-  _CheckBoxItemState createState() => _CheckBoxItemState();
+  _CheckBoxItemState createState() => _CheckBoxItemState(address: address);
 }
 
 class _CheckBoxItemState extends State<CheckBoxItem> {
   bool value = false;
+  Address address;
+  _CheckBoxItemState({this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -354,10 +360,30 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
       activeColor: colorPrimary,
       focusColor: colorPrimary,
       onChanged: (bool value) {
-        setState(() {
+        setState(() async {
           this.value = value;
+          if (value) {
+            String url = "customer-addresses/update/en";
+
+            Map body = {
+              "address_id": address.id,
+            };
+            FocusScope.of(context).requestFocus(FocusNode());
+
+            var response = await ApiCall()
+                .execute<AddressResponse, Null>(url, body);
+
+            if (response != null) {
+              homeResponse.address = response.addresses[0];
+              ApiCall().showToast(response.message);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AddressScreen("")),);
+            }
+          }
         });
-      },
+
+      }
     ); //Checkbox
   }
 }
