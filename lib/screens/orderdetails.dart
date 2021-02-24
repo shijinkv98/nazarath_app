@@ -143,7 +143,7 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
     );
   }
 }
-Widget getOrderDetails(Data response,BuildContext context,Widget widget)
+Widget getOrderDetails(Data response,BuildContext context,OrderDetailsScreen  widget)
 {
   return Container(width: double.infinity,
     child: Column(
@@ -159,7 +159,7 @@ Widget getOrderDetails(Data response,BuildContext context,Widget widget)
   );
 }
 
-Widget customScrollView(BuildContext context,Widget widget,Data response)
+Widget customScrollView(BuildContext context,OrderDetailsScreen widget,Data response)
 {
   final _itemExtent = 220.0;
   return CustomScrollView(
@@ -188,7 +188,7 @@ Widget customScrollView(BuildContext context,Widget widget,Data response)
 //     //       height: 1,
 //     //     ),
 //     itemCount: products.length);
-Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int payStatus)
+Widget getDeliveryPanel(ItemsNew item,BuildContext context,OrderDetailsScreen widget,int payStatus)
 {
   return Container(
     child: Column(
@@ -233,7 +233,7 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,Widget widget,int pay
   );
 
 }
-Widget getAddressPanel(Data orderData,BuildContext context,Widget widget)
+Widget getAddressPanel(Data orderData,BuildContext context,OrderDetailsScreen widget)
 {
   return Container(
     color: Colors.white,
@@ -316,7 +316,7 @@ Widget getAdress(String title,String address,String name,String mobile)
     ),
   );
 }
-Widget getOrderSummaryDetails(BuildContext context,Widget widget,Data orderData)
+Widget getOrderSummaryDetails(BuildContext context,OrderDetailsScreen widget,Data orderData)
 {
   return Container(
     color: Colors.white,
@@ -348,7 +348,7 @@ Widget getOrderSummaryDetails(BuildContext context,Widget widget,Data orderData)
     ),
   );
 }
-Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int payStatus)
+Widget getAllButton(BuildContext context,OrderDetailsScreen widget, ItemsNew item,int payStatus)
 {
   return Container(
 
@@ -418,7 +418,7 @@ Widget getAllButton(BuildContext context,Widget widget, ItemsNew item,int paySta
     ),
   );
 }
-Widget getProductReview(BuildContext context,Widget widget, ItemsNew item)
+Widget getProductReview(BuildContext context,OrderDetailsScreen widget, ItemsNew item)
 {
   return GestureDetector(
     onTap: (){
@@ -460,7 +460,7 @@ Widget getProductReview(BuildContext context,Widget widget, ItemsNew item)
                 GestureDetector(
                   onTap:(){ Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WriteReviewScreen()),
+                    MaterialPageRoute(builder: (context) => WriteReviewScreen(item)),
                   );},
                   child: Text(
                     "Tell us more",
@@ -506,7 +506,7 @@ Widget getStarRating(double rating) {
         }),
   );
 }
-Widget getButtonDelivery(BuildContext context,Widget widget,int type,String title,String icon,ItemsNew orderdata)
+Widget getButtonDelivery(BuildContext context,OrderDetailsScreen widget,int type,String title,String icon,ItemsNew orderdata)
 {
   return Container(
     padding: EdgeInsets.only(top:10,bottom: 10,left: 10,right: 10),
@@ -532,7 +532,7 @@ Widget getButtonDelivery(BuildContext context,Widget widget,int type,String titl
     ),
   );
 }
-Widget _itemsBuilder(ItemsNew item,BuildContext context,Widget widget,Data orderData) {
+Widget _itemsBuilder(ItemsNew item,BuildContext context,OrderDetailsScreen widget,Data orderData) {
   return  GestureDetector(
       onTap: () {
       },

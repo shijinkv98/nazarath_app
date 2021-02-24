@@ -4,14 +4,25 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/screens/orderdetails.dart';
 
 
 class WriteReviewScreen extends StatefulWidget {
+  ItemsNew item;
+  WriteReviewScreen(ItemsNew item)
+  {
+    this.item=item;
+  }
+
+
+
   @override
-  _WriteReviewScreenState createState() => new _WriteReviewScreenState();
+  _WriteReviewScreenState createState() => new _WriteReviewScreenState(item: item);
 }
 class _WriteReviewScreenState extends State<WriteReviewScreen> {
-
+  ItemsNew item;
+  _WriteReviewScreenState({this.item});
   @override
   Widget build(BuildContext context) {
 
@@ -40,10 +51,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
-                      placeholder: 'assets/images/no_image.png',
-                      // image: '$productThumbUrl${product.image}',
-                      image: 'assets/icons/product1.png',
-                      width: 120,
+                        placeholder: 'assets/images/no_image.png',
+                        image: '$productThumbUrl${item.image}',
+                        height:80,
+                        width:120
                     ),
 
                     Padding(
@@ -58,7 +69,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Ray Ban Frames Ray Ban Frames Ray Ban Frames',
+                                Text(item.productName,
                                   // product.name,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -68,7 +79,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: getStarRating(3),
+                                  child: getStarRating(1),
                                 ),
 
                               ],
@@ -96,6 +107,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     );
   }
 }
+double rateValue=1;
 Container getStarRating(double rating) {
   return Container(
     height: 10,
@@ -116,9 +128,7 @@ Container getStarRating(double rating) {
               color: colorPrimary,
             )),
         onRatingUpdate: (value) {
-          // setState(() {
-          //   _ratingValue = value;
-          // });
+          rateValue=value;
         }),
   );
 }
@@ -150,17 +160,29 @@ Widget getButton(BuildContext context){
               fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Colors.white)),
-      onPressed: () async {},
+      onPressed: () async {
+        Map body={
+
+        };
+        FocusScope.of(context).requestFocus(FocusNode());
+
+        var response = await ApiCall()
+            .execute<String, Null>("update-profile/en", body);
+
+        if (response!= null) {
+          //ApiCall().saveUser(customer.toJson().toString());
+        }
+      },
     ),
   );
 }
-String review;
+String review="";
 final reviewField = TextFormField(
   keyboardType: TextInputType.multiline,
   maxLines: 5,
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     review = value;
   },
   // style: style,
