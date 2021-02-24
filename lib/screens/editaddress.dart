@@ -55,7 +55,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
           if (snapshot.hasData) {
 
             //debugPrint('products size: ${snapshot.data?.news?.length}');
-            return getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from);
+            return Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from),
+            );
           } else if (snapshot.hasError) {
             return  getEmptyContainer(context, "No data", "empty_cart");
             //return errorScreen('Error: ${snapshot.error}');
@@ -101,69 +104,84 @@ Widget getForms(List<Countries>countries,BuildContext context,Widget widget,Cart
       padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
       child: Column(
         children: [
-          addressField,
-          stateField,
-          postalField,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10,top: 10),
+            child: addressField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: stateField,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: postalField,
+          ),
 
-          RaisedButton(
-              onPressed: ()  async {
-                String url="customer-addresses/add/en";
-                if(type=="edit")
-                  {
-                    url="customer-addresses/edit/en";
-                  }
-                Map body={
-                  "name":customer.name,
-                  "address":address,
-                  "country": country,
-                  "state":state,
-                  "city":"city",
-                  "zipcode":postal,
-                  "latitude":"0.0",
-                  "longtitude":"0.0",
-                  "mobile":customer.mobile,
-                };
-                FocusScope.of(context).requestFocus(FocusNode());
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButton(
+                  onPressed: ()  async {
+                    String url="customer-addresses/add/en";
+                    if(type=="edit")
+                      {
+                        url="customer-addresses/edit/en";
+                      }
+                    Map body={
+                      "name":customer.name,
+                      "address":address,
+                      "country": country,
+                      "state":state,
+                      "city":"city",
+                      "zipcode":postal,
+                      "latitude":"0.0",
+                      "longtitude":"0.0",
+                      "mobile":customer.mobile,
+                    };
+                    FocusScope.of(context).requestFocus(FocusNode());
 
-                var response = await ApiCall()
-                    .execute<AddressResponse, Null>(url, body);
+                    var response = await ApiCall()
+                        .execute<AddressResponse, Null>(url, body);
 
-                if (response!= null) {
-                  ApiCall().showToast(response.message);
-                  if(from=="address")
-                    {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddressScreen("")),
-                      );
+                    if (response!= null) {
+                      ApiCall().showToast(response.message);
+                      if(from=="address")
+                        {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddressScreen("")),
+                          );
+                        }
+                      else if(from=="cart")
+                      {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartScreen()),
+                        );
+                      }
+                      else if(from=="checkout")
+                      {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => CheckoutScreen(cartresponse)),
+                        );
+                      }
                     }
-                  else if(from=="cart")
-                  {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
-                    );
                   }
-                  else if(from=="checkout")
-                  {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => CheckoutScreen(cartresponse)),
-                    );
-                  }
-                }
-              }
-              ,
-              elevation: 0,
-              color: colorPrimary,
-              hoverColor: colorPrimary,
-              // padding: EdgeInsets.only(left: 5, right: 5),
-              textColor: Colors.white,
-              child: Text(
-                'Update',
-                style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              )),
+                  ,
+                  elevation: 0,
+                  color: colorPrimary,
+                  hoverColor: colorPrimary,
+                  // padding: EdgeInsets.only(left: 5, right: 5),
+                  textColor: Colors.white,
+                  child: Text(
+                    'Update',
+                    style: TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.w400),
+                  )),
+            ),
+          ),
         ],
       ),
     ),

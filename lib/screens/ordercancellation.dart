@@ -23,7 +23,8 @@ class OrderCancelScreen extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.only(top: 30),
         child: Column(
-          children: [_itemsBuilder(context), getReasonForCancellation(context)],
+          children: [_itemsBuilder(context),
+            getReasonForCancellation(context)],
         ),
       )),
     );
