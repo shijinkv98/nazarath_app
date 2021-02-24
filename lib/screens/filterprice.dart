@@ -34,10 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(left: 20,top: 20),
             child: Container(
+              color: product_bg,
               child: Text('Select Price Range',style: TextStyle(fontSize: 12,color: textColor,fontWeight: FontWeight.bold),),
             ),
           ),
           Container(
+
             margin: EdgeInsets.only(top: 0, left: 15, right: 15),
             alignment: Alignment.centerLeft,
             child: FlutterSlider(

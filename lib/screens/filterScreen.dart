@@ -57,7 +57,7 @@ class FilterScreeen extends StatelessWidget {
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5,bottom: 5),
                     child: VerticalTabs(
                       tabsWidth: 80,
                       direction: TextDirection.ltr,
@@ -76,6 +76,21 @@ class FilterScreeen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Container(
+                  height: 70,
+                  color: Colors.white,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageIcon(AssetImage('assets/icons/filtercontrol.png'),size: 30,color:colorPrimary),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text('Apply Filters',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:colorPrimary)),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           )),

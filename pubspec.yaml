@@ -106,6 +106,7 @@ flutter:
     - assets/icons/stores.png
     - assets/icons/stores_white.png
     - assets/icons/no_image.png
+    - assets/icons/filtercontrol.png
     - assets/icons/edit_profile.png
     - assets/images/no_image.png
     - assets/icons/my_orders.png
