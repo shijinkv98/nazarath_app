@@ -236,7 +236,7 @@ final repasswordField = TextFormField(
   ),
 );
 String otp="";
-final otpField = TextFormField(
+final    otpField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onChanged: (value) {
