@@ -75,14 +75,14 @@ Widget getButton(BuildContext context,String number,String code) {
             {
               Map body={
                 "email":number,
-                "phone_number_code":code,
+                "phone_country_code":code,
                 "password":password,
                 "code":otp
               };
               FocusScope.of(context).requestFocus(FocusNode());
 
               var response = await ApiCall()
-                  .execute<ForgotResponse, Null>("send-reset-password-code/en", body);
+                  .execute<ForgotResponse, Null>("reset-password/en", body);
 
               if (response!= null) {
                 Navigator.push(
