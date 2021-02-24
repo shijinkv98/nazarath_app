@@ -7,12 +7,14 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
+import 'package:nazarath_app/screens/ordercancellation.dart';
 import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:nazarath_app/screens/writereview.dart';
 
 import 'cart.dart';
 import 'notification.dart';
+
 // void main() {
 //   runApp(OrderDetails(
 //     items: List<ListItem>.generate(
@@ -26,17 +28,18 @@ import 'notification.dart';
 class OrderDetailsScreen extends StatefulWidget {
   Data _orderResponse;
   @override
-  _OrderDetailsState createState() => new _OrderDetailsState(orderresponse: _orderResponse);
-  OrderDetailsScreen(Data response)
-  {
-    this._orderResponse=response;
+  _OrderDetailsState createState() =>
+      new _OrderDetailsState(orderresponse: _orderResponse);
+  OrderDetailsScreen(Data response) {
+    this._orderResponse = response;
   }
 }
+
 class _OrderDetailsState extends State<OrderDetailsScreen> {
   List data;
   List<Data> products;
   Data orderresponse;
-  _OrderDetailsState({ this.orderresponse}) ;
+  _OrderDetailsState({this.orderresponse});
   Future<String> getData() async {
     return "Success!";
   }
@@ -44,141 +47,143 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     super.initState();
-   // this.getData();
+    // this.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: product_bg,
-      appBar: AppBar(
-        centerTitle: true,
-        // titleSpacing: 100,
-        automaticallyImplyLeading: true,
-        title: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-            child: ImageIcon(
-              AssetImage("assets/icons/nazarath_logo.png"),
-              size: appTabImageSize,
+        backgroundColor: product_bg,
+        appBar: AppBar(
+          centerTitle: true,
+          // titleSpacing: 100,
+          automaticallyImplyLeading: true,
+          title: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
+              child: ImageIcon(
+                AssetImage("assets/icons/nazarath_logo.png"),
+                size: appTabImageSize,
+              ),
             ),
           ),
+          backgroundColor: colorPrimary,
+          elevation: 0,
+
+          actions: <Widget>[
+            // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
+                    // );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(
+                      AssetImage("assets/icons/search.png"),
+                    ),
+                  ),
+                )),
+
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              NotificationScreen("notification")),
+                    );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(
+                      AssetImage("assets/icons/notification.png"),
+                    ),
+                  ),
+                )),
+
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WishListScreen()),
+                    );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(
+                      AssetImage("assets/icons/favorite.png"),
+                    ),
+                  ),
+                )),
+          ],
         ),
-        backgroundColor: colorPrimary,
-        elevation: 0,
-
-        actions: <Widget>[
-          // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/search.png"),),
-                ),
-              )
-          ),
-
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/notification.png"),),
-                ),
-              )
-          ),
-
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WishListScreen()),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/favorite.png"),),
-                ),
-              )
-          ),
-
-        ],
-      ),
-      body:  getOrderDetails(orderresponse, context, widget)
-      // _listview(orderresponse?.itemsNew?.
-      //     where((element) =>
-      //   element != null )
-      //   ?.toList(),context,super.widget),
-    //);
-    // return new Scaffold(
-    //   appBar: new AppBar(
-    //     title: new Text("Listviews"),
-    //   ),
-    //   body: new ListView.builder(
-    //     itemCount: products == null ? 0 : products.length,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return new Text(products[index].name);
-    //     },
-    //   ),
-    // );
-    );
+        body: getOrderDetails(orderresponse, context, widget)
+        // _listview(orderresponse?.itemsNew?.
+        //     where((element) =>
+        //   element != null )
+        //   ?.toList(),context,super.widget),
+        //);
+        // return new Scaffold(
+        //   appBar: new AppBar(
+        //     title: new Text("Listviews"),
+        //   ),
+        //   body: new ListView.builder(
+        //     itemCount: products == null ? 0 : products.length,
+        //     itemBuilder: (BuildContext context, int index) {
+        //       return new Text(products[index].name);
+        //     },
+        //   ),
+        // );
+        );
   }
 }
-Widget getOrderDetails(Data response,BuildContext context,OrderDetailsScreen  widget)
-{
-  return Container(width: double.infinity,
-    child: Column(
 
+Widget getOrderDetails(
+    Data response, BuildContext context, OrderDetailsScreen widget) {
+  return Container(
+    width: double.infinity,
+    child: Column(
       children: [
         getTopContainerOrder(),
-        Flexible(
-            child: customScrollView(context, widget, response)
-        ),
+        Flexible(child: customScrollView(context, widget, response)),
       ],
     ),
-
   );
 }
 
-Widget customScrollView(BuildContext context,OrderDetailsScreen widget,Data response)
-{
+Widget customScrollView(
+    BuildContext context, OrderDetailsScreen widget, Data response) {
   final _itemExtent = 220.0;
   return CustomScrollView(
     slivers: <Widget>[
       SliverFixedExtentList(
-        itemExtent: _itemExtent,  // I'm forcing item heights
+        itemExtent: _itemExtent, // I'm forcing item heights
         delegate: SliverChildBuilderDelegate(
-              (context, index) => _itemsBuilder(response.itemsNew[index],context,widget,response),
+          (context, index) => _itemsBuilder(
+              response.itemsNew[index], context, widget, response),
           childCount: response.itemsNew.length,
         ),
       ),
+      SliverToBoxAdapter(child: getAddressPanel(response, context, widget)),
       SliverToBoxAdapter(
-          child: getAddressPanel(response,context,widget)
-      ),
-      SliverToBoxAdapter(child: getOrderSummaryDetails(context, widget, response)),
-
+          child: getOrderSummaryDetails(context, widget, response)),
     ],
   );
 }
+
 // Widget _listview(List<ItemsNew> products,BuildContext context,Widget widget) => ListView.builder(
 //     padding: EdgeInsets.only(bottom: 70),
 //     itemBuilder: (context, index) =>
@@ -188,14 +193,14 @@ Widget customScrollView(BuildContext context,OrderDetailsScreen widget,Data resp
 //     //       height: 1,
 //     //     ),
 //     itemCount: products.length);
-Widget getDeliveryPanel(ItemsNew item,BuildContext context,OrderDetailsScreen widget,int payStatus)
-{
+Widget getDeliveryPanel(ItemsNew item, BuildContext context,
+    OrderDetailsScreen widget, int payStatus) {
   return Container(
     child: Column(
       children: [
         Container(
           color: colorPrimary,
-          padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
           child: Row(
             children: [
               Image(
@@ -203,7 +208,9 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,OrderDetailsScreen wi
                 width: 20,
                 height: 20,
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,59 +218,49 @@ Widget getDeliveryPanel(ItemsNew item,BuildContext context,OrderDetailsScreen wi
                   Text(
                     item.statusText,
                     style: TextStyle(
-                        color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 2),
                   Text(
-                   item.createdAt,
-                    style: TextStyle(
-                        color: Colors.white,fontSize: 10),
+                    item.createdAt,
+                    style: TextStyle(color: Colors.white, fontSize: 10),
                   )
-
                 ],
               )
-
             ],
           ),
         ),
-        getAllButton(context, widget, item,payStatus),
+        getAllButton(context, widget, item, payStatus),
         getProductReview(context, widget, item),
       ],
     ),
   );
-
 }
-Widget getAddressPanel(Data orderData,BuildContext context,OrderDetailsScreen widget)
-{
+
+Widget getAddressPanel(
+    Data orderData, BuildContext context, OrderDetailsScreen widget) {
   return Container(
     color: Colors.white,
     child: Column(
       children: [
-        getAdress("Delivery Address",orderData.billingAddress,orderData.billingName,orderData.billingPhone),
-        Container(
-          color: item_text_gray,
-          height:1,
-          width:double.infinity
-        ),
-        getAdress("Shipping Address",orderData.shippingAddress,orderData.shippingName,orderData.shippingPhone),
-        Container(
-            color: item_text_gray,
-            height:1,
-            width:double.infinity
-        ),
-
-
+        getAdress("Delivery Address", orderData.billingAddress,
+            orderData.billingName, orderData.billingPhone),
+        Container(color: item_text_gray, height: 1, width: double.infinity),
+        getAdress("Shipping Address", orderData.shippingAddress,
+            orderData.shippingName, orderData.shippingPhone),
+        Container(color: item_text_gray, height: 1, width: double.infinity),
       ],
     ),
   );
 }
-Widget getAdress(String title,String address,String name,String mobile)
-{
+
+Widget getAdress(String title, String address, String name, String mobile) {
   return Container(
     color: product_bg,
-    padding: const EdgeInsets.only(top: 10, left: 20,bottom: 10),
+    padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
     child: Container(
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,35 +268,33 @@ Widget getAdress(String title,String address,String name,String mobile)
           Text(
             title,
             style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+                color: textColor, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           Container(
               child: Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Row(
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
-                    ),
-                    VerticalDivider(
-                      thickness: 1,
-                    ),
-                    Text(
-                      mobile,
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
-                    )
-                  ],
+            padding: const EdgeInsets.only(top: 8),
+            child: Row(
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
                 ),
-              )),
+                VerticalDivider(
+                  thickness: 1,
+                ),
+                Text(
+                  mobile,
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
+                )
+              ],
+            ),
+          )),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
@@ -310,107 +305,121 @@ Widget getAdress(String title,String address,String name,String mobile)
                   fontSize: 12),
             ),
           ),
-
         ],
       ),
     ),
   );
 }
-Widget getOrderSummaryDetails(BuildContext context,OrderDetailsScreen widget,Data orderData)
-{
+
+Widget getOrderSummaryDetails(
+    BuildContext context, OrderDetailsScreen widget, Data orderData) {
   return Container(
     color: Colors.white,
-    padding: EdgeInsets.only(bottom: 40,top:10),
+    padding: EdgeInsets.only(bottom: 40, top: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
         SizedBox(
           height: 10,
         ),
         Container(
-          padding: EdgeInsets.only(left:10),
+          padding: EdgeInsets.only(left: 10),
           child: Text(
             "Order Summary",
             textAlign: TextAlign.start,
             style: TextStyle(
-              color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
+              color: text_tilte_page,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         SizedBox(
           height: 5,
         ),
-        getTextContainer("Sub Total", '${"AED  "}${orderData.orderTotalAmount}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
-        getTextContainer("Shipping", '${"AED "}${orderData.orderShippingCharge}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
-        getTextContainer("Total", '${"AED "}${orderData.orderNetTotalAmount}', "bold", text_tilte_page, colorRed, "title")
+        getTextContainer("Sub Total", '${"AED  "}${orderData.orderTotalAmount}',
+            "normal", item_text_gray_light, item_text_gray_light, "normal"),
+        getTextContainer(
+            "Shipping",
+            '${"AED "}${orderData.orderShippingCharge}',
+            "normal",
+            item_text_gray_light,
+            item_text_gray_light,
+            "normal"),
+        getTextContainer("Total", '${"AED "}${orderData.orderNetTotalAmount}',
+            "bold", text_tilte_page, colorRed, "title")
       ],
-
     ),
   );
 }
-Widget getAllButton(BuildContext context,OrderDetailsScreen widget, ItemsNew item,int payStatus)
-{
+
+Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
+    ItemsNew item, int payStatus) {
   return Container(
-
     decoration: BoxDecoration(
-
-        color: tab_bg,
-        border: Border.all( color: item_text_gray,width: 1),
-
+      color: tab_bg,
+      border: Border.all(color: item_text_gray, width: 1),
     ),
-
     child: Column(
-
       children: [
         Container(
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              item.returnPeriod!=0?GestureDetector(
-                onTap: (){
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
-                  // );
-                },
-                child: Row(
-                  children: [
-                    getButtonDelivery(context, widget, 0, "Return", "assets/icons/return.png", item),
-                    Container(
-                      width: 1,
-                      height:40,
-                      color: item_text_gray,
-                    ),
-                  ],
-                ),
-              ):Container(),
-              payStatus==0?GestureDetector(
-                onTap: (){
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
-                  // );
-                },
-                child: Row(
-                  children: [
-                    getButtonDelivery(context, widget, 1, "Cancel", "assets/icons/remove.png", item),
-                    Container(
-                      width: 1,
-                      height:40,
-                      color: item_text_gray,
-                    ),
-                  ],
-                ),
-              ):Container(),
+              item.returnPeriod != 0
+                  ? GestureDetector(
+                      onTap: () {
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                        // );
+                      },
+                      child: Row(
+                        children: [
+                          getButtonDelivery(context, widget, 0, "Return",
+                              "assets/icons/return.png", item),
+                          Container(
+                            width: 1,
+                            height: 40,
+                            color: item_text_gray,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
+              payStatus == 0
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrderCancelScreen(),
+                            ));
+                      },
+                      child: Row(
+                        children: [
+                          getButtonDelivery(context, widget, 1, "Cancel",
+                              "assets/icons/remove.png", item),
+                          Container(
+                            width: 1,
+                            height: 40,
+                            color: item_text_gray,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              TrackingScreen(item.id.toString())),
                     );
                   },
-                  child: getButtonDelivery(context, widget, 2, "Tracking", "assets/icons/location.png", item)),
+                  child: getButtonDelivery(context, widget, 2, "Tracking",
+                      "assets/icons/location.png", item)),
             ],
           ),
         ),
@@ -418,29 +427,27 @@ Widget getAllButton(BuildContext context,OrderDetailsScreen widget, ItemsNew ite
     ),
   );
 }
-Widget getProductReview(BuildContext context,OrderDetailsScreen widget, ItemsNew item)
-{
+
+Widget getProductReview(
+    BuildContext context, OrderDetailsScreen widget, ItemsNew item) {
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
       // );
     },
     child: Container(
-
       decoration: BoxDecoration(
         color: product_bg,
       ),
-
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top:10,bottom: 10),
+            padding: EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
-
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -451,25 +458,32 @@ Widget getProductReview(BuildContext context,OrderDetailsScreen widget, ItemsNew
                       "Rate Product",
                       textAlign: TextAlign.center,
                       style: new TextStyle(
-                          color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold),
+                          color: text_tilte_page,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(width:10),
+                    SizedBox(width: 10),
                     getStarRating(1)
                   ],
                 ),
                 GestureDetector(
-                  onTap:(){ Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WriteReviewScreen(item)),
-                  );},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WriteReviewScreen(item)),
+                    );
+                  },
                   child: Text(
                     "Tell us more",
                     textAlign: TextAlign.center,
                     style: new TextStyle(
-                        color: colorPrimary,fontSize: 14,fontWeight: FontWeight.bold),
+                        color: colorPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-               // getSa,
+                // getSa,
               ],
             ),
           ),
@@ -479,6 +493,7 @@ Widget getProductReview(BuildContext context,OrderDetailsScreen widget, ItemsNew
     ),
   );
 }
+
 Widget getStarRating(double rating) {
   return Container(
     height: 20,
@@ -506,11 +521,11 @@ Widget getStarRating(double rating) {
         }),
   );
 }
-Widget getButtonDelivery(BuildContext context,OrderDetailsScreen widget,int type,String title,String icon,ItemsNew orderdata)
-{
-  return Container(
-    padding: EdgeInsets.only(top:10,bottom: 10,left: 10,right: 10),
 
+Widget getButtonDelivery(BuildContext context, OrderDetailsScreen widget,
+    int type, String title, String icon, ItemsNew orderdata) {
+  return Container(
+    padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -521,42 +536,42 @@ Widget getButtonDelivery(BuildContext context,OrderDetailsScreen widget,int type
           height: 18,
           color: item_text_gray,
         ),
-        SizedBox(width:5),
+        SizedBox(width: 5),
         Text(
           title,
           textAlign: TextAlign.center,
           style: new TextStyle(
-              color: text_tilte_page,fontSize: 11,fontWeight: FontWeight.bold),
+              color: text_tilte_page,
+              fontSize: 11,
+              fontWeight: FontWeight.bold),
         )
       ],
     ),
   );
 }
-Widget _itemsBuilder(ItemsNew item,BuildContext context,OrderDetailsScreen widget,Data orderData) {
-  return  GestureDetector(
-      onTap: () {
-      },
-      child:Container(
-       // margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
-        decoration: BoxDecoration(
-            color: Colors.white,
 
+Widget _itemsBuilder(ItemsNew item, BuildContext context,
+    OrderDetailsScreen widget, Data orderData) {
+  return GestureDetector(
+      onTap: () {},
+      child: Container(
+        // margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+        decoration: BoxDecoration(
+          color: Colors.white,
         ),
         child: Column(
           children: [
             Padding(
-              padding:
-              EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FadeInImage.assetNetwork(
-                    placeholder: 'assets/images/no_image.png',
-                    image: '$productThumbUrl${item.image}',
-                    height:80,
-                    width:120
-                  ),
+                      placeholder: 'assets/images/no_image.png',
+                      image: '$productThumbUrl${item.image}',
+                      height: 80,
+                      width: 120),
                   SizedBox(
                     width: 5,
                   ),
@@ -568,23 +583,22 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,OrderDetailsScreen widge
                       children: [
                         Text(
                           orderData.invoiceNumber,
-                          style: TextStyle(
-                              color: item_text_gray,fontSize: 8),
+                          style: TextStyle(color: item_text_gray, fontSize: 8),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Flexible(
-
                           child: Container(
                             width: 200,
                             child: Text(
                               item.productName,
                               maxLines: 3,
-
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.w500,fontSize: 10),
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10),
                             ),
                           ),
                         ),
@@ -593,36 +607,31 @@ Widget _itemsBuilder(ItemsNew item,BuildContext context,OrderDetailsScreen widge
                         ),
                         Row(
                           children: [
-                            Text('$currency${" "}${item.amount}',style: TextStyle(
-                                color: colorRed,fontSize: 11,fontWeight: FontWeight.w800)),
+                            Text('$currency${" "}${item.amount}',
+                                style: TextStyle(
+                                    color: colorRed,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w800)),
                             SizedBox(
                               width: 5,
                             ),
-                            Text('$currency${" "}${item.amount}',style: TextStyle(
-                                color: item_text_gray_light,fontSize: 11,decoration: TextDecoration.lineThrough))
+                            Text('$currency${" "}${item.amount}',
+                                style: TextStyle(
+                                    color: item_text_gray_light,
+                                    fontSize: 11,
+                                    decoration: TextDecoration.lineThrough))
                           ],
                         ),
-
-
                       ],
                     ),
                   ),
-
                 ],
-
               ),
-
             ),
-            getDeliveryPanel(item, context, widget,orderData.paymentStatus),
-
-
+            getDeliveryPanel(item, context, widget, orderData.paymentStatus),
           ],
         ),
-      )
-  );
+      ));
 }
-
-
-
 
 ///
