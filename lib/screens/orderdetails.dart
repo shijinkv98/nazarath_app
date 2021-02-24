@@ -356,13 +356,15 @@ Widget getOrderSummaryDetails(
 Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
     ItemsNew item, int payStatus) {
   return Container(
-    decoration: BoxDecoration(
-      color: tab_bg,
-      border: Border.all(color: item_text_gray, width: 1),
-    ),
+    color: tab_bg,
+    // decoration: BoxDecoration(
+    //   color: tab_bg,
+    //   border: Border.all(color: item_text_gray, width: 1),
+    // ),
     child: Column(
       children: [
         Container(
+          width: MediaQuery.of(context).size.width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -378,11 +380,11 @@ Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
                         children: [
                           getButtonDelivery(context, widget, 0, "Return",
                               "assets/icons/return.png", item),
-                          Container(
-                            width: 1,
-                            height: 40,
-                            color: item_text_gray,
-                          ),
+                          // Container(
+                          //   width: 1,
+                          //   height: 40,
+                          //   color: item_text_gray,
+                          // ),
                         ],
                       ),
                     )
@@ -397,14 +399,15 @@ Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
                             ));
                       },
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           getButtonDelivery(context, widget, 1, "Cancel",
                               "assets/icons/remove.png", item),
-                          Container(
-                            width: 1,
-                            height: 40,
-                            color: item_text_gray,
-                          ),
+                          // Container(
+                          //   width: 1,
+                          //   height: 40,
+                          //   color: item_text_gray,
+                          // ),
                         ],
                       ),
                     )
@@ -525,9 +528,13 @@ Widget getStarRating(double rating) {
 Widget getButtonDelivery(BuildContext context, OrderDetailsScreen widget,
     int type, String title, String icon, ItemsNew orderdata) {
   return Container(
+    width: MediaQuery.of(context).size.width/3,
     padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+    decoration:BoxDecoration(
+      border: Border.all(color: item_text_gray)
+    ),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Image(
