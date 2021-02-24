@@ -14,7 +14,7 @@ import 'cart.dart';
 // ignore: must_be_immutable
 class orderSucessScreen extends StatefulWidget {
   CheckoutResponse response;
-  orderSucessScreen(CheckoutResponse title)
+  orderSucessScreen(CheckoutResponse response)
   {
     this.response=response;
   }
@@ -64,7 +64,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
               padding: EdgeInsets.only(top: 10),
               child: Center(
                 child: Text(
-                  '${"Your Order Number is "}${response.orderId.invoiceNumber}',
+                  '${"Your Order Number is "}${response.orderId!=null?response.orderId.invoiceNumber:""}',
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
