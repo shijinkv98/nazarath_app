@@ -325,8 +325,8 @@ class Profile extends StatelessWidget {
                   ],
                 ));
           } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
 
+            return  getEmptyContainer(context, "No data", "empty_cart");
           } else {
             return progressBar;
           }

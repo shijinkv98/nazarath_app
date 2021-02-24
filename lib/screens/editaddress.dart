@@ -57,9 +57,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             //debugPrint('products size: ${snapshot.data?.news?.length}');
             return getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from);
           } else if (snapshot.hasError) {
-            // return getEmptyContainerOrder(context);
-            //return getEditAdress(context,widget,cartresponse,address,type,from);
-            return errorScreen('Error: ${snapshot.error}');
+            return  getEmptyContainer(context, "No data", "empty_cart");
+            //return errorScreen('Error: ${snapshot.error}');
           } else {
             return progressBar;
           }

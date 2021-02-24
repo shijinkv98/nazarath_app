@@ -51,7 +51,7 @@ class _ReferScreenState extends State<ReferScreen> {
           } else if (snapshot.hasError) {
             // return getEmptyContainerOrder(context);
             //return getEditAdress(context,widget,cartresponse,address,type,from);
-            return errorScreen('Error: ${snapshot.error}');
+            return  getEmptyContainer(context, "No data", "empty_cart");
           } else {
             return progressBar;
           }

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/response/FilterResponse.dart';
 
 class FilterPrice extends StatelessWidget {
+  Filters filters;
+  Currency currency;
+  FilterPrice({this.filters,this.currency});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: MyHomePage(),
+     body: MyHomePage(
+         filters: this.filters,
+       currency: this.currency,
+     ),
     );
   }
 }
@@ -15,17 +22,32 @@ class MyHomePage extends StatefulWidget {
   // MyHomePage({Key key, this.title}) : super(key: key);
   //
   // final String title;
-
+  Filters filters;
+  Currency currency;
+  MyHomePage({this.filters,this.currency});
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(filters: this.filters,currency: this.currency,);
 }
-
+double _lowerValue=0, _upperValue = 0;
 class _MyHomePageState extends State<MyHomePage> {
-  double _lowerValue = 50;
-  double _upperValue = 180;
 
+  Filters filters;
+  Currency currency;
+  _MyHomePageState({this.filters,this.currency});
   @override
   Widget build(BuildContext context) {
+    _lowerValue=0; _upperValue = 0;
+    if(filters!=null)
+      {
+        if(filters.pricevalues.length>1)
+          {
+            _lowerValue= double.parse(filters.pricevalues[0]);
+            _upperValue= double.parse(filters.pricevalues[1]);
+          }
+
+      }
+
+    double step=(_upperValue-_lowerValue)/50;
     return Scaffold(
 
       body: Column(
@@ -44,19 +66,22 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.centerLeft,
             child: FlutterSlider(
               key: Key('3343'),
-              values: [250, 600],
+              values: [_lowerValue, _upperValue],
               rangeSlider: true,
               tooltip: FlutterSliderTooltip(
                 alwaysShowTooltip: true,
               ),
-              max: 700,
-              min: 10,
-              step: FlutterSliderStep(step: 20),
+              max: _upperValue,
+              min: _lowerValue,
+              step: FlutterSliderStep(step: step),
               jump: true,
+
               onDragging: (handlerIndex, lowerValue, upperValue) {
-                _lowerValue = lowerValue;
-                _upperValue = upperValue;
-                setState(() {});
+
+                setState(() {
+                  _lowerValue = lowerValue;
+                  _upperValue = upperValue;
+                });
               },
             ),
           ),

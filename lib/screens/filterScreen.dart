@@ -1,16 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/FilterResponse.dart';
 import 'package:nazarath_app/screens/filterprice.dart';
 import '../main.dart';
+import 'ProductList.dart';
 import 'vertical_tabs.dart';
-
+String f_filters="";
 class FilterScreeen extends StatelessWidget {
-  double _lowerValue = 50;
-  double _upperValue = 180;
+  String by,sortBy, sortOrder,query, slug;
+  FilterScreeen(String by, String sortBy, String sortOrder, String query, String slug)
+  {
+    this.by=by;
+    this.sortBy=sortBy;
+    this.sortOrder=sortOrder;
+    this.query=query;
+    this.slug=slug;
+  }
 
   @override
   Widget build(BuildContext context) {
+    f_filters="";
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -30,52 +41,91 @@ class FilterScreeen extends StatelessWidget {
         backgroundColor: colorPrimary,
         elevation: 0,
       ),
-      body: SafeArea(
-          child: Container(
-            color: product_bg,
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(Icons.refresh_rounded),
-                            Text('Clear All'),
-                          ],
-                        ),
+      body:
+      FutureBuilder<FilterResponse>(
+        future: ApiCall()
+            .execute<FilterResponse, Null>('filters/en', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+
+            return getFilterPage(context,snapshot.data,by,sortBy,sortOrder,query,slug);
+
+          } else if (snapshot.hasError) {
+            return errorScreen('Error: ${snapshot.error}');
+             //return  getEmptyContainer(context, "No data", "empty_cart");
+
+          } else {
+            return progressBar;
+          }
+        },
+      )
+    );
+  }
+  
+  Widget getFilterPage(BuildContext context, FilterResponse data,String by, String sortBy, String sortOrder, String query, String slug,)
+  {
+    Filters filter1=getFilterPrice(data.filters);
+    Filters filter2=getFilter(1, data.filters);
+    Filters filter3=getFilter(2, data.filters);
+    Filters filter4=getFilter(3, data.filters);
+
+   return SafeArea(
+        child: Container(
+          color: product_bg,
+          child: Column(
+            children: [
+              Container(
+                color: Colors.white,
+                height: 50,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.refresh_rounded),
+                          Text('Clear All'),
+                        ],
                       ),
                     ),
                   ),
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
-                    child: VerticalTabs(
-                      tabsWidth: 80,
-                      direction: TextDirection.ltr,
-                      contentScrollAxis: Axis.vertical,
-                      changePageDuration: Duration(milliseconds: 020),
-                      tabs: <Tab>[
-                        Tab(child: Text('Price')),
-                        Tab(child: Text('Categories')),
-                        Tab(child: Text('Delivery Options')),
-                      ],
-                      contents: <Widget>[
-                        Container(child: FilterPrice()),
-                        _listviewFilCat(),
-                        _listviewFilDelivery()
-                      ],
-                    ),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5,bottom: 5),
+                  child: VerticalTabs(
+                    tabsWidth: 80,
+                    direction: TextDirection.ltr,
+                    contentScrollAxis: Axis.vertical,
+                    changePageDuration: Duration(milliseconds: 020),
+                    tabs: <Tab>[
+                      Tab(child: Text(filter1.text)),
+                      Tab(child: Text(filter2.text)),
+                      Tab(child: Text(filter3.text)),
+                      Tab(child: Text(filter4.text)),
+                    ],
+                    contents: <Widget>[
+                      Container(child: FilterPrice(filters: filter1,)),
+                      _listviewFilCat(filter2.values,context),
+                      _listviewFilCat(filter3.values,context),
+                      _listviewFilCat(filter4.values,context),
+
+                    ],
                   ),
                 ),
-                Container(
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        ProductScreen(slug,by,sortBy,sortOrder,f_filters,query)),
+                  );
+                },
+                child: Container(
                   height: 70,
                   color: Colors.white,
                   child: Row(
@@ -89,11 +139,11 @@ class FilterScreeen extends StatelessWidget {
                       )
                     ],
                   ),
-                )
-              ],
-            ),
-          )),
-    );
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
 //
@@ -132,21 +182,38 @@ class FilterScreeen extends StatelessWidget {
 //   }
 // }
 
-  Widget _listviewFilCat() =>
+  Widget _listviewFilCat(List<Values> values,BuildContext context) =>
       ListView.builder(
-          itemBuilder: (context, index) => _itemsBuilder(),
+          itemBuilder: (context, index) => _itemsBuilder(values[index],context),
           // separatorBuilder: (context, index) => Divider(
           //       color: Colors.grey,
           //       height: 1,
           //     ),
-          itemCount: 4);
+          itemCount: values.length);
 
-  Widget _itemsBuilder() {
+  Widget _itemsBuilder(Values value,BuildContext context) {
     bool status = false;
-    return GestureDetector(onTap: () {}, child: _listviewCat());
+    return GestureDetector(onTap: () {}, child: _Cat(value,context));
   }
-
-  Widget _listviewCat() {
+  Filters getFilter(int count,List<Filters>filters)
+  {
+    Filters filter=new Filters(type: "",text: "",values:new List<Values> () );
+    if(filters.length>count)
+      return filters[count];
+    else
+      return filter;
+  }
+  Filters getFilterPrice(List<Filters>filters)
+  {
+    Filters filter;
+    for(int i=0;i<filters.length;i++)
+      {
+        if(filters[i].type=="price")
+          return filters[i];
+      }
+    return filter;
+  }
+  Widget _Cat(Values value,BuildContext context) {
     return Column(
       children: <Widget>[
         Row(
@@ -161,7 +228,10 @@ class FilterScreeen extends StatelessWidget {
                 // });
               },
             ),
-            Text('Sunday Offer')
+            Container(
+                width:MediaQuery.of(context).size.width*0.5,
+                padding: EdgeInsets.only(right: 10),
+                child: Text(value.name,maxLines: 10,overflow: TextOverflow.ellipsis,))
           ],
         ),
       ],

@@ -639,7 +639,7 @@ Widget getButtonContainer(BuildContext context,String by,String sortBy ,String s
             {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FilterScreeen()),
+                MaterialPageRoute(builder: (context) => FilterScreeen(by,sortBy,sortOrder,query,slug)),
               );
             },
             child: Container(

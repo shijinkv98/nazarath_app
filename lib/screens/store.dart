@@ -39,7 +39,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     getStoreScreen(snapshot.data.stores,context,super.widget);
                 } else if (snapshot.hasError) {
                   getEmptyContainer(context, "Store list is empty", "empty_cart");
-                  return errorScreen('Error: ${snapshot.error}');
+                  return  getEmptyContainer(context, "No data", "empty_cart");
                 } else {
                   return progressBar;
                 }

@@ -122,7 +122,7 @@ class _TrackingScreenState extends State<TrackingScreen>
                 debugPrint('products size: ${snapshot.data?.data}');
                 return getTrackingFull(snapshot.data.data,context,super.widget);
               } else if (snapshot.hasError) {
-                return errorScreen('Error: ${snapshot.error}');
+                return  getEmptyContainer(context, "No data", "empty_cart");
                 //return getEmptyContainerCart(context);
               } else {
                 return progressBar;

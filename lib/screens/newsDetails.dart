@@ -121,7 +121,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
           if (snapshot.hasData) {
             return getNewsScreen(snapshot.data,context,super.widget);
           } else if (snapshot.hasError) {
-            return errorScreen('Error: ${snapshot.error}');
+            return  getEmptyContainer(context, "No data", "empty_cart");return errorScreen('Error: ${snapshot.error}');
            // return getEmptyContainerOrder(context);
           } else {
             return progressBar;

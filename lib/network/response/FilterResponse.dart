@@ -35,21 +35,35 @@ class FilterResponse {
 }
 
 class Filters {
-  String type;
-  String text;
-  List<Values> values;
 
+  String type="";
+  String text="";
+  List<Values> values;
+  List<String> pricevalues;
   Filters({this.type, this.text, this.values});
 
   Filters.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     text = json['text'];
-    if (json['values'] != null) {
-      values = new List<Values>();
-      json['values'].forEach((v) {
-        values.add(new Values.fromJson(v));
-      });
-    }
+    pricevalues=new List<String>();
+    if(type=="price")
+      {
+        if (json['values'] != null) {
+          values = new List<Values>();
+          json['values'].forEach((v) {
+            pricevalues.add(v);
+          });
+        }
+      }
+      else
+        {
+          if (json['values'] != null) {
+            values = new List<Values>();
+            json['values'].forEach((v) {
+              values.add(new Values.fromJson(v));
+            });
+          }
+        }
   }
 
   Map<String, dynamic> toJson() {
