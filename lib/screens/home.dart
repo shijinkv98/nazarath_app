@@ -42,7 +42,23 @@ class HomePage extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async => showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(title: Text('Are you sure you want to quit?'), actions: <Widget>[
+              RaisedButton(
+                color: colorPrimary,
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(true)),
+              RaisedButton(
+                  color: colorPrimary,
+                  child: Text('Cancel'),
+                  onPressed: () => Navigator.of(context).pop(false)),
+            ])),
+    child:
+
+      Scaffold(
         backgroundColor:home_bg,
         // drawer: SideDrawer(),
         body: FutureBuilder<HomeResponse>(
@@ -56,7 +72,7 @@ class HomePage extends State<Home> {
               return progressBar;
             }
           },
-        ));
+        )));
   }
 }
 
