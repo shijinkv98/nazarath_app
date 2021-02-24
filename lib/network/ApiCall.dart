@@ -152,6 +152,14 @@ class ApiCall{
         //     false;
         return fromJson<T, K>(jsonResponse);
       }
+      else if (success == '0') {
+        showToast(jsonResponse['message'] ?? "Something went wrong!");
+        // await saveUser("");
+
+        // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
+        //     false;
+
+      }
       return Future.error(Exception('Failed to load post'));
     }
   }

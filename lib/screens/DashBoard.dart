@@ -8,6 +8,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/LogoutResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/network/response/ProfileResponse.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkout.dart';
@@ -38,6 +39,7 @@ int tbPosition = 0;
 //var homeResponse;
 var customer;
 var login_data;
+String userName="",userEmail;
 final ValueNotifier<int> notificationCounterValueNotifer=ValueNotifier(0);
 
 class _DashBoard extends State<DashBoard> {
@@ -51,12 +53,29 @@ class _DashBoard extends State<DashBoard> {
 
 
   }
+
   Future<void> getHomeData(BuildContext context)
   async {
 
     ApiCall().context=context;
     customer=await ApiCall().getUser();
     login_data=await ApiCall().getLoginResponse();
+    // if(login_data!=null)
+    // {
+    //   if(login_data.guest_id!="")
+    //     {
+    //       var response = await ApiCall()
+    //           .execute<ProfileResponse, Null>('my-profile/en', null);
+    //       if(response!=null)
+    //         {
+    //           userName=response.name;
+    //           userEmail=response.email;
+    //         }
+    //     }
+    // }
+
+
+
     // Map body = {
     //   // name,email,phone_number,passwor
     // };
@@ -599,7 +618,8 @@ Widget _individualTab4(String imagePath) {
 
 Future<void> logout(BuildContext context)
 async {
-
+  ApiCall().saveUser("");
+  ApiCall().saveLoginResponse("");
   LogoutResponse logoutResponse = await ApiCall()
       .execute<LogoutResponse, Null>("logout/en", null);
     if(logoutResponse!=null)

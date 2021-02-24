@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/OrderResponse.dart';
+
 import 'package:nazarath_app/screens/filterprice.dart';
 import '../main.dart';
+import 'order.dart';
 import 'vertical_tabs.dart';
 
 class OrderCancelScreen extends StatelessWidget {
+  ItemsNew item;
+  Data data;
+  OrderCancelScreen({this.item,this.data});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +30,15 @@ class OrderCancelScreen extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.only(top: 30),
         child: Column(
-          children: [_itemsBuilder(context),
-            getReasonForCancellation(context)],
+          children: [_itemsBuilder(context,item,data),
+            getReasonForCancellation(context,item)],
         ),
       )),
     );
   }
 }
 
-Widget _itemsBuilder(BuildContext context) {
+Widget _itemsBuilder(BuildContext context, ItemsNew item,Data orderData) {
   bool status = false;
 
   return Container(
@@ -47,7 +54,7 @@ Widget _itemsBuilder(BuildContext context) {
             children: [
               FadeInImage.assetNetwork(
                 placeholder: 'assets/images/no_image.png',
-                image: 'assets/images/no_image.png',
+                image: item.image!=null?'$productThumbUrl${item.image}':"",
                 width: 120,
               ),
               SizedBox(
@@ -61,14 +68,14 @@ Widget _itemsBuilder(BuildContext context) {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 2),
                       child: Text(
-                        'invoiceNumber',
+                       orderData.invoiceNumber,
                         style: TextStyle(color: item_text_gray, fontSize: 9),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
-                        'productName',
+                        item.productName,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -81,19 +88,12 @@ Widget _itemsBuilder(BuildContext context) {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: [
-                          Text('23.00',
+                          Text('$currency${" "}${item.amount}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w800)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('AED',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w800))
+
                         ],
                       ),
                     ),
@@ -109,7 +109,7 @@ Widget _itemsBuilder(BuildContext context) {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('Order Placed',
+                          Text(item.statusText,
                               style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 11,
@@ -129,7 +129,7 @@ Widget _itemsBuilder(BuildContext context) {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('1.00',
+                          Text(item.quantity,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 11,
@@ -148,7 +148,7 @@ Widget _itemsBuilder(BuildContext context) {
   );
 }
 
-Widget getReasonForCancellation(BuildContext context) {
+Widget getReasonForCancellation(BuildContext context, ItemsNew item) {
   return Container(
     color: Colors.white,
     // child: Container(
@@ -163,13 +163,13 @@ Widget getReasonForCancellation(BuildContext context) {
           children: [
             DropDown(),
             getTellUsMore(),
-            getButton()
+            getButton(context,item)
           ],
         )),
     // ),
   );
 }
-Widget getButton() {
+Widget getButton(BuildContext context,ItemsNew item) {
   return Padding(
     padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
     child: Container(
@@ -183,7 +183,32 @@ Widget getButton() {
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
-        onPressed: () async {},
+        onPressed: () async {
+          if(dropdownValue==""||dropdownValue=="Please select a reason for cancellation")
+            {
+              ApiCall().showToast("Please select a reason for cancellation");
+            }
+          else{
+            Map body={
+            "reason":dropdownValue,
+            "type":"item",
+            "order_id":item.orderId.toString(),
+            "item_id":item.id.toString()
+            };
+            FocusScope.of(context).requestFocus(FocusNode());
+
+            var response = await ApiCall()
+                .execute<String, Null>("cancel-order/en", body);
+            if (response!= null)
+            {
+              ApiCall().showToast("ORDER CANCELL REQUESTED");
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => OrderScreen()),
+              );
+            }
+          }
+        },
       ),
     ),
   );
@@ -245,40 +270,43 @@ final tellusmoreField = TextFormField(
   ),
 );
 
+String dropdownValue="";
 class DropDown extends StatefulWidget {
   @override
   DropDownWidget createState() => DropDownWidget();
 }
 
 class DropDownWidget extends State {
-  String dropdownValue = 'Please select a reason for cancellation';
+
 
   List<String> spinnerItems = [
+    'Please select a reason for cancellation',
     'Item not fit',
     'low quality',
     'ordered by mistake',
-    'find new model',
-    'Please select a reason for cancellation'
+    'find new model'
+
   ];
 
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
         child: Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             border: Border.all(color: colorPrimary),
             borderRadius: BorderRadius.all(Radius.circular(2)),
           ),
-          child: Center(
+          child: Container(
+            padding: EdgeInsets.only(left: 10,right: 10),
             child: DropdownButton<String>(
-              value: dropdownValue,
+              value: spinnerItems[0],
               icon: Icon(Icons.arrow_drop_down),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(color: Colors.black, fontSize: 18),
+              iconSize: 23,
+              elevation: 0,
+              style: TextStyle(color: Colors.black, fontSize: 11),
               underline: Container(
                 height: 1,
                 color: Colors.white,

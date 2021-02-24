@@ -194,7 +194,7 @@ Widget customScrollView(
 //     //     ),
 //     itemCount: products.length);
 Widget getDeliveryPanel(ItemsNew item, BuildContext context,
-    OrderDetailsScreen widget, int payStatus) {
+    OrderDetailsScreen widget, int payStatus,Data orderData) {
   return Container(
     child: Column(
       children: [
@@ -232,7 +232,7 @@ Widget getDeliveryPanel(ItemsNew item, BuildContext context,
             ],
           ),
         ),
-        getAllButton(context, widget, item, payStatus),
+        getAllButton(context, widget, item, payStatus,orderData),
         getProductReview(context, widget, item),
       ],
     ),
@@ -354,7 +354,7 @@ Widget getOrderSummaryDetails(
 }
 
 Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
-    ItemsNew item, int payStatus) {
+    ItemsNew item, int payStatus,Data data) {
   return Container(
     color: tab_bg,
     // decoration: BoxDecoration(
@@ -395,7 +395,7 @@ Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OrderCancelScreen(),
+                              builder: (context) => OrderCancelScreen(item: item,data: data,),
                             ));
                       },
                       child: Row(
@@ -635,7 +635,7 @@ Widget _itemsBuilder(ItemsNew item, BuildContext context,
                 ],
               ),
             ),
-            getDeliveryPanel(item, context, widget, orderData.paymentStatus),
+            getDeliveryPanel(item, context, widget, orderData.paymentStatus,orderData),
           ],
         ),
       ));

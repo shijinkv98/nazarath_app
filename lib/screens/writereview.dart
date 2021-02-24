@@ -8,6 +8,8 @@ import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/network/response/ReviewResponse.dart';
 import 'package:nazarath_app/screens/orderdetails.dart';
 
+import 'order.dart';
+
 
 class WriteReviewScreen extends StatefulWidget {
   ItemsNew item;
@@ -175,7 +177,10 @@ Widget getButton(BuildContext context,ItemsNew item){
 
         if (response!= null) {
           ApiCall().showToast(response.message);
-          //ApiCall().saveUser(customer.toJson().toString());
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => OrderScreen()),
+          );
         }
       },
     ),
