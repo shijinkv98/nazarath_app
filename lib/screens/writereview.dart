@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/network/response/ReviewResponse.dart';
 import 'package:nazarath_app/screens/orderdetails.dart';
 
 
@@ -99,7 +100,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 25,top: 25,right: 25),
-          child: getButton(context),
+          child: getButton(context,item),
         )
 
       ],
@@ -147,7 +148,7 @@ Widget getwriteReview(){
     ),
   );
 }
-Widget getButton(BuildContext context){
+Widget getButton(BuildContext context,ItemsNew item){
 
   return Container(
     width: MediaQuery.of(context).size.width,
@@ -161,15 +162,19 @@ Widget getButton(BuildContext context){
               fontWeight: FontWeight.w400,
               color: Colors.white)),
       onPressed: () async {
+        String url='${"add-product-review/"}${item.slug}${"/en"}';
         Map body={
-
+            "title":item.productName,
+            "message":review,
+            "rating":rateValue.toString()
         };
         FocusScope.of(context).requestFocus(FocusNode());
 
         var response = await ApiCall()
-            .execute<String, Null>("update-profile/en", body);
+            .execute<ReviewResponse, Null>(url, body);
 
         if (response!= null) {
+          ApiCall().showToast(response.message);
           //ApiCall().saveUser(customer.toJson().toString());
         }
       },
