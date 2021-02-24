@@ -3,34 +3,33 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/screens/login.dart';
 import 'package:nazarath_app/screens/notification.dart';
 
 import 'DashBoard.dart';
 import 'cart.dart';
 
-class PersonalInfoScreen extends StatefulWidget {
+class ResetPasswordScreen extends StatefulWidget {
   String title;
-  PersonalInfoScreen(String title)
+  ResetPasswordScreen(String title)
   {
     this.title=title;
   }
   @override
-  _PersonalInfoScreenState createState() => new _PersonalInfoScreenState(title: title);
+  _ResetPasswordScreenState createState() => new _ResetPasswordScreenState(title: title);
 }
-class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   String title;
-  _PersonalInfoScreenState({ this.title}) ;
+  _ResetPasswordScreenState({ this.title}) ;
   @override
   Widget build(BuildContext context) {
-    email=customer.email;
-    username=customer.name;
-    phonenumber=customer.mobile;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Personal Information',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text('Reset Password',style:TextStyle(fontSize:15,color: Colors.white),
         ),
       ),
       backgroundColor: Colors.white,
@@ -39,6 +38,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
             padding: const EdgeInsets.only(top: 25),
             child: Column(
               children: [
+                getOtp(),
                 getPersonalInfo(),
                 getButton(context)
               ],
@@ -46,6 +46,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           )),
     );
   }
+}
+Widget getOtp(){
+  return Padding(
+   padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
+    child: Container(
+      child: otpField,
+
+    ),
+  );
 }
 Widget getButton(BuildContext context) {
   return Padding(
@@ -62,24 +71,24 @@ Widget getButton(BuildContext context) {
                 fontWeight: FontWeight.w400,
                 color: Colors.white)),
         onPressed: () async {
-          Map body={
-            "name":username,
-            "email":email,
-            "phone_number":phonenumber,
-          };
-          FocusScope.of(context).requestFocus(FocusNode());
-
-          var response = await ApiCall()
-              .execute<String, Null>("update-profile/en", body);
-
-          if (response!= null) {
-            customer.name=username;
-            customer.email=email;
-            customer.mobile=phonenumber;
-            print(response);
-            print(customer.toJson().toString());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => Login()));
+          // Map body={
+          //
+          // };
+          // FocusScope.of(context).requestFocus(FocusNode());
+          //
+          // var response = await ApiCall()
+          //     .execute<String, Null>("update-profile/en", body);
+          //
+          // if (response!= null) {
+          //
+          //   print(response);
+          //   print(customer.toJson().toString());
             //ApiCall().saveUser(customer.toJson().toString());
-          }
+          // }
         },
       ),
     ),
@@ -113,15 +122,11 @@ Widget getForms(){
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: usernameField,
+            child: passwordField,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: emailField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: phonenumberField,
+            child: repasswordField
           ),
 
 
@@ -130,14 +135,15 @@ Widget getForms(){
     ),
   );
 }
-String email="";
-final emailField = TextFormField(
+
+String password="";
+final passwordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onChanged: (value) {
-    email = value;
+    password = value;
   },
-  initialValue: email,
+  initialValue: password,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -150,8 +156,8 @@ final emailField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Enter friend email id", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'EMAIL',
+    hintText: "Enter New Password", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'New Password',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
@@ -163,7 +169,7 @@ final emailField = TextFormField(
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
-        'assets/icons/mailicon.png',
+        'assets/icons/change_password.png',
         width: register_icon_size,
         height: register_icon_size,
       ),
@@ -174,14 +180,14 @@ final emailField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String username="";
-final usernameField = TextFormField(
+String repassword="";
+final repasswordField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onChanged: (value) {
-    username = value;
+    repassword = value;
   },
-  initialValue: username,
+  initialValue: repassword,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -194,8 +200,8 @@ final usernameField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'USER NAME',
+    hintText: "Confirm Password", hintStyle: TextStyle(color: textColorSecondary),
+    labelText: 'Re-enter New Password',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
@@ -207,7 +213,7 @@ final usernameField = TextFormField(
 
     prefixIcon: new IconButton(
       icon: new Image.asset(
-        'assets/icons/user.png',
+        'assets/icons/change_password.png',
         width: register_icon_size,
         height: register_icon_size,
       ),
@@ -218,14 +224,14 @@ final usernameField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-String phonenumber="";
-final phonenumberField = TextFormField(
+String otp="";
+final otpField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
   onChanged: (value) {
-    phonenumber = value;
+    otp = value;
   },
-  initialValue: phonenumber,
+  initialValue: otp,
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
@@ -234,12 +240,13 @@ final phonenumberField = TextFormField(
       return null;
     }
   },
-  keyboardType: TextInputType.name,
+  keyboardType: TextInputType.number,
+  maxLength: 6,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Phone Number", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'PHONE NUMBER',
+    hintText: "Enter Otp", hintStyle: TextStyle(color: textColorSecondary),
+    // labelText: 'New Password',
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[200]),
@@ -249,20 +256,19 @@ final phonenumberField = TextFormField(
     ),
 
 
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/mobile.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
+    // prefixIcon: new IconButton(
+    //   icon: new Image.asset(
+    //     'assets/icons/change_password.png',
+    //     width: register_icon_size,
+    //     height: register_icon_size,
+    //   ),
+    //   onPressed: null,
+    //   color: colorPrimary,
+    // ),
 
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-
 
 Container getTopContainer()
 {

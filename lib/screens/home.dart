@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -50,7 +52,7 @@ class HomePage extends State<Home> {
               RaisedButton(
                 color: colorPrimary,
                   child: Text('Ok'),
-                  onPressed: () => Navigator.of(context).pop(true)),
+                  onPressed: () => Navigator.of(context).pop(exit(0))),
               RaisedButton(
                   color: colorPrimary,
                   child: Text('Cancel'),

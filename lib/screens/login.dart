@@ -1,5 +1,6 @@
 // import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/screens/forgotpassword.dart';
 import 'package:nazarath_app/screens/register/register.dart';
 
 import 'DashBoard.dart';
@@ -48,6 +50,7 @@ class Login extends StatelessWidget {
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
         hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
         labelText: 'USERNAME',
+        prefixText: "971",
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey[200]),
@@ -164,7 +167,23 @@ class Login extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async => showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(title: Text('Are you sure you want to quit?'), actions: <Widget>[
+              RaisedButton(
+                  color: colorPrimary,
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(exit(0))),
+              RaisedButton(
+                  color: colorPrimary,
+                  child: Text('Cancel'),
+                  onPressed: () => Navigator.of(context).pop(false)),
+            ])),
+    child:
+
+      Scaffold(
       appBar: AppBar(
         title: Text(
           '',
@@ -245,12 +264,20 @@ class Login extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            "Forgot Password ?",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 12),
+                          child: GestureDetector(
+                            onTap:(){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) => ForgotPasswordScreen('')));
+                            },
+                            child: Text(
+                              "Forgot Password ?",
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -337,7 +364,7 @@ class Login extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
     
   }
   Widget getSocialMediaContainer(BuildContext context)
