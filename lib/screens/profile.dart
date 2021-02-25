@@ -296,10 +296,10 @@ class Profile extends StatelessWidget {
                                   Text('Privacy Policy',style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => PrivacyPolicyScreen("https://ranna.ae/en/privacy-policy")),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => PrivacyPolicyScreen("https://ranna.ae/en/privacy-policy")),
+                              // );
                             },
                             ),
                             FlatButton(

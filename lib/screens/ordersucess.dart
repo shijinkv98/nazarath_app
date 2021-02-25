@@ -6,7 +6,7 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 import 'DashBoard.dart';
 import 'cart.dart';
