@@ -49,14 +49,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     double step=(_upperValue-_lowerValue)/50;
     return Scaffold(
-
+      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 20,top: 20),
             child: Container(
-              color: product_bg,
+             color: Colors.white,
               child: Text('Select Price Range',style: TextStyle(fontSize: 12,color: textColor,fontWeight: FontWeight.bold),),
             ),
           ),

@@ -94,6 +94,7 @@ class FilterScreeen extends StatelessWidget {
                 ),
               ),
               Flexible(
+
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5,bottom: 5),
                   child: VerticalTabs(
@@ -109,9 +110,9 @@ class FilterScreeen extends StatelessWidget {
                     ],
                     contents: <Widget>[
                       Container(child: FilterPrice(filters: filter1,)),
-                      _listviewFilCat(filter2.values,context),
-                      _listviewFilCat(filter3.values,context),
-                      _listviewFilCat(filter4.values,context),
+                      Container(color:Colors.white,child: _listviewFilCat(filter2.values,context)),
+                      Container(color:Colors.white,child: _listviewFilCat(filter3.values,context)),
+                      Container(color:Colors.white,child: _listviewFilCat(filter4.values,context)),
 
                     ],
                   ),
@@ -218,20 +219,14 @@ class FilterScreeen extends StatelessWidget {
       children: <Widget>[
         Row(
           children: [
-            Checkbox(
-              value: true,
-              activeColor: colorPrimary,
-              focusColor: colorPrimary,
-              onChanged: (value) {
-                // setState(() {
-                //   _value = value;
-                // });
-              },
-            ),
-            Container(
-                width:MediaQuery.of(context).size.width*0.5,
-                padding: EdgeInsets.only(right: 10),
-                child: Text(value.name,maxLines: 10,overflow: TextOverflow.ellipsis,))
+            CheckBoxItem(),
+            GestureDetector(
+              child: Container(
+
+                  width:MediaQuery.of(context).size.width*0.5,
+                  padding: EdgeInsets.only(right: 10),
+                  child: Text(value.name,maxLines: 10,overflow: TextOverflow.ellipsis,)),
+            )
           ],
         ),
       ],
@@ -272,5 +267,28 @@ class FilterScreeen extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+class CheckBoxItem extends StatefulWidget {
+  @override
+  _CheckBoxItemState createState() => _CheckBoxItemState();
+}
+
+class _CheckBoxItemState extends State<CheckBoxItem> {
+  bool value = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+
+      activeColor: colorPrimary,
+      focusColor: colorPrimary,
+      value: this.value,
+      onChanged: (bool value) {
+        setState(() {
+          this.value = value;
+        });
+      },
+    ); //Checkbox
   }
 }
