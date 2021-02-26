@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 
@@ -12,6 +13,7 @@ import 'package:nazarath_app/Screens/register/otp.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
+import 'package:nazarath_app/screens/login.dart';
 
 // show CheckBoxNotifier;
 
@@ -118,6 +120,11 @@ class Register extends StatelessWidget {
     final phoneField = TextFormField(
       cursorColor: colorPrimary,
       obscureText: false,
+      inputFormatters: [
+        new WhitelistingTextInputFormatter(
+            new RegExp(r'^[0-9]*$')),
+        new LengthLimitingTextInputFormatter(10)
+      ],
       onSaved: (value) {
         phoneNo = value;
       },
@@ -126,7 +133,7 @@ class Register extends StatelessWidget {
         if (value.trim().isEmpty) {
           return 'This field is required';
         } else {
-          return null;
+          return value.length < 10 ? 'Enter a valid mobile number' : null;
         }
       },
       keyboardType: TextInputType.number,
@@ -256,7 +263,14 @@ class Register extends StatelessWidget {
         title: Text(
           '',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+
         ),
+        leading:Container(
+            height: 20,
+            width: 55,
+            child: GestureDetector(
+             onTap:() => Navigator.of(context).push(new MaterialPageRoute(builder: (_)=> Login())),
+                child: Icon(Icons.arrow_back_sharp,color: Colors.white,)),),
         backgroundColor: colorPrimary,
         elevation: 0,
         centerTitle: true,

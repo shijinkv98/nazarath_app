@@ -52,6 +52,8 @@ dependencies:
   footer: ^0.0.3
   flutter_share: ^1.0.5
   grouped_buttons: ^1.0.3
+  flutter_time_date_picker: ^0.0.2
+  date_format: ^1.0.9
 #  uuid: ^2.2.2
 #  webview_flutter: ^1.0.7
   flutter_signin_button: ^1.1.0

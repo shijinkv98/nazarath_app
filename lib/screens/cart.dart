@@ -528,13 +528,15 @@ Widget getDiscountButton(BuildContext context,Widget widget)
     ),
     margin: EdgeInsets.only(left: 10,right: 10),
     child:Container(
+      height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width/ 1.45,
+            height: 40,
+            width: MediaQuery.of(context).size.width*0.71,
             child: couponField,
           ),
           Column(
@@ -546,8 +548,8 @@ Widget getDiscountButton(BuildContext context,Widget widget)
 
                 },
                 child: Container(
-                   width: 107.5,
-                    height: 50,
+                   width: MediaQuery.of(context).size.width*0.24,
+                    height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(topRight: Radius.circular(10),
                           bottomRight:Radius.circular(10) ),
@@ -588,8 +590,8 @@ final couponField = TextFormField(
   keyboardType: TextInputType.text,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Discount code ", hintStyle: TextStyle(color: textColorSecondary),
+    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 15.0),
+    hintText: "Discount code ", hintStyle: TextStyle(color: textColor ,fontSize: 12),
     // labelText: 'Discount code',
     // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
@@ -681,7 +683,9 @@ Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
             height: 10,
           ),
           Container(
-            padding: EdgeInsets.only(left:10),
+            width: double.infinity,
+            color: Colors.white,
+            padding: EdgeInsets.only(left:10,top: 15),
             child: Text(
               "Order Summary",
               textAlign: TextAlign.start,
@@ -689,9 +693,7 @@ Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
                   color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+
           getTextContainer("Sub Total", '${cartResponse.symbolLeft}${" "}${cartResponse.netTotal}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
           getTextContainer("Shipping", '${cartResponse.symbolLeft}${" "}${cartResponse.deliveryCharge.toString()}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
           getTextContainer("Total", '${cartResponse.symbolLeft}${" "}${cartResponse.grandTotal}', "bold", text_tilte_page, colorRed, "title")
@@ -709,14 +711,18 @@ Widget getTextContainer(String title, String value,String style,Color color1,Col
     color: Colors.white,
     child: Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Column(
           children: [
-            getText(title, color1, 12, type, style,TextAlign.start),
-            getText(value, color2, 12, type, style,TextAlign.end)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getText(title, color1, 12, type, style,TextAlign.start),
+                getText(value, color2, 12, type, style,TextAlign.end)
 
+              ],
+            ),
           ],
         ),
         SizedBox(

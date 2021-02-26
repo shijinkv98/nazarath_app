@@ -14,6 +14,7 @@ import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/custom/notificationbadge.dart';
+import 'package:nazarath_app/screens/date_time_picker.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
@@ -199,7 +200,7 @@ DefaultTabController getTabController(BuildContext context)
       TabBarView(
         children: <Widget>[
           Home(),
-          CheckUpScreen("checkup"),
+          CheckUpScreen(),
           //ProductScreen("s"),
           StoreScreen(""),
 
