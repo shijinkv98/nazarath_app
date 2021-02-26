@@ -527,42 +527,46 @@ Widget getDiscountButton(BuildContext context,Widget widget)
 
     ),
     margin: EdgeInsets.only(left: 10,right: 10),
-    child:Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 250,
-          child: couponField,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            GestureDetector(
-              onTap: (){
+    child:Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width/ 1.45,
+            child: couponField,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              GestureDetector(
+                onTap: (){
 
-              },
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),
-                        bottomRight:Radius.circular(10) ),
-                    color: colorPrimary,
+                },
+                child: Container(
+                   width: 107.5,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),
+                          bottomRight:Radius.circular(10) ),
+                      color: colorPrimary,
 
-                  ),
-                height: 50,
-                padding: EdgeInsets.only(left: 15 ,right: 15),
-                child: Center(child: Text(
-                    "Apply",
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 11)),
-                )
+                    ),
+                  // height: 50,
+                  padding: EdgeInsets.only(left: 15 ,right: 15),
+                  child: Center(child: Text(
+                      "Apply",
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 11)),
+                  )
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     ),
   );
 }
@@ -586,13 +590,13 @@ final couponField = TextFormField(
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
     hintText: "Discount code ", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Discount code',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+    // labelText: 'Discount code',
+    // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
+      borderSide: BorderSide(color: Colors.transparent),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
+      borderSide: BorderSide(color: Colors.transparent),
     ),
 
 

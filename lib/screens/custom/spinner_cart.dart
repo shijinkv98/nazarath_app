@@ -50,9 +50,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 0.5, color:item_text_gray_light),
-                      borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(0.0)),
-                    ),
+                      borderRadius:  BorderRadius.circular(2)),
                     child: SpinnerInput(
                       minValue: 1,
                       maxValue: 200,
@@ -60,18 +58,18 @@ class _SpinnerCartState extends State<SpinnerCart> {
                       step: 1,
                       disabledLongPress: true,
                       disabledPopup: true,
-                      middleNumberStyle: TextStyle(fontSize: 16,color: item_text_gray, fontWeight: FontWeight.bold),
+                      middleNumberStyle: TextStyle(fontSize: 16,color: Colors.grey[700], fontWeight: FontWeight.bold),
                       middleNumberBackground: Colors.white,
                       plusButton: SpinnerButtonStyle(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(0),
-                          textColor: item_text_gray,
+                          textColor: Colors.grey[700],
 
                           elevation: 0
                       ),
                       minusButton: SpinnerButtonStyle(elevation: 0,
                         color: Colors.white, borderRadius: BorderRadius.circular(0),
-                        textColor: item_text_gray,
+                        textColor:Colors.grey[700],
 
                       ),
                       onChange: (newValue) {
@@ -83,10 +81,11 @@ class _SpinnerCartState extends State<SpinnerCart> {
                         },
                     ),
                   ),
-            SizedBox(
-              width: 5,
-            ),
-            removeButtonCart(slug,store,context,widget)
+
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: removeButtonCart(slug,store,context,widget),
+            )
           ],
         ),
       ],
@@ -122,11 +121,11 @@ GestureDetector removeButtonCart(String slug,String store,BuildContext context,W
       child: Container(
         padding: EdgeInsets.fromLTRB(5, 6, 5, 6),
         decoration: BoxDecoration(
-            border: Border.all(width: 1, color:item_text_gray_light),
+            border: Border.all(width: 0.5, color:item_text_gray_light),
             borderRadius:  BorderRadius.circular(2)),
         child: Row(
           children: [
-            Icon(Icons.delete,color:item_text_gray_light ,size: 20,)
+            ImageIcon(AssetImage('assets/icons/delete.png'),color:item_text_gray_light ,size: 20,)
             //Image.asset(Icons.,width: 28,),
           ],
         ),

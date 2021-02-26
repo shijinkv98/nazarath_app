@@ -147,12 +147,14 @@ Container getEmptyContainerNotification()
 {
   return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: Text(
-              "Notification is Emppy",
+              "Notification is Empty",
               style: TextStyle(
-                  color: Colors.grey,fontSize: 11),
+                  color: Colors.grey,fontSize: 15),
             ),
           )
         ],
