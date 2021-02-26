@@ -311,14 +311,14 @@ class Login extends StatelessWidget {
                             Text("Don't have an account?",
                                 style: style.copyWith(
                                     fontSize: 14,
-                                    color: item_text_gray_light,
+                                    color: textColor,
                                     fontWeight: FontWeight.normal)),
                             TextButton(onPressed: (){
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) => Register()));
-                            }, child: Text("Creat Account", style: style.copyWith(
+                            }, child: Text("Create Account", style: style.copyWith(
                                         fontSize: 14,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)))

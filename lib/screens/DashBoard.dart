@@ -497,7 +497,7 @@ Widget _individualTab(String imagePath) {
             alignment: Alignment.centerRight,
             child: Container(
               color: Colors.grey,
-              width: 0.5,
+              width: 0.3,
               height: 50,
             ),
           )
@@ -534,7 +534,7 @@ Widget _individualTab2(String imagePath) {
             alignment: Alignment.centerRight,
             child: Container(
               color: Colors.grey,
-              width: 0.5,
+              width: 0.3,
               height: 50,
             ),
           )
@@ -570,7 +570,7 @@ Widget _individualTab3(String imagePath) {
             alignment: Alignment.centerRight,
             child: Container(
               color: Colors.grey,
-              width: 0.5,
+              width: 0.3,
               height: 50,
             ),
           )
@@ -607,7 +607,7 @@ Widget _individualTab4(String imagePath) {
             alignment: Alignment.centerRight,
             child: Container(
               color: Colors.grey,
-              width: 0.5,
+              width: 0.3,
               height: 50,
             ),
           )
