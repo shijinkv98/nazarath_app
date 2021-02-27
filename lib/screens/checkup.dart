@@ -103,8 +103,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
                   child: InkWell(
                       onTap: (){
-                        SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top
-                        ]);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
