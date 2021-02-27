@@ -130,6 +130,7 @@ Widget getForms(List<Countries>countries,BuildContext context,Widget widget,Cart
                       {
                         url="customer-addresses/edit/en";
                       }
+                    ApiCall().showToast(customer.toString());
                     Map body={
                       "name":customer.name,
                       "address":address,

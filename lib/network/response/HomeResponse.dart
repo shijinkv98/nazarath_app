@@ -602,6 +602,7 @@ class Address {
   String streetNumber;
   String location;
   Country country;
+  bool isSelected=false;
 
   Address(
       {this.id,
