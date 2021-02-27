@@ -75,12 +75,14 @@ class Filters {
     }
     return data;
   }
+
 }
 
 class Values {
   int filterValueId;
   String name;
   int parentId;
+  bool isSelected=false;
   List<FilterSpecificationValues> filterSpecificationValues;
 
   Values(
@@ -100,6 +102,11 @@ class Values {
             .add(new FilterSpecificationValues.fromJson(v));
       });
     }
+    void setSelected(bool condition)
+    {
+      isSelected=condition;
+    }
+
   }
 
   Map<String, dynamic> toJson() {

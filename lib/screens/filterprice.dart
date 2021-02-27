@@ -3,51 +3,60 @@ import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
 
-class FilterPrice extends StatelessWidget {
-  Filters filters;
-  Currency currency;
-  FilterPrice({this.filters,this.currency});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-     body: MyHomePage(
-         filters: this.filters,
-       currency: this.currency,
-     ),
-    );
-  }
-}
+// class FilterPrice extends StatelessWidget {
+//   double _lowerValue=0, _upperValue = 0;
+//   Filters filters;
+//   Currency currency;
+//   FilterPrice({this.filters,this.currency});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//      body: MyHomePage(
+//          filters: this.filters,
+//        currency: this.currency,
+//      ),
+//     );
+//   }
+// }
 
-class MyHomePage extends StatefulWidget {
+class FilterPrice extends StatefulWidget {
+  double _lowerValue=0, _upperValue = 0;
   // MyHomePage({Key key, this.title}) : super(key: key);
   //
   // final String title;
   Filters filters;
+
+  String get lowerValue => _lowerValue.toString();
+  String get upperValue => _upperValue.toString();
+  double getLowerValue()
+  {
+
+  }
   Currency currency;
-  MyHomePage({this.filters,this.currency});
+  FilterPrice({this.filters,this.currency});
   @override
-  _MyHomePageState createState() => _MyHomePageState(filters: this.filters,currency: this.currency,);
+  _FilterState createState() => _FilterState(filters: this.filters,currency: this.currency,);
 }
-double _lowerValue=0, _upperValue = 0;
-class _MyHomePageState extends State<MyHomePage> {
+
+class _FilterState extends State<FilterPrice> {
 
   Filters filters;
   Currency currency;
-  _MyHomePageState({this.filters,this.currency});
+  _FilterState({this.filters,this.currency});
   @override
   Widget build(BuildContext context) {
-    _lowerValue=0; _upperValue = 0;
+    widget._lowerValue=0; widget._upperValue = 0;
     if(filters!=null)
       {
         if(filters.pricevalues.length>1)
           {
-            _lowerValue= double.parse(filters.pricevalues[0]);
-            _upperValue= double.parse(filters.pricevalues[1]);
+            widget._lowerValue= double.parse(filters.pricevalues[0]);
+            widget._upperValue= double.parse(filters.pricevalues[1]);
           }
 
       }
 
-    double step=(_upperValue-_lowerValue)/50;
+    double step=(widget._upperValue-widget._lowerValue)/50;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -66,21 +75,21 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.centerLeft,
             child: FlutterSlider(
               key: Key('3343'),
-              values: [_lowerValue, _upperValue],
+              values: [widget._lowerValue, widget._upperValue],
               rangeSlider: true,
               tooltip: FlutterSliderTooltip(
                 alwaysShowTooltip: true,
               ),
-              max: _upperValue,
-              min: _lowerValue,
+              max: widget._upperValue,
+              min: widget._lowerValue,
               step: FlutterSliderStep(step: step),
               jump: true,
 
               onDragging: (handlerIndex, lowerValue, upperValue) {
 
                 setState(() {
-                  _lowerValue = lowerValue;
-                  _upperValue = upperValue;
+                  widget._lowerValue = lowerValue;
+                  widget._upperValue = upperValue;
                 });
               },
             ),

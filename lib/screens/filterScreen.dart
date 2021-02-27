@@ -9,7 +9,9 @@ import 'ProductList.dart';
 import 'vertical_tabs.dart';
 String f_filters="";
 class FilterScreeen extends StatelessWidget {
+   List<String> valueArray ;
   String by,sortBy, sortOrder,query, slug;
+  FilterPrice filterPrice;
   FilterScreeen(String by, String sortBy, String sortOrder, String query, String slug)
   {
     this.by=by;
@@ -64,11 +66,12 @@ class FilterScreeen extends StatelessWidget {
   
   Widget getFilterPage(BuildContext context, FilterResponse data,String by, String sortBy, String sortOrder, String query, String slug,)
   {
-    Filters filter1=getFilterPrice(data.filters);
-    Filters filter2=getFilter(1, data.filters);
-    Filters filter3=getFilter(2, data.filters);
-    Filters filter4=getFilter(3, data.filters);
-
+    List<Filters> listFilters=data.filters;
+    Filters filter1=getFilterPrice(listFilters);
+    Filters filter2=getFilter(1, listFilters);
+    Filters filter3=getFilter(2, listFilters);
+    Filters filter4=getFilter(3, listFilters);
+    filterPrice=FilterPrice(filters: filter1,);
    return SafeArea(
         child: Container(
           color: product_bg,
@@ -109,7 +112,7 @@ class FilterScreeen extends StatelessWidget {
                       Tab(child: Text(filter4.text)),
                     ],
                     contents: <Widget>[
-                      Container(child: FilterPrice(filters: filter1,)),
+                      Container(child: filterPrice),
                       Container(color:Colors.white,child: _listviewFilCat(filter2.values,context)),
                       Container(color:Colors.white,child: _listviewFilCat(filter3.values,context)),
                       Container(color:Colors.white,child: _listviewFilCat(filter4.values,context)),
@@ -120,10 +123,31 @@ class FilterScreeen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
+                  Map<String, Object>  typeObject =  new Map<String, Object>();
+                   valueArray = new List<String>();
+                   valueArray.add('"'+filterPrice.lowerValue+'"');
+                   valueArray.add('"'+filterPrice.upperValue+'"');
+                   List< Map<String, Object>> jsonarray=new List< Map<String, Object>>();
+                  typeObject['"values"']=valueArray;
+                  typeObject['"type"']='"price"';
+                  jsonarray.add(typeObject);
+                  for(int i=0;i<listFilters.length;i++)
+                    {
+                      //Map<String, Object>  typeObjectNew =  new Map<String, Object>();
+                      Filters filter=listFilters[i];
+                      // if(filter.isSelected)
+                      //   {
+                      //
+                      //   }
+                    }
+
+                  Map<String, Object>  jsonObjct =  new Map<String, Object>();
+                  jsonObjct['"filters"']= jsonarray;
+                  print(jsonObjct.toString());
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) =>
-                        ProductScreen(slug,by,sortBy,sortOrder,f_filters,query)),
+                        ProductScreen(slug,by,sortBy,sortOrder,jsonObjct.toString(),query)),
                   );
                 },
                 child: Container(
