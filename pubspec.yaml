@@ -116,6 +116,8 @@ flutter:
     - assets/icons/no_image.png
     - assets/icons/filtercontrol.png
     - assets/icons/edit_profile.png
+    - assets/icons/checkicon.png
+    - assets/icons/checkiconinactive.png
     - assets/images/no_image.png
     - assets/icons/my_orders.png
     - assets/icons/favourite.png

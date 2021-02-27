@@ -208,10 +208,10 @@ class _AddressState extends State<AddressScreen> {
                                 context,
                                 MaterialPageRoute(builder: (context) => AddressScreen("")),);
 
-                                ApiCall().showToast(address.isSelected.toString());
+                                //ApiCall().showToast(address.isSelected.toString());
                               },
                               child: Container(width: 30, height: 30,
-                                  child: address.isSelected?Text("Checked"):Text("Unchecked")
+                                  child: address.isSelected?Image(image:AssetImage('assets/icons/checkicon.png')):Image(image:AssetImage('assets/icons/checkiconinactive.png'))
                                 // Checkbox(
                                 //   value: true,
                                 //   activeColor: colorPrimary,
