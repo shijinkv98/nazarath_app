@@ -1,13 +1,18 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nazarath_app/helper/constants.dart';
 
 TextEditingController _dateController = TextEditingController();
 TextEditingController _timeController = TextEditingController();
+TextEditingController _locationController = TextEditingController();
 String _setTime, _setDate;
-
 class CheckUpScreen extends StatefulWidget {
+  static final kInitialPosition = LatLng(-33.8567844, 151.213108);
+
   @override
   _CheckUpScreenState createState() => _CheckUpScreenState();
 }
@@ -15,6 +20,7 @@ class CheckUpScreen extends StatefulWidget {
 class _CheckUpScreenState extends State<CheckUpScreen> {
   double _height;
   double _width;
+  PickResult selectedPlace;
 
   String _hour, _minute, _time;
 
@@ -95,7 +101,36 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: locationField,
+                  child: InkWell(
+                      onTap: (){
+                        SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top
+                        ]);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return PlacePicker(
+                                apiKey: 'AIzaSyAIjBw5JjRaRSZXLVNNUUjSUrFA6VP5KEQ'.trim(),
+                                initialPosition: CheckUpScreen.kInitialPosition,
+                                useCurrentLocation: true,
+                                selectInitialPosition: true,
+
+                                //usePlaceDetailSearch: true,
+                                onPlacePicked: (result) {
+                                  selectedPlace = result;
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    _locationController.text=selectedPlace == null ?"":selectedPlace.formattedAddress ?? "";
+
+                                  });
+                                },
+
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: locationField),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
@@ -126,7 +161,13 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: Colors.white)),
-                      onPressed: () {},
+                      onPressed: () {
+
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => ,
+                        // );
+                      },
                     ),
                   ),
                 ),
@@ -182,71 +223,6 @@ final dateField = TextFormField(
   ),
 );
 
-Container getCheckUp(BuildContext context) {
-  return Container(
-    child: Container(
-      width: double.infinity,
-      child: Column(
-        children: [
-          getTopContainer(),
-          getForms(context),
-        ],
-      ),
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-}
-
-Widget getForms(BuildContext context) {
-  return Container(
-    width: double.infinity,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: mobileNumberField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: addressField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: locationField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: InkWell(child: dateField),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: timeField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Container(
-              width: double.infinity,
-              height: 40,
-              child: RaisedButton(
-                color: colorPrimary,
-                elevation: 0,
-                child: Text('Book an Appoinment',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white)),
-                onPressed: () {
-                  },
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 
 String mobileNmber;
 final mobileNumberField = TextFormField(
@@ -333,9 +309,11 @@ final addressField = TextFormField(
   ),
 );
 String location;
-final locationField = TextFormField(
+final    locationField = TextFormField(
   cursorColor: colorPrimary,
+  controller: _locationController,
   obscureText: false,
+  enabled: false,
   onSaved: (value) {
     location = value;
   },
@@ -469,3 +447,4 @@ Container getTopContainer() {
     ),
   );
 }
+
