@@ -109,6 +109,8 @@ class Values {
 
   }
 
+  get filtervalue_id => filterValueId;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['filter_value_id'] = this.filterValueId;

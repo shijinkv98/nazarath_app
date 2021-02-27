@@ -83,7 +83,13 @@ class FilterScreeen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            FilterScreeen(by,sortBy,sortOrder,query,slug)),
+                      );
+                    },
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -133,8 +139,61 @@ class FilterScreeen extends StatelessWidget {
                   jsonarray.add(typeObject);
                   for(int i=0;i<listFilters.length;i++)
                     {
-                      //Map<String, Object>  typeObjectNew =  new Map<String, Object>();
                       Filters filter=listFilters[i];
+                      if(filter.type!="price")
+                        {
+                          Map<String, Object>  typeObject_1 =  new Map<String, Object>();
+
+                          List<String> valueArray_1=new List<String>();
+                          if(filter.type=="specification")
+                            {
+
+
+                              for(int j=0;j<filter.values.length;j++)
+                              {
+                                Map<String, Object>  valueArrayObject =  new Map<String, Object>();
+                                int fc=0;
+                                if(filter.values[j].isSelected) {
+                                  valueArrayObject['"field"'] = '"' + filter
+                                      .values[j].filtervalue_id.toString() +
+                                      '"';
+                                  List<String> valueArray_2=new List<String>();
+                                  fc++;
+                                  for(int k=0;k<filter
+                                      .values[j].filterSpecificationValues.length;k++)
+                                    {
+
+                                      valueArray_2.add('"' + filter.values[j].filterSpecificationValues[k].filterValueId
+                                          .toString() + '"');
+                                    }
+                                  valueArrayObject['"values"'] = valueArray_2;
+
+                                }
+                                if(fc!=0)
+                                  {
+                                    typeObject_1['"type"'] = '"' + filter.type + '"';
+                                    typeObject_1['"values"'] = valueArrayObject;
+                                    jsonarray.add(typeObject_1);
+                                  }
+                              }
+                            }
+                          else
+                            {
+                              for(int j=0;j<filter.values.length;j++)
+                              {
+                                if(filter.values[j].isSelected)
+                                  valueArray_1.add('"'+filter.values[j].filtervalue_id.toString()+'"');
+                              }
+
+                              if(valueArray_1.length>0) {
+                                typeObject_1['"type"'] = '"' + filter.type + '"';
+                                typeObject_1['"values"'] = valueArray_1;
+                                jsonarray.add(typeObject_1);
+                              }
+                            }
+
+
+                        }
                       // if(filter.isSelected)
                       //   {
                       //
@@ -243,7 +302,7 @@ class FilterScreeen extends StatelessWidget {
       children: <Widget>[
         Row(
           children: [
-            CheckBoxItem(),
+            CheckBoxItem(filterValue: value,),
             GestureDetector(
               child: Container(
 
@@ -294,15 +353,20 @@ class FilterScreeen extends StatelessWidget {
   }
 }
 class CheckBoxItem extends StatefulWidget {
+  Values filterValue;
+  CheckBoxItem({this.filterValue});
   @override
-  _CheckBoxItemState createState() => _CheckBoxItemState();
+  _CheckBoxItemState createState() => _CheckBoxItemState(filterValue: this.filterValue);
 }
 
 class _CheckBoxItemState extends State<CheckBoxItem> {
   bool value = false;
+  Values filterValue;
 
+  _CheckBoxItemState({this.filterValue});
   @override
   Widget build(BuildContext context) {
+    value=filterValue.isSelected;
     return Checkbox(
 
       activeColor: colorPrimary,
@@ -311,6 +375,8 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
       onChanged: (bool value) {
         setState(() {
           this.value = value;
+          filterValue.isSelected=value;
+
         });
       },
     ); //Checkbox
