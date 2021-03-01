@@ -137,11 +137,8 @@ Widget getProductDetailsValue(ProductDetailsResponse response,BuildContext conte
         getTopContainer(),
         getProductImageSlider(response.product.images),
         getProductDetails(response.product),
-        getSizeChart(),
         getSpecifications(response.product.sizeChart,response.product.options, context, widget),
-        SizedBox(
-          height: 25,
-        ),
+
         getButtons(context, widget, slug, response.product.store, "1"),
         getProductDescription(response.product.description),
         getRecommended(homeResponse.recommendedProducts,widget),
@@ -445,59 +442,94 @@ Widget getSpecifications(String sizeChart,List<Options>specifications,BuildConte
 {
   if(specifications.length==0)
     return Container(
-      child: SizedBox(
-        height: 0.01,
-      ),
+
     );
-  return Container(
-      height: 50,
-      child:Flexible(child:listview(sizeChart,specifications,context,widget) )
-      );
+  double height=50.0*specifications.length;
+  return Column(
+    children: [
+      Container(
+          height: height,
+          child:Flexible(child:listview(sizeChart,specifications,context,widget) )
+          ),
+      SizedBox(
+        height: 25,
+      ),
+    ],
+  );
 }
 
 listview(String sizeChart, List<Options> specifications, BuildContext context, Widget widget)=> ListView.builder(
     itemBuilder: (context, index) =>
         _itemsBuilder(specifications[index],context,widget),
     itemCount: specifications.length);
-Container getSizeChart() {
-  return Container(
-    width: double.infinity,
-    height: 50,
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 15, top: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Color:',
-            style: TextStyle(color: Colors.black, fontSize: 15),
-          ), //<< any widgets added
-          Expanded(
-              child: ListView.builder(
-                  //here your code
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 6,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 2, left: 10),
-                      child: Container(
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(5.0),
-                              topRight: Radius.circular(5.0),
-                              topLeft: Radius.circular(5.0),
-                              bottomLeft: Radius.circular(5.0)),
+Widget getSizeChart(List<ValuesOption> values,BuildContext context) {
+  return GestureDetector(
+    onTap: (){
+
+    },
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, top: 20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Color:',
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ), //<< any widgets added
+            Expanded(
+                child: ListView.builder(
+                    //here your code
+                    scrollDirection: Axis.horizontal,
+                    itemCount: values.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 2, left: 10),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ProductDetailsScreen(values[index].slug)),
+                            );
+                          },
+                          child: Container(
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: HexColor.fromHex(values[index].value),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(5.0),
+                                  topRight: Radius.circular(5.0),
+                                  topLeft: Radius.circular(5.0),
+                                  bottomLeft: Radius.circular(5.0)),
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                  })),
-        ],
+                      );
+                    })),
+          ],
+        ),
       ),
     ),
   );
+}
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }
 Widget getHtmlValue(String text)
 {
@@ -510,50 +542,65 @@ Widget getHtmlValue(String text)
 
 }
 Widget _itemsBuilder(Options specifications, BuildContext context, Widget widget) {
-  return Container(
-    width: double.infinity,
-    height: 50,
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 22, top: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            specifications.name,
-            style: TextStyle(color: Colors.black, fontSize: 15),
-          ), //<< any widgets added
-          Expanded(
-              child: ListView.builder(
-                  //here your code
-                  scrollDirection: Axis.horizontal,
-                  itemCount: specifications.values.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 10, left: 10),
-                      child: Container(
-                        padding: const EdgeInsets.only(right: 10, left: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                        ),
-                        child: Center(
-                            child: Text(
-                         specifications.values[index].value,
-                          style: TextStyle(fontSize: 11),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                    );
-                  })),
-          SizedBox(
-            width: 20,
+  if(specifications.type=="image")
+    {
+      return getSizeChart(specifications.values,context);
+    }
+  else
+    {
+      return Container(
+        width: double.infinity,
+        height: 50,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 22, top: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                specifications.name,
+                style: TextStyle(color: Colors.black, fontSize: 15),
+              ), //<< any widgets added
+              Expanded(
+                  child: ListView.builder(
+                    //here your code
+                      scrollDirection: Axis.horizontal,
+                      itemCount: specifications.values.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 10, left: 10),
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ProductDetailsScreen(specifications.values[index].slug)),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.only(right: 10, left: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                              ),
+                              child: Center(
+                                  child: Text(
+                                    specifications.values[index].value,
+                                    style: TextStyle(fontSize: 11),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            ),
+                          ),
+                        );
+                      })),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: Text('Size Chart', style: TextStyle(color: colorPrimary)))
+            ],
           ),
-          Expanded(
-              child: Text('Size Chart', style: TextStyle(color: colorPrimary)))
-        ],
-      ),
-    ),
-  );
+        ),
+      );
+    }
 }
 
 Container getButtons(BuildContext context,Widget widget,String slug,String store,String quantity) {
