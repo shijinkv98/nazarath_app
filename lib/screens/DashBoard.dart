@@ -621,12 +621,16 @@ Future<void> logout(BuildContext context)
 async {
   ApiCall().saveUser("");
   ApiCall().saveLoginResponse("");
-  LogoutResponse logoutResponse = await ApiCall()
-      .execute<LogoutResponse, Null>("logout/en", null);
-    if(logoutResponse!=null)
-      {
-        gotoLogin(context);
-      }
+  Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Login()));
+  // LogoutResponse logoutResponse = await ApiCall()
+  //     .execute<LogoutResponse, Null>("logout/en", null);
+  //   if(logoutResponse!=null)
+  //     {
+  //       gotoLogin(context);
+  //     }
 
 }
 Future<void> gotoLogout(BuildContext context)

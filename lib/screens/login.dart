@@ -19,8 +19,11 @@ import 'DashBoard.dart';
 import 'home.dart';
 
 // show CheckBoxNotifier;
-
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => new _LoginState();
+}
+class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 12);
   // CheckBoxNotifier _checkBoxNotifier;
@@ -135,6 +138,10 @@ class Login extends StatelessWidget {
 
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
+            setState(() {
+              isLoading=true;
+            });
+
             // Map body = {
             //   // name,email,phone_number,password
             //   'email_phone': shopName,
@@ -337,12 +344,13 @@ class Login extends StatelessWidget {
                             // )
                           ],
                         ),
-                        isLoading
-                            ? Center(
-                          child: CircularProgressIndicator(),
-                        ):
-                        SizedBox(
-                          height: 10,
+
+                        Visibility(
+                            maintainSize: true,
+                            maintainAnimation: true,
+                            maintainState: true,
+                            visible: isLoading,
+                            child: CircularProgressIndicator()
                         ),
 
                         // Text("Or Sign in with",
@@ -418,6 +426,7 @@ class Login extends StatelessWidget {
         .execute<LoginResponse, Null>("guest-login/en", body);
 
     if (response?.customerData != null) {
+      isLoading=false;
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
       await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
@@ -440,7 +449,7 @@ class Login extends StatelessWidget {
         .execute<LoginResponse, Null>("login/en", body);
 
     if (response?.customerData != null) {
-
+      isLoading=false;
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
       await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
