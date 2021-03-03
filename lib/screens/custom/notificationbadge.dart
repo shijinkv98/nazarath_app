@@ -55,7 +55,7 @@ class _NotificationBadgeState extends State<NotificationBadge> {
                 right: 0,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: colorRed),
                   alignment: Alignment.center,
                   child: Text(notificationCounterValueNotifer.value.toString()),
                 ),

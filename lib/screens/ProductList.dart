@@ -273,7 +273,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
       context: context,
       builder: (ctx) {
         return Container(
-          height: MediaQuery.of(context).size.height  * 0.4,
+          height: 300,
           child: Column(
             children: [
               Container(
@@ -320,7 +320,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                               color: Colors.black,fontSize: 12,fontWeight: f1),
                         ),
                       ),
-                      Divider(height: 1,)
+                      // Divider(height: 1,)
                     ],
                   ),
                 ),
@@ -346,7 +346,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                               color: Colors.black,fontSize: 12,fontWeight: f2),
                         ),
                       ),
-                      Divider(height: 1,)
+                      // Divider(height: 1,)
                     ],
                   ),
                 ),
@@ -372,7 +372,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                               color: Colors.black,fontSize: 12,fontWeight: f3),
                         ),
                       ),
-                      Divider(height: 1,)
+                      // Divider(height: 1,)
                     ],
                   ),
                 ),
@@ -398,7 +398,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                               color: Colors.black,fontSize: 12,fontWeight: f4),
                         ),
                       ),
-                      Divider(height: 1,)
+                      // Divider(height: 1,)
                     ],
                   ),
                 ),
@@ -424,7 +424,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                               color: Colors.black,fontSize: 12,fontWeight: f5),
                         ),
                       ),
-                      Divider(height: 1,)
+                      // Divider(height: 1,)
                     ],
                   ),
                 ),
@@ -542,7 +542,7 @@ Widget customView(List<Data> products,BuildContext context,Widget widget)
 //                                                 child: Text(
 //                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
 //                                                   style: TextStyle(
-//                                                       color: Colors.red,
+//                                                       color: colorRed,
 //                                                       fontSize: 8,
 //                                                       fontWeight: FontWeight.bold),
 //                                                 ),

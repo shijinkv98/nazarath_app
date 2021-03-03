@@ -805,7 +805,7 @@ Container getMiddleBanner() {
 //                                                   child: Text(
 //                                                     '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
 //                                                     style: TextStyle(
-//                                                         color: Colors.red,
+//                                                         color: colorRed,
 //                                                         fontSize: 8,
 //                                                         fontWeight: FontWeight.bold),
 //                                                   ),

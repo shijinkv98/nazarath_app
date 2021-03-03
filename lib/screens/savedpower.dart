@@ -159,7 +159,7 @@ Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.red),
+                                color: colorRed),
                           ):Text(
                            data.prescription,
                             maxLines: 2,

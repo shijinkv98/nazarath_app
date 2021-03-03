@@ -296,7 +296,7 @@ Container getItems() {
                                   Text(
                                     '230',
                                     style: TextStyle(
-                                        color: Colors.red,
+                                        color: colorRed,
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   ),

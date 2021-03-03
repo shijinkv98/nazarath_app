@@ -57,6 +57,8 @@ class _FilterState extends State<FilterPrice> {
       }
 
     double step=(widget._upperValue-widget._lowerValue)/50;
+    RangeValues values = RangeValues(widget._lowerValue, widget._upperValue);
+    RangeLabels labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -73,26 +75,70 @@ class _FilterState extends State<FilterPrice> {
 
             margin: EdgeInsets.only(top: 0, left: 15, right: 15),
             alignment: Alignment.centerLeft,
-            child: FlutterSlider(
-              key: Key('3343'),
-              values: [widget._lowerValue, widget._upperValue],
-              rangeSlider: true,
-              tooltip: FlutterSliderTooltip(
-                alwaysShowTooltip: true,
+            child:
+            SliderTheme(
+              data: SliderThemeData(
+                // rangeThumbShape: CustomRangeShape(),
+                trackHeight: 2,
               ),
-              max: widget._upperValue,
-              min: widget._lowerValue,
-              step: FlutterSliderStep(step: step),
-              jump: true,
-
-              onDragging: (handlerIndex, lowerValue, upperValue) {
-
-                setState(() {
-                  widget._lowerValue = lowerValue;
-                  widget._upperValue = upperValue;
-                });
-              },
-            ),
+              child: Center(
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    gradient: RadialGradient(
+                      colors: <Color>[
+                        Colors.orangeAccent,
+                        Color.lerp(Colors.cyan, Colors.black,.01)
+                      ],
+                    ),
+                  ),
+                  child: RangeSlider(
+                      divisions: 100,
+                      activeColor: Colors.red[700],
+                      inactiveColor: Colors.red[300],
+                      min: widget._lowerValue,
+                      max: widget._upperValue,
+                      values: values,
+                      labels: labels,
+                      onChanged: (value){
+                        print("START: ${value.start}, End: ${value.end}");
+                        // widget._lowerValue=value.start;
+                        // widget._upperValue=value.end;
+                        setState(() {
+                          values =value;
+                          widget._lowerValue=value.start;
+                          widget._upperValue=value.end;
+                          labels =RangeLabels("${value.start.toInt().toString()}\$", "${value.start.toInt().toString()}\$");
+                        });
+                      }
+                  ),
+                ),
+              ),
+            )
+            // FlutterSlider(
+            //   key: Key('3343'),
+            //   values: [widget._lowerValue, widget._upperValue],
+            //   rangeSlider: true,
+            //   tooltip: FlutterSliderTooltip(
+            //     alwaysShowTooltip: true,
+            //   ),
+            //   max: widget._upperValue,
+            //   min: widget._lowerValue,
+            //   step: FlutterSliderStep(step: step),
+            //   jump: true,
+            //
+            //   onDragging: (handlerIndex, lowerValue, upperValue) {
+            //
+            //     setState(() {
+            //       widget._lowerValue = lowerValue;
+            //       widget._upperValue = upperValue;
+            //     });
+            //   },
+            // ),
           ),
         ],
       ),

@@ -78,7 +78,7 @@ Widget errorScreen(String errorTitle) => Center(
     children: [
       Icon(
         Icons.error_outline,
-        color: Colors.red,
+        color: colorRed,
         size: 60,
       ),
       Padding(

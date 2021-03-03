@@ -431,14 +431,14 @@ Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartR
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 14,
-                            color: Colors.red),
+                            color: colorRed),
                       ):Text(
                         "",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 14,
-                            color: Colors.red),
+                            color: colorRed),
                     )
                     )
                   ],

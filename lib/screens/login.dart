@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
         if (value.trim().isEmpty) {
           return 'This field is required';
         } else {
-          return value.length < 10 ? 'Enter a valid mobile number' : null;
+          return value.length < 8 ? 'Enter a valid mobile number' : null;
         }
       },
       keyboardType: TextInputType.phone,
