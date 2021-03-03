@@ -121,7 +121,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
           if (snapshot.hasData) {
             return getNewsScreen(snapshot.data,context,super.widget);
           } else if (snapshot.hasError) {
-            return  getEmptyContainer(context, "No data", "empty_cart");return errorScreen('Error: ${snapshot.error}');
+            return  getEmptyContainerNews(context);return errorScreen('Error: ${snapshot.error}');
            // return getEmptyContainerOrder(context);
           } else {
             return progressBar;
@@ -133,6 +133,39 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
 
     );
   }
+
+}
+Container getEmptyContainerNews(BuildContext context)
+{
+  return Container(
+      height: double.infinity,
+      child: Center(
+        child:Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Image.asset(
+                "assets/icons/news.png",height: 50,),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                "No Details Available",
+                style: TextStyle(
+                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+          ],),
+      )
+  );
+
+
 
 }
 Container getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){

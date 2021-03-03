@@ -148,7 +148,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                       child: timeField),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 22, right: 22),
+                  padding: const EdgeInsets.only(top: 30, left: 22, right: 22,bottom: 20),
                   child: Container(
                     width: double.infinity,
                     height: 40,

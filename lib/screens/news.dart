@@ -36,7 +36,7 @@ class _NewsState extends State<NewsScreen> {
             element != null )
                 ?.toList(),context,super.widget);
           } else if (snapshot.hasError) {
-            return getEmptyContainerOrder(context);
+            return getEmptyContainerNews(context);
           } else {
             return progressBar;
           }
@@ -52,6 +52,40 @@ class _NewsState extends State<NewsScreen> {
   }
 
 }
+Container getEmptyContainerNews(BuildContext context)
+{
+  return Container(
+      height: double.infinity,
+      child: Center(
+        child:Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Image.asset(
+                "assets/icons/news.png",height: 50,),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                "No Details Available",
+                style: TextStyle(
+                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+          ],),
+      )
+  );
+
+
+
+}
+
 Container getNewsScreen(List<News> news,BuildContext context,Widget widget){
 
   return Container(

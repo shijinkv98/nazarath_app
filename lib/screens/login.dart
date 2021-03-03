@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/gestures.dart';
@@ -36,6 +37,11 @@ class _LoginState extends State<Login> {
     final shopNameField = TextFormField(
       cursorColor: colorPrimary,
       obscureText: false,
+      inputFormatters: [
+        new WhitelistingTextInputFormatter(
+            new RegExp(r'^[0-9]*$')),
+        new LengthLimitingTextInputFormatter(10)
+      ],
       onSaved: (value) {
         shopName = value;
       },
@@ -44,10 +50,10 @@ class _LoginState extends State<Login> {
         if (value.trim().isEmpty) {
           return 'This field is required';
         } else {
-          return null;
+          return value.length < 10 ? 'Enter a valid mobile number' : null;
         }
       },
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.phone,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
@@ -236,137 +242,141 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        shopNameField,
-                        SizedBox(
-                          height: 25,
-                        ),
-                        passwordField,
-                        SizedBox(
-                          height: 15,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap:(){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) => ForgotPasswordScreen('')));
-                            },
+            Container(
+
+
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
                             child: Text(
-                              "Forgot Password ?",
+                              "Login",
                               style: TextStyle(
                                   color: textColor,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          shopNameField,
+                          SizedBox(
+                            height: 10,
+                          ),
+                          passwordField,
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap:(){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) => ForgotPasswordScreen('')));
+                              },
+                              child: Text(
+                                "Forgot Password ?",
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
 
-                        loginButon,
-                        MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                          onPressed: () async {
-                            isLoading=true;
-                            Map body = {
-                              // name,email,phone_number,password
-                            };
+                          loginButon,
+                          MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                            onPressed: () async {
+                              isLoading=true;
+                              Map body = {
+                                // name,email,phone_number,password
+                              };
 
-                            guestLogin(context);
-                          },
+                              guestLogin(context);
+                            },
 
-                          child: Text("Guest",
-                              textAlign: TextAlign.center,
-                              style: style.copyWith(
-                                  fontSize: 14,
-                                  color: colorPrimary,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.normal)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Don't have an account?",
+                            child: Text("Guest",
+                                textAlign: TextAlign.center,
                                 style: style.copyWith(
                                     fontSize: 14,
-                                    color: textColor,
+                                    color: colorPrimary,
+                                    decoration: TextDecoration.underline,
                                     fontWeight: FontWeight.normal)),
-                            TextButton(onPressed: (){
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) => Register()));
-                            }, child: Text("Create Account", style: style.copyWith(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold)))
-                            // MaterialButton(
-                            //   minWidth: MediaQuery.of(context).size.width,
-                            //   onPressed: () {
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Don't have an account?",
+                                  style: style.copyWith(
+                                      fontSize: 14,
+                                      color: textColor,
+                                      fontWeight: FontWeight.normal)),
+                              TextButton(onPressed: (){
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) => Register()));
+                              }, child: Text("Create Account", style: style.copyWith(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold)))
+                              // MaterialButton(
+                              //   minWidth: MediaQuery.of(context).size.width,
+                              //   onPressed: () {
 
-                            //   },
-                            //
-                            //   child: Text("  Creat an Account?",
-                            //       textAlign: TextAlign.center,
-                            //       style: style.copyWith(
-                            //           fontSize: 14,
-                            //           color: Colors.black,
-                            //           fontWeight: FontWeight.bold)),
-                            // )
-                          ],
-                        ),
+                              //   },
+                              //
+                              //   child: Text("  Creat an Account?",
+                              //       textAlign: TextAlign.center,
+                              //       style: style.copyWith(
+                              //           fontSize: 14,
+                              //           color: Colors.black,
+                              //           fontWeight: FontWeight.bold)),
+                              // )
+                            ],
+                          ),
 
-                        Visibility(
-                            maintainSize: true,
-                            maintainAnimation: true,
-                            maintainState: true,
-                            visible: isLoading,
-                            child: CircularProgressIndicator()
-                        ),
+                          // Visibility(
+                          //     maintainSize: true,
+                          //     maintainAnimation: true,
+                          //     maintainState: true,
+                          //     visible: isLoading,
+                          //     child: CircularProgressIndicator()
+                          // ),
 
-                        // Text("Or Sign in with",
-                        //     textAlign: TextAlign.center,
-                        //     style: style.copyWith(
-                        //         fontSize: 12,color: item_text_gray)),
-                        // SizedBox(
-                        //   height: 10,
-                        // ),
-                       // getSocialMediaContainer(context)
-                      ],
-                    )
+                          // Text("Or Sign in with",
+                          //     textAlign: TextAlign.center,
+                          //     style: style.copyWith(
+                          //         fontSize: 12,color: item_text_gray)),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                         // getSocialMediaContainer(context)
+                        ],
+                      )
 
-                  ],
+                    ],
+                  ),
+
                 ),
-
               ),
             ),
           ],

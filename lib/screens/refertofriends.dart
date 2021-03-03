@@ -63,7 +63,7 @@ class _ReferScreenState extends State<ReferScreen> {
 
 Widget getButton(ReferalResponse referal) {
   return Padding(
-    padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
+    padding: const EdgeInsets.only(top: 40, left: 25, right: 25),
     child: Container(
       width: double.infinity,
       height: 40,

@@ -165,17 +165,28 @@ class Register extends StatelessWidget {
     );
 
     // final TextEditingController passwordController =
+    //
     //     new TextEditingController();
+
     String password;
     final passwordField = TextFormField(
       cursorColor: colorPrimary,
       obscureText: true,
       // controller: passwordController,
       style: style,
+      // inputFormatters: [
+      //   new WhitelistingTextInputFormatter(
+      //       new RegExp(r'^[0-9]*$')),
+      //   new LengthLimitingTextInputFormatter(20)
+      // ],
       validator: (value) {
         if (value.trim().isEmpty) {
           return 'This field is required';
-        } else {
+        }
+        else if (value.trim().length<8) {
+          return 'Minimum 8 character needed';
+        }
+        else {
           return null;
         }
       },
@@ -277,128 +288,135 @@ class Register extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              color: colorPrimary,
-              padding:EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 35.0),
-              child: ImageIcon(
-                AssetImage("assets/icons/nazarath_logo.png"),
-                color: Colors.white,
-                size: register_logo_size,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              color: colorPrimary,
-              child: Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(top: primary_margin),
-                height: container_space,
-                decoration: BoxDecoration(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                color: colorPrimary,
+                padding:EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 20.0),
+                child: ImageIcon(
+                  AssetImage("assets/icons/nazarath_logo.png"),
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(border_radius),
-                      topRight: Radius.circular(border_radius)),
+                  size: register_logo_size,
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(forms_padding, 0, forms_padding, forms_padding),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: header_text_size),
-                      ),
-                    ),
-                    SizedBox(
-                      height: space2,
-                    ),
-                    shopNameField,
-                    SizedBox(
-                      height: space,
-                    ),
-                    passwordField,
-                    SizedBox(
-                      height: space,
-                    ),
-                    emailField,
-                    SizedBox(
-                      height: space,
-                    ),
-                    phoneField,
-                    SizedBox(
-                      height: space,
-                    ),
-                    // Row(
-                    //   children: [
-                    //
-                    //     Expanded(
-                    //       child: RichText(
-                    //         text: TextSpan(
-                    //           text: "I Accept All The",
-                    //           style:
-                    //           TextStyle(color: Colors.black, fontSize: field_text_size),
-                    //           children: <TextSpan>[
-                    //             TextSpan(
-                    //                 text: ' Terms of Use',
-                    //                 style: TextStyle(
-                    //                   fontSize: field_text_size,
-                    //                   color: Color(0xFF265c7e),
-                    //                 )),
-                    //             TextSpan(
-                    //               text: ' and',
-                    //               style: TextStyle(
-                    //                   color: Colors.black, fontSize: field_text_size),
-                    //             ),
-                    //             TextSpan(
-                    //                 text: ' Privacy Policy',
-                    //                 style: TextStyle(
-                    //                   fontSize: field_text_size,
-                    //                   color: Color(0xFF265c7e),
-                    //                 )),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: normal_space,
-                    ),
-                    loginButon,
-                    SizedBox(
-                      height: normal_space,
-                    ),
-                    // RichText(
-                    //     text: TextSpan(
-                    //         text: 'Already have an account?',
-                    //         style: TextStyle(color: Colors.black, fontSize: 15),
-                    //         children: <TextSpan>[
-                    //           TextSpan(
-                    //               text: ' Sign in',
-                    //               recognizer: new TapGestureRecognizer()
-                    //                 ..onTap = () {
-                    //                   Navigator.of(context).pop();
-                    //                 },
-                    //               style:
-                    //               TextStyle(color: colorPrimary, fontSize: 15))
-                    //         ]))
-                  ],
+              Container(
+                width: double.infinity,
+                color: colorPrimary,
+                child: Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: primary_margin),
+                  height: container_space,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(border_radius),
+                        topRight: Radius.circular(border_radius)),
+                  ),
                 ),
               ),
-            ),
-          ],
+              Container(
+
+
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(forms_padding, 0, forms_padding, 0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Create Account",
+                            style: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: header_text_size),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        shopNameField,
+                        SizedBox(
+                          height: space,
+                        ),
+                        passwordField,
+                        SizedBox(
+                          height: space,
+                        ),
+                        emailField,
+                        SizedBox(
+                          height: space,
+                        ),
+                        phoneField,
+                        SizedBox(
+                          height: space,
+                        ),
+                        // Row(
+                        //   children: [
+                        //
+                        //     Expanded(
+                        //       child: RichText(
+                        //         text: TextSpan(
+                        //           text: "I Accept All The",
+                        //           style:
+                        //           TextStyle(color: Colors.black, fontSize: field_text_size),
+                        //           children: <TextSpan>[
+                        //             TextSpan(
+                        //                 text: ' Terms of Use',
+                        //                 style: TextStyle(
+                        //                   fontSize: field_text_size,
+                        //                   color: Color(0xFF265c7e),
+                        //                 )),
+                        //             TextSpan(
+                        //               text: ' and',
+                        //               style: TextStyle(
+                        //                   color: Colors.black, fontSize: field_text_size),
+                        //             ),
+                        //             TextSpan(
+                        //                 text: ' Privacy Policy',
+                        //                 style: TextStyle(
+                        //                   fontSize: field_text_size,
+                        //                   color: Color(0xFF265c7e),
+                        //                 )),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        loginButon,
+                        SizedBox(
+                          height: 0,
+                        ),
+                        // RichText(
+                        //     text: TextSpan(
+                        //         text: 'Already have an account?',
+                        //         style: TextStyle(color: Colors.black, fontSize: 15),
+                        //         children: <TextSpan>[
+                        //           TextSpan(
+                        //               text: ' Sign in',
+                        //               recognizer: new TapGestureRecognizer()
+                        //                 ..onTap = () {
+                        //                   Navigator.of(context).pop();
+                        //                 },
+                        //               style:
+                        //               TextStyle(color: colorPrimary, fontSize: 15))
+                        //         ]))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

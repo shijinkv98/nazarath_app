@@ -50,8 +50,8 @@ Container getPassword(BuildContext context)
             padding: const EdgeInsets.only(top: 30),
             child: Column(
               children: [
-                getForms(),
-                getForgotPasssword(),
+                getFormsChangePass(),
+                // getForgotPasssword(),
                 getButton(context)
 
               ],
@@ -67,27 +67,30 @@ Container getPassword(BuildContext context)
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
 }
-Widget getForms(){
+Widget getFormsChangePass(){
   return Container(
     width: double.infinity,
     child: Padding(
       padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 15),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
-            child: currentpasswordField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
-            child: newpasswordField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
-            child: confirmpasswordField,
-          ),
+      child: Form(
+        key: _formKey_chang,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+              child: currentpasswordField,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+              child: newpasswordField,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+              child: confirmpasswordField,
+            ),
 
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -105,47 +108,50 @@ Widget getButton(BuildContext context){
         child: Text('Update', style: TextStyle(
             fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
         onPressed: () async {
-          // if (_formKey_chang.currentState.validate()) {
-          //   _formKey_chang.currentState.save();
-            Map body={
-              "new_password":newpassword,
-              "old_password":currentpassword,
-              "email":customer.email,
+          if (_formKey_chang.currentState.validate()) {
+            _formKey_chang.currentState.save();
+          }
+            Map body = {
+              "new_password": newpassword,
+              "old_password": currentpassword,
+              "email": customer.email,
             };
             FocusScope.of(context).requestFocus(FocusNode());
 
             var response = await ApiCall()
-                .execute<ChangePasswordResponse, Null>("change-password/en", body);
+                .execute<ChangePasswordResponse, Null>(
+                "change-password/en", body);
 
-            if (response!= null) {
-                ApiCall().showToast(response.message);
-                tbPosition=3;
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => DashBoard()),
-                );
-            }
-        //  }
+            if (response != null) {
+              ApiCall().showToast(response.message);
+              tbPosition = 3;
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoard()),
+              );
+
+            //  }
+          }
         },
       ),
     ),
   );
 }
-Container getForgotPasssword(){
-  return Container(
-    child: Padding(
-      padding: const EdgeInsets.only(right: 30),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-
-        children: [
-          Text('Forgot your password',style: TextStyle(fontSize: 12,color: textColor),),
-        ],
-      ),
-    ),
-  );
-}
+// Container getForgotPasssword(){
+//   return Container(
+//     child: Padding(
+//       padding: const EdgeInsets.only(right: 30),
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.end,
+//         mainAxisAlignment: MainAxisAlignment.end,
+//
+//         children: [
+//           Text('Forgot your password',style: TextStyle(fontSize: 12,color: textColor),),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 String currentpassword;
 final currentpasswordField = TextFormField(
   cursorColor: colorPrimary,
@@ -157,7 +163,11 @@ final currentpasswordField = TextFormField(
   validator: (value) {
     if (value.trim().isEmpty) {
       return 'This field is required';
-    } else {
+    }
+    else if (value.trim().length<8) {
+      return 'Minimum 8 character needed';
+    }
+    else {
       return null;
     }
   },
@@ -201,7 +211,11 @@ final newpasswordField = TextFormField(
   validator: (value) {
     if (value.trim().isEmpty) {
       return 'This field is required';
-    } else {
+    }
+    else if (value.trim().length<8) {
+      return 'Minimum 8 character needed';
+    }
+    else {
       return null;
     }
   },
@@ -245,7 +259,11 @@ final confirmpasswordField = TextFormField(
   validator: (value) {
     if (value.trim().isEmpty) {
       return 'This field is required';
-    } else {
+    }
+    else if (value.trim().length<8) {
+      return 'Minimum 8 character needed';
+    }
+    else {
       return null;
     }
   },

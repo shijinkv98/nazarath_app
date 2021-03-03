@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
@@ -13,6 +14,7 @@ import 'cart.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   String title;
+
   ForgotPasswordScreen(String title)
   {
     this.title=title;
@@ -22,7 +24,72 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String title;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   _ForgotPasswordScreenState({ this.title}) ;
+
+  Widget getForms_forgot(){
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
+        child: Form(
+         key: _formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: phoneField,
+              ),
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget getButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
+      child: Container(
+        width: double.infinity,
+        height: 40,
+        child: RaisedButton(
+            color: colorPrimary,
+            elevation: 0,
+            child: Text('Submit',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white)),
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+
+              }
+
+
+              Map body={
+                "email":phoneNo,
+                "phone_country_code":"+91"
+              };
+              FocusScope.of(context).requestFocus(FocusNode());
+
+              var response = await ApiCall()
+                  .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
+
+              if (response!= null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phoneNo ,)));
+              }
+            }
+
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -47,97 +114,49 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           )),
     );
   }
-}
-Widget getButton(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
-    child: Container(
-      width: double.infinity,
-      height: 40,
-      child: RaisedButton(
-        color: colorPrimary,
-        elevation: 0,
-        child: Text('Submit',
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.white)),
-        onPressed: () async {
+  Container getPersonalInfo()
+  {
+    return Container(
+      child: Container(width: double.infinity,
+        child: Column(
 
-          Map body={
-              "email":phone,
-              "phone_country_code":"+91"
-          };
-          FocusScope.of(context).requestFocus(FocusNode());
+          children: [
+            getForms_forgot(),
 
-          var response = await ApiCall()
-              .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
 
-            if (response!= null) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phone ,)));
-            }
-          }
+          ],
+        ),
 
       ),
-    ),
-  );
+    );
+    //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+
+  }
 }
 
-Container getPersonalInfo()
-{
-  return Container(
-    child: Container(width: double.infinity,
-      child: Column(
-
-        children: [
-          getForms(),
 
 
-        ],
-      ),
 
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-
-}
-Widget getForms(){
-  return Container(
-    width: double.infinity,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: phoneField,
-          ),
-
-
-        ],
-      ),
-    ),
-  );
-}
-
-String phone="";
+String phoneNo;
 bool isLoading = false;
 // _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
 final phoneField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
+  inputFormatters: [
+    new WhitelistingTextInputFormatter(
+        new RegExp(r'^[0-9]*$')),
+    new LengthLimitingTextInputFormatter(10)
+  ],
   onChanged: (value) {
-    phone = value;
+    phoneNo = value;
   },
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
       return 'This field is required';
     } else {
-      return null;
+      return value.length < 10 ? 'Enter a valid mobile number' : null;
     }
   },
   keyboardType: TextInputType.phone,

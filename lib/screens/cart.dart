@@ -528,15 +528,16 @@ Widget getDiscountButton(BuildContext context,Widget widget)
     ),
     margin: EdgeInsets.only(left: 10,right: 10),
     child:Container(
+      width: MediaQuery.of(context).size.width,
       height: 40,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 40,
-            width: MediaQuery.of(context).size.width*0.71,
+            width: MediaQuery.of(context).size.width*0.70,
             child: couponField,
           ),
           Column(
@@ -548,7 +549,6 @@ Widget getDiscountButton(BuildContext context,Widget widget)
 
                 },
                 child: Container(
-                   width: MediaQuery.of(context).size.width*0.24,
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(topRight: Radius.circular(10),
@@ -557,7 +557,7 @@ Widget getDiscountButton(BuildContext context,Widget widget)
 
                     ),
                   // height: 50,
-                  padding: EdgeInsets.only(left: 15 ,right: 15),
+                  padding: EdgeInsets.only(left: 25 ,right: 25),
                   child: Center(child: Text(
                       "Apply",
                       style: TextStyle(
