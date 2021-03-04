@@ -8,8 +8,6 @@ import '../main.dart';
 import 'ProductList.dart';
 import 'vertical_tabs.dart';
 String f_filters="";
-RangeValues values = RangeValues(1, 100);
-RangeLabels labels =RangeLabels('1', "100");
 class FilterScreeen extends StatefulWidget {
   String by,sortBy, sortOrder,query, slug;
   double _lowerValue=0, _upperValue = 0;
@@ -38,10 +36,24 @@ class FilterScreeen extends StatefulWidget {
 
 class _FilterScreeenState extends State<FilterScreeen> {
    List<String> valueArray ;
-   Filters filters;
-   Currency currency;
-  FilterPrice filterPrice;
+    double upValue=0;
+   double lowValue=0;
+  Filters filterPrice;
    Widget _rangeSlider(){
+     if(filterPrice!=null)
+     {
+       if(filterPrice.pricevalues.length>1)
+       {
+         widget._lowerValue= double.parse(filterPrice.pricevalues[0]);
+         widget._upperValue= double.parse(filterPrice.pricevalues[1]);
+       }
+
+     }
+     lowValue=widget._lowerValue;
+     upValue=widget._upperValue;
+     double step=(widget._upperValue-widget._lowerValue)/50;
+     RangeValues values = RangeValues(widget._lowerValue, widget._upperValue);
+     RangeLabels labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
      return Container(
          height: 50,
          decoration: BoxDecoration(
@@ -66,8 +78,8 @@ class _FilterScreeenState extends State<FilterScreeen> {
                  divisions: 100,
                  activeColor: colorPrimary,
                  inactiveColor: Colors.grey[300],
-                 min:1,
-                 max: 100,
+                 min:widget._lowerValue,
+                 max: widget._upperValue,
                  values: values,
                  labels: labels,
                  onChanged: (value){
@@ -75,6 +87,8 @@ class _FilterScreeenState extends State<FilterScreeen> {
 
                    setState(() {
                      values =value;
+                     lowValue=value.start;
+                     upValue=value.end;
                      labels =RangeLabels(value.start.toString(),value.end.toString());
                    });
                  }
@@ -87,18 +101,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
   @override
   Widget build(BuildContext context) {
     widget._lowerValue=0; widget._upperValue = 0;
-    if(filters!=null)
-    {
-      if(filters.pricevalues.length>1)
-      {
-        widget._lowerValue= double.parse(filters.pricevalues[0]);
-        widget._upperValue= double.parse(filters.pricevalues[1]);
-      }
 
-    }
-    double step=(widget._upperValue-widget._lowerValue)/50;
-    RangeValues values = RangeValues(widget._lowerValue, widget._upperValue);
-    RangeLabels labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
     f_filters="";
     return Scaffold(
       appBar: AppBar(
@@ -174,11 +177,10 @@ class _FilterScreeenState extends State<FilterScreeen> {
    Widget getFilterPage(BuildContext context, FilterResponse data,String by, String sortBy, String sortOrder, String query, String slug,)
   {
     List<Filters> listFilters=data.filters;
-    Filters filter1=getFilterPrice(listFilters);
+    filterPrice=getFilterPrice(listFilters);
     Filters filter2=getFilter(1, listFilters);
     Filters filter3=getFilter(2, listFilters);
     Filters filter4=getFilter(3, listFilters);
-    filterPrice=FilterPrice(filters: filter1,);
    return SafeArea(
         child: Container(
           color: product_bg,
@@ -219,7 +221,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
                     contentScrollAxis: Axis.vertical,
                     changePageDuration: Duration(milliseconds: 020),
                     tabs: <Tab>[
-                      Tab(child: Text(filter1.text)),
+                      Tab(child: Text(filterPrice.text)),
                       Tab(child: Text(filter2.text)),
                       Tab(child: Text(filter3.text)),
                       Tab(child: Text(filter4.text)),
@@ -238,8 +240,8 @@ class _FilterScreeenState extends State<FilterScreeen> {
                 onTap: (){
                   Map<String, Object>  typeObject =  new Map<String, Object>();
                    valueArray = new List<String>();
-                   valueArray.add('"'+filterPrice.lowerValue+'"');
-                   valueArray.add('"'+filterPrice.upperValue+'"');
+                   valueArray.add('"'+lowValue.toString()+'"');
+                   valueArray.add('"'+upValue.toString()+'"');
                    List< Map<String, Object>> jsonarray=new List< Map<String, Object>>();
                   typeObject['"values"']=valueArray;
                   typeObject['"type"']='"price"';

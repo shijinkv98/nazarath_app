@@ -132,7 +132,7 @@ class ApiCall{
     showAlert(jsonResponse['alert_message']);
 
     if (success == '1') {
-      showToast(jsonResponse['message']);
+    //  showToast(jsonResponse['message']);
 
       print(jsonResponse.toString());
       return fromJson<T, K>(jsonResponse);

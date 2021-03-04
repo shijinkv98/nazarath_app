@@ -104,7 +104,7 @@ Future<String>addtoCart(String slug,String store,BuildContext context,Widget wid
       .execute<CartResponse, Null>("cart/add/en", body);
 
   if (cartResponse != null) {
-    ApiCall().showToast(cartResponse.message);
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
