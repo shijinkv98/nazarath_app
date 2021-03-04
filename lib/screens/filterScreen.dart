@@ -8,11 +8,22 @@ import '../main.dart';
 import 'ProductList.dart';
 import 'vertical_tabs.dart';
 String f_filters="";
-class FilterScreeen extends StatelessWidget {
-   List<String> valueArray ;
+RangeValues values = RangeValues(1, 100);
+RangeLabels labels =RangeLabels('1', "100");
+class FilterScreeen extends StatefulWidget {
   String by,sortBy, sortOrder,query, slug;
-  FilterPrice filterPrice;
-  FilterScreeen(String by, String sortBy, String sortOrder, String query, String slug)
+  double _lowerValue=0, _upperValue = 0;
+  Filters filters;
+
+  String get lowerValue => _lowerValue.toString();
+  String get upperValue => _upperValue.toString();
+  double getLowerValue()
+  {
+
+  }
+  Currency currency;
+
+  FilterScreeen(String by, String sortBy, String sortOrder, String query, String slug,)
   {
     this.by=by;
     this.sortBy=sortBy;
@@ -20,9 +31,74 @@ class FilterScreeen extends StatelessWidget {
     this.query=query;
     this.slug=slug;
   }
+  // FilterScreeen({this.filters,this.currency});
+  @override
+  _FilterScreeenState createState() => _FilterScreeenState();
+}
+
+class _FilterScreeenState extends State<FilterScreeen> {
+   List<String> valueArray ;
+   Filters filters;
+   Currency currency;
+  FilterPrice filterPrice;
+   Widget _rangeSlider(){
+     return Container(
+         height: 50,
+         decoration: BoxDecoration(
+           borderRadius:
+           BorderRadius.all(
+             Radius.circular(20),
+           ),
+
+         ),
+         child:
+         Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+             Padding(
+               padding: const EdgeInsets.only(left: 20,top: 20),
+               child: Container(
+                 color: Colors.white,
+                 child: Text('Select Price Range',style: TextStyle(fontSize: 12,color: textColor,fontWeight: FontWeight.bold),),
+               ),
+             ),
+             RangeSlider(
+                 divisions: 100,
+                 activeColor: colorPrimary,
+                 inactiveColor: Colors.grey[300],
+                 min:1,
+                 max: 100,
+                 values: values,
+                 labels: labels,
+                 onChanged: (value){
+                   print("START: ${value.start}, End: ${value.end}");
+
+                   setState(() {
+                     values =value;
+                     labels =RangeLabels(value.start.toString(),value.end.toString());
+                   });
+                 }
+             ),
+           ],
+         )
+     );
+   }
 
   @override
   Widget build(BuildContext context) {
+    widget._lowerValue=0; widget._upperValue = 0;
+    if(filters!=null)
+    {
+      if(filters.pricevalues.length>1)
+      {
+        widget._lowerValue= double.parse(filters.pricevalues[0]);
+        widget._upperValue= double.parse(filters.pricevalues[1]);
+      }
+
+    }
+    double step=(widget._upperValue-widget._lowerValue)/50;
+    RangeValues values = RangeValues(widget._lowerValue, widget._upperValue);
+    RangeLabels labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
     f_filters="";
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +126,7 @@ class FilterScreeen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
 
-            return getFilterPage(context,snapshot.data,by,sortBy,sortOrder,query,slug);
+            return getFilterPage(context,snapshot.data,widget.by,widget.sortBy,widget.sortOrder,widget.query,widget.slug);
 
           } else if (snapshot.hasError) {
             return errorScreen('Error: ${snapshot.error}');
@@ -63,8 +139,39 @@ class FilterScreeen extends StatelessWidget {
       )
     );
   }
-  
-  Widget getFilterPage(BuildContext context, FilterResponse data,String by, String sortBy, String sortOrder, String query, String slug,)
+
+   // Widget _rangeSlider(){
+   //   return Container(
+   //       height: 50,
+   //       decoration: BoxDecoration(
+   //         borderRadius:
+   //         BorderRadius.all(
+   //           Radius.circular(20),
+   //         ),
+   //
+   //       ),
+   //       child:
+   //       RangeSlider(
+   //           divisions: 100,
+   //           activeColor: colorPrimary,
+   //           inactiveColor: Colors.grey[300],
+   //           min: 1,
+   //           max: 100,
+   //           values: values,
+   //           labels: labels,
+   //           onChanged: (value){
+   //             print("START: ${value.start}, End: ${value.end}");
+   //
+   //             setState(() {
+   //               values =value;
+   //               labels =RangeLabels(value.start.toString(),value.end.toString());
+   //             });
+   //           }
+   //       )
+   //   );
+   // }
+
+   Widget getFilterPage(BuildContext context, FilterResponse data,String by, String sortBy, String sortOrder, String query, String slug,)
   {
     List<Filters> listFilters=data.filters;
     Filters filter1=getFilterPrice(listFilters);
@@ -118,7 +225,7 @@ class FilterScreeen extends StatelessWidget {
                       Tab(child: Text(filter4.text)),
                     ],
                     contents: <Widget>[
-                      Container(child: filterPrice),
+                      Container(color:Colors.white,child: _rangeSlider()),
                       Container(color:Colors.white,child: _listviewFilCat(filter2.values,context)),
                       Container(color:Colors.white,child: _listviewFilCat(filter3.values,context)),
                       Container(color:Colors.white,child: _listviewFilCat(filter4.values,context)),
@@ -230,42 +337,6 @@ class FilterScreeen extends StatelessWidget {
         ));
   }
 
-//
-//   Widget tabsContent(String caption, [String description = '']) {
-//     return Container(
-//       color: Colors.white,
-//       margin: EdgeInsets.all(1),
-//       padding: EdgeInsets.all(2),
-//       child: Column(
-//         children: <Widget>[
-//           // Padding(
-//           //   padding: const EdgeInsets.fromLTRB(15,20,15,15),
-//           //   child: Container(
-//           //     height: 30,
-//           //     decoration: BoxDecoration(
-//           //         color: Colors.white,
-//           //         borderRadius:BorderRadius.all(Radius.circular(5),),
-//           //         border: Border.all(color: product_bg)
-//           //     ),),
-//           // ),
-//           Text(
-//             caption,
-//             style: TextStyle(fontSize: 25),
-//           ),
-//           Divider(
-//             height: 20,
-//             color: Colors.white,
-//           ),
-//           Text(
-//             description,
-//             style: TextStyle(fontSize: 15, color: Colors.black87),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
   Widget _listviewFilCat(List<Values> values,BuildContext context) =>
       ListView.builder(
           itemBuilder: (context, index) => _itemsBuilder(values[index],context),
@@ -279,6 +350,7 @@ class FilterScreeen extends StatelessWidget {
     bool status = false;
     return GestureDetector(onTap: () {}, child: _Cat(value,context));
   }
+
   Filters getFilter(int count,List<Filters>filters)
   {
     Filters filter=new Filters(type: "",text: "",values:new List<Values> () );
@@ -287,6 +359,7 @@ class FilterScreeen extends StatelessWidget {
     else
       return filter;
   }
+
   Filters getFilterPrice(List<Filters>filters)
   {
     Filters filter;
@@ -297,6 +370,7 @@ class FilterScreeen extends StatelessWidget {
       }
     return filter;
   }
+
   Widget _Cat(Values value,BuildContext context) {
     return Column(
       children: <Widget>[

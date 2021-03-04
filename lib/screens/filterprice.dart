@@ -89,33 +89,51 @@ class _FilterState extends State<FilterPrice> {
                     BorderRadius.all(
                       Radius.circular(20),
                     ),
-                    gradient: RadialGradient(
-                      colors: <Color>[
-                        Colors.orangeAccent,
-                        Color.lerp(Colors.cyan, Colors.black,.01)
-                      ],
-                    ),
+                    // gradient: RadialGradient(
+                    //   colors: <Color>[
+                    //     Colors.orangeAccent,
+                    //     Color.lerp(Colors.cyan, Colors.black,.01)
+                    //   ],
+                    // ),
                   ),
-                  child: RangeSlider(
+                  child:
+                  RangeSlider(
                       divisions: 100,
-                      activeColor: Colors.red[700],
-                      inactiveColor: Colors.red[300],
+                      activeColor: colorPrimary,
+                      inactiveColor: Colors.grey[300],
                       min: widget._lowerValue,
                       max: widget._upperValue,
                       values: values,
                       labels: labels,
                       onChanged: (value){
                         print("START: ${value.start}, End: ${value.end}");
-                        // widget._lowerValue=value.start;
-                        // widget._upperValue=value.end;
+
                         setState(() {
                           values =value;
-                          widget._lowerValue=value.start;
-                          widget._upperValue=value.end;
-                          labels =RangeLabels("${value.start.toInt().toString()}\$", "${value.start.toInt().toString()}\$");
+                          labels =RangeLabels(value.start.toString(),value.end.toString());
                         });
                       }
-                  ),
+                  )
+                  // RangeSlider(
+                  //     divisions: 100,
+                  //     activeColor: Colors.red[700],
+                  //     inactiveColor: Colors.red[300],
+                  //     min: widget._lowerValue,
+                  //     max: widget._upperValue,
+                  //     values: values,
+                  //     labels: labels,
+                  //     onChanged: (value){
+                  //       print("START: ${value.start}, End: ${value.end}");
+                  //       // widget._lowerValue=value.start;
+                  //       // widget._upperValue=value.end;
+                  //       setState(() {
+                  //         values =value;
+                  //         widget._lowerValue=value.start;
+                  //         widget._upperValue=value.end;
+                  //         labels =RangeLabels("${value.start.toInt().toString()}\$", "${value.start.toInt().toString()}\$");
+                  //       });
+                  //     }
+                  // ),
                 ),
               ),
             )
