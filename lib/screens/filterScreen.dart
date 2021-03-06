@@ -33,7 +33,8 @@ class FilterScreeen extends StatefulWidget {
   @override
   _FilterScreeenState createState() => _FilterScreeenState();
 }
-
+RangeValues values = RangeValues(0, 100);
+RangeLabels labels =RangeLabels("0", "100");
 class _FilterScreeenState extends State<FilterScreeen> {
    List<String> valueArray ;
     double upValue=0;
@@ -51,9 +52,10 @@ class _FilterScreeenState extends State<FilterScreeen> {
      }
      lowValue=widget._lowerValue;
      upValue=widget._upperValue;
-     double step=(widget._upperValue-widget._lowerValue)/50;
-     RangeValues values = RangeValues(widget._lowerValue, widget._upperValue);
-     RangeLabels labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
+     double min=lowValue;
+     double ratio=(upValue-lowValue)/100;
+    // values = RangeValues(widget._lowerValue, widget._upperValue);
+    // labels =RangeLabels(widget._lowerValue.toString(), widget._upperValue.toString());
      return Container(
          height: 50,
          decoration: BoxDecoration(
@@ -78,8 +80,8 @@ class _FilterScreeenState extends State<FilterScreeen> {
                  divisions: 100,
                  activeColor: colorPrimary,
                  inactiveColor: Colors.grey[300],
-                 min:widget._lowerValue,
-                 max: widget._upperValue,
+                 min: 0,
+                 max: 100,
                  values: values,
                  labels: labels,
                  onChanged: (value){
@@ -87,9 +89,9 @@ class _FilterScreeenState extends State<FilterScreeen> {
 
                    setState(() {
                      values =value;
-                     lowValue=value.start;
-                     upValue=value.end;
-                     labels =RangeLabels(value.start.toString(),value.end.toString());
+                     lowValue=min+((value.start)*ratio);
+                     upValue=min+(value.end*ratio);
+                     labels =RangeLabels(lowValue.toString(),upValue.toString());
                    });
                  }
              ),
