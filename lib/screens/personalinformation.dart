@@ -20,11 +20,28 @@ class PersonalInfoScreen extends StatefulWidget {
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   String title;
   _PersonalInfoScreenState({ this.title}) ;
+  var customer;
+
+  @override
+  void initState() {
+
+    getData();
+    super.initState();
+
+  }
+  Future<void> getData()
+  async {
+    customer=await ApiCall().getUser();
+    if(customer!=null)
+      {
+        email=customer.email;
+        username=customer.name;
+        phonenumber=customer.mobile;
+      }
+  }
   @override
   Widget build(BuildContext context) {
-    email=customer.email;
-    username=customer.name;
-    phonenumber=customer.mobile;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
@@ -34,20 +51,20 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: customer!=null?SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 25),
             child: Column(
               children: [
                 getPersonalInfo(),
-                getButton(context)
+                getButton(context,customer)
               ],
             ),
-          )),
+          )):CircularProgressIndicator(),
     );
   }
 }
-Widget getButton(BuildContext context) {
+Widget getButton(BuildContext context,var customer) {
   return Padding(
     padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
     child: Container(

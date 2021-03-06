@@ -25,7 +25,29 @@ import 'changePassword.dart';
 import 'order.dart';
 
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  var customer;
+  var login_data;
+
+  @override
+  void initState() {
+    getHomeData(context);
+    super.initState();
+
+
+  }
+
+  Future<void> getHomeData(BuildContext context)
+  async {
+    customer=await ApiCall().getUser();
+    login_data=await ApiCall().getLoginResponse();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,7 +304,7 @@ class Profile extends StatelessWidget {
                               else
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ChangePasswordScreen('')),
+                                  MaterialPageRoute(builder: (context) => ChangePasswordScreen('',customer)),
                                 );
                             },
                             ),

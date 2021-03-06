@@ -17,10 +17,12 @@ import 'package:nazarath_app/screens/custom/notificationbadge.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
+import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:nazarath_app/custom/namedicon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'changePassword.dart';
 import 'home.dart';
 import 'news.dart';
 import 'notification.dart';
@@ -38,13 +40,14 @@ class DashBoard extends StatefulWidget {
 
 int tbPosition = 0;
 //var homeResponse;
-var customer;
-var login_data;
+
+
 String userName="",userEmail;
 final ValueNotifier<int> notificationCounterValueNotifer=ValueNotifier(0);
 
 class _DashBoard extends State<DashBoard> {
-
+  var customer;
+  var login_data;
   @override
   void initState() {
     customer=new UserData();
@@ -93,356 +96,383 @@ class _DashBoard extends State<DashBoard> {
     debugPrint('MJM HomeScreen build()');
     //notificationCounterValueNotifer=ValueNotifier(0);
     controller =getTabController(context);
-    return controller;
+
+    return customer!=null?controller:CircularProgressIndicator();
   }
-}
-DefaultTabController getTabController(BuildContext context)
-{
+  Widget getSideDrawer()
+  {
+    return Container(
 
- return  DefaultTabController(
-    length: 5,
-   initialIndex: tbPosition,
-    child: Scaffold(
+      child:Drawer(
 
-      appBar:AppBar(
-        centerTitle: true,
-        // titleSpacing: 100,
-        // leading: SideDrawer(),
-        title: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-            child: ImageIcon(
-              AssetImage("assets/icons/nazarath_logo.png"),
-              size: appTabImageSize,
-            ),
-          ),
-        ),
-        backgroundColor: colorPrimary,
-        elevation: 0,
+        child: Container(
+          color: slider_bg,
+          height: double.infinity,
 
-        actions: <Widget>[
-          // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/search.png"),),
-                ),
-              )
-          ),
-         // NotificationBadge(notificationCounterValueNotifer),
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/notification.png"),),
-                ),
-              )
-          ),
+          child: SingleChildScrollView(
 
-          Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WishListScreen()),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/favorite.png"),),
-                ),
-              )
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: appTabIconPad),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CartScreen()),
-                );
-              },
-              child: Container(
-                height: appTabIconSize,
-                width: appTabIconSize,
-                child: ImageIcon(AssetImage("assets/icons/cart.png"),),
+            child: Container(
+              color: slider_bg,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+
+                  Container(
+                      child: Container(
+
+                          child:Container(
+
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                  BorderRadius.only(bottomRight: Radius.circular(45.0)),
+                                ),
+                                height: 150,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 45, top: 30, bottom: 10),
+                                      child: CircleAvatar(
+                                        radius: 35,
+                                        backgroundColor: Colors.grey[300],
+                                        backgroundImage: AssetImage('assets/icons/no_image.png'
+                                          // NetworkImage(''
+                                          // profileData.user.getImage()
+                                        ),
+
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+
+                                        children: [
+                                          SizedBox(
+                                            width: 180,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 6),
+                                              child: Text(customer==null?"GUEST":customer.name!=null&&customer.name!=""?customer.name:"GUEST",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15)),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 180,
+
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 6),
+                                              child: AutoSizeText(customer==null?"":customer.email!=null&&customer.email!=""?customer.email:"",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[700],
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 15)),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ))
+
+                      )),
+                  SizedBox(height: 20,),
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Column(
+                      children: [
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('My Profile',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=3;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('My Orders',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => OrderScreen()),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('Wishlist',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WishListScreen()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('My Wallet',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => WalletScreen("")),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('Change Password',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ChangePasswordScreen("",customer)),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('Stores',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=2;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('Notifications',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NotificationScreen("Notification is empty")),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('News',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=4;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text('Logout',style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            logout(context);
+                        },
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
-
-
-        ],
+        ),
       ),
-      drawer: SideDrawer(),
-      // drawer: SideDrawer(),
+    );
+  }
+  DefaultTabController getTabController(BuildContext contexT)
+  {
 
-      bottomNavigationBar:getBottomNav(context) ,
-      body:
-      TabBarView(
-        children: <Widget>[
-          Home(),
-          CheckUpScreen(),
-          //ProductScreen("s"),
-          StoreScreen(""),
+    return  DefaultTabController(
+      length: 5,
+      initialIndex: tbPosition,
+      child: Scaffold(
 
-          Profile(),
-          NewsScreen("checkout"),
-        ],
+        appBar:AppBar(
+          centerTitle: true,
+          // titleSpacing: 100,
+          // leading: SideDrawer(),
+          title: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
+              child: ImageIcon(
+                AssetImage("assets/icons/nazarath_logo.png"),
+                size: appTabImageSize,
+              ),
+            ),
+          ),
+          backgroundColor: colorPrimary,
+          elevation: 0,
+
+          actions: <Widget>[
+            // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
+                    // );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(AssetImage("assets/icons/search.png"),),
+                  ),
+                )
+            ),
+            // NotificationBadge(notificationCounterValueNotifer),
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
+                    );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(AssetImage("assets/icons/notification.png"),),
+                  ),
+                )
+            ),
+
+            Padding(
+                padding: const EdgeInsets.only(right: appTabIconPad),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WishListScreen()),
+                    );
+                  },
+                  child: Container(
+                    height: appTabIconSize,
+                    width: appTabIconSize,
+                    child: ImageIcon(AssetImage("assets/icons/favorite.png"),),
+                  ),
+                )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: appTabIconPad),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartScreen()),
+                  );
+                },
+                child: Container(
+                  height: appTabIconSize,
+                  width: appTabIconSize,
+                  child: ImageIcon(AssetImage("assets/icons/cart.png"),),
+                ),
+              ),
+            ),
+
+
+          ],
+        ),
+        drawer: getSideDrawer(),
+        // drawer: SideDrawer(),
+
+        bottomNavigationBar:getBottomNav(context) ,
+        body:
+        TabBarView(
+          children: <Widget>[
+            Home(),
+            CheckUpScreen(),
+            //ProductScreen("s"),
+            StoreScreen(""),
+
+            Profile(),
+            NewsScreen("checkout"),
+          ],
+        ),
+
       ),
-      // drawer:Drawer(
-      //
-      //   child: Column(
-      //     children: [
-      //       // Container(
-      //       //   decoration: BoxDecoration(
-      //       //     borderRadius: BorderRadius.only(
-      //       //         bottomRight: Radius.circular(45.0)),
-      //       //   ),
-      //       //   width: MediaQuery.of(context).size.width * 0.5,
-      //       //   height: 180,
-      //       //   child: DrawerHeader(
-      //       //
-      //       //     child: Text("Header"),
-      //       //   ),
-      //       // ),
-      //       Expanded(
-      //           child: Container(
-      //             color: colorPrimary,
-      //             child: ListView(children: [
-      //               Expanded(
-      //                   child: Container(
-      //                     decoration: BoxDecoration(
-      //                       color: Colors.white,
-      //                       borderRadius:
-      //                       BorderRadius.only(bottomRight: Radius.circular(45.0)),
-      //                     ),
-      //                     height: 150,
-      //                     child: ListTile(
-      //                       title: Row(
-      //                         crossAxisAlignment: CrossAxisAlignment.center,
-      //                         mainAxisAlignment: MainAxisAlignment.start,
-      //                         children: [
-      //                           Padding(
-      //                               padding: const EdgeInsets.only( left: 5),
-      //                               child: CircleAvatar(
-      //                                 radius: 38,
-      //                                 backgroundColor: Colors.grey[300],
-      //                                 child: CircleAvatar(
-      //                                   radius: 35,
-      //                                   backgroundColor: Colors.grey[300],
-      //                                   backgroundImage:
-      //                                   AssetImage('assets/icons/no_image.png'),
-      //
-      //                                 ),
-      //                               )
-      //
-      //                           ),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.start,
-      //                             mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(
-      //                                 width: 180,
-      //                                 child: Padding(
-      //                                   padding: const EdgeInsets.only(left: 6),
-      //                                   child: Text(customer.name,
-      //                                       style: TextStyle(
-      //                                           color: Colors.black,
-      //                                           fontWeight: FontWeight.bold,
-      //                                           fontSize: 15)),
-      //                                 ),
-      //                               ),
-      //                               SizedBox(
-      //                                 width: 180,
-      //
-      //                                 child: Padding(
-      //                                   padding: const EdgeInsets.only(left: 6),
-      //                                   child: AutoSizeText(customer.email,
-      //                                       style: TextStyle(
-      //                                           color: Colors.grey[700],
-      //                                           fontWeight: FontWeight.normal,
-      //                                           fontSize: 15)),
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ],
-      //                       ),
-      //                       onTap: () {
-      //                         // Navigator.of(context).pop();
-      //                       },
-      //                     ),
-      //                   )),
-      //               SizedBox(height: 20,),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Edit Profile',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {},
-      //                 ),
-      //                 // onTap: () {
-      //                 //   Navigator.of(context).pop();
-      //                 // },
-      //               ),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('My Orders',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //                   Navigator.push(
-      //                     context,
-      //                     MaterialPageRoute(builder: (context) => OrderScreen()),
-      //                   );
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Wishlist',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //                   Navigator.push(
-      //                     context,
-      //                     MaterialPageRoute(builder: (context) => WishListScreen()),
-      //                   );
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('My Wallet',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {},
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Change Password',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title: FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Stores',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title:FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Notifications',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //                   Navigator.push(
-      //                     context,
-      //                     MaterialPageRoute(builder: (context) => NotificationScreen("Notification is empty")),
-      //                   );
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title:FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('News',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {
-      //
-      //
-      //                 },
-      //                 ),
-      //               ),
-      //               ListTile(
-      //                 title:FlatButton(
-      //                   color: colorPrimary,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     children: <Widget>[
-      //                       ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
-      //                       SizedBox(width: 10),
-      //                       Text('Logout',style:TextStyle(color:Colors.white),)
-      //                     ],
-      //                   ), onPressed: () {},
-      //                 ),
-      //               )
-      //             ]),
-      //           ))
-      //     ],
-      //   ),
-      // ),
-    ),
-  );
+    );
+  }
 }
+
 Container getBottomNav(BuildContext context)
 {
 
@@ -635,8 +665,11 @@ async {
 }
 Future<void> gotoLogout(BuildContext context)
 async {
+
   await ApiCall().saveUser("");
   await ApiCall().saveLoginResponse("");
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  await preferences.clear();
   Navigator.pushReplacement(
       context,
       MaterialPageRoute(

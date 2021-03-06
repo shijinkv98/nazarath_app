@@ -35,18 +35,9 @@ class _CartState extends State<CartScreen> {
   List data;
   List<Products> products;
   CartResponse cartresponse;
+  var login_data;
   Future<String> getData() async {
-    //
-    // Map body = {
-    //   // name,email,phone_number,passwor
-    // };
-    // cartresponse = await ApiCall()
-    //     .execute<CartResponse, Null>("cart/en", body);
-    //
-    // if (cartresponse != null) {
-    //   products=cartresponse.products;
-    //   ApiCall().showToast(cartresponse.message);
-    // }
+    login_data=await ApiCall().getLoginResponse();
     return "Success!";
   }
 
@@ -150,6 +141,34 @@ class _CartState extends State<CartScreen> {
       )
 
       );
+
+  }
+  Container getCartFull(CartResponse cartResponse,BuildContext context,Widget widget)
+  {
+    if(cartResponse==null)
+      return getEmptyContainerCart(context);
+    else if(cartResponse.products==null)
+      return getEmptyContainerCart(context);
+    else if(cartResponse.products.length==0)
+      return getEmptyContainerCart(context);
+    return Container(
+      child: Container(width: double.infinity,
+        child: Column(
+
+          children: [
+            getTopContainer(),
+            Flexible(
+                child: customView(context, widget, cartResponse,login_data)
+              //_listview(cartResponse.products,context,widget,),
+
+            ),
+            //getDetails(context,widget,cartResponse)
+          ],
+        ),
+
+      ),
+    );
+    //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
   }
 }
@@ -296,35 +315,8 @@ Future<String> movetoWishList(String slug,String store,BuildContext context,Widg
   }
   return "Success!";
 }
-Container getCartFull(CartResponse cartResponse,BuildContext context,Widget widget)
-{
-  if(cartResponse==null)
-    return getEmptyContainerCart(context);
-  else if(cartResponse.products==null)
-    return getEmptyContainerCart(context);
-  else if(cartResponse.products.length==0)
-    return getEmptyContainerCart(context);
-  return Container(
-    child: Container(width: double.infinity,
-      child: Column(
 
-        children: [
-          getTopContainer(),
-          Flexible(
-            child: customView(context, widget, cartResponse)
-            //_listview(cartResponse.products,context,widget),
-
-          ),
-          //getDetails(context,widget,cartResponse)
-        ],
-      ),
-
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-
-}
-Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
+Widget customView(BuildContext context,Widget widget,CartResponse cartResponse,var login_data)
 {
   final _itemExtent = 140.0;
   return CustomScrollView(
@@ -370,7 +362,7 @@ Widget customView(BuildContext context,Widget widget,CartResponse cartResponse)
         padding: const EdgeInsets.only(bottom: 10.0),
       ),
       SliverToBoxAdapter(
-        child:   getPlaceOrderButton(context,widget,cartResponse),
+        child:   getPlaceOrderButton(context,widget,cartResponse,login_data),
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 30.0),
@@ -605,7 +597,7 @@ final couponField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
-Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response)
+Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response,var login_data)
 {
   return Container(
     color: product_bg,

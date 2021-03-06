@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
@@ -36,9 +37,26 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   String type;
   CartResponse cartresponse;
   Address address;
+  var customer;
+
+  @override
+  void initState() {
+    customer=new UserData();
+    getData();
+    super.initState();
+
+
+  }
+  Future<void> getData()
+  async {
+
+
+    customer=await ApiCall().getUser();
+  }
   _EditAddressScreenState({ this.from,this.address,this.type,this.cartresponse}) ;
   @override
   Widget build(BuildContext context) {
+
     String title="Add Adress";
     if(type=="edit")
       title="Edit Address";
@@ -59,7 +77,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             //debugPrint('products size: ${snapshot.data?.news?.length}');
             return Padding(
               padding: const EdgeInsets.only(left: 20,right: 20),
-              child: getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from),
+              child: getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from,customer),
             );
           } else if (snapshot.hasError) {
             return  getEmptyContainer(context, "No data", "empty_cart");
@@ -73,7 +91,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     );
   }
 }
-Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address address,String type,String from)
+Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address address,String type,String from,var customer)
 {
   return Container(
     padding: EdgeInsets.only(top:15),
@@ -81,7 +99,7 @@ Container getEditAdress(List<Countries>countries,BuildContext context,Widget wid
       child: Column(
 
         children: [
-          getForms(countries,context,widget,cartresponse,address,type,from),
+          getForms(countries,context,widget,cartresponse,address,type,from,customer),
 
 
         ],
@@ -92,7 +110,7 @@ Container getEditAdress(List<Countries>countries,BuildContext context,Widget wid
   //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
 }
-Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address addresses,String type,String from){
+Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address addresses,String type,String from,var customer){
   String country=countries[0].id.toString();
   if(addresses!=null)
     {

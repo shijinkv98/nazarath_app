@@ -14,6 +14,7 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
 import 'package:nazarath_app/screens/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // show CheckBoxNotifier;
 
@@ -253,6 +254,8 @@ class Register extends StatelessWidget {
         if (response?.customerData != null) {
         // Navigator.of(context)
         //     .pushReplacementNamed('HomePage', arguments: '');
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => OtpScreen(userData: response.customerData)),);

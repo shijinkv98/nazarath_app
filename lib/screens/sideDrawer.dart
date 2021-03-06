@@ -18,6 +18,12 @@ import 'notification.dart';
 import 'order.dart';
 
 class SideDrawer extends StatelessWidget{
+  var customer, login_data;
+  SideDrawer( var customer,var login_data)
+  {
+    this.customer=customer;
+    this.login_data=login_data;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +80,7 @@ class SideDrawer extends StatelessWidget{
                                         width: 180,
                                         child: Padding(
                                           padding: const EdgeInsets.only(left: 6),
-                                          child: Text(customer.name!=null&&customer.name!=""?customer.name:"GUEST",
+                                          child: Text(customer==null?"GUEST":customer.name!=null&&customer.name!=""?customer.name:"GUEST",
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
@@ -86,7 +92,7 @@ class SideDrawer extends StatelessWidget{
 
                                         child: Padding(
                                           padding: const EdgeInsets.only(left: 6),
-                                          child: AutoSizeText(customer.email!=null&&customer.email!=""?customer.email:"",
+                                          child: AutoSizeText(customer==null?"":customer.email!=null&&customer.email!=""?customer.email:"",
                                               style: TextStyle(
                                                   color: Colors.grey[700],
                                                   fontWeight: FontWeight.normal,
@@ -192,7 +198,7 @@ class SideDrawer extends StatelessWidget{
                         else
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChangePasswordScreen("")),
+                          MaterialPageRoute(builder: (context) => ChangePasswordScreen("",customer)),
                         );
                       },
                       ),

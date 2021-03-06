@@ -15,6 +15,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/screens/forgotpassword.dart';
 import 'package:nazarath_app/screens/register/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'DashBoard.dart';
 import 'home.dart';
@@ -429,6 +430,8 @@ class _LoginState extends State<Login> {
   async {
     await ApiCall().saveUser("");
     await ApiCall().saveLoginResponse("");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
     Map body = {
       // name,email,phone_number,password
     };
@@ -448,6 +451,8 @@ class _LoginState extends State<Login> {
   async {
     await ApiCall().saveUser("");
     await ApiCall().saveLoginResponse("");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
     Map body = {
       // name,email,phone_number,password
       'email_phone': email_phone,

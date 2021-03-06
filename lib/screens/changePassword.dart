@@ -10,9 +10,11 @@ import 'cart.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   String title;
-  ChangePasswordScreen(String title)
+  var customer;
+  ChangePasswordScreen(String title,var customer)
   {
     this.title=title;
+    this.customer=customer;
   }
   @override
   _ChangePasswordScreenState createState() => new _ChangePasswordScreenState(title: title);
@@ -20,7 +22,8 @@ class ChangePasswordScreen extends StatefulWidget {
  final GlobalKey<FormState> _formKey_chang = GlobalKey<FormState>();
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   String title;
-  _ChangePasswordScreenState({ this.title}) ;
+  var customer;
+  _ChangePasswordScreenState({ this.title,this.customer}) ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +38,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       //   elevation: 0,
       // ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(child: getPassword(context)),
+      body: SingleChildScrollView(child: getPassword(context,customer)),
     );
   }
 }
-Container getPassword(BuildContext context)
+Container getPassword(BuildContext context,var customer)
 {
   return Container(
     child: Container(width: double.infinity,
@@ -52,7 +55,7 @@ Container getPassword(BuildContext context)
               children: [
                 getFormsChangePass(),
                 // getForgotPasssword(),
-                getButton(context)
+                getButton(context,customer)
 
               ],
             ),
@@ -95,7 +98,7 @@ Widget getFormsChangePass(){
     ),
   );
 }
-Widget getButton(BuildContext context){
+Widget getButton(BuildContext context,var customer){
   return Padding(
     padding: const EdgeInsets.only(top: 70,left: 25,right: 25),
     child: Container(
