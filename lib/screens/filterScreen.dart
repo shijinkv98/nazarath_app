@@ -40,6 +40,12 @@ class _FilterScreeenState extends State<FilterScreeen> {
     double upValue=0;
    double lowValue=0;
   Filters filterPrice;
+   @override
+   void dispose() {
+     values = RangeValues(0, 100);
+     labels =RangeLabels("0", "100");
+     super.dispose();
+   }
    Widget _rangeSlider(){
      if(filterPrice!=null)
      {

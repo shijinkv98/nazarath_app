@@ -355,7 +355,11 @@ class _CartState extends State<CartScreen> {
       ],
     );
   }
-
+  @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
+  }
 }
 
 // Widget getSpinner(String slug,String store)

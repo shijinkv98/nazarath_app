@@ -168,8 +168,11 @@ Container getEmptyContainerNews(BuildContext context)
 
 
 }
-Container getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){
-
+Widget getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){
+if(response.news==null)
+  {
+    return getEmptyContainerNews(context);
+  }
   return Container(
     child: Column(
       children: [
