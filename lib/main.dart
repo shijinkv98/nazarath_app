@@ -1,32 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/Splash.dart';
+import 'package:provider/provider.dart';
 
 import 'helper/constants.dart';
+import 'network/ApiCall.dart';
+import 'notifiers/home_notifiers.dart';
+import 'notifiers/login_notifier.dart';
+import 'notifiers/register_notifier.dart';
 
 void main() {
+  runApp(MyApp());
   // runApp(MyApp());
-  runApp(new MaterialApp(
-    home: new SplashScreen(),
-    debugShowCheckedModeBanner: false,
-    routes: <String, WidgetBuilder>{
-      '/DashBoard': (BuildContext context) => new DashBoard()
-    },
-  ));
+  // runApp(new MaterialApp(
+  //   home: new SplashScreen(),
+  //   debugShowCheckedModeBanner: false,
+  //   routes: <String, WidgetBuilder>{
+  //     '/DashBoard': (BuildContext context) => new DashBoard()
+  //   },
+  // ));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Nazarath',
-      theme: ThemeData(
-        primarySwatch: colorPrimary,
+    ApiCall().context = context;
+    return MultiProvider(
+        providers: [
+        ChangeNotifierProvider(
+          create: (context) => HomeTabNotifier(),
+        ),
+          ChangeNotifierProvider(
+            create: (context) => LoginLoadingNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => RegisterLoadingNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => DocsAddedNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => CartUpdatedNotifier(),
+          ),
+        ],
+    child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Nazarath',
+        theme:  ThemeData(
+          primaryColor: colorPrimary,
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.white),
+            color: Colors.white
+          ),
+          fontFamily: 'Roboto',
+          // primarySwatch: colorPrimary,
+          visualDensity: VisualDensity.standard,
+        ),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
+
   }
 }
 

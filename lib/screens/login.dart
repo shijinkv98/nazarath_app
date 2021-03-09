@@ -13,8 +13,10 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
+import 'package:nazarath_app/notifiers/login_notifier.dart';
 import 'package:nazarath_app/screens/forgotpassword.dart';
 import 'package:nazarath_app/screens/register/register.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'DashBoard.dart';
@@ -29,10 +31,17 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 12);
   // CheckBoxNotifier _checkBoxNotifier;
-
+  LoginLoadingNotifier _loadingNotifier;
+  @override
+  void initState() {
+    _loadingNotifier =
+        Provider.of<LoginLoadingNotifier>(context, listen: false);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     String shopName;
+
     bool isLoading = false;
     // _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
     final shopNameField = TextFormField(
@@ -209,178 +218,197 @@ class _LoginState extends State<Login> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              height: 40,
-              color: colorPrimary,
-            ),
-            Container(
-              color: colorPrimary,
-              child: ImageIcon(
-                AssetImage("assets/icons/nazarath_logo.png"),
-                color: Colors.white,
-                size: 70,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              color: colorPrimary,
-              child: Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(top: 50),
-                height: 50,
+        physics: NeverScrollableScrollPhysics(),
+        child:  ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: IntrinsicHeight(
+            child: Stack(
+              children:[ Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    height: 40,
+                    color: colorPrimary,
+                  ),
+                  Container(
+                    color: colorPrimary,
+                    child: ImageIcon(
+                      AssetImage("assets/icons/nazarath_logo.png"),
+                      color: Colors.white,
+                      size: 70,
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    color: colorPrimary,
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 50),
+                      height: 50,
 
-                decoration: BoxDecoration(
-                  color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
 
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(65.0),
-                      topRight: Radius.circular(65.0)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(65.0),
+                            topRight: Radius.circular(65.0)),
 
-                ),
-              ),
-            ),
-            Container(
-
-
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          shopNameField,
-                          SizedBox(
-                            height: 10,
-                          ),
-                          passwordField,
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
                       ),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap:(){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) => ForgotPasswordScreen('')));
-                              },
-                              child: Text(
-                                "Forgot Password ?",
-                                style: TextStyle(
-                                    color: textColor,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12),
-                              ),
+                    ),
+                  ),
+                  Container(
+
+
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                shopNameField,
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                passwordField,
+                                SizedBox(
+                                  height: 15,
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                            Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: GestureDetector(
+                                    onTap:(){
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) => ForgotPasswordScreen('')));
+                                    },
+                                    child: Text(
+                                      "Forgot Password ?",
+                                      style: TextStyle(
+                                          color: textColor,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
 
-                          loginButon,
-                          MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
-                            onPressed: () async {
-                              isLoading=true;
-                              Map body = {
-                                // name,email,phone_number,password
-                              };
+                                loginButon,
+                                MaterialButton(
+                                  minWidth: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                                  onPressed: () async {
+                                    isLoading=true;
+                                    Map body = {
+                                      // name,email,phone_number,password
+                                    };
 
-                              guestLogin(context);
-                            },
+                                    guestLogin(context);
+                                  },
 
-                            child: Text("Guest",
-                                textAlign: TextAlign.center,
-                                style: style.copyWith(
-                                    fontSize: 14,
-                                    color: colorPrimary,
-                                    decoration: TextDecoration.underline,
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Don't have an account?",
-                                  style: style.copyWith(
-                                      fontSize: 14,
-                                      color: textColor,
-                                      fontWeight: FontWeight.normal)),
-                              TextButton(onPressed: (){
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) => Register()));
-                              }, child: Text("Create Account", style: style.copyWith(
+                                  child: Text("Guest",
+                                      textAlign: TextAlign.center,
+                                      style: style.copyWith(
                                           fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)))
-                              // MaterialButton(
-                              //   minWidth: MediaQuery.of(context).size.width,
-                              //   onPressed: () {
+                                          color: colorPrimary,
+                                          decoration: TextDecoration.underline,
+                                          fontWeight: FontWeight.normal)),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Don't have an account?",
+                                        style: style.copyWith(
+                                            fontSize: 14,
+                                            color: textColor,
+                                            fontWeight: FontWeight.normal)),
+                                    TextButton(onPressed: (){
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) => Register()));
+                                    }, child: Text("Create Account", style: style.copyWith(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold)))
+                                    // MaterialButton(
+                                    //   minWidth: MediaQuery.of(context).size.width,
+                                    //   onPressed: () {
 
-                              //   },
-                              //
-                              //   child: Text("  Creat an Account?",
-                              //       textAlign: TextAlign.center,
-                              //       style: style.copyWith(
-                              //           fontSize: 14,
-                              //           color: Colors.black,
-                              //           fontWeight: FontWeight.bold)),
-                              // )
-                            ],
-                          ),
+                                    //   },
+                                    //
+                                    //   child: Text("  Creat an Account?",
+                                    //       textAlign: TextAlign.center,
+                                    //       style: style.copyWith(
+                                    //           fontSize: 14,
+                                    //           color: Colors.black,
+                                    //           fontWeight: FontWeight.bold)),
+                                    // )
+                                  ],
+                                ),
 
-                          // Visibility(
-                          //     maintainSize: true,
-                          //     maintainAnimation: true,
-                          //     maintainState: true,
-                          //     visible: isLoading,
-                          //     child: CircularProgressIndicator()
-                          // ),
+                                // Visibility(
+                                //     maintainSize: true,
+                                //     maintainAnimation: true,
+                                //     maintainState: true,
+                                //     visible: isLoading,
+                                //     child: CircularProgressIndicator()
+                                // ),
 
-                          // Text("Or Sign in with",
-                          //     textAlign: TextAlign.center,
-                          //     style: style.copyWith(
-                          //         fontSize: 12,color: item_text_gray)),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                         // getSocialMediaContainer(context)
-                        ],
-                      )
+                                // Text("Or Sign in with",
+                                //     textAlign: TextAlign.center,
+                                //     style: style.copyWith(
+                                //         fontSize: 12,color: item_text_gray)),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
+                               // getSocialMediaContainer(context)
+                              ],
+                            )
 
-                    ],
+                          ],
+                        ),
+
+                      ),
+                    ),
                   ),
 
-                ),
+                ],
               ),
+              Consumer<LoginLoadingNotifier>(
+                builder: (context, value, child) {
+                  return value.isLoading ? progressBar : SizedBox();
+                },
+              )
+            ]
             ),
-          ],
+          ),
         ),
       ),
     ));
@@ -432,25 +460,35 @@ class _LoginState extends State<Login> {
     await ApiCall().saveLoginResponse("");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
+    _loadingNotifier.isLoading = true;
     Map body = {
       // name,email,phone_number,password
     };
     var response = await ApiCall()
         .execute<LoginResponse, Null>("guest-login/en", body);
 
-    if (response?.customerData != null) {
-      isLoading=false;
-      await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
-      await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DashBoard()),);
+    if(response!=null) {
+      _loadingNotifier.isLoading = false;
+      if (response?.customerData != null) {
+        //isLoading = false;
+        await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+        await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashBoard()),);
+      }
     }
+  }
+  @override
+  void dispose() {
+    _loadingNotifier.reset();
+    super.dispose();
   }
   Future<void> login(String email_phone,String referral_code,String guest_id,String password,BuildContext context)
   async {
     await ApiCall().saveUser("");
     await ApiCall().saveLoginResponse("");
+    _loadingNotifier.isLoading = true;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
     Map body = {
@@ -462,14 +500,17 @@ class _LoginState extends State<Login> {
     };
     var response = await ApiCall()
         .execute<LoginResponse, Null>("login/en", body);
+    if(response!=null) {
+      _loadingNotifier.isLoading = false;
+      if (response?.customerData != null) {
 
-    if (response?.customerData != null) {
-      isLoading=false;
-      await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
-      await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DashBoard()),);
+        isLoading = false;
+        await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
+        await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashBoard()),);
+      }
     }
   }
   Future<void> forgotPassword(String email,String id,BuildContext context)

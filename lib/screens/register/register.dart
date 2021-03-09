@@ -13,15 +13,28 @@ import 'package:nazarath_app/Screens/register/otp.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
+import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/login.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // show CheckBoxNotifier;
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  RegisterLoadingNotifier _loadingNotifier;
+  @override
+  void initState() {
+    _loadingNotifier =
+        Provider.of<RegisterLoadingNotifier>(context, listen: false);
+    super.initState();
+  }
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: font_size_head);
-  // CheckBoxNotifier _checkBoxNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -239,28 +252,33 @@ class Register extends StatelessWidget {
                 'email': email.trim(),
                 'password': password.trim(),
                 'phone_number': phoneNo,
-                'phone_country_code':'+91',
-                'referral_code':'',
-                'guest_id':'',
-        'device_token': deviceToken,
-        'device_id': deviceId,
-        'device_platform': Platform.isIOS ? '2' : '1',
-        };
+                'phone_country_code': '+91',
+                'referral_code': '',
+                'guest_id': '',
+                'device_token': deviceToken,
+                'device_id': deviceId,
+                'device_platform': Platform.isIOS ? '2' : '1',
+              };
 
-        FocusScope.of(context).requestFocus(FocusNode());
-        var response = await ApiCall()
-            .execute<SignupResponse, Null>("register/en", body);
-
-        if (response?.customerData != null) {
-        // Navigator.of(context)
-        //     .pushReplacementNamed('HomePage', arguments: '');
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          await preferences.clear();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => OtpScreen(userData: response.customerData)),);
-        }
-        }
+              FocusScope.of(context).requestFocus(FocusNode());
+              _loadingNotifier.isLoading = true;
+              var response = await ApiCall()
+                  .execute<SignupResponse, Null>("register/en", body);
+              if (response != null) {
+                _loadingNotifier.isLoading = false;
+                if (response?.customerData != null) {
+                  // Navigator.of(context)
+                  //     .pushReplacementNamed('HomePage', arguments: '');
+                  SharedPreferences preferences = await SharedPreferences
+                      .getInstance();
+                  await preferences.clear();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        OtpScreen(userData: response.customerData)),);
+                }
+              }
+            }
         }
         },
         child: Text("Register",
@@ -291,137 +309,157 @@ class Register extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                color: colorPrimary,
-                padding:EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 20.0),
-                child: ImageIcon(
-                  AssetImage("assets/icons/nazarath_logo.png"),
-                  color: Colors.white,
-                  size: register_logo_size,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                color: colorPrimary,
-                child: Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: primary_margin),
-                  height: container_space,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(border_radius),
-                        topRight: Radius.circular(border_radius)),
-                  ),
-                ),
-              ),
-              Container(
-
-
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(forms_padding, 0, forms_padding, 0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Create Account",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: header_text_size),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        shopNameField,
-                        SizedBox(
-                          height: space,
-                        ),
-                        passwordField,
-                        SizedBox(
-                          height: space,
-                        ),
-                        emailField,
-                        SizedBox(
-                          height: space,
-                        ),
-                        phoneField,
-                        SizedBox(
-                          height: space,
-                        ),
-                        // Row(
-                        //   children: [
-                        //
-                        //     Expanded(
-                        //       child: RichText(
-                        //         text: TextSpan(
-                        //           text: "I Accept All The",
-                        //           style:
-                        //           TextStyle(color: Colors.black, fontSize: field_text_size),
-                        //           children: <TextSpan>[
-                        //             TextSpan(
-                        //                 text: ' Terms of Use',
-                        //                 style: TextStyle(
-                        //                   fontSize: field_text_size,
-                        //                   color: Color(0xFF265c7e),
-                        //                 )),
-                        //             TextSpan(
-                        //               text: ' and',
-                        //               style: TextStyle(
-                        //                   color: Colors.black, fontSize: field_text_size),
-                        //             ),
-                        //             TextSpan(
-                        //                 text: ' Privacy Policy',
-                        //                 style: TextStyle(
-                        //                   fontSize: field_text_size,
-                        //                   color: Color(0xFF265c7e),
-                        //                 )),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        loginButon,
-                        SizedBox(
-                          height: 0,
-                        ),
-                        // RichText(
-                        //     text: TextSpan(
-                        //         text: 'Already have an account?',
-                        //         style: TextStyle(color: Colors.black, fontSize: 15),
-                        //         children: <TextSpan>[
-                        //           TextSpan(
-                        //               text: ' Sign in',
-                        //               recognizer: new TapGestureRecognizer()
-                        //                 ..onTap = () {
-                        //                   Navigator.of(context).pop();
-                        //                 },
-                        //               style:
-                        //               TextStyle(color: colorPrimary, fontSize: 15))
-                        //         ]))
-                      ],
+        physics: NeverScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: IntrinsicHeight(
+            child: Stack(
+              children:[Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    color: colorPrimary,
+                    padding:EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 20.0),
+                    child: ImageIcon(
+                      AssetImage("assets/icons/nazarath_logo.png"),
+                      color: Colors.white,
+                      size: register_logo_size,
                     ),
                   ),
-                ),
+                  Container(
+                    width: double.infinity,
+                    color: colorPrimary,
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: primary_margin),
+                      height: container_space,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(border_radius),
+                            topRight: Radius.circular(border_radius)),
+                      ),
+                    ),
+                  ),
+                  Container(
+
+
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(forms_padding, 0, forms_padding, 0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Create Account",
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: header_text_size),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            shopNameField,
+                            SizedBox(
+                              height: space,
+                            ),
+                            passwordField,
+                            SizedBox(
+                              height: space,
+                            ),
+                            emailField,
+                            SizedBox(
+                              height: space,
+                            ),
+                            phoneField,
+                            SizedBox(
+                              height: space,
+                            ),
+                            // Row(
+                            //   children: [
+                            //
+                            //     Expanded(
+                            //       child: RichText(
+                            //         text: TextSpan(
+                            //           text: "I Accept All The",
+                            //           style:
+                            //           TextStyle(color: Colors.black, fontSize: field_text_size),
+                            //           children: <TextSpan>[
+                            //             TextSpan(
+                            //                 text: ' Terms of Use',
+                            //                 style: TextStyle(
+                            //                   fontSize: field_text_size,
+                            //                   color: Color(0xFF265c7e),
+                            //                 )),
+                            //             TextSpan(
+                            //               text: ' and',
+                            //               style: TextStyle(
+                            //                   color: Colors.black, fontSize: field_text_size),
+                            //             ),
+                            //             TextSpan(
+                            //                 text: ' Privacy Policy',
+                            //                 style: TextStyle(
+                            //                   fontSize: field_text_size,
+                            //                   color: Color(0xFF265c7e),
+                            //                 )),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            loginButon,
+                            SizedBox(
+                              height: 0,
+                            ),
+                            // RichText(
+                            //     text: TextSpan(
+                            //         text: 'Already have an account?',
+                            //         style: TextStyle(color: Colors.black, fontSize: 15),
+                            //         children: <TextSpan>[
+                            //           TextSpan(
+                            //               text: ' Sign in',
+                            //               recognizer: new TapGestureRecognizer()
+                            //                 ..onTap = () {
+                            //                   Navigator.of(context).pop();
+                            //                 },
+                            //               style:
+                            //               TextStyle(color: colorPrimary, fontSize: 15))
+                            //         ]))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+                Consumer<RegisterLoadingNotifier>(
+                  builder: (context, value, child) {
+                    return value.isLoading ? progressBar : SizedBox();
+                  },
+                )
+            ]
+            ),
           ),
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    _loadingNotifier.reset();
+    super.dispose();
   }
 }

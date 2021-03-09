@@ -155,7 +155,8 @@ class ApiCall{
       }
       else if (success == '0') {
         showToast(jsonResponse['message'] ?? "Something went wrong!");
-        // await saveUser("");
+        return fromJson<T, K>(jsonResponse);
+        await saveUser("");
 
         // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
         //     false;

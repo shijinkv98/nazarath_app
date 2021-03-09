@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
+import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/screens/home.dart';
 import 'package:spinner_input/spinner_input.dart';
 
@@ -11,15 +12,17 @@ class SpinnerCart extends StatefulWidget {
   String slug, store;
   double count;
   Widget superWidget;
-    SpinnerCart(String slug,String store,String count,Widget superWidget)
+  CartUpdatedNotifier notifer;
+    SpinnerCart(String slug,String store,String count,Widget superWidget,CartUpdatedNotifier notifer)
     {
       this.store=store;
       this.slug=slug;
       this.count=double.parse(count);
       this.superWidget=superWidget;
+      this.notifer=notifer;
     }
   @override
-  _SpinnerCartState createState() => _SpinnerCartState(slug:this.slug,store:this.store,spinner_cart: this.count,superWidget: this.superWidget);
+  _SpinnerCartState createState() => _SpinnerCartState(slug:this.slug,store:this.store,spinner_cart: this.count,superWidget: this.superWidget,notifer: this.notifer);
 }
 
 
@@ -27,7 +30,18 @@ class _SpinnerCartState extends State<SpinnerCart> {
   double spinner_cart = 1;
   String slug, store;
   Widget superWidget;
-  _SpinnerCartState({this.slug,this.store,this.spinner_cart,this.superWidget});
+  CartUpdatedNotifier notifer;
+  Future<void> getCartResponse()
+  async {
+    var response = await ApiCall()
+        .execute<CartResponse, Null>("'cart/en'", null);
+    if(response!=null)
+    {
+      notifer.cartAdded=response;
+
+    }
+  }
+  _SpinnerCartState({this.slug,this.store,this.spinner_cart,this.superWidget,this.notifer});
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -92,63 +106,65 @@ class _SpinnerCartState extends State<SpinnerCart> {
     );
 
   }
-}
-Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+  Future<String>addtoCart(String slug,String store,BuildContext context,Widget widget,String quantity) async {
 
-  Map body = {
-    "slug":slug,
-    "quantity":quantity,
-    "store":store
-  };
-  CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/en", body);
+    Map body = {
+      "slug":slug,
+      "quantity":quantity,
+      "store":store
+    };
+    CartResponse cartResponse = await ApiCall()
+        .execute<CartResponse, Null>("cart/add/en", body);
 
-  if (cartResponse != null) {
-
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    if (cartResponse != null) {
+     // ApiCall().showToast(cartResponse.message);
+      notifer.cartAdded=cartResponse;
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => widget));
+    }
+    return "Success!";
   }
-  return "Success!";
-}
-GestureDetector removeButtonCart(String slug,String store,BuildContext context,Widget widget)
-{
-  return GestureDetector(
-      onTap: () {
-        removeFromCart(slug,store,context,widget);
-      },
-      child: Container(
-        padding: EdgeInsets.fromLTRB(5, 6, 5, 6),
-        decoration: BoxDecoration(
-            border: Border.all(width: 0.5, color:item_text_gray_light),
-            borderRadius:  BorderRadius.circular(2)),
-        child: Row(
-          children: [
-            ImageIcon(AssetImage('assets/icons/delete.png'),color:item_text_gray_light ,size: 20,)
-            //Image.asset(Icons.,width: 28,),
-          ],
-        ),
-      )
-  );
+  GestureDetector removeButtonCart(String slug,String store,BuildContext context,Widget widget)
+  {
+    return GestureDetector(
+        onTap: () {
+          removeFromCart(slug,store,context,widget);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(5, 6, 5, 6),
+          decoration: BoxDecoration(
+              border: Border.all(width: 0.5, color:item_text_gray_light),
+              borderRadius:  BorderRadius.circular(2)),
+          child: Row(
+            children: [
+              ImageIcon(AssetImage('assets/icons/delete.png'),color:item_text_gray_light ,size: 20,)
+              //Image.asset(Icons.,width: 28,),
+            ],
+          ),
+        )
+    );
 
-}
-Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
-
-  Map body = {
-    "slug":slug,
-    "quantity":"0",
-    "store":store
-  };
-  CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/en", body);
-
-  if (cartResponse != null) {
-    ApiCall().showToast(cartResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => CartScreen()));
   }
-  return "Success!";
+  Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
+
+    Map body = {
+      "slug":slug,
+      "quantity":"0",
+      "store":store
+    };
+    CartResponse cartResponse = await ApiCall()
+        .execute<CartResponse, Null>("cart/add/en", body);
+
+    if (cartResponse != null) {
+      ApiCall().showToast(cartResponse.message);
+      notifer.cartAdded=cartResponse;
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => CartScreen()));
+    }
+    return "Success!";
+  }
 }

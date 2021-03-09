@@ -7,8 +7,10 @@ import 'dart:convert';
 
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
+import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:provider/provider.dart';
 import 'package:spinner_input/spinner_input.dart';
 
 import 'DashBoard.dart';
@@ -36,16 +38,19 @@ class _CartState extends State<CartScreen> {
   List<Products> products;
   CartResponse cartresponse;
   var login_data;
+  CartUpdatedNotifier _updateNotifier;
+  @override
+  void initState() {
+    _updateNotifier =
+        Provider.of<CartUpdatedNotifier>(context, listen: false);
+    this.getData();
+    super.initState();
+  }
   Future<String> getData() async {
     login_data=await ApiCall().getLoginResponse();
     return "Success!";
   }
 
-  @override
-  void initState() {
-    super.initState();
-    this.getData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +134,7 @@ class _CartState extends State<CartScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               debugPrint('products size: ${snapshot.data?.products?.length}');
-              return getCartFull(snapshot.data,context,super.widget);
+              return getCartScreen(snapshot.data);
             } else if (snapshot.hasError) {
               //return errorScreen('Error: ${snapshot.error}');
               return getEmptyContainerCart(context);
@@ -143,74 +148,98 @@ class _CartState extends State<CartScreen> {
       );
 
   }
-  Container getCartFull(CartResponse cartResponse,BuildContext context,Widget widget)
+  Future<void> getCartResponse()
+  async {
+    var response = await ApiCall()
+        .execute<CartResponse, Null>("'cart/en'", null);
+    if(response!=null)
+      {
+        _updateNotifier.cartAdded=response;
+
+      }
+  }
+  Widget getCartScreen(CartResponse cartResponse)
   {
+    cartresponse=cartResponse;
+    _updateNotifier.cartAdded=cartResponse;
+
+    return Consumer<CartUpdatedNotifier>(
+      builder: (context, value, child) {
+        return value.cartAdded!=null ? getCartFull(value.cartAdded) : SizedBox();
+      },
+    );
+
+  }
+  Widget getCartFull(CartResponse cartResponse)
+  {
+
     if(cartResponse==null)
       return getEmptyContainerCart(context);
     else if(cartResponse.products==null)
       return getEmptyContainerCart(context);
     else if(cartResponse.products.length==0)
       return getEmptyContainerCart(context);
-    return Container(
-      child: Container(width: double.infinity,
-        child: Column(
+    return  Container(
+          child: Container(width: double.infinity,
+            child: Column(
 
-          children: [
-            getTopContainer(),
-            Flexible(
-                child: customView(context, widget, cartResponse,login_data)
-              //_listview(cartResponse.products,context,widget,),
+              children: [
+                getTopContainer(),
+                Flexible(
+                    child: customView(context, widget, cartResponse,login_data)
+                  //_listview(cartResponse.products,context,widget,),
 
+                ),
+                //getDetails(context,widget,cartResponse)
+              ],
             ),
-            //getDetails(context,widget,cartResponse)
-          ],
-        ),
 
-      ),
-    );
+          ),
+        );
+
+
     //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
   }
-}
 
-Widget _listview(List<Products> products,BuildContext context,Widget widget) => ListView.builder(
-    itemBuilder: (context, index) =>
-        _itemsBuilder(products[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
-    itemCount: products.length);
+  Widget _listview(List<Products> products,BuildContext context,Widget widget) => ListView.builder(
+      itemBuilder: (context, index) =>
+          _itemsBuilder(products[index],context,widget),
+      // separatorBuilder: (context, index) => Divider(
+      //       color: Colors.grey,
+      //       height: 1,
+      //     ),
+      itemCount: products.length);
 
-Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
-  bool status = false;
-  return GestureDetector(
-          onTap: () {
+  Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
+    bool status = false;
+    return GestureDetector(
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.slug)),
         );
       },
-    child: Container(
-      margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 2.0,
-
-            )]
-      ),
       child: Container(
-          child:
-              Padding(
-              padding:
-              EdgeInsets.fromLTRB(padding, padding, 0, 2),
+        margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 2.0,
+
+              )]
+        ),
+        child: Container(
+            child:
+            Padding(
+                padding:
+                EdgeInsets.fromLTRB(padding, padding, 0, 2),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
                       placeholder: 'assets/images/no_image.png',
@@ -231,7 +260,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              height: 1.3,
+                                height: 1.3,
                                 color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500),
                           ) ,)
                         ,
@@ -255,7 +284,7 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SpinnerCart(product.slug,product.storeslug,product.quantity,widget),
+                            SpinnerCart(product.slug,product.storeslug,product.quantity,widget,_updateNotifier),
 
                           ],
                         )
@@ -264,14 +293,71 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                     )
                   ],
                 )
-              )
+            )
 
+        ),
       ),
-    ),
-  );
+    );
 
+
+  }
+  Widget customView(BuildContext context,Widget widget,CartResponse cartResponse,var login_data)
+  {
+    final _itemExtent = 140.0;
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverFixedExtentList(
+          itemExtent: _itemExtent,  // I'm forcing item heights
+          delegate: SliverChildBuilderDelegate(
+                (context, index) => _itemsBuilder(cartResponse.products[index],context,widget),
+            childCount: cartResponse.products.length,
+          ),
+        ),
+        // SliverToBoxAdapter(
+        //   child:Flexible(child:  _listview(cartResponse.products,context,widget)),
+        // ),
+        // SliverGrid(
+        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: 1,
+        //       childAspectRatio: 2.5,
+        //       mainAxisSpacing: 0.0,
+        //       crossAxisSpacing: 0.0),
+        //   delegate: SliverChildBuilderDelegate(
+        //         (context, index) {
+        //       return _itemsBuilder(products[index],context,widget);
+        //     },
+        //     childCount: products.length,
+        //   ),
+        // ),
+
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+        ),
+        SliverToBoxAdapter(
+          child:   getDiscountButton(context,widget),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+        ),
+        SliverToBoxAdapter(
+          child:   getDetails(context,widget,cartResponse),
+        ),
+
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+        ),
+        SliverToBoxAdapter(
+          child:   getPlaceOrderButton(context,widget,cartResponse,login_data),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+        )
+      ],
+    );
+  }
 
 }
+
 // Widget getSpinner(String slug,String store)
 // {
 //   return SpinnerCart(slug,store);
@@ -316,60 +402,6 @@ Future<String> movetoWishList(String slug,String store,BuildContext context,Widg
   return "Success!";
 }
 
-Widget customView(BuildContext context,Widget widget,CartResponse cartResponse,var login_data)
-{
-  final _itemExtent = 140.0;
-  return CustomScrollView(
-    slivers: <Widget>[
-      SliverFixedExtentList(
-        itemExtent: _itemExtent,  // I'm forcing item heights
-        delegate: SliverChildBuilderDelegate(
-              (context, index) => _itemsBuilder(cartResponse.products[index],context,widget),
-          childCount: cartResponse.products.length,
-        ),
-      ),
-    // SliverToBoxAdapter(
-    //   child:Flexible(child:  _listview(cartResponse.products,context,widget)),
-    // ),
-      // SliverGrid(
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //       crossAxisCount: 1,
-      //       childAspectRatio: 2.5,
-      //       mainAxisSpacing: 0.0,
-      //       crossAxisSpacing: 0.0),
-      //   delegate: SliverChildBuilderDelegate(
-      //         (context, index) {
-      //       return _itemsBuilder(products[index],context,widget);
-      //     },
-      //     childCount: products.length,
-      //   ),
-      // ),
-
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-        child:   getDiscountButton(context,widget),
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-        child:   getDetails(context,widget,cartResponse),
-      ),
-
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-      ),
-      SliverToBoxAdapter(
-        child:   getPlaceOrderButton(context,widget,cartResponse,login_data),
-      ),
-      SliverPadding(
-        padding: const EdgeInsets.only(bottom: 30.0),
-      )
-    ],
-  );
-}
 
 Container getTopContainer()
 {

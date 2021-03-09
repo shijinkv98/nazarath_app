@@ -102,7 +102,7 @@ class _DashBoard extends State<DashBoard> {
   Widget getSideDrawer()
   {
     return Container(
-
+      color: Colors.white,
       child:Drawer(
 
         child: Container(
@@ -364,6 +364,7 @@ class _DashBoard extends State<DashBoard> {
       child: Scaffold(
 
         appBar:AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           centerTitle: true,
           // titleSpacing: 100,
           // leading: SideDrawer(),
@@ -373,6 +374,7 @@ class _DashBoard extends State<DashBoard> {
               child: ImageIcon(
                 AssetImage("assets/icons/nazarath_logo.png"),
                 size: appTabImageSize,
+                color: Colors.white,
               ),
             ),
           ),
@@ -393,7 +395,7 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/search.png"),),
+                    child: ImageIcon(AssetImage("assets/icons/search.png"), color: Colors.white,),
                   ),
                 )
             ),
@@ -410,7 +412,7 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/notification.png"),),
+                    child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,),
                   ),
                 )
             ),
@@ -427,7 +429,7 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/favorite.png"),),
+                    child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,),
                   ),
                 )
             ),
@@ -443,7 +445,7 @@ class _DashBoard extends State<DashBoard> {
                 child: Container(
                   height: appTabIconSize,
                   width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/cart.png"),),
+                  child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,),
                 ),
               ),
             ),
