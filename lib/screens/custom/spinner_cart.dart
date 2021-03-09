@@ -86,6 +86,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
                         textColor:Colors.grey[700],
 
                       ),
+
                       onChange: (newValue) {
                         setState(() {
                           spinner_cart = newValue;
@@ -133,13 +134,14 @@ class _SpinnerCartState extends State<SpinnerCart> {
           removeFromCart(slug,store,context,widget);
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(5, 6, 5, 6),
+          padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
           decoration: BoxDecoration(
               border: Border.all(width: 0.5, color:item_text_gray_light),
               borderRadius:  BorderRadius.circular(2)),
           child: Row(
             children: [
-              ImageIcon(AssetImage('assets/icons/delete.png'),color:item_text_gray_light ,size: 20,)
+              Container(
+                  child: ImageIcon(AssetImage('assets/icons/delete.png'),color:item_text_gray_light,size: 15,))
               //Image.asset(Icons.,width: 28,),
             ],
           ),
