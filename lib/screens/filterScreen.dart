@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/FilterResponse.dart';
+import 'package:nazarath_app/notifiers/filternotifier.dart';
 import 'package:nazarath_app/screens/filterprice.dart';
+import 'package:provider/provider.dart';
 import '../main.dart';
 import 'ProductList.dart';
 import 'vertical_tabs.dart';
@@ -40,10 +42,18 @@ class _FilterScreeenState extends State<FilterScreeen> {
     double upValue=0;
    double lowValue=0;
   Filters filterPrice;
+   FilterUpdatedNotifier _updateNotifier;
+   @override
+   void initState() {
+     _updateNotifier =
+         Provider.of<FilterUpdatedNotifier>(context, listen: false);
+     super.initState();
+   }
    @override
    void dispose() {
      values = RangeValues(0, 100);
      labels =RangeLabels("0", "100");
+     _updateNotifier.reset();
      super.dispose();
    }
    Widget _rangeSlider(){
@@ -136,8 +146,8 @@ class _FilterScreeenState extends State<FilterScreeen> {
             .execute<FilterResponse, Null>('filters/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-
-            return getFilterPage(context,snapshot.data,widget.by,widget.sortBy,widget.sortOrder,widget.query,widget.slug);
+            return getFilterContent(snapshot.data);
+            //return getFilterPage(context,snapshot.data,widget.by,widget.sortBy,widget.sortOrder,widget.query,widget.slug);
 
           } else if (snapshot.hasError) {
             return errorScreen('Error: ${snapshot.error}');
@@ -149,6 +159,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
         },
       )
     );
+
   }
 
    // Widget _rangeSlider(){
@@ -433,6 +444,17 @@ class _FilterScreeenState extends State<FilterScreeen> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget getFilterContent(FilterResponse data) {
+
+    _updateNotifier.filterResponse=data;
+
+    return Consumer<FilterUpdatedNotifier>(
+      builder: (context, value, child) {
+        return value.filterResponse!=null ? getFilterPage(context,value.filterResponse,widget.by,widget.sortBy,widget.sortOrder,widget.query,widget.slug) : SizedBox();
+      },
     );
   }
 }
