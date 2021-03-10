@@ -236,7 +236,7 @@ class _CartState extends State<CartScreen> {
             child:
             Padding(
                 padding:
-                EdgeInsets.fromLTRB(padding, padding, 0, 2),
+                EdgeInsets.fromLTRB(padding, padding, 0, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -247,7 +247,7 @@ class _CartState extends State<CartScreen> {
                       width: 120,
                     ),
                     SizedBox(
-                      width: 5,
+                      width: 30,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,7 +303,7 @@ class _CartState extends State<CartScreen> {
   }
   Widget customView(BuildContext context,Widget widget,CartResponse cartResponse,var login_data)
   {
-    final _itemExtent = 140.0;
+    final _itemExtent = 155.0;
     return CustomScrollView(
       slivers: <Widget>[
         SliverFixedExtentList(
@@ -566,7 +566,10 @@ Widget getDiscountButton(BuildContext context,Widget widget)
           Container(
             height: 40,
             width: MediaQuery.of(context).size.width*0.70,
-            child: couponField,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: couponField,
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -618,12 +621,12 @@ final couponField = TextFormField(
   keyboardType: TextInputType.text,
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 15.0),
     hintText: "Discount code ", hintStyle: TextStyle(color: textColor ,fontSize: 12),
     // labelText: 'Discount code',
     // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
     enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.transparent),
+      borderSide: BorderSide.none,
+
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.transparent),

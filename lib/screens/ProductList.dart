@@ -184,6 +184,8 @@ class _ProductState extends State<ProductScreen> {
             .execute<ProductListResponse, Null>('products/en', para),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if(snapshot.data.products==null)
+              return getEmptyContainer(context, "Product List is empty", "empty_cart");
             debugPrint('products size: ${snapshot.data?.products?.data?.length}');
             return getProductViews(snapshot.data?.products?.data
                 ?.where((element) =>
