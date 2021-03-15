@@ -232,7 +232,7 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    height: 40,
+                    height: 15,
                     color: colorPrimary,
                   ),
                   Container(
@@ -248,7 +248,7 @@ class _LoginState extends State<Login> {
                     color: colorPrimary,
                     child: Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 50),
+                      margin: EdgeInsets.only(top: 35),
                       height: 50,
 
                       decoration: BoxDecoration(
@@ -372,7 +372,9 @@ class _LoginState extends State<Login> {
                                     // )
                                   ],
                                 ),
-
+                                Container(
+                                  padding: EdgeInsets.only(top:20),
+                                )
                                 // Visibility(
                                 //     maintainSize: true,
                                 //     maintainAnimation: true,

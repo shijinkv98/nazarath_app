@@ -324,7 +324,7 @@ class _RegisterState extends State<Register> {
                 children: <Widget>[
                   Container(
                     color: colorPrimary,
-                    padding:EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 20.0),
+                    padding:EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 20.0),
                     child: ImageIcon(
                       AssetImage("assets/icons/nazarath_logo.png"),
                       color: Colors.white,
@@ -422,7 +422,7 @@ class _RegisterState extends State<Register> {
                             ),
                             loginButon,
                             SizedBox(
-                              height: 0,
+                              height: 10,
                             ),
                             // RichText(
                             //     text: TextSpan(
