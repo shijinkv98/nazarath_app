@@ -309,7 +309,7 @@ class _RegisterState extends State<Register> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: MediaQuery.of(context).size.width,
