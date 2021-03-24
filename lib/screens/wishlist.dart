@@ -132,7 +132,7 @@ class _WishListState extends State<WishListScreen> {
         .execute<WishListResponse, Null>('wishlist/en', null),
     builder: (context, snapshot) {
     if (snapshot.hasData) {
-    debugPrint('products size: ${snapshot.data?.products?.length}');
+    //debugPrint('products size: ${snapshot.data?.products?.length}');
     return getWishListFull(snapshot.data?.products
         ?.where((element) =>
     element != null )
@@ -307,6 +307,10 @@ Future<String> movetoCart(String slug,String store,BuildContext context,Widget w
 
 Container getWishListFull(List<Products> products,BuildContext context,Widget widget)
 {
+  if(products==null)
+    return getEmptyContainerWishlist(context);
+  else if(products.length==0)
+    return getEmptyContainerWishlist(context);
   return Container(
     child: Container(width: double.infinity,
       child: Column(

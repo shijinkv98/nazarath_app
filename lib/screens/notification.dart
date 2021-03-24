@@ -99,7 +99,7 @@ class _NotificationState extends State<NotificationScreen> {
               .execute<NotificationResponse, Null>('notifications/en', null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              debugPrint('products size: ${snapshot.data?.notifications?.length}');
+            //  debugPrint('products size: ${snapshot.data?.notifications?.length}');
               return getNotificationFull(snapshot.data?.notifications
                   ?.where((element) =>
               element != null )
@@ -118,6 +118,10 @@ class _NotificationState extends State<NotificationScreen> {
 }
 Container getNotificationFull(List<Notifications> products,BuildContext context,Widget widget)
 {
+  if(products==null)
+    return getEmptyContainerWishlist(context);
+  else if(products.length==0)
+    return getEmptyContainerWishlist(context);
     return Container(
         child: Column(
         children: [
