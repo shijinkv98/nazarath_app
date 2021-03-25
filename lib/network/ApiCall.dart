@@ -64,11 +64,11 @@ class ApiCall{
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        debugPrint('connected');
+        //debugPrint('connected');
         isConnected = true;
       }
     } on SocketException catch (_) {
-      debugPrint('not connected');
+      //debugPrint('not connected');
       isConnected = false;
     }
 
@@ -168,26 +168,26 @@ class ApiCall{
 
   Future saveUser(String userResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('save user resp: $userResponse');
+    //debugPrint('save user resp: $userResponse');
     bool success = await prefs.setString('user', userResponse);
     return success;
   }
   Future saveLoginResponse(String userResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('save user resp: $userResponse');
+    //debugPrint('save user resp: $userResponse');
     bool success = await prefs.setString('login_response', userResponse);
     return success;
   }
   Future saveHome(String userResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('save user resp: $userResponse');
+    //debugPrint('save user resp: $userResponse');
     bool success = await prefs.setString('user', userResponse);
     return success;
   }
 
   Future saveAdminPhone(String adminNo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('save admin phone NO: $adminNo');
+    //debugPrint('save admin phone NO: $adminNo');
     bool success = await prefs.setString('admin_phone_no', adminNo);
     return success;
   }

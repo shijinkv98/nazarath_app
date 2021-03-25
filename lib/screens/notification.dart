@@ -99,7 +99,7 @@ class _NotificationState extends State<NotificationScreen> {
               .execute<NotificationResponse, Null>('notifications/en', null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-            //  debugPrint('products size: ${snapshot.data?.notifications?.length}');
+            //  //debugPrint('products size: ${snapshot.data?.notifications?.length}');
               return getNotificationFull(snapshot.data?.notifications
                   ?.where((element) =>
               element != null )

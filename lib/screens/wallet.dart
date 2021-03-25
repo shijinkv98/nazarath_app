@@ -36,7 +36,7 @@ class _WalletScreenState extends State<WalletScreen> {
             .execute<WalletResponse, Null>('wallet/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data!=null}');
+            //debugPrint('products size: ${snapshot.data!=null}');
             return getWalletScreen(snapshot.data,context,super.widget);
           } else if (snapshot.hasError) {
             return getEmptyWallet(context);

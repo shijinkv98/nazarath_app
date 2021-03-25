@@ -30,7 +30,7 @@ class _NewsState extends State<NewsScreen> {
             .execute<NewsResponse, Null>('news/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data?.news?.length}');
+            //debugPrint('products size: ${snapshot.data?.news?.length}');
             return getNewsScreen(snapshot.data?.news
                 ?.where((element) =>
             element != null )

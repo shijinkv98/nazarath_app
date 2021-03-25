@@ -9,6 +9,7 @@ import 'package:nazarath_app/network/LogoutResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/network/response/ProfileResponse.dart';
+import 'package:nazarath_app/notifiers/dashboardnotifier.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/checkout.dart';
@@ -20,6 +21,7 @@ import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:nazarath_app/custom/namedicon.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'changePassword.dart';
@@ -33,6 +35,8 @@ DefaultTabController controller;
 TabController _controller;
 
 class DashBoard extends StatefulWidget {
+  UserData user;
+  DashBoard({this.user});
   @override
   _DashBoard createState() => _DashBoard();
 
@@ -48,34 +52,56 @@ final ValueNotifier<int> notificationCounterValueNotifer=ValueNotifier(0);
 class _DashBoard extends State<DashBoard> {
   var customer;
   var login_data;
+  _DashBoard({this.customer});
+  DashBoardUpdateNotifier _updateNotifier;
   @override
   void initState() {
-    customer=new UserData();
-    login_data=new LoginResponse();
+    _updateNotifier =
+        Provider.of<DashBoardUpdateNotifier>(context, listen: false);
     getHomeData(context);
+
     super.initState();
 
 
   }
+  @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
+  }
+  Widget getViews()
+  {
 
+    return Consumer<DashBoardUpdateNotifier>(
+      builder: (context, value, child) {
+        return value.user!=null ? getTabController() : CircularProgressIndicator();
+      },
+    );
+  }
   Future<void> getHomeData(BuildContext context)
   async {
 
     ApiCall().context=context;
-    customer=await ApiCall().getUser();
-    login_data=await ApiCall().getLoginResponse();
-    // if(login_data!=null)
-    // {
-    //   if(login_data.guest_id!="")
-    //     {
-    //       var response = await ApiCall()
-    //           .execute<ProfileResponse, Null>('my-profile/en', null);
-    //       if(response!=null)
-    //         {
-    //           userName=response.name;
-    //           userEmail=response.email;
-    //         }
-    //     }
+    if(customer==null) {
+      customer = await ApiCall().getUser();
+      login_data = await ApiCall().getLoginResponse();
+      if (customer != null) {
+        _updateNotifier.user = customer;
+      }
+    }
+    //   if(customer==null)
+    //     customer=_updateNotifier.user;
+    //   // if(login_data.guest_id!="")
+    //   //   {
+    //   //
+    //   //     // var response = await ApiCall()
+    //   //     //     .execute<ProfileResponse, Null>('my-profile/en', null);
+    //   //     // if(response!=null)
+    //   //     //   {
+    //   //     //     userName=response.name;
+    //   //     //     userEmail=response.email;
+    //   //     //   }
+    //   //   }
     // }
 
 
@@ -91,13 +117,14 @@ class _DashBoard extends State<DashBoard> {
     //   ApiCall().showToast(homeResponse.categories.toString());
     // }
   }
+
   @override
   Widget build(BuildContext context) {
-    debugPrint('MJM HomeScreen build()');
+    //debugPrint('MJM HomeScreen build()');
     //notificationCounterValueNotifer=ValueNotifier(0);
-    controller =getTabController(context);
+    //controller =getTabController(context);
 
-    return customer!=null?controller:CircularProgressIndicator();
+    return getViews();
   }
   Widget getSideDrawer()
   {
@@ -355,9 +382,9 @@ class _DashBoard extends State<DashBoard> {
       ),
     );
   }
-  DefaultTabController getTabController(BuildContext contexT)
+  DefaultTabController getTabController()
   {
-
+    customer=_updateNotifier.user;
     return  DefaultTabController(
       length: 5,
       initialIndex: tbPosition,
@@ -429,7 +456,12 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,),
+                    child: Column(
+                      children: [ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,),
+                        _updateNotifier.wishListCount!="0"?Text( _updateNotifier.wishListCount):SizedBox()
+                      ],
+                    )
+
                   ),
                 )
             ),
@@ -460,7 +492,7 @@ class _DashBoard extends State<DashBoard> {
         body:
         TabBarView(
           children: <Widget>[
-            Home(),
+            Home(_updateNotifier),
             CheckUpScreen(),
             //ProductScreen("s"),
             StoreScreen(""),

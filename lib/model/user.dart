@@ -6,7 +6,7 @@ class UserData {
   {
     id = "";
     mobile ="";
-    name = "";
+    name = "Guest";
     email ="";
     status =0;
     token = "";

@@ -34,7 +34,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   .execute<StoreResponse, Null>('stores/en', null),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  debugPrint('products size: ${snapshot.data?.stores?.length}');
+                  //debugPrint('products size: ${snapshot.data?.stores?.length}');
                   return
                     getStoreScreen(snapshot.data.stores,context,super.widget);
                 } else if (snapshot.hasError) {

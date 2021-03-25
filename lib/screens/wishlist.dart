@@ -132,7 +132,7 @@ class _WishListState extends State<WishListScreen> {
         .execute<WishListResponse, Null>('wishlist/en', null),
     builder: (context, snapshot) {
     if (snapshot.hasData) {
-    //debugPrint('products size: ${snapshot.data?.products?.length}');
+    ////debugPrint('products size: ${snapshot.data?.products?.length}');
     return getWishListFull(snapshot.data?.products
         ?.where((element) =>
     element != null )

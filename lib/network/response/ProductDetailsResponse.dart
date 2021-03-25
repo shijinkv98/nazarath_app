@@ -1,7 +1,7 @@
 class ProductDetailsResponse {
   int success;
   String message;
-  Product product;
+  ProductDetail product;
   bool enableGuestReview;
 
   ProductDetailsResponse(
@@ -11,7 +11,7 @@ class ProductDetailsResponse {
     success = json['success'];
     message = json['message'];
     product =
-    json['product'] != null ? new Product.fromJson(json['product']) : null;
+    json['product'] != null ? new   ProductDetail.fromJson(json['product']) : null;
     enableGuestReview = json['enable_guest_review'];
   }
   Map<String, dynamic> toJson() {
@@ -27,7 +27,7 @@ class ProductDetailsResponse {
 
 }
 
-class Product {
+class ProductDetail {
   String slug;
   String code;
   String sizeChart;
@@ -64,7 +64,7 @@ class Product {
   List<RelatedOptions> relatedOptions;
   List<RelatedProducts> relatedProducts;
 
-  Product(
+  ProductDetail(
       {this.slug,
         this.code,
         this.sizeChart,
@@ -101,7 +101,7 @@ class Product {
         this.relatedOptions,
         this.relatedProducts});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  ProductDetail.fromJson(Map<String, dynamic> json) {
     slug = json['slug'];
     code = json['code'];
     sizeChart = json['size_chart'];

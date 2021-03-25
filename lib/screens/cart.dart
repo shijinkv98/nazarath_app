@@ -133,7 +133,7 @@ class _CartState extends State<CartScreen> {
               .execute<CartResponse, Null>('cart/en', null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              debugPrint('products size: ${snapshot.data?.products?.length}');
+              //debugPrint('products size: ${snapshot.data?.products?.length}');
               return getCartScreen(snapshot.data);
             } else if (snapshot.hasError) {
               //return errorScreen('Error: ${snapshot.error}');
@@ -765,6 +765,25 @@ Widget getTextContainer(String title, String value,String style,Color color1,Col
       ],
     ),
   );
+}
+Future<String>addtoCartReferesh(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":quantity,
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/en", body);
+
+  if (cartResponse != null) {
+    // ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
 }
 Text getText(String title,Color color,double size,String type,String style,TextAlign alignment)
 {

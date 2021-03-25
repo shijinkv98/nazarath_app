@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/Screens/register/register.dart';
+import 'package:nazarath_app/model/user.dart';
 
 import '../helper/constants.dart';
 import '../network/ApiCall.dart';
@@ -14,19 +15,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  var customer;
   @override
   void initState() {
     super.initState();
+
     new Future.delayed(
       const Duration(seconds: 3),
           () => ApiCall().getUserToken().then((token) => {
         if (token != null &&
             token.trim().isNotEmpty)
           {
-            // Navigator.of(context).pushReplacementNamed('/home')
+
             Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => DashBoard()),
+                  MaterialPageRoute(builder: (context) => DashBoard(user: customer,)),
                 )
           }
         else
@@ -41,7 +44,10 @@ class _SplashScreenState extends State<SplashScreen> {
       //     )
     );
   }
-
+  Future<void> getData()
+  async {
+     customer = await ApiCall().getUser();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

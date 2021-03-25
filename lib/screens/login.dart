@@ -477,7 +477,7 @@ class _LoginState extends State<Login> {
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DashBoard()),);
+          MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData)),);
       }
     }
   }
@@ -511,7 +511,7 @@ class _LoginState extends State<Login> {
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DashBoard()),);
+          MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData)),);
       }
     }
   }
@@ -530,7 +530,7 @@ class _LoginState extends State<Login> {
       await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home()),);
+        MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData,)),);
     }
   }
 }

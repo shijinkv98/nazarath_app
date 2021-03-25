@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
-import 'package:nazarath_app/network/response/ProductListResponse.dart';
+// import 'package:nazarath_app/network/response/ProductListResponse.dart';
+import 'package:nazarath_app/screens/ProductDetails.dart';
 
+import '../ProductList.dart';
 import '../home.dart';
 class WishListProductList extends StatefulWidget {
   String slug, store;

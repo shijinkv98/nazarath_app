@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
-import 'package:nazarath_app/network/ApiCall.dart';
-import 'dart:convert';
+
 import 'package:nazarath_app/network/response/OrderResponse.dart';
-import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/ordercancellation.dart';
 import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
@@ -15,16 +12,7 @@ import 'package:nazarath_app/screens/writereview.dart';
 import 'cart.dart';
 import 'notification.dart';
 
-// void main() {
-//   runApp(OrderDetails(
-//     items: List<ListItem>.generate(
-//       1000,
-//           (i) => i % 6 == 0
-//           ? HeadingItem("Heading $i")
-//           : MessageItem("Sender $i", "Message body $i"),
-//     ),
-//   ));
-// }
+
 class OrderDetailsScreen extends StatefulWidget {
   Data _orderResponse;
   @override
@@ -162,6 +150,57 @@ Widget getOrderDetails(
       ],
     ),
   );
+}
+Widget getTopContainerOrder()
+{
+  return Container(
+    child: Column(
+      children: [
+        Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: colorPrimary,
+                  borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10,left: 30,right: 30),
+                child: Container(
+                    height: 100,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new AssetImage("assets/icons/inner_banner.png"),
+                          fit: BoxFit.fill,
+                        )
+                    )
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Text(
+            "My Orders",
+            style: TextStyle(
+                color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    ),
+  );
+
 }
 
 Widget customScrollView(

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'helper/constants.dart';
 import 'network/ApiCall.dart';
+import 'notifiers/dashboardnotifier.dart';
 import 'notifiers/filternotifier.dart';
 import 'notifiers/home_notifiers.dart';
 import 'notifiers/login_notifier.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => FilterUpdatedNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => DashBoardUpdateNotifier(),
           ),
         ],
     child: MaterialApp(

@@ -40,7 +40,7 @@ class _AddressState extends State<AddressScreen> {
             .execute<AddressResponse, Null>('customer-addresses/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            debugPrint('products size: ${snapshot.data?.addresses?.length}');
+            //debugPrint('products size: ${snapshot.data?.addresses?.length}');
             return getAdressFull(
                 snapshot.data?.addresses
                     ?.where((element) => element != null)
