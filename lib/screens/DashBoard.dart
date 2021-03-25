@@ -439,7 +439,20 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,),
+                    child: Stack(
+                        children:[ Align(
+                            alignment: Alignment.center,
+                            child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: _updateNotifier.notificationCount!="0"?CircleAvatar(
+                                    radius:7,
+                                    backgroundColor: Colors.white,
+                                    child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                          )
+                        ]),
                   ),
                 )
             ),
@@ -456,10 +469,20 @@ class _DashBoard extends State<DashBoard> {
                   child: Container(
                     height: appTabIconSize,
                     width: appTabIconSize,
-                    child: Column(
-                      children: [ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,),
-                        _updateNotifier.wishListCount!="0"?Text( _updateNotifier.wishListCount):SizedBox()
-                      ],
+                    child: Stack(
+                      children:[ Align(
+                        alignment:Alignment.center,
+                          child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: _updateNotifier.wishListCount!="0"?CircleAvatar(
+                                radius:7,
+                                backgroundColor: Colors.white,
+                                child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                      ),
+              ]
                     )
 
                   ),
@@ -477,7 +500,22 @@ class _DashBoard extends State<DashBoard> {
                 child: Container(
                   height: appTabIconSize,
                   width: appTabIconSize,
-                  child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,),
+                  child: Stack(
+                      children:[ Align(
+                          alignment: Alignment.center,
+
+                          child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child: _updateNotifier.cartCount!="0"?CircleAvatar(
+                                  radius:7,
+                                  backgroundColor: Colors.white,
+                                  child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                        )
+
+                      ]),
                 ),
               ),
             ),

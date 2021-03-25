@@ -108,8 +108,9 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return PlacePicker(
-                                apiKey: 'AIzaSyAIjBw5JjRaRSZXLVNNUUjSUrFA6VP5KEQ'.trim(),
+                              return
+                                PlacePicker(
+                                apiKey: 'AIzaSyC6FXxQ6oMlmp8e-uQz2sIth9wJz0c2Od8'.trim(),
                                 initialPosition: CheckUpScreen.kInitialPosition,
                                 useCurrentLocation: true,
                                 selectInitialPosition: true,
