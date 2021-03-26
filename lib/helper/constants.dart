@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
@@ -27,7 +28,7 @@ const String BASE_URL = "https://nazarath.webdemos.cf/";
  const Color gradientEnd = Color(0xFF45ccc1);
 const Color primaryTextColor = Color(0xFF45ccc1);
 const Color primaryIconColor = Color(0xFF45ccc1);
-int wish_c=0,cart_c=0,noti_c=0;
+String wish_c="0",cart_c="0",noti_c="0";
 const String productThumbUrl = '${BASE_URL}images/product/thumbnail/';
 const String newsThumbUrl = '${BASE_URL}images/blog/thumbnail/';
 const String newsImageUrl = '${BASE_URL}images/blog/';
@@ -94,9 +95,15 @@ void setCounts(int wish,int cart, int noti)
   //     ValueNotifier(cart);
   notificationCounterValueNotifer.value=10;
   notificationCounterValueNotifer.notifyListeners();
-  cart_c=cart;
-  wish_c=wish;
-  noti_c=noti;
+  cart_c=cart.toString();
+  wish_c=wish.toString();
+  noti_c=noti.toString();
+}
+void saveCounts(String wish,String cart,String notification)
+{
+  ApiCall().saveCartCount(cart);
+  ApiCall().saveWishListCount(wish);
+  ApiCall().saveNotificationCount(notification);
 }
 Widget progressBar = InkWell(
   child: SafeArea(

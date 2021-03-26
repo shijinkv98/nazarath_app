@@ -191,7 +191,36 @@ class ApiCall{
     bool success = await prefs.setString('admin_phone_no', adminNo);
     return success;
   }
-
+  Future saveNotificationCount(String notificationCount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //debugPrint('save admin phone NO: $adminNo');
+    bool success = await prefs.setString('notification_count', notificationCount);
+    return success;
+  }
+  Future<String> getNotificationCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('notification_count');
+  }
+  Future saveCartCount(String cartCount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //debugPrint('save admin phone NO: $adminNo');
+    bool success = await prefs.setString('cart_count', cartCount);
+    return success;
+  }
+  Future<String> getCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('cart_count');
+  }
+  Future saveWishListCount(String wishListCount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //debugPrint('save admin phone NO: $adminNo');
+    bool success = await prefs.setString('wishList_count', wishListCount);
+    return success;
+  }
+  Future<String> getWishListCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('wishList_count');
+  }
   Future<String> getAdminPhone() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('admin_phone_no');

@@ -11,6 +11,7 @@ import 'notifiers/filternotifier.dart';
 import 'notifiers/home_notifiers.dart';
 import 'notifiers/login_notifier.dart';
 import 'notifiers/register_notifier.dart';
+import 'notifiers/wishlistnotifier.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => DashBoardUpdateNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => WishListUpdatedNotifier(),
           ),
         ],
     child: MaterialApp(

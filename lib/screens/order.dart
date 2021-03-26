@@ -111,7 +111,7 @@ class _OrderState extends State<OrderScreen> {
             .execute<OrderResponse, Null>('my-orders/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            ////debugPrint('products size: ${snapshot.data?.result.data?.length}');
+
             return getOrderScreen(snapshot.data?.result?.data
                 ?.where((element) =>
             element != null )
@@ -125,17 +125,6 @@ class _OrderState extends State<OrderScreen> {
         },
       ),
     );
-    // return new Scaffold(
-    //   appBar: new AppBar(
-    //     title: new Text("Listviews"),
-    //   ),
-    //   body: new ListView.builder(
-    //     itemCount: products == null ? 0 : products.length,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return new Text(products[index].name);
-    //     },
-    //   ),
-    // );
   }
 
   List<Data> allOrders;
@@ -172,19 +161,15 @@ class _OrderState extends State<OrderScreen> {
         items.add(orders[i].itemsNew[j]);
       }
     }
-    return Container(
-      child: Container(width: double.infinity,
-        child: Column(
+    if(items.length==0)
+      return getEmptyContainerOrder();
+    return SingleChildScrollView(
+      child: Column(
 
-          children: [
-            getTopContainerOrder(),
-            Flexible(
-              child: _listview(items),
-
-            ),
-          ],
-        ),
-
+        children: [
+          getTopContainerOrder(),
+          _listview(items),
+        ],
       ),
     );
   }

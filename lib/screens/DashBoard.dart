@@ -5,10 +5,7 @@ import 'package:nazarath_app/helper/common.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
-import 'package:nazarath_app/network/LogoutResponse.dart';
-import 'package:nazarath_app/network/response/HomeResponse.dart';
-import 'package:nazarath_app/network/response/LoginResponse.dart';
-import 'package:nazarath_app/network/response/ProfileResponse.dart';
+
 import 'package:nazarath_app/notifiers/dashboardnotifier.dart';
 import 'package:nazarath_app/screens/ProductList.dart';
 import 'package:nazarath_app/screens/cart.dart';
@@ -38,7 +35,7 @@ class DashBoard extends StatefulWidget {
   UserData user;
   DashBoard({this.user});
   @override
-  _DashBoard createState() => _DashBoard();
+  _DashBoard createState() => _DashBoard(customer: this.user);
 
 }
 
@@ -58,6 +55,11 @@ class _DashBoard extends State<DashBoard> {
   void initState() {
     _updateNotifier =
         Provider.of<DashBoardUpdateNotifier>(context, listen: false);
+    if(customer!=null)
+      {
+        _updateNotifier.user=customer;
+      }
+    //_updateNotifier.reset();
     getHomeData(context);
 
     super.initState();
@@ -82,9 +84,27 @@ class _DashBoard extends State<DashBoard> {
   async {
 
     ApiCall().context=context;
+
+    ApiCall().getNotificationCount().then((String result){
+      setState(() {
+        _updateNotifier.notificationCount=result;
+      });
+    });
+    ApiCall().getCartCount().then((String result){
+      setState(() {
+        _updateNotifier.cartCount=result;
+      });
+    });
+    ApiCall().getWishListCount().then((String result){
+      setState(() {
+        _updateNotifier.wishListCount=result;
+      });
+    });
+    login_data = await ApiCall().getLoginResponse();
     if(customer==null) {
       customer = await ApiCall().getUser();
-      login_data = await ApiCall().getLoginResponse();
+
+
       if (customer != null) {
         _updateNotifier.user = customer;
       }
@@ -447,10 +467,10 @@ class _DashBoard extends State<DashBoard> {
                             padding: const EdgeInsets.only(top: 12),
                             child: Align(
                                 alignment: Alignment.topRight,
-                                child: _updateNotifier.notificationCount!="0"?CircleAvatar(
+                                child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
                                     radius:7,
                                     backgroundColor: Colors.white,
-                                    child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                                    child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
                           )
                         ]),
                   ),
@@ -477,10 +497,10 @@ class _DashBoard extends State<DashBoard> {
                         padding: const EdgeInsets.only(top: 12),
                         child: Align(
                             alignment: Alignment.topRight,
-                            child: _updateNotifier.wishListCount!="0"?CircleAvatar(
+                            child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
                                 radius:7,
                                 backgroundColor: Colors.white,
-                                child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                                child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
                       ),
               ]
                     )
@@ -509,10 +529,10 @@ class _DashBoard extends State<DashBoard> {
                           padding: const EdgeInsets.only(top: 12),
                           child: Align(
                               alignment: Alignment.topRight,
-                              child: _updateNotifier.cartCount!="0"?CircleAvatar(
+                              child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
                                   radius:7,
                                   backgroundColor: Colors.white,
-                                  child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
+                                  child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
                         )
 
                       ]),
@@ -740,8 +760,8 @@ async {
 
   await ApiCall().saveUser("");
   await ApiCall().saveLoginResponse("");
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  await preferences.clear();
+  // SharedPreferences preferences = await SharedPreferences.getInstance();
+  // await preferences.clear();
   Navigator.pushReplacement(
       context,
       MaterialPageRoute(

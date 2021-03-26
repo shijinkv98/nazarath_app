@@ -21,6 +21,7 @@ import 'ProductList.dart';
 import 'custom/wishlist_product.dart';
 // import 'package:nazarath_app/network/ApiCall.dart';
 // void main() => runApp(Home());
+
 HomeResponse homeResponse;
 class Home extends StatefulWidget {
   final appTitle = 'Home';
@@ -88,6 +89,10 @@ class HomePage extends State<Home> {
     notifier.cartCount=homeResponse.cartcount.toString();
     notifier.wishListCount=homeResponse.wishlistcount.toString();
     notifier.notificationCount=homeResponse.notificationCount.toString();
+    notifier.notifyListeners();
+    saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
+    //print(notifier.wishListCount);
+
     //setCounts(homeResponse.wishlistcount,homeResponse.cartcount,homeResponse.notificationCount);
     // cart_c=homeResponse.cartcount;
     return SingleChildScrollView(
@@ -633,6 +638,7 @@ class HomePage extends State<Home> {
     if (wishListResponse != null) {
       ApiCall().showToast(wishListResponse.message);
       notifier.wishListCount=wishListResponse.products.length.toString();
+      saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
     }
     return "Success!";
   }
@@ -668,6 +674,7 @@ class HomePage extends State<Home> {
     if (cartResponse != null) {
       ApiCall().showToast(cartResponse.message);
       notifier.cartCount=cartResponse.cartcount.toString();
+      saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
     }
     return "Success!";
   }
@@ -684,6 +691,7 @@ class HomePage extends State<Home> {
       ApiCall().showToast(Productresponse.message);
       homeResponse.wishlistcount++;
       notifier.wishListCount=Productresponse.products.length.toString();
+      saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(

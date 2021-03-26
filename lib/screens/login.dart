@@ -460,8 +460,8 @@ class _LoginState extends State<Login> {
   async {
     await ApiCall().saveUser("");
     await ApiCall().saveLoginResponse("");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // await preferences.clear();
     _loadingNotifier.isLoading = true;
     Map body = {
       // name,email,phone_number,password
@@ -491,8 +491,8 @@ class _LoginState extends State<Login> {
     await ApiCall().saveUser("");
     await ApiCall().saveLoginResponse("");
     _loadingNotifier.isLoading = true;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // await preferences.clear();
     Map body = {
       // name,email,phone_number,password
       'email_phone': email_phone,

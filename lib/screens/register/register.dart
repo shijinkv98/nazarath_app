@@ -269,9 +269,9 @@ class _RegisterState extends State<Register> {
                 if (response?.customerData != null) {
                   // Navigator.of(context)
                   //     .pushReplacementNamed('HomePage', arguments: '');
-                  SharedPreferences preferences = await SharedPreferences
-                      .getInstance();
-                  await preferences.clear();
+                  // SharedPreferences preferences = await SharedPreferences
+                  //     .getInstance();
+                  // await preferences.clear();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) =>
