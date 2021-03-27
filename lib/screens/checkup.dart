@@ -156,7 +156,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                     child: RaisedButton(
                       color: colorPrimary,
                       elevation: 0,
-                      child: Text('Book an Appoinment',
+                      child: Text('Book an Appointment',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,

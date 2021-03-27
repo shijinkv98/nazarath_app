@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nazarath_app/custom/PinField.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
@@ -7,6 +8,8 @@ import 'package:nazarath_app/network/response/forgotresponse.dart';
 import 'package:nazarath_app/screens/changePassword.dart';
 import 'package:nazarath_app/screens/login.dart';
 import 'package:nazarath_app/screens/notification.dart';
+import 'package:nazarath_app/screens/register/otp.dart';
+import 'package:provider/provider.dart';
 
 import 'DashBoard.dart';
 import 'cart.dart';
@@ -19,7 +22,16 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   String code, number;
+  OTPNotifier _otpNotifier;
   _ResetPasswordScreenState({ this.code,this.number}) ;
+
+  @override
+  void initState() {
+    super.initState();
+    _otpNotifier = Provider.of<OTPNotifier>(context, listen: false);
+    // _otpNotifier.otpWithoutNotify = widget.userData?.otp;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -37,12 +49,31 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             padding: const EdgeInsets.only(top: 25),
             child: Column(
               children: [
-                getOtp(),
+                getOtpO(),
                 getPersonalInfo(),
                 getButton(context,number,code)
               ],
             ),
           )),
+    );
+  }
+
+
+  Widget getOtpO(){
+    return OTPTextField(
+      width: MediaQuery.of(context).size.width,
+      textFieldAlignment: MainAxisAlignment.spaceAround,
+      fieldWidth: 30,
+      otp: _otpNotifier.otp,
+      fieldStyle: FieldStyle.underline,
+      style: TextStyle(fontSize: 17),
+      onCompleted: (pin) {
+        _otpNotifier.otpWithoutNotify = pin;
+        print("Completed: " + pin);
+      },
+      onChanged: (value) {
+        _otpNotifier.otpWithoutNotify = value;
+      },
     );
   }
 }
@@ -235,6 +266,10 @@ final repasswordField = TextFormField(
     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
   ),
 );
+
+
+
+
 String otp="";
 final    otpField = TextFormField(
   cursorColor: colorPrimary,
@@ -281,4 +316,15 @@ final    otpField = TextFormField(
   ),
 );
 
+class OTPNotifier extends ChangeNotifier {
+  String _otp;
+  String get otp => _otp;
+  set otp(String otp2) {
+    _otp = otp2;
+    notifyListeners();
+  }
 
+  set otpWithoutNotify(String otp) {
+    _otp = otp;
+  }
+}

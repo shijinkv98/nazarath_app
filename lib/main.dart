@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/Splash.dart';
+import 'package:nazarath_app/screens/register/otp.dart';
 import 'package:provider/provider.dart';
 
 import 'helper/constants.dart';
@@ -53,9 +54,14 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => DashBoardUpdateNotifier(),
           ),
+
           ChangeNotifierProvider(
             create: (context) => WishListUpdatedNotifier(),
           ),
+
+          ChangeNotifierProvider(
+              create: (context) => OTPNotifier()
+          )
         ],
     child: MaterialApp(
         debugShowCheckedModeBanner: false,

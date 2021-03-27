@@ -565,12 +565,11 @@ Widget getDiscountButton(BuildContext context,Widget widget)
         children: [
           Container(
             height: 40,
+            padding:EdgeInsets.symmetric(vertical: 8,horizontal: 10),
             width: MediaQuery.of(context).size.width*0.70,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: couponField,
+              child: getCoupon(),
             ),
-          ),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
@@ -604,54 +603,63 @@ Widget getDiscountButton(BuildContext context,Widget widget)
   );
 }
 String coupon;
-final couponField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (value) {
-    coupon = value;
-  },
-  // style: style,
-  // validator: (value) {
-  //   if (value.trim().isEmpty) {
-  //     return 'This field is required';
-  //   } else {
-  //     return null;
-  //   }
-  // },
-  keyboardType: TextInputType.text,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    hintText: "Discount code ", hintStyle: TextStyle(color: textColor ,fontSize: 12),
-    // labelText: 'Discount code',
-    // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide.none,
-
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.transparent),
-    ),
-
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response,var login_data)
-{
+Widget getCoupon() {
   return Container(
-    color: product_bg,
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 40,right: 40,top:15,bottom: 15),
-          color: colorPrimary,
-          child: GestureDetector(
+    height: 40,
 
-            onTap: (){
-              if(login_data.guest_id != null && login_data.guest_id.length>0)
-                          gotoLogin(context);
-              else
+  child:
+    TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onSaved: (value) {
+      coupon = value;
+    },
+    // style: style,
+    // validator: (value) {
+    //   if (value.trim().isEmpty) {
+    //     return 'This field is required';
+    //   } else {
+    //     return null;
+    //   }
+    // },
+    keyboardType: TextInputType.text,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      hintText: "Discount code ",
+      hintStyle: TextStyle(color: textColor, fontSize: 12),
+      // labelText: 'Discount code',
+      // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide.none,
+
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+      ),
+
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+    )
+
+  );
+}
+  Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response,var login_data)
+  {
+    return Container(
+      color: product_bg,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 40,right: 40,top:15,bottom: 15),
+            color: colorPrimary,
+            child: GestureDetector(
+
+              onTap: (){
+                if(login_data.guest_id != null && login_data.guest_id.length>0)
+                  gotoLogin(context);
+                else
                 {
                   if(homeResponse.address==null) {
                     Navigator.push(
@@ -660,52 +668,52 @@ Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse respo
                     );
                   }
                   else
-                    {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
-                      );
-                    }
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CheckoutScreen(response)),
+                    );
+                  }
                 }
-            },
+              },
               child: Text(
-                        "Place Order",
-                        style: TextStyle(
-                            color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
+                "Place Order",
+                style: TextStyle(
+                    color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
 
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-  // return Container(
-  //
-  //   child: GestureDetector(
-  //       onTap: () {
-  //
-  //       },
-  //       child: Container(
-  //         padding: EdgeInsets.fromLTRB(10, 10,10, 10),
-  //         width:200,
-  //         decoration: BoxDecoration(
-  //             color: colorPrimary,
-  //             borderRadius:  BorderRadius.circular(3)),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: [
-  //             Center(child:  Text(
-  //               "Place Order",
-  //               style: TextStyle(
-  //                   color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
-  //             )
-  //           ],
-  //         ),
-  //       )
-  //   ),
-  // );
-}
-Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
-{
+        ],
+      ),
+    );
+    // return Container(
+    //
+    //   child: GestureDetector(
+    //       onTap: () {
+    //
+    //       },
+    //       child: Container(
+    //         padding: EdgeInsets.fromLTRB(10, 10,10, 10),
+    //         width:200,
+    //         decoration: BoxDecoration(
+    //             color: colorPrimary,
+    //             borderRadius:  BorderRadius.circular(3)),
+    //         child: Column(
+    //           crossAxisAlignment: CrossAxisAlignment.center,
+    //           children: [
+    //             Center(child:  Text(
+    //               "Place Order",
+    //               style: TextStyle(
+    //                   color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+    //             )
+    //           ],
+    //         ),
+    //       )
+    //   ),
+    // );
+  }
+  Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
+  {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -721,7 +729,7 @@ Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
               "Order Summary",
               textAlign: TextAlign.start,
               style: TextStyle(
-                  color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
+                color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
             ),
           ),
 
@@ -732,75 +740,76 @@ Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
 
       ),
     );
-}
-Widget getTextContainer(String title, String value,String style,Color color1,Color color2,String type)
-{
-
-  return Container(
-
-    padding:EdgeInsets.only(left: 10,right: 10,top: 15) ,
-    color: Colors.white,
-    child: Column(
-      children: [
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getText(title, color1, 12, type, style,TextAlign.start),
-                getText(value, color2, 12, type, style,TextAlign.end)
-
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Divider(
-          height: 1,
-        )
-      ],
-    ),
-  );
-}
-Future<String>addtoCartReferesh(String slug,String store,BuildContext context,Widget widget,String quantity) async {
-
-  Map body = {
-    "slug":slug,
-    "quantity":quantity,
-    "store":store
-  };
-  CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/en", body);
-
-  if (cartResponse != null) {
-    // ApiCall().showToast(cartResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
   }
-  return "Success!";
-}
-Text getText(String title,Color color,double size,String type,String style,TextAlign alignment)
-{
-  if(type=="title")
-    size=14.0;
-  if(style=="bold") {
+  Widget getTextContainer(String title, String value,String style,Color color1,Color color2,String type)
+  {
+
+    return Container(
+
+      padding:EdgeInsets.only(left: 10,right: 10,top: 15) ,
+      color: Colors.white,
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getText(title, color1, 12, type, style,TextAlign.start),
+                  getText(value, color2, 12, type, style,TextAlign.end)
+
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Divider(
+            height: 1,
+          )
+        ],
+      ),
+    );
+  }
+  Future<String>addtoCartReferesh(String slug,String store,BuildContext context,Widget widget,String quantity) async {
+
+    Map body = {
+      "slug":slug,
+      "quantity":quantity,
+      "store":store
+    };
+    CartResponse cartResponse = await ApiCall()
+        .execute<CartResponse, Null>("cart/add/en", body);
+
+    if (cartResponse != null) {
+      // ApiCall().showToast(cartResponse.message);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => widget));
+    }
+    return "Success!";
+  }
+  Text getText(String title,Color color,double size,String type,String style,TextAlign alignment)
+  {
+    if(type=="title")
+      size=14.0;
+    if(style=="bold") {
+      return
+        Text(
+            title,
+            textAlign: alignment,
+            style: TextStyle(
+                color: color, fontSize: size, fontWeight: FontWeight.bold));
+    }
     return
       Text(
           title,
-          textAlign: alignment,
           style: TextStyle(
-            color: color, fontSize: size, fontWeight: FontWeight.bold));
+              color: color, fontSize: size));
   }
-  return
-    Text(
-        title,
-        style: TextStyle(
-          color: color, fontSize: size));
-}
+
 ///

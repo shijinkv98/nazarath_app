@@ -165,7 +165,8 @@ class _RegisterState extends State<Register> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: colorPrimary),
         ),
-        prefixIcon: new IconButton(
+        prefixIcon:
+        new IconButton(
           icon: new Image.asset(
             'assets/icons/call.png',
             width: register_icon_size,

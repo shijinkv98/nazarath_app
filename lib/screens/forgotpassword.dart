@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
@@ -62,32 +63,46 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Colors.white)),
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-
-              }
-
-
-              Map body={
-                "email":phoneNo,
-                "phone_country_code":"+91"
-              };
-              FocusScope.of(context).requestFocus(FocusNode());
-
-              var response = await ApiCall()
-                  .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
-
-              if (response!= null) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phoneNo ,)));
-              }
-            }
+            onPressed: (){
+              showToastMessage('Mobile number not Registered with us');
+            },
+            // onPressed: () async {
+            //   if (_formKey.currentState.validate()) {
+            //     _formKey.currentState.save();
+            //
+            //   }
+            //
+            //
+            //   Map body={
+            //     "email":phoneNo,
+            //     "phone_country_code":"+91"
+            //   };
+            //   FocusScope.of(context).requestFocus(FocusNode());
+            //
+            //   var response = await ApiCall()
+            //       .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
+            //
+            //   if (response!= null) {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phoneNo ,)));
+            //   }
+            // }
 
         ),
       ),
+    );
+  }
+  void showToastMessage(String message){
+    Fluttertoast.showToast(
+        msg: message, //message to show toast
+        toastLength: Toast.LENGTH_LONG, //duration for message to show
+        gravity: ToastGravity.CENTER, //where you want to show, top, bottom
+        timeInSecForIosWeb: 1, //for iOS only
+        //backgroundColor: Colors.red, //background Color for message
+        textColor: Colors.grey, //message text color
+        fontSize: 16.0 //message font size
     );
   }
   @override
@@ -163,7 +178,7 @@ final phoneField = TextFormField(
   textInputAction: TextInputAction.next,
   decoration: InputDecoration(
     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Enter Registered Phone Number", hintStyle: TextStyle(color: textColorSecondary),
+    hintText: "Phone Number", hintStyle: TextStyle(color: textColorSecondary),
     labelText: 'Phone Number',
     prefixText: "971",
     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
@@ -175,9 +190,10 @@ final phoneField = TextFormField(
     ),
 
 
-    prefixIcon: new IconButton(
+    prefixIcon:
+    new IconButton(
       icon: new Image.asset(
-        'assets/icons/user.png',
+        'assets/icons/call.png',
         width: register_icon_size,
         height: register_icon_size,
       ),
