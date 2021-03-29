@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
-import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/Splash.dart';
 import 'package:nazarath_app/screens/register/otp.dart';
 import 'package:provider/provider.dart';
