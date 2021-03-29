@@ -105,12 +105,12 @@ class _OTPTextFieldState extends State<OTPTextField> {
 
     return Theme(
       data: new ThemeData(
-        primaryColor: Colors.black,
+        primaryColor: colorPrimary,
       ),
       child: Container(
         width: widget.fieldWidth,
         child: TextField(
-          cursorColor: Colors.black38,
+          cursorColor: colorPrimary,
           controller: _textControllers[i],
           keyboardType: widget.keyboardType,
           textAlign: TextAlign.center,
@@ -123,6 +123,8 @@ class _OTPTextFieldState extends State<OTPTextField> {
               border: widget.fieldStyle == FieldStyle.box
                   ? OutlineInputBorder(borderSide: BorderSide(width: 2.0))
                   : null,
+              hoverColor:colorPrimary ,
+              fillColor:colorPrimary,
               focusColor: colorPrimary),
           onChanged: (String str) {
             // Check if the current value at this position is empty

@@ -152,7 +152,7 @@ Container getEmptyContainerNews(BuildContext context)
             ),
             Center(
               child: Text(
-                "No Details    Available",
+                "No Details Available",
                 style: TextStyle(
                     color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
               ),

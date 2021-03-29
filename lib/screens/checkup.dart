@@ -29,6 +29,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
   DateTime selectedDate = DateTime.now();
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  final GlobalKey<FormState> _checkUpForms = GlobalKey<FormState>();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -88,10 +89,13 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 10, left: 22, right: 22),
-                    child: Column(
-                      children: [
-                        mobileNumberField,
-                      ],
+                    child: Form(
+                      key: _checkUpForms,
+                      child: Column(
+                        children: [
+                          mobileNumberField,
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -161,13 +165,16 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: Colors.white)),
-                      onPressed: () {
+                      onPressed: () async {
+                        if (_checkUpForms.currentState.validate()) {
+                          _checkUpForms.currentState.save();
 
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => ,
-                        // );
-                      },
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => ,
+                          // );
+                        }
+                      }
                     ),
                   ),
                 ),
