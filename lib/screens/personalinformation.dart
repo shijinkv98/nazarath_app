@@ -20,7 +20,7 @@ class PersonalInfoScreen extends StatefulWidget {
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   String title;
   _PersonalInfoScreenState({ this.title}) ;
-  var customer;
+  UserData customer;
 
   @override
   void initState() {
@@ -31,13 +31,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   }
   Future<void> getData()
   async {
-    customer=await ApiCall().getUser();
-    if(customer!=null)
-      {
-        email=customer.email;
-        username=customer.name;
-        phonenumber=customer.mobile;
-      }
+
+    ApiCall().getUser().then((UserData data){
+      customer=data;
+      email=customer.email;
+      username=customer.name;
+      phonenumber=customer.mobile;
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: customer!=null?SingleChildScrollView(
+      body:SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 25),
             child: Column(
@@ -60,7 +61,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 getButton(context,customer)
               ],
             ),
-          )):CircularProgressIndicator(),
+          )),
     );
   }
 }

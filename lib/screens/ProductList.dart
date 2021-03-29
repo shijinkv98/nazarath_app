@@ -331,7 +331,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                 onTap:(){  Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ProductScreen(slug, by,"price","desc",filter,query)),
+                      ProductScreen(slug, by,"price","asc",filter,query)),
                 );
                 },
                 child: Container(
@@ -357,7 +357,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                 onTap:(){  Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ProductScreen(slug, by,"price","asc",filter,query)),
+                      ProductScreen(slug, by,"price","desc",filter,query)),
                 );
                 },
                 child: Container(
@@ -818,7 +818,7 @@ Widget _itemsBuilder(Data item,BuildContext context,Widget widget) {
 
                                             ),
                                             onPressed: (){
-                                              addtoCart(item.slug, item.store, context, widget,"1");}
+                                              addtoCart(item.slug, item.storeslug, context, widget,"1");}
                                         ),
                                       ]
                                   ))

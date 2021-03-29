@@ -139,7 +139,7 @@ Widget getProductDetailsValue(ProductDetailsResponse response,BuildContext conte
         getProductDetails(response.product),
         getSpecifications(response.product.sizeChart,response.product.options, context, widget),
 
-        getButtons(context, widget, slug, response.product.store, "1"),
+        getButtons(context, widget, slug, response.product.storeslug, "1"),
         getProductDescription(response.product.description),
         getRecommended(homeResponse.recommendedProducts,widget),
       ],

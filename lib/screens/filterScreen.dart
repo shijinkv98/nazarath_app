@@ -199,7 +199,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
     filterPrice=getFilterPrice(listFilters);
     Filters filter2=getFilter(1, listFilters);
     Filters filter3=getFilter(2, listFilters);
-    Filters filter4=getFilter(3, listFilters);
+  //  Filters filter4=getFilter(3, listFilters);
    return SafeArea(
         child: Container(
           color: product_bg,
@@ -243,13 +243,13 @@ class _FilterScreeenState extends State<FilterScreeen> {
                       Tab(child: Text(filterPrice.text)),
                       Tab(child: Text(filter2.text)),
                       Tab(child: Text(filter3.text)),
-                      Tab(child: Text(filter4.text)),
+                      //Tab(child: Text(filter4.text)),
                     ],
                     contents: <Widget>[
                       Container(color:Colors.white,child: _rangeSlider()),
                       Container(color:Colors.white,child: _listviewFilCat(filter2.values,context)),
                       Container(color:Colors.white,child: _listviewFilCat(filter3.values,context)),
-                      Container(color:Colors.white,child: _listviewFilCat(filter4.values,context)),
+                      //Container(color:Colors.white,child: _listviewFilCat(filter4.values,context)),
 
                     ],
                   ),

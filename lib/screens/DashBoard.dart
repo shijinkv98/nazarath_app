@@ -463,15 +463,15 @@ class _DashBoard extends State<DashBoard> {
                         children:[ Align(
                             alignment: Alignment.center,
                             child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12),
-                            child: Align(
-                                alignment: Alignment.topRight,
-                                child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
-                                    radius:7,
-                                    backgroundColor: Colors.white,
-                                    child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                          )
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 12),
+                          //   child: Align(
+                          //       alignment: Alignment.topRight,
+                          //       child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
+                          //           radius:7,
+                          //           backgroundColor: Colors.white,
+                          //           child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                          // )
                         ]),
                   ),
                 )
@@ -493,15 +493,15 @@ class _DashBoard extends State<DashBoard> {
                       children:[ Align(
                         alignment:Alignment.center,
                           child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: Align(
-                            alignment: Alignment.topRight,
-                            child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
-                                radius:7,
-                                backgroundColor: Colors.white,
-                                child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 12),
+                      //   child: Align(
+                      //       alignment: Alignment.topRight,
+                      //       child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
+                      //           radius:7,
+                      //           backgroundColor: Colors.white,
+                      //           child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                      // ),
               ]
                     )
 
@@ -525,15 +525,15 @@ class _DashBoard extends State<DashBoard> {
                           alignment: Alignment.center,
 
                           child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: Align(
-                              alignment: Alignment.topRight,
-                              child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
-                                  radius:7,
-                                  backgroundColor: Colors.white,
-                                  child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 12),
+                        //   child: Align(
+                        //       alignment: Alignment.topRight,
+                        //       child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
+                        //           radius:7,
+                        //           backgroundColor: Colors.white,
+                        //           child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                        // )
 
                       ]),
                 ),

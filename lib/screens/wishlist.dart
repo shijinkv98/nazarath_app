@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
-import 'package:nazarath_app/network/response/CouponResponse.dart';
-import 'dart:convert';
+// import 'package:nazarath_app/network/response/CouponResponse.dart';
+// import 'dart:convert';
 
 import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/notifiers/wishlistnotifier.dart';
+import 'package:provider/provider.dart';
 
 import 'DashBoard.dart';
 import 'ProductDetails.dart';
@@ -30,6 +32,7 @@ class _WishListState extends State<WishListScreen> {
   List data;
   List<Products> products;
   WishListResponse wishlistresponse;
+  WishListUpdatedNotifier _updateNotifier;
   Future<String> getData() async {
 
     Map body = {
@@ -44,11 +47,18 @@ class _WishListState extends State<WishListScreen> {
     }
     return "Success!";
   }
-
+  @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
+  }
   @override
   void initState() {
-    super.initState();
+    _updateNotifier =
+        Provider.of<WishListUpdatedNotifier>(context, listen: false);
     this.getData();
+    super.initState();
+
   }
 
   @override
@@ -127,23 +137,20 @@ class _WishListState extends State<WishListScreen> {
           ],
         ),
 
-    body: FutureBuilder<WishListResponse>(
-    future: ApiCall()
-        .execute<WishListResponse, Null>('wishlist/en', null),
-    builder: (context, snapshot) {
-    if (snapshot.hasData) {
-    ////debugPrint('products size: ${snapshot.data?.products?.length}');
-    return getWishListFull(snapshot.data?.products
-        ?.where((element) =>
-    element != null )
-        ?.toList(),context,super.widget);
-    } else if (snapshot.hasError) {
-    return getEmptyContainerWishlist(context);
-    } else {
-    return progressBar;
-    }
-    },
-    ),
+      body: FutureBuilder<WishListResponse>(
+        future: ApiCall()
+            .execute<WishListResponse, Null>('wishlist/en', null),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            ////debugPrint('products size: ${snapshot.data?.products?.length}');
+            return getWishListFullView(snapshot.data);
+          } else if (snapshot.hasError) {
+            return getEmptyContainerWishlist(context);
+          } else {
+            return progressBar;
+          }
+        },
+      ),
     );
     // return new Scaffold(
     //   appBar: new AppBar(
@@ -157,330 +164,354 @@ class _WishListState extends State<WishListScreen> {
     //   ),
     // );
   }
-}
+  Widget _listview(List<Products> products) => ListView.builder(
+      padding: EdgeInsets.only(bottom: 70),
+      itemBuilder: (context, index) =>
+          _itemsBuilder(products[index]),
 
-Widget _listview(List<Products> products,BuildContext context,Widget widget) => ListView.builder(
-    padding: EdgeInsets.only(bottom: 70),
-    itemBuilder: (context, index) =>
-        _itemsBuilder(products[index],context,widget),
+      itemCount: products.length);
 
-    itemCount: products.length);
+  Widget _itemsBuilder(Products product) {
+    bool status = false;
 
-Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
-  bool status = false;
-
-  return GestureDetector(
-      onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.slug)),
-    );
-  },
-  child:
-  Container(
-    margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
-    padding: EdgeInsets.only(bottom: 10),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 1.0,
-          )]
-    ),
-    child: Column(
-      children: [
-        Padding(
-          padding:
-          EdgeInsets.fromLTRB(padding, padding, 0, 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProductDetailsScreen(product.slug)),
+          );
+        },
+        child:
+        Container(
+          margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
+          padding: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 1.0,
+                )]
+          ),
+          child: Column(
             children: [
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/images/no_image.png',
-                image: '$productThumbUrl${product.image}',
-                width: 120,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding:
+                EdgeInsets.fromLTRB(padding, padding, 0, 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      padding:EdgeInsets.only(right:10),
-                      child: Text(
-                        product.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500,height: 1.3),
+                    FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/no_image.png',
+                      image: '$productThumbUrl${product.image}',
+                      width: 120,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding:EdgeInsets.only(right:10),
+                            child: Text(
+                              product.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.black,fontSize: 12, fontWeight: FontWeight.w500,height: 1.3),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
+                                  color: colorRed,fontSize: 11,fontWeight: FontWeight.w500)),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
+                                  color: Colors.grey,fontSize: 11,decoration: TextDecoration.lineThrough)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              BagButton(product.slug, product.storeslug),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              removeButton(product.slug, product.storeslug),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Text('${product.symbolLeft}${" "}${product.price}${product.symbolRight}',style: TextStyle(
-                            color: colorRed,fontSize: 11,fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text('${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',style: TextStyle(
-                            color: Colors.grey,fontSize: 11,decoration: TextDecoration.lineThrough)),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        BagButton(product.slug, product.store, context, widget),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        removeButton(product.slug, product.store, context, widget),
-                      ],
-                    )
+
                   ],
+
                 ),
+
               ),
+
+
+
 
             ],
-
           ),
-
-        ),
-
-
-
-
-      ],
-    ),
-  )
-  );
-}
-
-Future<String>removeFromWishList(String slug,String store,BuildContext context,Widget widget) async {
-
-  Map body = {
-    "slug":slug,
-    "quantity":"0",
-    "store":store
-  };
-  WishListResponse wishlistresponse = await ApiCall()
-      .execute<WishListResponse, Null>("wishlist/add/en", body);
-
-  if (wishlistresponse != null) {
-    ApiCall().showToast(wishlistresponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+        )
+    );
   }
-  return "Success!";
-}
-Future<String> movetoCart(String slug,String store,BuildContext context,Widget widget) async {
 
-  Map body = {
-    "slug":slug,
-    "quantity":"1",
-  "store":store
-  };
-  WishListResponse wishlistresponse = await ApiCall()
-      .execute<WishListResponse, Null>("wishlist/move/en", body);
+  Future<String>removeFromWishList(String slug,String store) async {
 
-  if (wishlistresponse != null) {
-    ApiCall().showToast(wishlistresponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    Map body = {
+      "slug":slug,
+      "quantity":"0",
+      "store":store
+    };
+    WishListResponse wishlistresponse = await ApiCall()
+        .execute<WishListResponse, Null>("wishlist/add/en", body);
+
+    if (wishlistresponse != null) {
+      ApiCall().showToast(wishlistresponse.message);
+      _updateNotifier.wishListResponse=wishlistresponse;
+
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => widget));
+    }
+    return "Success!";
   }
-  return "Success!";
-}
+  Future<String> movetoCart(String slug,String store) async {
 
-Container getWishListFull(List<Products> products,BuildContext context,Widget widget)
-{
-  if(products==null)
-    return getEmptyContainerWishlist(context);
-  else if(products.length==0)
-    return getEmptyContainerWishlist(context);
-  return Container(
-    child: Container(width: double.infinity,
-      child: Column(
+    Map body = {
+      "slug":slug,
+      "quantity":"1",
+      "store":store
+    };
+    WishListResponse wishlistresponse = await ApiCall()
+        .execute<WishListResponse, Null>("wishlist/move/en", body);
 
-        children: [
-          getTopContainer(),
-          Flexible(
-            child: _listview(products,context,widget),
+    if (wishlistresponse != null) {
+      ApiCall().showToast(wishlistresponse.message);
+      getWishListResponse();
+    //  _updateNotifier.wishListResponse=wishlistresponse;
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => widget));
+    }
+    return "Success!";
+  }
 
-          ),
-        ],
-      ),
-
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-
-}
-Container getTopContainer()
-{
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
-                child: Container(
-                    height: 130,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fitWidth,
-                        )
-                    )
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "WishList",
-            style: TextStyle(
-                color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    ),
-  );
-
-}
-GestureDetector BagButton(String slug,String store,BuildContext context,Widget widget)
-{
-  return GestureDetector(
-      onTap: () {
-        movetoCart(slug,store,context,widget);
+  Widget getWishListFullView(WishListResponse response)
+  {
+    _updateNotifier.wishListResponse=response;
+    return Consumer<WishListUpdatedNotifier>(
+      builder: (context, value, child) {
+        return value.wishListResponse!=null ? getWishListFull(value.wishListResponse.products) : SizedBox();
       },
-      child: Container(
-        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-        decoration: BoxDecoration(
-          color: colorPrimary,
-            border: Border.all(width: 0.5, color:Colors.grey[500]),
-            borderRadius:  BorderRadius.circular(2)),
-        child: Row(
+    );
+  }
+  Widget getWishListFull(List<Products> products)
+  {
+    if(products==null)
+      return getEmptyContainerWishlist(context);
+    else if(products.length==0)
+      return getEmptyContainerWishlist(context);
+    return Container(
+      child: Container(width: double.infinity,
+        child: Column(
+
           children: [
-            Image.asset("assets/icons/bag.png",height: 18,),
-            Text(
-              "Move to bag",
-              style: TextStyle(
-                  color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
-            )
+            getTopContainer(),
+            Flexible(
+              child: _listview(products),
+
+            ),
           ],
         ),
-      )
-  );
 
-}
-GestureDetector removeButton(String slug,String store,BuildContext context,Widget widget)
-{
-  return GestureDetector(
-      onTap: () {
-        removeFromWishList(slug,store,context,widget);
-  },
-  child: Container(
-    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-    decoration: BoxDecoration(
-        border: Border.all(width: 1, color:colorPrimary),
-    borderRadius:  BorderRadius.circular(2)),
-      child: Row(
+      ),
+    );
+    //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+
+  }
+  Widget getTopContainer()
+  {
+    return Container(
+      child: Column(
         children: [
-          Image.asset("assets/icons/remove.png",width: 18,),
-          Text(
-            "Remove",
-            style: TextStyle(
-                color: Colors.grey[500],fontSize: 12,fontWeight: FontWeight.bold),
-          )
+          Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: colorPrimary,
+                    borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
+                  child: Container(
+                      height: 130,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/icons/inner_banner.png"),
+                            fit: BoxFit.fitWidth,
+                          )
+                      )
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Text(
+              "WishList",
+              style: TextStyle(
+                  color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
-  )
-  );
+    );
 
-}
-Container getEmptyContainerWishlist(BuildContext context)
-{
-  return Container(
-      height: double.infinity,
-      child: Center(
-        child:Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Image.asset(
-                "assets/icons/empty_cart.png",height: 50,),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Text(
-                "Your WishList is Empty",
+  }
+  Widget BagButton(String slug,String store)
+  {
+    return GestureDetector(
+        onTap: () {
+          movetoCart(slug,store);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+          decoration: BoxDecoration(
+              color: colorPrimary,
+              border: Border.all(width: 0.5, color:Colors.grey[500]),
+              borderRadius:  BorderRadius.circular(2)),
+          child: Row(
+            children: [
+              Image.asset("assets/icons/bag.png",height: 18,),
+              Text(
+                "Move to bag",
                 style: TextStyle(
-                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+                    color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        )
+    );
+
+  }
+  Widget removeButton(String slug,String store)
+  {
+    return GestureDetector(
+        onTap: () {
+          removeFromWishList(slug,store);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color:colorPrimary),
+              borderRadius:  BorderRadius.circular(2)),
+          child: Row(
+            children: [
+              Image.asset("assets/icons/remove.png",width: 18,),
+              Text(
+                "Remove",
+                style: TextStyle(
+                    color: Colors.grey[500],fontSize: 12,fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        )
+    );
+
+  }
+  Widget getEmptyContainerWishlist(BuildContext context)
+  {
+    return Container(
+        height: double.infinity,
+        child: Center(
+          child:Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/icons/empty_cart.png",height: 50,),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Material(
-                elevation: 0.0,
-                borderRadius: BorderRadius.circular(5.0),
-                color: colorPrimary,
-                child: MaterialButton(
-                  minWidth: 100,
-                  padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DashBoard()),);
-                  },
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "Your WishList is Empty",
+                  style: TextStyle(
+                      color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Material(
+                  elevation: 0.0,
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: colorPrimary,
+                  child: MaterialButton(
+                    minWidth: 100,
+                    padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DashBoard()),);
+                    },
 
-                  child: Text("Continue Shopping",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
-                )
-            ),
-          ],),
-      )
-  );
+                    child: Text("Continue Shopping",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
+                  )
+              ),
+            ],),
+        )
+    );
 
 
 
+  }
+
+  Future<void> getWishListResponse() async {
+    var response = await ApiCall()
+        .execute<WishListResponse, Null>("wishlist/en", null);
+    if(response!=null)
+    {
+      _updateNotifier.wishListResponse=response;
+
+    }
+  }
 }
+
+
 
 ///
