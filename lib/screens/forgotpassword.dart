@@ -86,7 +86,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phoneNo ,)));
+                        builder: (BuildContext context) => ResetPasswordScreen(code: "+91",number:phoneNo ,id:"",)));
               }
             }
 

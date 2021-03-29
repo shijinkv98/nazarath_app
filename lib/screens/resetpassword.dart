@@ -6,6 +6,7 @@ import 'package:nazarath_app/helper/constants.dart';
 // import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/forgotresponse.dart';
+import 'package:nazarath_app/network/response/resetpasswordresponse.dart';
 // import 'package:nazarath_app/screens/changePassword.dart';
 import 'package:nazarath_app/screens/login.dart';
 // import 'package:nazarath_app/screens/notification.dart';
@@ -16,16 +17,16 @@ import 'DashBoard.dart';
 import 'cart.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  String code, number;
-  ResetPasswordScreen({this.code,this.number});
+  String code, number,id;
+  ResetPasswordScreen({this.code,this.number,this.id});
   @override
-  _ResetPasswordScreenState createState() => new _ResetPasswordScreenState(code: code,number: number);
+  _ResetPasswordScreenState createState() => new _ResetPasswordScreenState(code: code,number: number,id: id);
 }
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  String code, number;
+  String code, number,id;
   OTPNotifier _otpNotifier;
   final GlobalKey<FormState> _otpKey = GlobalKey<FormState>();
-  _ResetPasswordScreenState({ this.code,this.number}) ;
+  _ResetPasswordScreenState({ this.code,this.number,this.id}) ;
 
   @override
   void initState() {
@@ -125,8 +126,18 @@ Widget getResendOtp(){
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           InkWell(
-              onTap:(){
+              onTap:() async {
+                Map body={
+                  "email":number,
+                  "phone_country_code":"+91"
+                };
+                FocusScope.of(context).requestFocus(FocusNode());
 
+                 ApiCall()
+                    .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body).then((ResetPasswordResponse data){
+                      ApiCall().showToast(data.message);
+
+                });
               },
               child: Text('Resend Otp',style: TextStyle(color: Colors.black,fontSize: 12),)),
         ],
