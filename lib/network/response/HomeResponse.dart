@@ -823,6 +823,7 @@ class Newarrivals {
   String discount;
   String image;
 
+
   Newarrivals(
       {this.slug,
         this.name,
@@ -838,7 +839,7 @@ class Newarrivals {
   Newarrivals.fromJson(Map<String, dynamic> json) {
     slug = json['slug'];
     name = json['name'];
-    store = json['store'];
+    store = json['storeslug'];
     manufacturer = json['manufacturer'];
     symbolLeft = json['symbol_left'];
     symbolRight = json['symbol_right'];
@@ -906,7 +907,7 @@ class RecommendedProducts {
     name = json['name'];
     description = json['description'];
     appDescription = json['app_description'];
-    store = json['store'];
+    store = json['storeslug'];
     manufacturer = json['manufacturer'];
     symbolLeft = json['symbol_left'];
     symbolRight = json['symbol_right'];
@@ -983,7 +984,7 @@ class FeaturedProducts {
     name = json['name'];
     description = json['description'];
     appDescription = json['app_description'];
-    store = json['store'];
+    store = json['storeslug'];
     manufacturer = json['manufacturer'];
     symbolLeft = json['symbol_left'];
     symbolRight = json['symbol_right'];
