@@ -23,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'changePassword.dart';
 import 'home.dart';
+import 'language_constants.dart';
 import 'news.dart';
 import 'notification.dart';
 import 'order.dart';
@@ -331,7 +332,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('Stores',style:TextStyle(color:Colors.white),)
+                              Text(getTranslated(context, 'stores'),style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           tbPosition=2;

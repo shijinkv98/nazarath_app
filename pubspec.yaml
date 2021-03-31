@@ -159,6 +159,11 @@ flutter:
     - assets/icons/delivery_icon.png
     - assets/icons/processed.png
     - assets/icons/un_processed.png
+    - lib/lang/ar.json
+    - lib/lang/en.json
+
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
