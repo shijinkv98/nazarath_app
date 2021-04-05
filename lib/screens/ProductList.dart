@@ -19,16 +19,7 @@ import 'package:nazarath_app/screens/wishlist.dart';
 import 'custom/wishlist_product.dart';
 import 'home.dart';
 
-// void main() {
-//   runApp(Product(
-//     items: List<ListItem>.generate(
-//       1000,
-//           (i) => i % 6 == 0
-//           ? HeadingItem("Heading $i")
-//           : MessageItem("Sender $i", "Message body $i"),
-//     ),
-//   ));
-// }
+
 class ProductScreen extends StatefulWidget {
   String slug="";
   String by="name";
@@ -200,17 +191,7 @@ class _ProductState extends State<ProductScreen> {
       ),
       // bottomNavigationBar: get,
     );
-    // return new Scaffold(
-    //   appBar: new AppBar(
-    //     title: new Text("Listviews"),
-    //   ),
-    //   body: new ListView.builder(
-    //     itemCount: products == null ? 0 : products.length,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return new Text(products[index].name);
-    //     },
-    //   ),
-    // );
+
   }
 }
 Widget getProductViews(List<Data> products,BuildContext context,Widget widget,String by,String sortBy,String sortOrder,String filter,String query,String slug)

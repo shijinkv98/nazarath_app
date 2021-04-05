@@ -3,24 +3,23 @@ import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
-import 'package:nazarath_app/screens/notification.dart';
-
-import 'DashBoard.dart';
-import 'cart.dart';
+import 'package:nazarath_app/network/response/ProfileResponse.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   String title;
-  PersonalInfoScreen(String title)
+  ProfileResponse customer;
+  PersonalInfoScreen(String title,ProfileResponse customer)
   {
     this.title=title;
+    this.customer=customer;
   }
   @override
-  _PersonalInfoScreenState createState() => new _PersonalInfoScreenState(title: title);
+  _PersonalInfoScreenState createState() => new _PersonalInfoScreenState(title: title,customer:customer);
 }
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   String title;
-  _PersonalInfoScreenState({ this.title}) ;
-  UserData customer;
+  _PersonalInfoScreenState({ this.title,this.customer}) ;
+  ProfileResponse customer;
 
   @override
   void initState() {
@@ -31,13 +30,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   }
   Future<void> getData()
   async {
-
-    ApiCall().getUser().then((UserData data){
-      customer=data;
-      email=customer.email;
-      username=customer.name;
-      phonenumber=customer.mobile;
-    });
+    email=customer.email;
+    username=customer.name;
+    phonenumber=customer.phoneNumber;
+    // ApiCall().getUser().then((UserData data){
+    //   customer=data;
+    //   email=customer.email;
+    //   username=customer.name;
+    //   phonenumber=customer.mobile;
+    // });
 
   }
   @override

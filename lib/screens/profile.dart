@@ -5,21 +5,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter/gestures.dart';
+
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/ProfileResponse.dart';
-import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
-import 'package:nazarath_app/screens/TrackingMain.dart';
+
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/personalinformation.dart';
-import 'package:nazarath_app/screens/privacy_policy.dart';
+
 import 'package:nazarath_app/screens/refertofriends.dart';
 import 'package:nazarath_app/screens/savedpower.dart';
-import 'package:nazarath_app/screens/tracking.dart';
+
 import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
-import 'package:nazarath_app/screens/writereview.dart';
+
 import 'DashBoard.dart';
 import 'changePassword.dart';
 import 'order.dart';
@@ -33,7 +32,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   var customer;
   var login_data;
-
+ProfileResponse profileResponse;
   @override
   void initState() {
     getHomeData(context);
@@ -44,6 +43,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> getHomeData(BuildContext context)
   async {
+
     customer=await ApiCall().getUser();
     login_data=await ApiCall().getLoginResponse();
   }
@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
             .execute<ProfileResponse, Null>('my-profile/en', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            ProfileResponse profileResponse=snapshot.data;
+            profileResponse=snapshot.data;
            return  SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -170,7 +170,7 @@ class _ProfileState extends State<Profile> {
                               else
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PersonalInfoScreen("")),
+                                  MaterialPageRoute(builder: (context) => PersonalInfoScreen("",profileResponse)),
                                 );
                             },
                             ),
