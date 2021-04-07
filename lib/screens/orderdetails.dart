@@ -394,74 +394,95 @@ Widget getOrderSummaryDetails(
 
 Widget getAllButton(BuildContext context, OrderDetailsScreen widget,
     ItemsNew item, int payStatus,Data data) {
+  double  count=3;
+  double width= MediaQuery.of(context).size.width;
+
+  if(item.returnPeriod == 0)
+    count--;
+  if(payStatus!=0)
+    count--;
+  double itemWidth=MediaQuery.of(context).size.width/count;
   return Container(
     color: tab_bg,
     // decoration: BoxDecoration(
     //   color: tab_bg,
     //   border: Border.all(color: item_text_gray, width: 1),
     // ),
+
     child: Column(
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               item.returnPeriod != 0
-                  ? GestureDetector(
-                      onTap: () {
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
-                        // );
-                      },
-                      child: Row(
-                        children: [
-                          getButtonDelivery(context, widget, 0, "Return",
-                              "assets/icons/return.png", item),
-                          // Container(
-                          //   width: 1,
-                          //   height: 40,
-                          //   color: item_text_gray,
-                          // ),
-                        ],
+                  ? Container(
+                width: itemWidth,
+                    child: GestureDetector(
+                        onTap: () {
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => TrackingScreen(item.id.toString())),
+                          // );
+                        },
+                        child: Row(
+                          children: [
+                            getButtonDelivery(context, widget, 0, "Return",
+                                "assets/icons/return.png", item,itemWidth),
+                            // Container(
+                            //   width: 1,
+                            //   height: 40,
+                            //   color: item_text_gray,
+                            // ),
+                          ],
+                        ),
                       ),
-                    )
+                  )
                   : Container(),
               payStatus == 0
-                  ? GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderCancelScreen(item: item,data: data,),
-                            ));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          getButtonDelivery(context, widget, 1, "Cancel",
-                              "assets/icons/remove.png", item),
-                          // Container(
-                          //   width: 1,
-                          //   height: 40,
-                          //   color: item_text_gray,
-                          // ),
-                        ],
+                  ? Container(
+                width: itemWidth,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OrderCancelScreen(item: item,data: data,),
+                              ));
+                        },
+                        child: Container(
+                          width: itemWidth,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              getButtonDelivery(context, widget, 1, "Cancel",
+                                  "assets/icons/remove.png", item,itemWidth),
+                              // Container(
+                              //   width: 1,
+                              //   height: 40,
+                              //   color: item_text_gray,
+                              // ),
+                            ],
+                          ),
+                        ),
                       ),
-                    )
+                  )
                   : Container(),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              TrackingScreen(item.id.toString())),
-                    );
-                  },
-                  child: getButtonDelivery(context, widget, 2, "Tracking",
-                      "assets/icons/location.png", item)),
+              Container(
+                width: itemWidth,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TrackingScreen(item.id.toString())),
+                      );
+                    },
+                    child: getButtonDelivery(context, widget, 2, "Tracking",
+                        "assets/icons/location.png", item,itemWidth)),
+              ),
             ],
           ),
         ),
@@ -565,9 +586,9 @@ Widget getStarRating(double rating) {
 }
 
 Widget getButtonDelivery(BuildContext context, OrderDetailsScreen widget,
-    int type, String title, String icon, ItemsNew orderdata) {
+    int type, String title, String icon, ItemsNew orderdata,double width) {
   return Container(
-    width: MediaQuery.of(context).size.width/3,
+    width: width,
     padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
     decoration:BoxDecoration(
       border: Border.all(color: item_text_gray)
