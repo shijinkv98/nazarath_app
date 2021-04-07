@@ -25,16 +25,6 @@ import 'home.dart';
 import 'notification.dart';
 import 'order.dart';
 
-// void main() {
-//   runApp(Checkout(
-//     items: List<ListItem>.generate(
-//       1000,
-//           (i) => i % 6 == 0
-//           ? HeadingItem("Heading $i")
-//           : MessageItem("Sender $i", "Message body $i"),
-//     ),
-//   ));
-// }
 class CheckoutScreen extends StatefulWidget {
   CartResponse response;
   CheckoutScreen(CartResponse response)

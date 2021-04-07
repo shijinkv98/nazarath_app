@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 class RegisterLoadingNotifier extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -23,6 +24,14 @@ class CheckBoxNotifier extends ChangeNotifier {
 class DocsAddedNotifier extends ChangeNotifier {
   bool _isAdded = false;
   bool get isAdded => _isAdded;
+  EyePowerResponse _eyePowerResponse;
+  EyePowerResponse get eyePowerResponse=>_eyePowerResponse;
+  set eyePowerResponse(EyePowerResponse response)
+  {
+    _eyePowerResponse=response;
+        _isAdded = false;
+        notifyListeners();
+  }
   set isLoading(bool duty) {
     _isAdded = duty;
     notifyListeners();

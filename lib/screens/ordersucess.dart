@@ -55,7 +55,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
             ),
             Center(
               child: Text(
-                'SUCESS',
+                'SUCCESS',
                 style: TextStyle(
                     color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
               ),

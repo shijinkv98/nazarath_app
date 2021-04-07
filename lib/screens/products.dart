@@ -111,7 +111,7 @@ class _ProductsState extends State<ProductsScreen> {
     );
   }
 }
-Container getTopContainer() {
+Widget getTopContainer() {
   return Container(
     color: product_bg,
     child: Column(

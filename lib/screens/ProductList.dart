@@ -50,18 +50,6 @@ class _ProductState extends State<ProductScreen> {
   ProductListResponse productresponse;
   _ProductState({ this.slug,this.by,this.filter,this.sortOrder,this.query,this.sortBy}) ;
   Future<String> getData() async {
-
-    // Map body = {
-    //   // name,email,phone_number,passwor
-    // };
-    // productresponse = await ApiCall()
-    //     .execute<ProductListResponse, Null>("products/en", body);
-    //
-    // if (productresponse != null) {
-    //   products=productresponse.products.data;
-    //   ApiCall().showToast(productresponse.message);
-    // }
-    // return "Success!";
   }
 
   @override
@@ -215,7 +203,7 @@ Widget getProductViews(List<Data> products,BuildContext context,Widget widget,St
 
           ),
           SizedBox(
-            height: 5,
+            height: 2,
           ),
          //getBottomTabPannel(context)
 
@@ -324,7 +312,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Price High to Low",
+                          "Price - Low to High",
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f2),
                         ),
@@ -350,7 +338,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Price Low to High",
+                          "Price - High to Low",
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f3),
                         ),
@@ -443,152 +431,12 @@ Widget customView(List<Data> products,BuildContext context,Widget widget)
         child:  getRecommended(homeResponse.recommendedProducts, widget),
       ),
       SliverPadding(
-        padding: const EdgeInsets.only(bottom: 30.0),
+        padding: const EdgeInsets.only(bottom: 5.0),
       )
     ],
   );
 }
-// Container getRecommended(List<Newarrivals> recommended,Widget widget) {
-//   return Container(
-//     child: Container(
-//       width: double.infinity,
-//       color: Color(0xFFe5eeef),
-//       child: Column(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.only(top: 7),
-//             child: Text("Recommended Products",
-//                 style: TextStyle(
-//                     fontSize: 13,
-//                     color: Colors.grey[600],
-//                     fontWeight: FontWeight.bold)),
-//           ),
-//           Container(
-//             padding: EdgeInsets.only(top: 0, left: 5, right: 5, bottom: 10),
-//             color: Color(0xFFe5eeef),
-//             height: 150,
-//             width: double.infinity,
-//             child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: recommended.length,
-//                 itemBuilder: (context, index) {
-//                   return Padding(
-//                     padding: const EdgeInsets.only(top: 5),
-//                     child: Container(
-//                       height:140,
-//                       width: 140,
-//                       child: Padding(
-//                         padding: const EdgeInsets.only(left: 2, right: 2),
-//                         child: Card(
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.only(
-//                                 bottomRight: Radius.circular(10.0),
-//                                 topRight: Radius.circular(10.0),
-//                                 topLeft: Radius.circular(10.0),
-//                                 bottomLeft: Radius.circular(10.0)),
-//                           ),
-//                           color: Colors.white,
-//                           elevation: 2,
-//                           child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.start,
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               children: [
-//                                 Padding(
-//                                   padding: const EdgeInsets.only(
-//                                       top: 5, left: 5, right: 5),
-//                                   child: Container(
-//                                     height: 70,
-//                                     child: Image(
-//                                       image: new NetworkImage(
-//                                           '$productThumbUrl${recommended[index].image}'),
-//                                       fit: BoxFit.cover,
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   crossAxisAlignment: CrossAxisAlignment.center,
-//                                   children: [
-//                                     Padding(
-//                                       padding: const EdgeInsets.only(top: 0,right: 5,left: 5),
-//                                       child: Container(
-//
-//                                         child: Row(
-//                                           crossAxisAlignment:
-//                                           CrossAxisAlignment.center,
-//                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                           children: [
-//                                             Container(
-//
-//                                               child: Padding(
-//                                                 padding: const EdgeInsets.only(top: 5,right: 3),
-//                                                 child: Text(
-//                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].price}${recommended[index].symbolRight}',
-//                                                   style: TextStyle(
-//                                                       color: colorRed,
-//                                                       fontSize: 8,
-//                                                       fontWeight: FontWeight.bold),
-//                                                 ),
-//                                               ),
-//                                             ),
-//
-//                                             Container(
-//
-//                                               child: Padding(
-//                                                 padding: const EdgeInsets.only(top: 5,right: 10),
-//                                                 child: Text(
-//                                                   '${recommended[index].symbolLeft}${" "}${recommended[index].oldprice}${recommended[index].symbolRight}',
-//                                                   style: TextStyle(
-//                                                       color: Colors.grey[700],
-//                                                       fontSize: 8,
-//                                                       decoration:
-//                                                       TextDecoration.lineThrough),
-//                                                 ),
-//                                               ),
-//                                             ),
-//                                             InkWell(
-//                                               onTap: (){
-//                                                 addtoWishList(recommended[index].slug, recommended[index].store, context, widget);
-//                                               } ,
-//                                               child: ImageIcon(
-//                                                 AssetImage(
-//                                                     'assets/icons/favourite.png'),
-//                                                 size: 14,
-//                                                 color: colorPrimary,
-//                                               ),
-//                                             ),
-//                                           ],
-//                                         ),
-//                                       ),
-//                                     ),
-//
-//                                   ],
-//                                 ),
-//                                 Container(
-//                                   child: Padding(
-//                                     padding: const EdgeInsets.only(
-//                                         top: 5, left: 10,right: 5),
-//                                     child: Text(
-//                                       recommended[index].name,
-//                                       textAlign: TextAlign.start,
-//                                       style: TextStyle(
-//                                           fontWeight: FontWeight.bold,
-//                                           fontSize:9),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ]),
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 }),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
+
 Widget getButtonContainer(BuildContext context,String by,String sortBy ,String sortOrder,String filter,String query,String slug)
 {
  return  Padding(
@@ -939,6 +787,200 @@ Widget getWishListIcon(int wish,double size ,Data item,BuildContext context,Widg
   // );
 }
 
+Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
+  if (recoomended == null)
+    return Container(
+      child:SizedBox(
+        height: 0.01,
+      ),
+    );
+  else if (recoomended.length == 0)  return Container(
+    child:SizedBox(
+      height: 0.01,
+    ),
+  );
+  return Container(
+    child: Container(
+      width: double.infinity,
+      color: featured_bg,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 15,bottom: 5),
+            child: Text("Recommended Products",
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+            color: Color(0xFFe5eeef),
+            height: 200,
+            width: double.infinity,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: recoomended.length,
+                itemBuilder: (context, index) {
+                  return getRecommendItem(recoomended[index], context, widget);
+                }),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget widget)
+{
+  return Container(
 
+    child: Container(
+        width: 150,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(10.0),
+                topRight: Radius.circular(10.0),
+                topLeft: Radius.circular(10.0),
+                bottomLeft: Radius.circular(10.0)),
+          ),
+          color: Colors.white,
 
-///
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 5,right: 10),
+                child: GestureDetector(
+                    onTap: (){
+                      // if(item.wishlist==0) {
+                      //   item.wishlist = 1;
+                      //   addtoWishList(item.slug, item.store, context, widget);
+                      // }
+                      // else {
+                      //   item.wishlist = 0;
+                      //   removefromWishList(item.slug, item.store, context, widget);
+                      // }
+                    },
+                    child:WishListProductList(item.wishlist,item.slug,item.store,home_wish_size)
+                  //getWishListIcon(item.wishlist,home_wish_size)
+
+                ),
+              ),
+              GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProductDetailsScreen(item.slug)),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 2, left: 0, right: 0),
+                        child: Container(
+                          height: 60,
+                          width: 120,
+                          child: Image(
+                            image: new NetworkImage(
+                                '$productThumbUrl${item.image}'),
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5, left: 10, right: 10),
+                          child: Text(
+                            item.name,
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                height: 1.3,
+                                fontSize: 10),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment:MainAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: 35,
+                              alignment: Alignment.bottomLeft,
+                              decoration: BoxDecoration(
+                                  color: button_cart_bg,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5))),
+                              child: Center(
+                                  widthFactor: 0.6,
+                                  child: new Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new IconButton(
+                                            icon: Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                              size: 13,
+
+                                            ),
+                                            onPressed: (){
+                                              addtoCart(item.slug, item.store, context, widget,"1");}
+                                        ),
+                                      ]
+                                  ))
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 10,
+                              right: 5,
+                              top: 3,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.price}${item.symbolRight}',
+                                  style: TextStyle(
+                                      color: colorRed,
+                                      fontSize:
+                                      11,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 2),
+                                Text(
+                                  '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      color: item_text_gray_light,
+                                      fontSize: 9,
+                                      decoration: TextDecoration
+                                          .lineThrough),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  )
+
+              )
+
+            ],
+
+          ),
+        )
+    ),
+  );
+}

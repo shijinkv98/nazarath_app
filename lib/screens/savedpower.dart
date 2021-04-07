@@ -9,10 +9,8 @@ import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
 import 'package:nazarath_app/notifiers/register_notifier.dart';
-import 'package:nazarath_app/screens/notification.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'cart.dart';
 
 class SavedPowerScreen extends StatefulWidget {
   String title;
@@ -27,7 +25,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
   DocsAddedNotifier _docsAddedNotifier;
   String title;
   _SavedPowerScreenState({this.title});
-
+  EyePowerResponse _eyePowerResponse;
   @override
   void initState() {
     _docsAddedNotifier =
@@ -50,15 +48,30 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
         .execute<EyePowerResponse, Null>('eye-power/en', null),
     builder: (context, snapshot) {
     if (snapshot.hasData) {
-    return getSavedEyePower(snapshot.data.data,context,widget);
+      _eyePowerResponse=snapshot.data;
+    return getViews(_eyePowerResponse);
     } else if (snapshot.hasError) {
-      Data data=new Data(id: 0,customerId: 1,prescription: "");
-      return getSavedEyePower(data,context,widget);
+     // Data data=new Data(id: 0,customerId: 1,prescription: "");
+      return getViews(null);
     } else {
     return progressBar;
     }
     },
     ));
+  }
+  Widget getViews(EyePowerResponse response)
+  {
+    Data data=new Data(id: 0,customerId: 1,prescription: "");
+    if(response!=null) {
+      _docsAddedNotifier.eyePowerResponse=response;
+    }
+    return Consumer<DocsAddedNotifier>(
+      builder: (context, value, child) {
+        return _docsAddedNotifier.eyePowerResponse!=null?getSavedEyePower(_docsAddedNotifier.eyePowerResponse.data,context,widget):
+        getSavedEyePower(data,context,widget);
+      },
+    );
+
   }
   Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
   {
@@ -352,82 +365,86 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
     _docsAddedNotifier.reset();
     super.dispose();
   }
-}
+  void setData(Data data)
+  {
+    if(data==null)
+      return;
+    if(data.rxOdReAxis!=null)
+      axixright=data.rxOdReAxis;
+    if(data.rxOdReAddv!=null)
+      addright=data.rxOdReAddv;
+    if(data.rxOdReCyi!=null)
+      cylright=data.rxOdReCyi;
+    if(data.rxOdReSphere!=null)
+      sphereright=data.rxOdReSphere;
 
-void setData(Data data)
-{
-  if(data==null)
-    return;
-  if(data.rxOdReAxis!=null)
-    axixright=data.rxOdReAxis;
-  if(data.rxOdReAddv!=null)
-    addright=data.rxOdReAddv;
-  if(data.rxOdReCyi!=null)
-    cylright=data.rxOdReCyi;
-  if(data.rxOdReSphere!=null)
-    sphereright=data.rxOdReSphere;
+    if(data.rxOsLeAxis!=null)
+      axixleft=data.rxOsLeAxis;
+    if(data.rxOsLeAddv!=null)
+      addleft=data.rxOsLeAddv;
+    if(data.rxOsLeCyi!=null)
+      cylleft=data.rxOsLeCyi;
+    if(data.rxOsLeSphere!=null)
+      sphereleft=data.rxOsLeSphere;
+  }
+  Future<void> updatePrescriptionWithoutPdf(BuildContext context)
+  async {
+    Map body={
+      "right_eye_sphere":sphereright,
+      "right_eye_cyi":cylright,
+      "right_eye_axis":axixright,
+      "right_eye_addv":addright,
+      "left_eye_sphere":sphereleft,
+      "left_eye_cyi":cylleft,
+      "left_eye_axis":axixleft,
+      "left_eye_addv":addleft,
+    };
+    FocusScope.of(context).requestFocus(FocusNode());
 
-  if(data.rxOsLeAxis!=null)
-    axixleft=data.rxOsLeAxis;
-  if(data.rxOsLeAddv!=null)
-    addleft=data.rxOsLeAddv;
-  if(data.rxOsLeCyi!=null)
-    cylleft=data.rxOsLeCyi;
-  if(data.rxOsLeSphere!=null)
-    sphereleft=data.rxOsLeSphere;
-}
+    var response = await ApiCall()
+        .execute<EyePowerResponse, Null>("eye-power/store/en", body);
 
-Future<void> updatePrescriptionWithoutPdf(BuildContext context)
-async {
-  Map body={
-    "right_eye_sphere":sphereright,
-    "right_eye_cyi":cylright,
-    "right_eye_axis":axixright,
-    "right_eye_addv":addright,
-    "left_eye_sphere":sphereleft,
-    "left_eye_cyi":cylleft,
-    "left_eye_axis":axixleft,
-    "left_eye_addv":addleft,
-  };
-  FocusScope.of(context).requestFocus(FocusNode());
+    if (response?.data != null) {
+      ApiCall().showToast(response.message);
+      _docsAddedNotifier.eyePowerResponse=response;
+    }
+  }
+  Future<void> updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
+  async {
+    var request =
+    ApiCall().getMultipartRequest("eye-power/store/en");
+    request.fields['right_eye_sphere'] = sphereright;
+    request.fields['right_eye_cyi'] = cylright;
+    request.fields['right_eye_axis'] = axixright;
+    request.fields['right_eye_addv'] = addright;
+    request.fields['left_eye_sphere'] = sphereleft;
+    request.fields['left_eye_cyi'] = cylleft;
+    request.fields['left_eye_axis'] = axixleft;
+    request.fields['left_eye_addv'] = addleft;
+    if (_regstraionDoc != null) {
+      request.files.add(http.MultipartFile.fromBytes(
+          'prescription',
+          File(_regstraionDoc.imageStr).readAsBytesSync(),
+          filename: _regstraionDoc.name,
+          contentType: MimeTypes.getContentType(_regstraionDoc)));
+    }
+    var response = await ApiCall()
+        .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request);
 
-  var response = await ApiCall()
-      .execute<EyePowerResponse, Null>("eye-power/store/en", body);
-
-  if (response?.data != null) {
-    ApiCall().showToast(response.message);
+    if (response?.data != null) {
+      ApiCall().showToast(response.message);
+      _docsAddedNotifier.eyePowerResponse=response;
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
+      // );
+    }
   }
 }
-Future<void> updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
-async {
-  var request =
-  ApiCall().getMultipartRequest("eye-power/store/en");
-  request.fields['right_eye_sphere'] = sphereright;
-  request.fields['right_eye_cyi'] = cylright;
-  request.fields['right_eye_axis'] = axixright;
-  request.fields['right_eye_addv'] = addright;
-  request.fields['left_eye_sphere'] = sphereleft;
-  request.fields['left_eye_cyi'] = cylleft;
-  request.fields['left_eye_axis'] = axixleft;
-  request.fields['left_eye_addv'] = addleft;
-  if (_regstraionDoc != null) {
-    request.files.add(http.MultipartFile.fromBytes(
-        'prescription',
-        File(_regstraionDoc.imageStr).readAsBytesSync(),
-        filename: _regstraionDoc.name,
-        contentType: MimeTypes.getContentType(_regstraionDoc)));
-  }
-  var response = await ApiCall()
-      .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request);
 
-  if (response?.data != null) {
-    ApiCall().showToast(response.message);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
-    );
-  }
-}
+
+
+
 String sphereleft="";
 final sphereFieldleft = TextFormField(
   cursorColor: colorPrimary,
