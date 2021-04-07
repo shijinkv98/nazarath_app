@@ -118,9 +118,9 @@ class _NotificationState extends State<NotificationScreen> {
   Container getNotificationFull(List<Notifications> products)
   {
     if(products==null)
-      return getEmptyContainer();
+      return getEmptyContainerNotification();
     else if(products.length==0)
-      return getEmptyContainer();
+      return getEmptyContainerNotification();
     return Container(
         child: Column(
             children: [
@@ -146,7 +146,7 @@ class _NotificationState extends State<NotificationScreen> {
     );
 
   }
-  Container getEmptyContainerNotification()
+  Widget getEmptyContainerNotification()
   {
     return Container(
       child: Column(
