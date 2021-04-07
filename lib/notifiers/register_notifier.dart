@@ -24,11 +24,15 @@ class CheckBoxNotifier extends ChangeNotifier {
 class DocsAddedNotifier extends ChangeNotifier {
   bool _isAdded = false;
   bool get isAdded => _isAdded;
+  String _docName;
   EyePowerResponse _eyePowerResponse;
+  String  get docName=>_docName;
   EyePowerResponse get eyePowerResponse=>_eyePowerResponse;
   set eyePowerResponse(EyePowerResponse response)
   {
     _eyePowerResponse=response;
+    if(response.data.prescription!=null)
+      _docName=response.data.prescription;
         _isAdded = false;
         notifyListeners();
   }
@@ -40,8 +44,9 @@ class DocsAddedNotifier extends ChangeNotifier {
   void reset() {
     _isAdded = false;
   }
-  void docAdded() {
+  void docAdded(String docName) {
     _isAdded=true;
+    _docName=docName;
     notifyListeners();
   }
 }

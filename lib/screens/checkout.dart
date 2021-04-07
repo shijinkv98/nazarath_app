@@ -406,7 +406,7 @@ Widget getTabSectionNormal(BuildContext context,Widget widget,CartResponse cartR
                                   imageStr: result.files.single.path,
                                   imageU8L: result.files.single.bytes);
                               DocsAddedNotifier _docsAddedNotifier;
-                              _docsAddedNotifier.docAdded();
+                              _docsAddedNotifier.docAdded(result.files.single.name);
                             }
                           },
                         ),

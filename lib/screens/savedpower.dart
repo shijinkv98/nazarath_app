@@ -26,6 +26,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
   String title;
   _SavedPowerScreenState({this.title});
   EyePowerResponse _eyePowerResponse;
+  FileModel _regstraionDoc;
   @override
   void initState() {
     _docsAddedNotifier =
@@ -51,8 +52,9 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
       _eyePowerResponse=snapshot.data;
     return getViews(_eyePowerResponse);
     } else if (snapshot.hasError) {
+      return errorScreen('Error: ${snapshot.error}');
      // Data data=new Data(id: 0,customerId: 1,prescription: "");
-      return getViews(null);
+      //return getViews(null);
     } else {
     return progressBar;
     }
@@ -76,7 +78,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
   Widget getContainerEyePower(Data data,BuildContext context,Widget widget)
   {
     setData(data);
-    FileModel _regstraionDoc;
+
     return Container(
       child: Container(
         child: Container(
@@ -128,7 +130,8 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                       fileName: result.files.single.name,
                                       imageStr: result.files.single.path,
                                       imageU8L: result.files.single.bytes);
-                                  _docsAddedNotifier.docAdded();
+                         //         ApiCall().showToast(_regstraionDoc.name);
+                                  _docsAddedNotifier.docAdded(result.files.single.name);
                                 }
                               },
                             ),
@@ -138,22 +141,31 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Container(
                               width: 150,
-                              child:_docsAddedNotifier.isAdded?  Text(
-                                _regstraionDoc.name!=null? _regstraionDoc.name:"",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: colorRed),
-                              ):Text(
-
-                                data!=null?data.prescription!=null?data.prescription:"":"",
+                              child:Text(
+                                _docsAddedNotifier.docName!=null?_docsAddedNotifier.docName:"",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black),
-                              ),
+                              )
+
+                              // _docsAddedNotifier.isAdded?  Text(
+                              //   _docsAddedNotifier.docName!=null? _docsAddedNotifier.name:"",
+                              //   maxLines: 2,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: TextStyle(
+                              //       fontSize: 14,
+                              //       color: colorRed),
+                              // ):Text(
+                              //
+                              //   data!=null?data.prescription!=null?data.prescription:"":"",
+                              //   maxLines: 2,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: TextStyle(
+                              //       fontSize: 14,
+                              //       color: Colors.black),
+                              // ),
                             )
                         ),
                       ],
@@ -319,10 +331,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.white)),
                                           onPressed: () async {
-                                            if(_regstraionDoc!=null)
-                                              updatePrescriptionWithPdf(context,_regstraionDoc);
-                                            else
-                                              updatePrescriptionWithoutPdf(context);
+                                              updatePrescriptionWithPdf(context);
                                           },
                                         ),
                                       ),
@@ -387,7 +396,8 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
     if(data.rxOsLeSphere!=null)
       sphereleft=data.rxOsLeSphere;
   }
-  Future<void> updatePrescriptionWithoutPdf(BuildContext context)
+  Future<void>uploadWithoutpdf
+  (BuildContext context)
   async {
     Map body={
       "right_eye_sphere":sphereright,
@@ -409,8 +419,8 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
       _docsAddedNotifier.eyePowerResponse=response;
     }
   }
-  Future<void> updatePrescriptionWithPdf(BuildContext context,FileModel _regstraionDoc)
-  async {
+  Future<void> updatePrescriptionWithPdf(BuildContext context)
+   async {
     var request =
     ApiCall().getMultipartRequest("eye-power/store/en");
     request.fields['right_eye_sphere'] = sphereright;
@@ -421,12 +431,14 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
     request.fields['left_eye_cyi'] = cylleft;
     request.fields['left_eye_axis'] = axixleft;
     request.fields['left_eye_addv'] = addleft;
+
     if (_regstraionDoc != null) {
       request.files.add(http.MultipartFile.fromBytes(
           'prescription',
           File(_regstraionDoc.imageStr).readAsBytesSync(),
           filename: _regstraionDoc.name,
           contentType: MimeTypes.getContentType(_regstraionDoc)));
+
     }
     var response = await ApiCall()
         .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request);
