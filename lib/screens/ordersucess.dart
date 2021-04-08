@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
-import 'package:nazarath_app/screens/notification.dart';
-import 'package:nazarath_app/screens/wishlist.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
 import 'DashBoard.dart';
-import 'cart.dart';
 
 // ignore: must_be_immutable
 class orderSucessScreen extends StatefulWidget {
@@ -64,7 +61,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
               padding: EdgeInsets.only(top: 10),
               child: Center(
                 child: Text(
-                  '${"Your Order Number is "}${response.orderId!=null?response.orderId.invoiceNumber:""}',
+                  '${"Your Order Number is "}${response.orderId!=null?response.orderId.id:""}',
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),

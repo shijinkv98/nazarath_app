@@ -25,6 +25,8 @@ class DocsAddedNotifier extends ChangeNotifier {
   bool _isAdded = false;
   bool get isAdded => _isAdded;
   String _docName;
+  bool _isLoading =false;
+  bool get isLoading=>_isLoading;
   EyePowerResponse _eyePowerResponse;
   String  get docName=>_docName;
   EyePowerResponse get eyePowerResponse=>_eyePowerResponse;
@@ -36,8 +38,12 @@ class DocsAddedNotifier extends ChangeNotifier {
         _isAdded = false;
         notifyListeners();
   }
-  set isLoading(bool duty) {
+  set isAdded(bool duty) {
     _isAdded = duty;
+    notifyListeners();
+  }
+  set isLoading(bool duty) {
+    _isLoading = duty;
     notifyListeners();
   }
 

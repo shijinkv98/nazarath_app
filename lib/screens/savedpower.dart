@@ -79,295 +79,302 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
   {
     setData(data);
 
-    return Container(
-      child: Container(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25, top: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Text(
-                        'Upload Prescription',
-                        style:
-                        TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
-                      ),
+    return
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 25, top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      'Upload Prescription',
+                      style:
+                      TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          child: SizedBox(
-                            width: 140,
-                            height: 40,
-                            child: RaisedButton(
-                              color: colorPrimary,
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('Upload',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white)),
-                              ),
-                              onPressed: () async {
-
-
-                                final _allowedDocuments = ['png', 'pdf', 'jpg'];
-                                FilePickerResult result =
-                                await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: _allowedDocuments,
-                                );
-                                if (result != null) {
-                                  _regstraionDoc = FileModel(
-                                      fileName: result.files.single.name,
-                                      imageStr: result.files.single.path,
-                                      imageU8L: result.files.single.bytes);
-                         //         ApiCall().showToast(_regstraionDoc.name);
-                                  _docsAddedNotifier.docAdded(result.files.single.name);
-                                }
-                              },
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 140,
+                          height: 40,
+                          child: RaisedButton(
+                            color: colorPrimary,
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text('Upload',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white)),
                             ),
+                            onPressed: () async {
+
+
+                              final _allowedDocuments = ['png', 'pdf', 'jpg'];
+                              FilePickerResult result =
+                              await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: _allowedDocuments,
+                              );
+                              if (result != null) {
+                                _regstraionDoc = FileModel(
+                                    fileName: result.files.single.name,
+                                    imageStr: result.files.single.path,
+                                    imageU8L: result.files.single.bytes);
+                       //         ApiCall().showToast(_regstraionDoc.name);
+                                _docsAddedNotifier.docAdded(result.files.single.name);
+                              }
+                            },
                           ),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Container(
-                              width: 150,
-                              child:Text(
-                                _docsAddedNotifier.docName!=null?_docsAddedNotifier.docName:"",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black),
-                              )
-
-                              // _docsAddedNotifier.isAdded?  Text(
-                              //   _docsAddedNotifier.docName!=null? _docsAddedNotifier.name:"",
-                              //   maxLines: 2,
-                              //   overflow: TextOverflow.ellipsis,
-                              //   style: TextStyle(
-                              //       fontSize: 14,
-                              //       color: colorRed),
-                              // ):Text(
-                              //
-                              //   data!=null?data.prescription!=null?data.prescription:"":"",
-                              //   maxLines: 2,
-                              //   overflow: TextOverflow.ellipsis,
-                              //   style: TextStyle(
-                              //       fontSize: 14,
-                              //       color: Colors.black),
-                              // ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Container(
+                            width: 150,
+                            child:Text(
+                              _docsAddedNotifier.docName!=null?_docsAddedNotifier.docName:"",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black),
                             )
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+
+                            // _docsAddedNotifier.isAdded?  Text(
+                            //   _docsAddedNotifier.docName!=null? _docsAddedNotifier.name:"",
+                            //   maxLines: 2,
+                            //   overflow: TextOverflow.ellipsis,
+                            //   style: TextStyle(
+                            //       fontSize: 14,
+                            //       color: colorRed),
+                            // ):Text(
+                            //
+                            //   data!=null?data.prescription!=null?data.prescription:"":"",
+                            //   maxLines: 2,
+                            //   overflow: TextOverflow.ellipsis,
+                            //   style: TextStyle(
+                            //       fontSize: 14,
+                            //       color: Colors.black),
+                            // ),
+                          )
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
-                child: Text(
-                  '(upload pdf,jpg,png format)',
-                  style: TextStyle(color: textColor, fontSize: 9),
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
+              child: Text(
+                '(upload pdf,jpg,png format)',
+                style: TextStyle(color: textColor, fontSize: 9),
               ),
+            ),
 
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30),
-              //   child: Divider(
-              //     color: product_bg,
-              //     thickness: 2,
-              //   ),
-              // ),
-              Container(
-                width: double.infinity,
-                color: product_bg,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25),
-                      child: Text(
-                        'Eye Power enter manually',
-                        style:
-                        TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
-                      ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 30),
+            //   child: Divider(
+            //     color: product_bg,
+            //     thickness: 2,
+            //   ),
+            // ),
+            Container(
+              width: double.infinity,
+              color: product_bg,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25),
+                    child: Text(
+                      'Eye Power enter manually',
+                      style:
+                      TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 10),
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      'RX.OD(left)',
-                                      style:
-                                      TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: sphereFieldleft,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: cylFieldleft,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: axixFieldleft,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                    child: addFieldleft,
-                                  )
-                                ],
-                              ),
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      'RX.OD(Right)',
-                                      style:
-                                      TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: sphereFieldright,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: cylFieldright,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: axixFieldright,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                    child: addFieldright,
-                                  )
-                                ],
-                              ),
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 10),
+                    child: Container(
                       color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 25),
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 15,top: 15,left: 0,right: 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        'Support(Assist)',
-                                        style:
-                                        TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: colorPrimary)
-                                          ),
-                                          child: Center(child: Padding(
-                                            padding: const EdgeInsets.only(left: 25,right: 25),
-                                            child: supportassistField,
-                                          ))),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20,bottom: 20),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 40,
-                                        child: RaisedButton(
-                                          color: colorPrimary,
-                                          elevation: 0,
-                                          child: Text('Update',
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.white)),
-                                          onPressed: () async {
-                                              updatePrescriptionWithPdf(context);
-                                          },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    'RX.OD(left)',
+                                    style:
+                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: sphereFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: cylFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: axixFieldleft,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                  child: addFieldleft,
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10,left: 25,right: 25,bottom: 25),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15,top: 15,left: 25,right: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    'RX.OD(Right)',
+                                    style:
+                                    TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: sphereFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: cylFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: axixFieldright,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                  child: addFieldright,
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 25),
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15,top: 15,left: 0,right: 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Support(Assist)',
+                                      style:
+                                      TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Container(
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: colorPrimary)
                                         ),
+                                        child: Center(child: Padding(
+                                          padding: const EdgeInsets.only(left: 25,right: 25),
+                                          child: supportassistField,
+                                        ))),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20,bottom: 20),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 40,
+                                      child: RaisedButton(
+                                        color: colorPrimary,
+                                        elevation: 0,
+                                        child: Text('Update',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white)),
+                                        onPressed: () async {
+                                            updatePrescriptionWithPdf(context);
+                                        },
                                       ),
                                     ),
+                                  ),
 
 
-                                  ],
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-
                       ),
 
                     ),
-                  ],
-                ),
+
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-    );
+      );
   }
   Widget getSavedEyePower(Data data,BuildContext context,Widget widget)
   {
 
-    return SingleChildScrollView(child: Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: Column(
+    return
+      Stack(
         children: [
-          getContainerEyePower(data,context,widget)
+          SingleChildScrollView(child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            children: [
+              getContainerEyePower(data,context,widget),
+
+            ],
+          ),
+    )),
+          Align(alignment: Alignment.center,
+            child: _docsAddedNotifier.isLoading?Container(
+                child: progressBar):SizedBox(),
+          )
         ],
-      ),
-    ));
+      );
   }
   @override
   void dispose() {
@@ -421,6 +428,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
   }
   Future<void> updatePrescriptionWithPdf(BuildContext context)
    async {
+     _docsAddedNotifier.isLoading=true;
     var request =
     ApiCall().getMultipartRequest("eye-power/store/en");
     request.fields['right_eye_sphere'] = sphereright;
@@ -440,17 +448,25 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
           contentType: MimeTypes.getContentType(_regstraionDoc)));
 
     }
-    var response = await ApiCall()
-        .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request);
+    ApiCall()
+        .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request).then((EyePowerResponse response){
+      setState(() {
+        _docsAddedNotifier.isLoading=false;
+        ApiCall().showToast(response.message);
+        _docsAddedNotifier.eyePowerResponse=response;
 
-    if (response?.data != null) {
-      ApiCall().showToast(response.message);
-      _docsAddedNotifier.eyePowerResponse=response;
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
-      // );
-    }
+      });
+    });
+
+    // if (response?.data != null) {
+    //   //;
+    //
+    //
+    //   // Navigator.pushReplacement(
+    //   //   context,
+    //   //   MaterialPageRoute(builder: (context) => SavedPowerScreen("")),
+    //   // );
+    // }
   }
 }
 
