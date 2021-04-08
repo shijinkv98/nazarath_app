@@ -801,6 +801,8 @@ Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
   );
   return Container(
     child: Container(
+      margin: EdgeInsets.only(left:10,right:10,top:10,bottom: 2),
+      padding: EdgeInsets.only(left:0,right:0,top:0,bottom: 10),
       width: double.infinity,
       color: featured_bg,
       child: Column(
