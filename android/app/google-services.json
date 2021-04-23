@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1023164971360",
+    "project_id": "nazarath-optical-store",
+    "storage_bucket": "nazarath-optical-store.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023164971360:android:9a2773bc6da7e12fb3c605",
+        "android_client_info": {
+          "package_name": "com.nazarath.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023164971360-93mt9r64hro8ir515ntcscai6sp0vvd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI4iznHjJR_jNM7mLq0vmsWJpRklt50r8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023164971360-93mt9r64hro8ir515ntcscai6sp0vvd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
