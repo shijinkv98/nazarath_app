@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
+import 'package:nazarath_app/notifiers/searchnotifier.dart';
 import 'package:nazarath_app/screens/Splash.dart';
 import 'package:nazarath_app/screens/language_constants.dart';
 import 'package:nazarath_app/screens/register/otp.dart';
@@ -114,6 +115,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (context) => DataUpdateNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SearchUpdateNotifier(),
           ),
           ChangeNotifierProvider(
               create: (context) => OTPNotifier()
