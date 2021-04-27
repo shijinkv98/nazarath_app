@@ -57,7 +57,7 @@ class _AddressState extends State<AddressScreen> {
       ),
     );
   }
-  GestureDetector updateButton(BuildContext context, String title) {
+  Widget newAddressButton(BuildContext context, String title) {
     return GestureDetector(
         onTap: () {
           Navigator.push(
@@ -66,6 +66,34 @@ class _AddressState extends State<AddressScreen> {
                 builder: (context) =>
                     EditAddressScreen("address", "add", null, null)),
           );
+        },
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          margin: EdgeInsets.fromLTRB(30, 10, 30, 30),
+          decoration: BoxDecoration(
+              color: colorPrimary, borderRadius: BorderRadius.circular(3)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+  Widget updateButton(BuildContext context, String title) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
         },
         child: Container(
           width: double.infinity,
@@ -126,7 +154,13 @@ class _AddressState extends State<AddressScreen> {
             SizedBox(
               height: 10,
             ),
-            updateButton(context, "Update")
+
+            updateButton(context, "Update"),
+
+            SizedBox(
+              height: 10,
+            ),
+            newAddressButton(context, "Add New Address")
           ],
         ),
       ),
@@ -254,7 +288,7 @@ class _AddressState extends State<AddressScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EditAddressScreen("adress",
+                                                EditAddressScreen("address",
                                                     "edit", null, address)),
                                       );
                                     },
