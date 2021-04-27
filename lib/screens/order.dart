@@ -118,8 +118,8 @@ class _OrderState extends State<OrderScreen> {
             element != null )
                 ?.toList());
           } else if (snapshot.hasError) {
-            // return errorScreen('Error: ${snapshot.error}');
-            return getEmptyContainerOrder();
+             return errorScreen('Error: ${snapshot.error}');
+           // return getEmptyContainerOrder();
           } else {
             return progressBar;
           }
@@ -177,6 +177,7 @@ class _OrderState extends State<OrderScreen> {
   Widget _listview(List<ItemsNew> items) => ListView.builder(
       padding: EdgeInsets.only(bottom: 70),
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) =>
           _itemsBuilder(items[index]),
       // separatorBuilder: (context, index) => Divider(

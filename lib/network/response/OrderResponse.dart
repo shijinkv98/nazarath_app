@@ -281,9 +281,9 @@ class Data {
     paymentStatus = json['payment_status'];
     orderCancelReason = json['order_cancel_reason'];
     orderCancelDescription = json['order_cancel_description'];
-    otherDetails = json['other_details'] != null
-        ? new OtherDetails.fromJson(json['other_details'])
-        : null;
+    // otherDetails = json['other_details'] != null
+    //     ? new OtherDetails.fromJson(json['other_details'])
+    //     : null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     orderWalletAmount = json['order_wallet_amount'];
