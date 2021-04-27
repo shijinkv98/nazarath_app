@@ -5,6 +5,7 @@ import 'package:nazarath_app/helper/constants.dart';
 
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/ordercancellation.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/tracking.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:nazarath_app/screens/writereview.dart';
@@ -65,10 +66,10 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

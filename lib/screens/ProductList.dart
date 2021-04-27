@@ -14,6 +14,7 @@ import 'package:nazarath_app/screens/ProductDetails.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/filterScreen.dart';
 import 'package:nazarath_app/screens/notification.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'custom/wishlist_product.dart';
@@ -92,10 +93,10 @@ class _ProductState extends State<ProductScreen> {
               padding: const EdgeInsets.only(right: appTabIconPad),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                 },
                 child: Container(
                   height: appTabIconSize,

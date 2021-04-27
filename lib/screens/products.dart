@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 
 import 'cart.dart';
 import 'notification.dart';
@@ -43,10 +44,10 @@ class _ProductsState extends State<ProductsScreen> {
               padding: const EdgeInsets.only(right: appTabIconPad),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                 },
                 child: Container(
                   height: appTabIconSize,

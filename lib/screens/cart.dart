@@ -9,6 +9,7 @@ import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/screens/checkout.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
 import 'package:spinner_input/spinner_input.dart';
@@ -78,10 +79,10 @@ class _CartState extends State<CartScreen> {
               padding: const EdgeInsets.only(right: appTabIconPad),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                 },
                 child: Container(
                   height: appTabIconSize,

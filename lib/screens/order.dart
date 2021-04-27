@@ -7,6 +7,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/orderdetails.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'notification.dart';
@@ -57,10 +58,10 @@ class _OrderState extends State<OrderScreen> {
               padding: const EdgeInsets.only(right: appTabIconPad),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                  // );
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                 },
                 child: Container(
                   height: appTabIconSize,

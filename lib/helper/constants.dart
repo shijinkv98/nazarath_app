@@ -5,6 +5,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 const Color colorPrimary = const Color.fromRGBO(72, 212, 201, 1.0);
@@ -140,10 +141,10 @@ AppBar getAppBarMain(BuildContext context)
           padding: const EdgeInsets.only(right: appTabIconPad),
           child: GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Search(product.name)),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+              );
             },
             child: Container(
               height: appTabIconSize,

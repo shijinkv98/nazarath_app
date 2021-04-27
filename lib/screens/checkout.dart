@@ -16,6 +16,7 @@ import 'dart:convert';
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/notifiers/register_notifier.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'DashBoard.dart';
@@ -87,10 +88,10 @@ class _CheckoutState extends State<CheckoutScreen> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

@@ -8,6 +8,7 @@ import 'package:nazarath_app/network/response/newsdetailsresponse.dart';
 import 'package:nazarath_app/screens/home.dart';
 import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/order.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 
 import 'cart.dart';
 import 'notification.dart';
@@ -59,10 +60,10 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

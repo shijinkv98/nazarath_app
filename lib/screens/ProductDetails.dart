@@ -12,6 +12,7 @@ import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/ProductDetailsResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/screens/galleryimageviewer.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 
 import 'cart.dart';
 import 'custom/spinner_product.dart';
@@ -58,10 +59,10 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

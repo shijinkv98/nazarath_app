@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
 import 'notification.dart';
@@ -64,10 +65,10 @@ class _TrackingScreenState extends State<TrackingScreen>
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

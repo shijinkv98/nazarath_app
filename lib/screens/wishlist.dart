@@ -8,6 +8,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 
 import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/notifiers/wishlistnotifier.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'DashBoard.dart';
@@ -87,10 +88,10 @@ class _WishListState extends State<WishListScreen> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,
