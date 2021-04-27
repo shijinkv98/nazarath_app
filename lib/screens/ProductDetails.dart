@@ -132,6 +132,8 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
   }
   Widget getProductDetailsValue()
   {
+    if(_productDetailsResponse.product==null)
+      return getEmptyContainer(context, "Product List is empty", "empty_cart");
     return  SingleChildScrollView(
       child: Column(
         children: [

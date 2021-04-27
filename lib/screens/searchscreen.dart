@@ -102,8 +102,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Future<void> SearchProduct(String query)
   async {
     Map body={
-      "term":query,
-      "search_type":from
+      "query":query,
+
     };
     SearchResponse response = await ApiCall()
         .execute<SearchResponse, Null>("search-products/en", body);
@@ -133,16 +133,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 Container(
                     color: Colors.white,
                   padding: EdgeInsets.all(10),
-                  height: 100,
-                  child:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                  width: MediaQuery.of(context).size.width-20,
 
-                      Text(_searchResponse.products[index].name,
-                        style: TextStyle(fontSize: 14,color: Colors.grey),),
-                    ],
-                  ),
+                  child:
+                  Text(_searchResponse.products[index].name,
+                    style: TextStyle(fontSize: 14,color: Colors.grey),),
                 ),
                 Divider()
               ],
