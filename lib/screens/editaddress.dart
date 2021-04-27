@@ -197,8 +197,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       ApiCall()
                           .execute<AddAddressResponse, Null>(url, body).then((response) {
                         _updateNotifier.isProgressShown=false;
-                        homeResponse.address=response.address;
+                        if(homeResponse!=null)
+                          homeResponse.address=response.address;
                         ApiCall().showToast(response.message);
+
                         if(from=="address")
                         {
                           Navigator.pushReplacement(

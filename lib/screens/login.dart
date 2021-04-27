@@ -475,7 +475,7 @@ class _LoginState extends State<Login> {
         //isLoading = false;
         await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData)),);
       }
@@ -509,7 +509,7 @@ class _LoginState extends State<Login> {
         isLoading = false;
         await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData)),);
       }
@@ -528,7 +528,7 @@ class _LoginState extends State<Login> {
     if (response?.customerData != null) {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
       await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DashBoard(user: response.customerData,)),);
     }

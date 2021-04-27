@@ -28,6 +28,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   DataUpdateNotifier _updateNotifier;
   @override
   void initState() {
+    ApiCall().getUser().then((result) {
+      customer=result;
+    });
     _updateNotifier =
         Provider.of<DataUpdateNotifier>(context, listen: false);
     super.initState();
@@ -146,10 +149,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ApiCall().showToast(result.message);
       _updateNotifier.isProgressShown=false;
       tbPosition = 3;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => DashBoard()),
-      );
+      Navigator.pop(context);
+
     });
 
   }
