@@ -33,6 +33,7 @@ import 'package:nazarath_app/network/response/StoreResponse.dart';
 import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
 import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/network/response/WishListResponse.dart';
+import 'package:nazarath_app/network/response/addaddressresponse.dart';
 import 'package:nazarath_app/network/response/forgotresponse.dart';
 import 'package:nazarath_app/network/response/resetpasswordresponse.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
@@ -295,6 +296,8 @@ class ApiCall{
       return CouponResponse.fromJson(json) as T;
     } else if (T == AddressResponse) {
       return AddressResponse.fromJson(json) as T;
+    } else if (T == AddAddressResponse) {
+      return AddAddressResponse.fromJson(json) as T;
     } else if (T == ReviewResponse) {
       return ReviewResponse.fromJson(json) as T;
     } else if (T == LogoutResponse) {

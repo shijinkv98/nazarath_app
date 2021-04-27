@@ -7,6 +7,7 @@ import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CountryResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
+import 'package:nazarath_app/network/response/addaddressresponse.dart';
 import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/notification.dart';
@@ -177,7 +178,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       {
                         url="customer-addresses/edit/en";
                       }
-                      ApiCall().showToast(customer.toString());
                       Map body={
                         "name":customer.name,
                         "address":address,
@@ -190,12 +190,14 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         "address_type":"home",
                         "mobile":customer.mobile,
                       };
+                      if(addresses!=null)
+                        body["address_id"]=addresses.id.toString();
                       FocusScope.of(context).requestFocus(FocusNode());
 
                       ApiCall()
-                          .execute<AddressResponse, Null>(url, body).then((response) {
+                          .execute<AddAddressResponse, Null>(url, body).then((response) {
                         _updateNotifier.isProgressShown=false;
-                        homeResponse.address=response.addresses[0];
+                        homeResponse.address=response.address;
                         ApiCall().showToast(response.message);
                         if(from=="address")
                         {
