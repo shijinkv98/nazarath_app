@@ -7,8 +7,10 @@ import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/CountryResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
+import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
 import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/notification.dart';
+import 'package:provider/provider.dart';
 
 import 'DashBoard.dart';
 import 'cart.dart';
@@ -30,30 +32,37 @@ class EditAddressScreen extends StatefulWidget {
 
   }
   @override
-  _EditAddressScreenState createState() => new _EditAddressScreenState(from: from,type: type,cartresponse: response,address: this.address);
+  _EditAddressScreenState createState() => new _EditAddressScreenState(from: from,type: type,cartresponse: response,addresses: this.address);
 }
 class _EditAddressScreenState extends State<EditAddressScreen> {
   String from;
   String type;
   CartResponse cartresponse;
-  Address address;
+  Address addresses;
   var customer;
-
+  DataUpdateNotifier _updateNotifier;
   @override
   void initState() {
     customer=new UserData();
     getData();
+    _updateNotifier =
+        Provider.of<DataUpdateNotifier>(context, listen: false);
     super.initState();
-
-
   }
-  Future<void> getData()
-  async {
 
-
-    customer=await ApiCall().getUser();
+  @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
   }
-  _EditAddressScreenState({ this.from,this.address,this.type,this.cartresponse}) ;
+
+ void getData()
+ {
+    ApiCall().getUser().then((result) {
+      customer=result;
+    });
+  }
+  _EditAddressScreenState({ this.from,this.addresses,this.type,this.cartresponse}) ;
   @override
   Widget build(BuildContext context) {
 
@@ -77,7 +86,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             ////debugPrint('products size: ${snapshot.data?.news?.length}');
             return Padding(
               padding: const EdgeInsets.only(left: 20,right: 20),
-              child: getEditAdress(snapshot.data.countries,context,widget,cartresponse,address,type,from,customer),
+              child: getFullView(snapshot.data.countries),
             );
           } else if (snapshot.hasError) {
             return  getEmptyContainer(context, "No data", "empty_cart");
@@ -90,125 +99,152 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       //getEditAdress(context,widget,cartresponse,address,type,from),
     );
   }
-}
-Container getEditAdress(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address address,String type,String from,var customer)
-{
-  return Container(
-    padding: EdgeInsets.only(top:15),
-    child: Container(width: double.infinity,
-      child: Column(
-
+  Widget getFullView(List<Countries>countries)
+  {
+    return Container(
+      child: Stack(
         children: [
-          getForms(countries,context,widget,cartresponse,address,type,from,customer),
-
-
+          Align(alignment: Alignment.topCenter,
+            child: SingleChildScrollView(child:getEditAdress(countries)),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Consumer<DataUpdateNotifier>(
+              builder: (context, value, child) {
+                return _updateNotifier.isProgressShown?progressBar:SizedBox();
+              },
+            ),
+          )
         ],
       ),
+    );
+  }
+  Widget  getEditAdress(List<Countries>countries)
+  {
+    return Container(
+      padding: EdgeInsets.only(top:15),
+      child: Container(width: double.infinity,
+        child: Column(
 
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+          children: [
+            getForms(countries),
 
-}
-Widget getForms(List<Countries>countries,BuildContext context,Widget widget,CartResponse cartresponse,Address addresses,String type,String from,var customer){
-  String country=countries[0].id.toString();
-  if(addresses!=null)
+
+          ],
+        ),
+
+      ),
+    );
+    //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+
+  }
+  Widget getForms(List<Countries>countries){
+    String country=countries[0].id.toString();
+    if(addresses!=null)
     {
       address=addresses.address;
       state=addresses.state;
       postal=addresses.zipcode;
     }
-  return Container(
-    width: double.infinity,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10,top: 10),
-            child: addressField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: stateField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: postalField,
-          ),
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5,left: 15,right: 15,bottom: 20),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10,top: 10),
+              child: addressField,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: stateField,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: postalField,
+            ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                  onPressed: ()  async {
-                    String url="customer-addresses/add/en";
-                    if(type=="edit")
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                    onPressed: ()  async {
+                      String url="customer-addresses/add/en";
+                      _updateNotifier.isProgressShown=true;
+                      if(type=="edit")
                       {
                         url="customer-addresses/edit/en";
                       }
-                    ApiCall().showToast(customer.toString());
-                    Map body={
-                      "name":customer.name,
-                      "address":address,
-                      "country": country,
-                      "state":state,
-                      "city":"city",
-                      "zipcode":postal,
-                      "latitude":"0.0",
-                      "longtitude":"0.0",
-                      "mobile":customer.mobile,
-                    };
-                    FocusScope.of(context).requestFocus(FocusNode());
+                      ApiCall().showToast(customer.toString());
+                      Map body={
+                        "name":customer.name,
+                        "address":address,
+                        "country": country,
+                        "state":state,
+                        "city":"city",
+                        "zipcode":postal,
+                        "latitude":"0.0",
+                        "longtitude":"0.0",
+                        "address_type":"home",
+                        "mobile":customer.mobile,
+                      };
+                      FocusScope.of(context).requestFocus(FocusNode());
 
-                    var response = await ApiCall()
-                        .execute<AddressResponse, Null>(url, body);
-
-                    if (response!= null) {
-                      homeResponse.address=response.addresses[0];
-                      ApiCall().showToast(response.message);
-                      if(from=="address")
+                      ApiCall()
+                          .execute<AddressResponse, Null>(url, body).then((response) {
+                        _updateNotifier.isProgressShown=false;
+                        homeResponse.address=response.addresses[0];
+                        ApiCall().showToast(response.message);
+                        if(from=="address")
                         {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => AddressScreen("")),
                           );
                         }
-                      else if(from=="cart")
-                      {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => CartScreen()),
-                        );
-                      }
-                      else if(from=="checkout")
-                      {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => CheckoutScreen(cartresponse)),
-                        );
-                      }
+                        else if(from=="cart")
+                        {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => CartScreen()),
+                          );
+                        }
+                        else if(from=="checkout")
+                        {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => CheckoutScreen(cartresponse)),
+                          );
+                        }
+                      });
+
+
                     }
-                  }
-                  ,
-                  elevation: 0,
-                  color: colorPrimary,
-                  hoverColor: colorPrimary,
-                  // padding: EdgeInsets.only(left: 5, right: 5),
-                  textColor: Colors.white,
-                  child: Text(
-                    'Update',
-                    style: TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w400),
-                  )),
+                    ,
+                    elevation: 0,
+                    color: colorPrimary,
+                    hoverColor: colorPrimary,
+                    // padding: EdgeInsets.only(left: 5, right: 5),
+                    textColor: Colors.white,
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w400),
+                    )),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
+
 }
+
+
+
 String address="";
 final addressField = TextFormField(
   cursorColor: colorPrimary,
