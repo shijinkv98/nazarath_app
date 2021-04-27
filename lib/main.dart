@@ -1,5 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
+import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
 import 'package:nazarath_app/screens/Splash.dart';
 import 'package:nazarath_app/screens/language_constants.dart';
 import 'package:nazarath_app/screens/register/otp.dart';
@@ -40,12 +42,36 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale;
+  String messageTitle = "Empty";
+  String notificationAlert = "alert";
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   setLocale(Locale locale) {
     setState(() {
       _locale = locale;
     });
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+    _firebaseMessaging.configure(
+      onMessage: (message) async{
+        setState(() {
+          messageTitle = message["notification"]["title"];
+          notificationAlert = "New Notification Alert";
+        });
+
+      },
+      onResume: (message) async{
+        setState(() {
+          messageTitle = message["data"]["title"];
+          notificationAlert = "Application opened from Notification";
+        });
+
+      },
+    );
+  }
   @override
   void didChangeDependencies() {
     getLocale().then((locale) {
@@ -86,7 +112,9 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(
             create: (context) => WishListUpdatedNotifier(),
           ),
-
+          ChangeNotifierProvider(
+            create: (context) => DataUpdateNotifier(),
+          ),
           ChangeNotifierProvider(
               create: (context) => OTPNotifier()
           )
