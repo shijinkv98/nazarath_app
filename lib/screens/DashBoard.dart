@@ -13,6 +13,7 @@ import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/custom/notificationbadge.dart';
 import 'package:nazarath_app/screens/checkup.dart';
+import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wallet.dart';
@@ -435,10 +436,10 @@ class _DashBoard extends State<DashBoard> {
                 padding: const EdgeInsets.only(right: appTabIconPad),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Search(product.name)),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+                    );
                   },
                   child: Container(
                     height: appTabIconSize,

@@ -114,7 +114,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                             builder: (context) {
                               return
                                 PlacePicker(
-                                apiKey: 'AIzaSyC6FXxQ6oMlmp8e-uQz2sIth9wJz0c2Od8'.trim(),
+                                apiKey: 'AIzaSyAIjaTpHNWTYXsHI-aW1kNxGQVXc3_epGA'.trim(),
                                 initialPosition: CheckUpScreen.kInitialPosition,
                                 useCurrentLocation: true,
                                 selectInitialPosition: true,
