@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
-                colors: [colorPrimary, gradientEnd],
+                colors: [Colors.white, Colors.white70],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0.0, 1.0],
@@ -64,8 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Center(
             child: Image(
               image: AssetImage('assets/icons/nazarath_logo.png'),
-              height: 40.0,
-              fit: BoxFit.contain,
+              height: 120.0,
+              fit: BoxFit.fitHeight,
             ),
           )),
     );

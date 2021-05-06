@@ -36,6 +36,7 @@ import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/network/response/addaddressresponse.dart';
 import 'package:nazarath_app/network/response/forgotresponse.dart';
 import 'package:nazarath_app/network/response/resetpasswordresponse.dart';
+import 'package:nazarath_app/network/response/updateresponse.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
@@ -304,6 +305,8 @@ class ApiCall{
       return LogoutResponse.fromJson(json) as T;
     } else if (T == NewsResponse) {
       return NewsResponse.fromJson(json) as T;
+    } else if (T == UpdateResponse) {
+      return UpdateResponse.fromJson(json) as T;
     } else if (T == StoreResponse) {
       return StoreResponse.fromJson(json) as T;
     } else if (T == EyePowerResponse) {

@@ -5,6 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/network/response/updateresponse.dart';
 
 TextEditingController _dateController = TextEditingController();
 TextEditingController _timeController = TextEditingController();
@@ -30,7 +32,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   final GlobalKey<FormState> _checkUpForms = GlobalKey<FormState>();
-
+  String selected_date="2021-01-01";
+  String selected_Time="00:00:00";
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -168,11 +171,13 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                       onPressed: () async {
                         if (_checkUpForms.currentState.validate()) {
                           _checkUpForms.currentState.save();
+                            selected_date=selectedDate.year.toString()+"-"+selectedDate.month.toString()+"-"+
+                                selectedDate.day.toString();
+                            selected_Time=selectedTime.hour.toString()+":"+selectedTime.minute.toString()+":00";
+                            String lat=selectedPlace.geometry.location.lat.toString();
+                          String lng=selectedPlace.geometry.location.lng.toString();
+                          checkup(mobileNmber, address, selectedPlace.formattedAddress, selected_date, selected_Time, "", lat, lng);
 
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => ,
-                          // );
                         }
                       }
                     ),
@@ -230,7 +235,26 @@ final dateField = TextFormField(
   ),
 );
 
+Future<String>checkup(String phone,
+    String adrs,String loc,String date,String time,String msg,String lat,String log) async {
 
+  Map body = {
+  "phone":phone,
+  "address":address,
+  "location":address,
+  "date":date,
+  "time":time,
+  "message":msg,
+  "latitude":lat,
+  "longitude":log
+  };
+   ApiCall()
+      .execute<UpdateResponse, Null>("cart/add/en", body).then((result) {
+    ApiCall().showToast(result.message);
+  });
+
+  return "Success!";
+}
 String mobileNmber;
 final mobileNumberField = TextFormField(
   cursorColor: colorPrimary,
