@@ -173,10 +173,12 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                           _checkUpForms.currentState.save();
                             selected_date=selectedDate.year.toString()+"-"+selectedDate.month.toString()+"-"+
                                 selectedDate.day.toString();
-                            selected_Time=selectedTime.hour.toString()+":"+selectedTime.minute.toString()+":00";
+                            String hr=selectedTime.hour<12?"0"+selectedTime.hour.toString():selectedTime.hour.toString();
+                            String mt=selectedTime.minute<10?"0"+selectedTime.minute.toString():selectedTime.minute.toString();
+                            selected_Time=hr+":"+mt+":00";
                             String lat=selectedPlace.geometry.location.lat.toString();
                           String lng=selectedPlace.geometry.location.lng.toString();
-                          checkup(mobileNmber, address, selectedPlace.formattedAddress, selected_date, selected_Time, "", lat, lng);
+                          checkup(mobileNmber, address, selectedPlace.formattedAddress, selected_date, selected_Time, "message", lat, lng);
 
                         }
                       }
