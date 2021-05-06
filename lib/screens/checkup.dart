@@ -241,7 +241,7 @@ Future<String>checkup(String phone,
   Map body = {
   "phone":phone,
   "address":address,
-  "location":address,
+  "location":loc,
   "date":date,
   "time":time,
   "message":msg,
@@ -249,7 +249,7 @@ Future<String>checkup(String phone,
   "longitude":log
   };
    ApiCall()
-      .execute<UpdateResponse, Null>("cart/add/en", body).then((result) {
+      .execute<UpdateResponse, Null>("appointment/store/en", body).then((result) {
     ApiCall().showToast(result.message);
   });
 
@@ -259,7 +259,7 @@ String mobileNmber;
 final mobileNumberField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     mobileNmber = value;
   },
   // style: style,
@@ -301,7 +301,7 @@ String address;
 final addressField = TextFormField(
   cursorColor: colorPrimary,
   obscureText: false,
-  onSaved: (value) {
+  onChanged: (value) {
     address = value;
   },
   // style: style,
@@ -345,7 +345,7 @@ final    locationField = TextFormField(
   controller: _locationController,
   obscureText: false,
   enabled: false,
-  onSaved: (value) {
+  onChanged: (value) {
     location = value;
   },
   // style: style,
