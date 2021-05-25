@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,7 +67,7 @@ dependencies:
   google_maps_place_picker: ^1.0.1
   #  camera: ^0.6.4+5
   json_annotation:
-  charts_flutter: ^0.9.0
+#  charts_flutter: ^0.9.0
   flutter_uploader: ^1.2.1
   firebase_messaging: ^7.0.3
 #  flutter_launcher_icons: ^0.7.2+1
@@ -92,78 +93,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/nazarath_logo.png
-    - assets/icons/change_password.png
-    - assets/icons/walleticon.png
-    - assets/icons/favourite.png
-    - assets/icons/log_out.png
-    - assets/icons/my_address.png
-    - assets/icons/my_orders.png
-    - assets/icons/men.png
-    - assets/icons/nazarath_logo.png
-    - assets/icons/privacy_policy.png
-    - assets/icons/refer_to_friend.png
-    - assets/icons/saved_power.png
-    - assets/icons/wallet.png
-    - assets/icons/check_up.png
-    - assets/icons/check_up_white.png
-    - assets/icons/home.png
-    - assets/icons/home_white.png
-    - assets/icons/news.png
-    - assets/icons/news_white.png
-    - assets/icons/profile.png
-    - assets/icons/profile_white.png
-    - assets/icons/stores.png
-    - assets/icons/stores_white.png
-    - assets/icons/no_image.png
-    - assets/icons/filtercontrol.png
-    - assets/icons/edit_profile.png
-    - assets/icons/checkicon.png
-    - assets/icons/checkiconinactive.png
-    - assets/images/no_image.png
-    - assets/icons/my_orders.png
-    - assets/icons/favourite.png
-    - assets/icons/my_address.png
-    - assets/icons/saved_power.png
-    - assets/icons/wallet.png
-    - assets/icons/refer_to_friend.png
-    - assets/icons/change_password.png
-    - assets/icons/privacy_policy.png
-    - assets/icons/log_out.png
-    - assets/icons/user.png
-    - assets/icons/search.png
-    - assets/icons/password.png
-    - assets/icons/notification.png
-    - assets/icons/mail.png
-    - assets/icons/favorite.png
-    - assets/icons/fav_active.png
-    - assets/icons/cart.png
-    - assets/icons/call.png
-    - assets/icons/inner_banner.png
-    - assets/icons/delete.png
-    - assets/icons/minus.png
-    - assets/icons/plus.png
-    - assets/icons/homebanner.png
-    - assets/icons/product1.png
-    - assets/icons/empty_cart.png
-    - assets/icons/bag.png
-    - assets/icons/remove.png
-    - assets/icons/banner1.png
-    - assets/icons/banner2.png
-    - assets/icons/time.png
-    - assets/icons/mobile.png
-    - assets/icons/location.png
-    - assets/icons/house.png
-    - assets/icons/calendar.png
-    - assets/icons/mailicon.png
-    - assets/icons/google.png
-    - assets/icons/return.png
-    - assets/icons/delivery_icon.png
-    - assets/icons/processed.png
-    - assets/icons/un_processed.png
-    - lib/lang/ar.json
-    - lib/lang/en.json
-
+    - assets/icons/
+    - assets/images/
+    - lib/lang/
 
 
 

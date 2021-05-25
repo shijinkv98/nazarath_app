@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/main.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/cart.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const Color colorPrimary = Color(0xFF5BC4BF);
 const Color bottom_nav_bg = const Color.fromRGBO(68, 204, 192, 1.0);
@@ -90,6 +92,31 @@ Widget errorScreen(String errorTitle) => Center(
     ],
   ),
 );
+const String prefSelectedLanguageCode = "SelectedLanguageCode";
+
+Future<Locale> setLocale(String languageCode) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+  await _prefs.setString(prefSelectedLanguageCode, languageCode);
+  return _locale(languageCode);
+}
+String selectLanguage="en";
+Future<Locale> getLocale() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  String languageCode = _prefs.getString(prefSelectedLanguageCode) ?? "en";
+  return _locale(languageCode);
+}
+
+Locale _locale(String languageCode) {
+  return languageCode != null && languageCode.isNotEmpty
+      ? Locale(languageCode, '')
+      : Locale('en', '');
+}
+
+void changeLanguage(BuildContext context, String selectedLanguageCode) async {
+  var _locale = await setLocale(selectedLanguageCode);
+  MyApp.setLocale(context, _locale);
+}
 void setCounts(int wish,int cart, int noti)
 {
   // notificationCounterValueNotifer =
@@ -100,6 +127,21 @@ void setCounts(int wish,int cart, int noti)
   wish_c=wish.toString();
   noti_c=noti.toString();
 }
+const Color transparent=Color(0x00000000);
+BoxDecoration zredBorder=BoxDecoration(
+    color: transparent,
+    borderRadius:
+    BorderRadius.only(bottomRight: Radius.circular(3.0)),
+    border: Border.all(
+        color: colorPrimary,
+        width: 1
+
+    ),
+);
+BoxDecoration filledBorder=BoxDecoration(
+    color: colorPrimary,
+    borderRadius: BorderRadius.only(bottomRight: Radius.circular(3.0)),
+);
 void saveCounts(String wish,String cart,String notification)
 {
   ApiCall().saveCartCount(cart);

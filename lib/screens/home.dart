@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 // import 'package:nazarath_app/screens/sideDrawer.dart';
@@ -175,7 +176,7 @@ class HomePage extends State<Home> {
         padding: EdgeInsets.only(top:10),
         child: Column(
           children: [
-            Text("Categories",
+            Text(Languages.of(context).categories,
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey[600],
@@ -252,7 +253,7 @@ class HomePage extends State<Home> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 15,bottom: 5),
-              child: Text("Recommended Products",
+              child: Text(Languages.of(context).recommendedProducts,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.grey[600],
@@ -295,7 +296,7 @@ class HomePage extends State<Home> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 15,bottom: 5),
-              child: Text("Featured Products",
+              child: Text(Languages.of(context).featuredProducts,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.grey[600],
@@ -739,7 +740,7 @@ class HomePage extends State<Home> {
 //         children: [
 //           Padding(
 //             padding: const EdgeInsets.only(top: 7),
-//             child: Text("Recommended Products",
+//             child: Text(Languages.of(context).recommendedProducts,
 //                 style: TextStyle(
 //                     fontSize: 15,
 //                     color: Colors.grey[600],

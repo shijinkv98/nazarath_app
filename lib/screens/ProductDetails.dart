@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
@@ -720,7 +721,7 @@ Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 15,bottom: 5),
-            child: Text("Recommended Products",
+            child: Text(Languages.of(context).recommendedProducts,
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey[600],

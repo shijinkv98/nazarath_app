@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nazarath_app/Screens/login.dart';
 import 'package:nazarath_app/helper/common.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 
@@ -13,6 +14,7 @@ import 'package:nazarath_app/screens/checkout.dart';
 import 'package:nazarath_app/screens/checkup.dart';
 import 'package:nazarath_app/screens/custom/notificationbadge.dart';
 import 'package:nazarath_app/screens/checkup.dart';
+import 'package:nazarath_app/screens/languagescreen.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/sideDrawer.dart';
 import 'package:nazarath_app/screens/store.dart';
@@ -243,7 +245,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('My Profile',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).profile,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           tbPosition=3;
@@ -260,7 +262,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('My Orders',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).myOrders,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -279,7 +281,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('Wishlist',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).wishlist,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           Navigator.push(
@@ -295,7 +297,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('My Wallet',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).myWallet,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -314,7 +316,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('Change Password',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).changePassword,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -333,7 +335,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text(getTranslated(context, 'stores'),style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).stores,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           tbPosition=2;
@@ -350,7 +352,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('Notifications',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).notification,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           Navigator.push(
@@ -364,9 +366,27 @@ class _DashBoard extends State<DashBoard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/language_icon.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages
+                                  .of(context)
+                                  .labelSelectLanguage,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => languageScreen("")),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('News',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).news,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           tbPosition=4;
@@ -384,7 +404,7 @@ class _DashBoard extends State<DashBoard> {
                             children: <Widget>[
                               ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
                               SizedBox(width: 10),
-                              Text('Logout',style:TextStyle(color:Colors.white),)
+                              Text(Languages.of(context).logout,style:TextStyle(color:Colors.white),)
                             ],
                           ), onPressed: () {
                           if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -574,11 +594,11 @@ Container getBottomNav(BuildContext context)
     color: bottom_nav_bg,
     child: TabBar(
       tabs: [
-        _individualTab('assets/icons/home_white.png'),
-        _individualTab2('assets/icons/check_up_white.png'),
-        _individualTab3('assets/icons/stores_white.png'),
-        _individualTab4('assets/icons/profile_white.png'),
-        _individualTab5('assets/icons/news_white.png'),
+        _individualTab('assets/icons/home_white.png',context),
+        _individualTab2('assets/icons/check_up_white.png',context),
+        _individualTab3('assets/icons/stores_white.png',context),
+        _individualTab4('assets/icons/profile_white.png',context),
+        _individualTab5('assets/icons/news_white.png',context),
         // Tab(
         //   icon: ImageIcon(AssetImage('assets/icons/bottom_nav/Email.png')),
         // ),
@@ -593,7 +613,7 @@ Container getBottomNav(BuildContext context)
   );
 }
 
-Widget _individualTab(String imagePath) {
+Widget _individualTab(String imagePath,BuildContext context) {
 
   return Container(
       height: 70,
@@ -611,7 +631,7 @@ Widget _individualTab(String imagePath) {
               icon: ImageIcon(AssetImage(imagePath),
                 size: 20,),
               child: Text(
-                "HOME",
+                Languages.of(context).home,
                 style: TextStyle(fontSize: 12),
               ),
               //text: 'STORES',
@@ -630,7 +650,7 @@ Widget _individualTab(String imagePath) {
       ));
 }
 
-Widget _individualTab2(String imagePath) {
+Widget _individualTab2(String imagePath,BuildContext context) {
 
   return Container(
       height: 70,
@@ -648,7 +668,7 @@ Widget _individualTab2(String imagePath) {
               icon: ImageIcon(AssetImage(imagePath),
                 size: 20,),
               child: Text(
-                "CHECKUP",
+                Languages.of(context).checkup,
                 style: TextStyle(fontSize: 12),
               ),
               //text: 'STORES',
@@ -667,7 +687,7 @@ Widget _individualTab2(String imagePath) {
       ));
 }
 
-Widget _individualTab3(String imagePath) {
+Widget _individualTab3(String imagePath,BuildContext context) {
   return Container(
       height: 70,
       width: double.infinity,
@@ -684,7 +704,7 @@ Widget _individualTab3(String imagePath) {
               icon: ImageIcon(AssetImage(imagePath),
               size: 20,),
               child: Text(
-                "STORES",
+                Languages.of(context).stores,
                 style: TextStyle(fontSize: 12),
               ),
               //text: 'STORES',
@@ -703,7 +723,7 @@ Widget _individualTab3(String imagePath) {
       ));
 }
 
-Widget _individualTab4(String imagePath) {
+Widget _individualTab4(String imagePath,BuildContext context) {
 
   return Container(
       height: 70,
@@ -721,7 +741,7 @@ Widget _individualTab4(String imagePath) {
               icon: ImageIcon(AssetImage(imagePath),
                 size: 20,),
               child: Text(
-                "PROFILE",
+                Languages.of(context).profile,
                 style: TextStyle(fontSize: 12),
               ),
               //text: 'STORES',
@@ -776,7 +796,7 @@ void gotoLogin(BuildContext context) {
       MaterialPageRoute(
           builder: (BuildContext context) => Login()));
 }
-Widget _individualTab5(String imagePath) {
+Widget _individualTab5(String imagePath, BuildContext context) {
   return Container(
       height: 70,
       width: double.infinity,
@@ -793,7 +813,7 @@ Widget _individualTab5(String imagePath) {
               icon: ImageIcon(AssetImage(imagePath),
                 size: 20,),
               child: Text(
-                "NEWS",
+                Languages.of(context).news,
                 style: TextStyle(fontSize: 12),
               ),
               //text: 'STORES',

@@ -55,7 +55,7 @@ class ApiCall{
 
   http.MultipartRequest getMultipartRequest(String url) {
     if (!url.startsWith("http")) {
-      url = "$API_URL$url";
+      url = "$API_URL$url${"/"}$selectLanguage";
     }
     return http.MultipartRequest('POST', Uri.parse(url));
   }

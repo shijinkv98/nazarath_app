@@ -4,12 +4,10 @@ import 'package:nazarath_app/notifiers/cartnotifier.dart';
 import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
 import 'package:nazarath_app/notifiers/searchnotifier.dart';
 import 'package:nazarath_app/screens/Splash.dart';
-import 'package:nazarath_app/screens/language_constants.dart';
 import 'package:nazarath_app/screens/register/otp.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
+import 'localizations_delegate.dart';
 import 'helper/constants.dart';
-import 'language_localization.dart';
 import 'network/ApiCall.dart';
 import 'notifiers/dashboardnotifier.dart';
 import 'notifiers/filternotifier.dart';
@@ -17,6 +15,7 @@ import 'notifiers/home_notifiers.dart';
 import 'notifiers/login_notifier.dart';
 import 'notifiers/register_notifier.dart';
 import 'notifiers/wishlistnotifier.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +32,7 @@ void main() {
 class MyApp extends StatefulWidget {
   const MyApp({Key key}) : super(key: key);
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    var state = context.findAncestorStateOfType<_MyAppState>();
     state.setLocale(newLocale);
   }
 
@@ -46,10 +45,22 @@ class _MyAppState extends State<MyApp> {
   String messageTitle = "Empty";
   String notificationAlert = "alert";
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  setLocale(Locale locale) {
+
+  void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
+      selectLanguage=_locale.languageCode;
     });
+  }
+  @override
+  void didChangeDependencies() async {
+    getLocale().then((locale) {
+      setState(() {
+        _locale = locale;
+        selectLanguage=_locale.languageCode;
+      });
+    });
+    super.didChangeDependencies();
   }
   @override
   void initState() {
@@ -73,15 +84,7 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
-  @override
-  void didChangeDependencies() {
-    getLocale().then((locale) {
-      setState(() {
-        this._locale = locale;
-      });
-    });
-    super.didChangeDependencies();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -136,24 +139,26 @@ class _MyAppState extends State<MyApp> {
           // primarySwatch: colorPrimary,
           visualDensity: VisualDensity.standard,
         ),
-        locale: _locale,
-        supportedLocales: [
-          Locale("en", "US"),
-          Locale("ar", "SA"),
-        ],
-        localizationsDelegates: [
-          LanguageLocalization.delegate,
-          LanguageLocalization.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode &&
-                supportedLocale.countryCode == locale.countryCode) {
-              return supportedLocale;
-            }
+      locale: _locale,
+      supportedLocales: [
+        Locale('en', ''),
+        Locale('ar', ''),
+
+      ],
+      localizationsDelegates: [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale?.languageCode == locale?.languageCode &&
+              supportedLocale?.countryCode == locale?.countryCode) {
+            return supportedLocale;
           }
-          return supportedLocales.first;
-        },
+        }
+        return supportedLocales?.first;
+      },
         home: SplashScreen(),
       ),
     );

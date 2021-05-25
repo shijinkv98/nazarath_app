@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/network/response/ProductListResponse.dart';
@@ -429,7 +430,7 @@ Widget customView(List<Data> products,BuildContext context,Widget widget)
         ),
       ),
       SliverToBoxAdapter(
-        child:  getRecommended(homeResponse.recommendedProducts, widget),
+        child:  getRecommended(homeResponse.recommendedProducts, widget,context),
       ),
       SliverPadding(
         padding: const EdgeInsets.only(bottom: 5.0),
@@ -788,7 +789,7 @@ Widget getWishListIcon(int wish,double size ,Data item,BuildContext context,Widg
   // );
 }
 
-Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
+Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget,BuildContext context) {
   if (recoomended == null)
     return Container(
       child:SizedBox(
@@ -810,7 +811,7 @@ Widget getRecommended(List<RecommendedProducts> recoomended,Widget widget) {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 15,bottom: 5),
-            child: Text("Recommended Products",
+            child: Text(Languages.of(context).recommendedProducts,
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey[600],
