@@ -261,7 +261,7 @@ final addressField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -318,7 +318,7 @@ final stateField = TextFormField(
   initialValue: state,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -364,7 +364,7 @@ final postalField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }

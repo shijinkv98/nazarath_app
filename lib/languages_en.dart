@@ -105,7 +105,7 @@ class LanguageEn extends Languages {
   @override
   String get phoneNumberCaps => "PHONE NUMBER";
   @override
-  String get thisFieldRequired => "'This field is required'";
+  String get thisFieldRequired => "Languages.of(context).thisFieldRequired";
   @override
   String get editProfile => "Edit Profile";
 

@@ -228,7 +228,7 @@ final passwordField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -272,7 +272,7 @@ final repasswordField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -320,7 +320,7 @@ final repasswordField = TextFormField(
 //   // style: style,
 //   validator: (value) {
 //     if (value.trim().isEmpty) {
-//       return 'This field is required';
+//       return "This field is Required";
 //     } else {
 //       return null;
 //     }

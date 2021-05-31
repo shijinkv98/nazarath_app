@@ -55,4 +55,5 @@ abstract class Languages {
   String get savedPower;
   String get referToFriend;
   String get privacyPolicy ;
+  String get inavalidEmail;
 }

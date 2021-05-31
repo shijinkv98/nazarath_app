@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/ChangePasswordResponse.dart';
 import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
@@ -188,7 +189,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       // style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
           return 'Minimum 8 character needed';
@@ -238,7 +239,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       // style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
           return 'Minimum 8 character needed';
@@ -287,7 +288,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       // style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
           return 'Minimum 8 character needed';

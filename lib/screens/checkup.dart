@@ -204,7 +204,7 @@ final dateField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -267,7 +267,7 @@ final mobileNumberField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -309,7 +309,7 @@ final addressField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -353,7 +353,7 @@ final    locationField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -396,7 +396,7 @@ final timeField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }

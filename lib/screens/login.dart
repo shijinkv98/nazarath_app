@@ -19,6 +19,7 @@ import 'package:nazarath_app/screens/register/register.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../languages.dart';
 import 'DashBoard.dart';
 import 'home.dart';
 
@@ -58,7 +59,7 @@ class _LoginState extends State<Login> {
       style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         } else {
           return value.length < 8 ? 'Enter a valid mobile number' : null;
         }
@@ -67,8 +68,8 @@ class _LoginState extends State<Login> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'USERNAME',
+        hintText: Languages.of(context).userName, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).userNameCaps,
         prefixText: "971",
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
           enabledBorder: UnderlineInputBorder(
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
       style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         } else {
           return null;
         }

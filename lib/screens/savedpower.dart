@@ -484,7 +484,7 @@ final sphereFieldleft = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -522,7 +522,7 @@ final cylFieldleft = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -556,7 +556,7 @@ final axixFieldleft = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -589,7 +589,7 @@ final addFieldleft = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -624,7 +624,7 @@ final sphereFieldright = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -660,7 +660,7 @@ final supportassistField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -696,7 +696,7 @@ final cylFieldright = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -731,7 +731,7 @@ final axixFieldright = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
@@ -766,7 +766,7 @@ final addFieldright = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return 'This field is required';
+      return "This field is Required";
     } else {
       return null;
     }
