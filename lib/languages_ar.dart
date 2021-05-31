@@ -86,4 +86,30 @@ class LanguageAr extends Languages {
 
   @override
   String get recommendedProducts => "المنتجات الموصى بها";
+  @override
+  String get email => "بريد إلكتروني";
+  @override
+  String get emailCaps => "بريد إلكتروني";
+  @override
+  String get userName => "اسم االمستخدم";
+  @override
+  String get userNameCaps => "اسم االمستخدم";
+  @override
+  String get phoneNumber => "رقم الهاتف";
+  @override
+  String get phoneNumberCaps => "رقم الهاتف";
+  @override
+  String get thisFieldRequired => "هذه الخانة مطلوبه";
+
+  @override
+  String get editProfile => "تعديل الملف الشخصي";
+  @override
+  String get myAddress => "عنواني";
+  @override
+  String get privacyPolicy => "Privacy Policy";
+  @override
+  String get referToFriend => "الرجوع إلى صديق";
+  @override
+  String get savedPower => "الطاقة المحفوظة";
+
 }

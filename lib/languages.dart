@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 
 abstract class Languages {
 
+
+
+
+
   static Languages of(BuildContext context) {
     return Localizations.of<Languages>(context, Languages);
   }
-
+  String get editProfile;
   String get appName;
 
   String get labelWelcome;
@@ -39,5 +43,16 @@ abstract class Languages {
   String get newOffers;
   String get weeklyOffers;
   String get by;
+  String get userName;
+  String get userNameCaps;
+  String get email;
+  String get emailCaps;
+  String get phoneNumber;
+  String get phoneNumberCaps;
+  String get thisFieldRequired;
 
+  String get myAddress;
+  String get savedPower;
+  String get referToFriend;
+  String get privacyPolicy ;
 }

@@ -92,4 +92,29 @@ class LanguageEn extends Languages {
   @override
   String get recommendedProducts => "Recommended Products";
 
+  @override
+  String get email => "Email";
+  @override
+  String get emailCaps => "EMAIL";
+  @override
+  String get userName => "User Name";
+  @override
+  String get userNameCaps => "USER NAME";
+  @override
+  String get phoneNumber => "Phone Number";
+  @override
+  String get phoneNumberCaps => "PHONE NUMBER";
+  @override
+  String get thisFieldRequired => "'This field is required'";
+  @override
+  String get editProfile => "Edit Profile";
+
+  @override
+  String get myAddress => "My Address";
+  @override
+  String get privacyPolicy => "Privacy Policy";
+  @override
+  String get referToFriend => "Refer to Friend";
+  @override
+  String get savedPower => "Saved Power";
 }

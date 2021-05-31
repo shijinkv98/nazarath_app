@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 
 
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/ProfileResponse.dart';
 
@@ -162,7 +163,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Edit Profile',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).editProfile,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -182,7 +183,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('My Orders',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).myOrders,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -201,7 +202,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/my_address.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('My Addresses',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).myAddress,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -209,7 +210,7 @@ ProfileResponse profileResponse;
                               else
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AddressScreen("Notification is empty")),
+                                  MaterialPageRoute(builder: (context) => AddressScreen("Address is empty")),
                                 );
                             },
                             ),
@@ -220,7 +221,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/saved_power.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Saved Power',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).savedPower,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.trim().length>0)
@@ -239,7 +240,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Wallet',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).myWallet,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -258,7 +259,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/refer_to_friend.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Refer to Friend',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).referToFriend,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -279,7 +280,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Favourite',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).favorites,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               Navigator.push(
@@ -296,7 +297,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Change Password',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).changePassword,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
@@ -315,7 +316,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/privacy_policy.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Privacy Policy',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).privacyPolicy,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               // Navigator.push(
@@ -331,7 +332,7 @@ ProfileResponse profileResponse;
                                 children: <Widget>[
                                   ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.grey[700],),
                                   SizedBox(width: 10),
-                                  Text('Logout',style:TextStyle(color:Colors.grey[700] ),)
+                                  Text(Languages.of(context).logout,style:TextStyle(color:Colors.grey[700] ),)
                                 ],
                               ), onPressed: () {
                               if(login_data.guest_id != null && login_data.guest_id.length>0)
