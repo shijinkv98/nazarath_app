@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/Screens/register/otp.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SignupResponse.dart';
 import 'package:nazarath_app/notifiers/register_notifier.dart';
@@ -49,7 +50,7 @@ class _RegisterState extends State<Register> {
       style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         } else {
           return null;
         }
@@ -58,8 +59,8 @@ class _RegisterState extends State<Register> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'USERNAME',
+        hintText: Languages.of(context).userName, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).userNameCaps,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey[200]),
@@ -95,7 +96,7 @@ class _RegisterState extends State<Register> {
       style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         } else if (!RegExp(
                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value)) {
@@ -108,8 +109,8 @@ class _RegisterState extends State<Register> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Email", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'EMAIL',
+        hintText: Languages.of(context).email, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).emailCaps,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -145,7 +146,7 @@ class _RegisterState extends State<Register> {
       style: style,
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         } else {
           return value.length < 10 ? 'Enter a valid mobile number' : null;
         }
@@ -196,7 +197,7 @@ class _RegisterState extends State<Register> {
       // ],
       validator: (value) {
         if (value.trim().isEmpty) {
-          return 'This field is required';
+          return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
           return 'Minimum 8 character needed';
