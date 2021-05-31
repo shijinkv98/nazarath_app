@@ -106,13 +106,58 @@ class LanguageAr extends Languages {
   @override
   String get myAddress => "عنواني";
   @override
-  String get privacyPolicy => "Privacy Policy";
+  String get privacyPolicy => "سياسة الخصوصية";
   @override
   String get referToFriend => "الرجوع إلى صديق";
   @override
   String get savedPower => "الطاقة المحفوظة";
 
   @override
-  String get inavalidEmail =>  "Invalid Email";
+  String get invalidEmail =>  "بريد إلكتروني خاطئ";
+  @override
+  String get enterValidNumber => "أدخل رقم صحيح";
+
+  @override
+  String get minEightCharecterRequired => "الحد الأدنى المطلوب 8 أحرف";
+
+  @override
+  String get passWord => "كلمه السر";
+
+  @override
+
+  String get passWordCaps => "كلمه السر";
+  @override
+  String get confirmPassWord => "تأكيد كلمة المرور";
+
+  @override
+
+  String get confirmPassWordCaps => "تأكيد كلمة المرور";
+  @override
+  String get createAccount => "إنشاء حساب";
+  @override
+  String get forgotPassword => "هل نسيت كلمة السر";
+  @override
+  String get login => "تسجيل الدخول";
+  @override
+  String get register => "يسجل";
+  @override
+  String get cancel => "يلغي";
+
+  @override
+  String get ok =>"نعم";
+
+  @override
+  String get wantToQuit => "هل أنت متأكد من أنك تريد الخروج؟";
+
+  @override
+  String get dontHaveAccount => "ليس لديك حساب؟";
+
+  @override
+  String get guest => "زائر";
+
+  @override
+
+  String get signIn => "تسجيل الدخول";
+
 
 }

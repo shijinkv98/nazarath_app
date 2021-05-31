@@ -6,6 +6,10 @@ abstract class Languages {
 
 
 
+
+
+
+
   static Languages of(BuildContext context) {
     return Localizations.of<Languages>(context, Languages);
   }
@@ -22,7 +26,9 @@ abstract class Languages {
   String get changePassword;
   String get myWallet;
   String get stores;
+  String get guest ;
   String get aboutUs;
+  String get dontHaveAccount;
   String get orderHistory;
   String get contactUs;
   String get contest;
@@ -55,5 +61,22 @@ abstract class Languages {
   String get savedPower;
   String get referToFriend;
   String get privacyPolicy ;
-  String get inavalidEmail;
+  String get invalidEmail;
+  String get enterValidNumber;
+  String get minEightCharecterRequired;
+  String get passWord;
+  String get passWordCaps;
+  String get confirmPassWord;
+  String get confirmPassWordCaps;
+  String get  register;
+  String get login;
+  String get signIn;
+  String get createAccount;
+  String get forgotPassword;
+  String get wantToQuit;
+  String get ok;
+  String get cancel;
+
+
+
 }

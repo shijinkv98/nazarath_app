@@ -60,8 +60,9 @@ class _LoginState extends State<Login> {
       validator: (value) {
         if (value.trim().isEmpty) {
           return Languages.of(context).thisFieldRequired;
-        } else {
-          return value.length < 8 ? 'Enter a valid mobile number' : null;
+        }
+        else {
+         return  null;
         }
       },
       keyboardType: TextInputType.phone,
@@ -120,8 +121,8 @@ class _LoginState extends State<Login> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Password", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: "PASSWORD",
+        hintText: Languages.of(context).passWord, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).passWordCaps,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -182,7 +183,7 @@ class _LoginState extends State<Login> {
          // guestLogin(context);
         },
 
-        child: Text("Sign In",
+        child: Text(Languages.of(context).signIn,
             textAlign: TextAlign.center,
             style: style.copyWith(
                 fontSize: 16,
@@ -195,14 +196,14 @@ class _LoginState extends State<Login> {
         onWillPop: () async => showDialog(
         context: context,
         builder: (context) =>
-            AlertDialog(title: Text('Are you sure you want to quit?'), actions: <Widget>[
+            AlertDialog(title: Text(Languages.of(context).wantToQuit), actions: <Widget>[
               RaisedButton(
                   color: colorPrimary,
-                  child: Text('Ok'),
+                  child: Text(Languages.of(context).ok),
                   onPressed: () => Navigator.of(context).pop(exit(0))),
               RaisedButton(
                   color: colorPrimary,
-                  child: Text('Cancel'),
+                  child: Text(Languages.of(context).cancel),
                   onPressed: () => Navigator.of(context).pop(false)),
             ])),
     child:
@@ -276,7 +277,7 @@ class _LoginState extends State<Login> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "Login",
+                                    Languages.of(context).login,
                                     style: TextStyle(
                                         color: textColor,
                                         fontWeight: FontWeight.bold,
@@ -308,7 +309,7 @@ class _LoginState extends State<Login> {
                                               builder: (BuildContext context) => ForgotPasswordScreen('')));
                                     },
                                     child: Text(
-                                      "Forgot Password ?",
+                                      '${Languages.of(context).forgotPassword}${" ?"}',
                                       style: TextStyle(
                                           color: textColor,
                                           fontWeight: FontWeight.normal,
@@ -333,7 +334,7 @@ class _LoginState extends State<Login> {
                                     guestLogin(context);
                                   },
 
-                                  child: Text("Guest",
+                                  child: Text(Languages.of(context).guest,
                                       textAlign: TextAlign.center,
                                       style: style.copyWith(
                                           fontSize: 14,
@@ -344,7 +345,7 @@ class _LoginState extends State<Login> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Don't have an account?",
+                                    Text('${Languages.of(context).dontHaveAccount}${" ?"}',
                                         style: style.copyWith(
                                             fontSize: 14,
                                             color: textColor,
@@ -354,7 +355,7 @@ class _LoginState extends State<Login> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (BuildContext context) => Register()));
-                                    }, child: Text("Create Account", style: style.copyWith(
+                                    }, child: Text(Languages.of(context).createAccount, style: style.copyWith(
                                                 fontSize: 14,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold)))

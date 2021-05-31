@@ -118,5 +118,50 @@ class LanguageEn extends Languages {
   @override
   String get savedPower => "Saved Power";
   @override
-  String get inavalidEmail =>  "Invalid Email";
+  String get invalidEmail =>  "Invalid Email";
+
+  @override
+  String get enterValidNumber => "Enter Valid Number";
+
+  @override
+  String get minEightCharecterRequired => "Minimum 8 character needed";
+
+  @override
+  String get passWord => "Password";
+
+  @override
+
+  String get passWordCaps => "PASSWORD";
+  @override
+  String get confirmPassWord => "Confirm Password";
+
+  @override
+
+  String get confirmPassWordCaps => "CONFIRM PASSWORD";
+
+  @override
+  String get createAccount => "Create Account";
+  @override
+  String get forgotPassword => "Forgot Password";
+  @override
+  String get login => "Login";
+  @override
+  String get signIn => "Sign In";
+  @override
+  String get register => "Register";
+
+  @override
+  String get cancel => "Cancel";
+
+  @override
+  String get ok =>"Ok";
+
+  @override
+  String get wantToQuit => "Are you sure you want to quit?";
+
+  @override
+  String get dontHaveAccount => "Don't have an account?";
+
+  @override
+  String get guest => "Guest";
 }

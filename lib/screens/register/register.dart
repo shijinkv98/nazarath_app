@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-
-import 'package:flutter/gestures.dart';
 import 'package:nazarath_app/Screens/register/otp.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/languages.dart';
@@ -17,7 +15,7 @@ import 'package:nazarath_app/network/response/SignupResponse.dart';
 import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/login.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 // show CheckBoxNotifier;
 
@@ -100,7 +98,7 @@ class _RegisterState extends State<Register> {
         } else if (!RegExp(
                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value)) {
-          return 'Invalid email';
+          return Languages.of(context).invalidEmail;
         } else {
           return null;
         }
@@ -140,6 +138,7 @@ class _RegisterState extends State<Register> {
             new RegExp(r'^[0-9]*$')),
         new LengthLimitingTextInputFormatter(10)
       ],
+      maxLength: 10,
       onSaved: (value) {
         phoneNo = value;
       },
@@ -147,17 +146,21 @@ class _RegisterState extends State<Register> {
       validator: (value) {
         if (value.trim().isEmpty) {
           return Languages.of(context).thisFieldRequired;
-        } else {
-          return value.length < 10 ? 'Enter a valid mobile number' : null;
         }
+        else {
+          return null;
+        }
+        // else {
+        //   return value.length < 10 ? 'Enter a valid mobile number' : null;
+        // }
       },
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Phone Number",
+        hintText: Languages.of(context).phoneNumber,
         hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'PHONE NUMBER',
+        labelText: Languages.of(context).phoneNumberCaps,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         prefixText: '+971 ', prefixStyle: TextStyle(color: Colors.grey),
         enabledBorder: UnderlineInputBorder(
@@ -200,7 +203,7 @@ class _RegisterState extends State<Register> {
           return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
-          return 'Minimum 8 character needed';
+          return Languages.of(context).minEightCharecterRequired;
         }
         else {
           return null;
@@ -212,8 +215,8 @@ class _RegisterState extends State<Register> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Password", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: "PASSWORD",
+        hintText: Languages.of(context).passWord, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).passWordCaps,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -283,7 +286,7 @@ class _RegisterState extends State<Register> {
             }
         }
         },
-        child: Text("Register",
+        child: Text(Languages.of(context).register,
             textAlign: TextAlign.center,
             style: style.copyWith(
                 fontSize: button_text_size,
@@ -360,7 +363,7 @@ class _RegisterState extends State<Register> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "Create Account",
+                                Languages.of(context).createAccount,
                                 style: TextStyle(
                                     color: textColor,
                                     fontWeight: FontWeight.bold,
