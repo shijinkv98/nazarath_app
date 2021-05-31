@@ -112,4 +112,7 @@ class LanguageAr extends Languages {
   @override
   String get savedPower => "الطاقة المحفوظة";
 
+  @override
+  String get inavalidEmail =>  "Invalid Email";
+
 }

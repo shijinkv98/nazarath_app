@@ -117,4 +117,6 @@ class LanguageEn extends Languages {
   String get referToFriend => "Refer to Friend";
   @override
   String get savedPower => "Saved Power";
+  @override
+  String get inavalidEmail =>  "Invalid Email";
 }
