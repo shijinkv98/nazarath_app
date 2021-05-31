@@ -636,9 +636,14 @@ Widget _itemsBuilder(ItemsNew item, BuildContext context,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                       placeholder: 'assets/images/no_image.png',
                       image: '$productThumbUrl${item.image}',
                       height: 80,
+
                       width: 120),
                   SizedBox(
                     width: 5,

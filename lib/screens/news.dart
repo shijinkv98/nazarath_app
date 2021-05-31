@@ -27,7 +27,7 @@ class _NewsState extends State<NewsScreen> {
       backgroundColor: Colors.white,
       body:FutureBuilder<NewsResponse>(
         future: ApiCall()
-            .execute<NewsResponse, Null>('news/en', null),
+            .execute<NewsResponse, Null>('news/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //debugPrint('products size: ${snapshot.data?.news?.length}');
@@ -181,6 +181,10 @@ Widget getListView(News item,BuildContext context,Widget widget) {
               children: [
                 Container(
                   child: FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                     placeholder: 'assets/images/no_image.png',
                     image: '$newsThumbUrl${item.image}',
                     width: 100

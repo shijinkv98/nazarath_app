@@ -80,7 +80,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       body:
       FutureBuilder<CountryResponse>(
         future: ApiCall()
-            .execute<CountryResponse, Null>('countries/en', null),
+            .execute<CountryResponse, Null>('countries/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
 
@@ -172,11 +172,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                     onPressed: ()  async {
-                      String url="customer-addresses/add/en";
+                      String url="customer-addresses/add/"+selectLanguage;
                       _updateNotifier.isProgressShown=true;
                       if(type=="edit")
                       {
-                        url="customer-addresses/edit/en";
+                        url="customer-addresses/edit/"+selectLanguage;
                       }
                       Map body={
                         "name":customer.name,
@@ -296,7 +296,7 @@ final addressField = TextFormField(
        // // FocusScope.of(context).requestFocus(FocusNode());
        //
        //  var response = await ApiCall()
-       //      .execute<AddressResponse, Null>("customer-addresses/add/en", body);
+       //      .execute<AddressResponse, Null>("customer-addresses/add/"+selectLanguage, body);
        //
        //  if (response?.addresses!= null) {
        //  }

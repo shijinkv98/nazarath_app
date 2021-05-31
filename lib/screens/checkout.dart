@@ -49,7 +49,7 @@ class _CheckoutState extends State<CheckoutScreen> {
       // name,email,phone_number,passwor
     };
     // Checkoutresponse =
-    //     await ApiCall().execute<CheckoutResponse, Null>("Checkout/en", body);
+    //     await ApiCall().execute<CheckoutResponse, Null>("Checkout/"+selectLanguage, body);
 
     // if (Checkoutresponse != null) {
     //   products = Checkoutresponse.orderId.items;
@@ -146,7 +146,7 @@ class _CheckoutState extends State<CheckoutScreen> {
 
             // FutureBuilder<CheckoutResponse>(
             //   future: ApiCall()
-            //       .execute<CheckoutResponse, Null>('Checkout/en', null),
+            //       .execute<CheckoutResponse, Null>('Checkout/'+selectLanguage, null),
             //   builder: (context, snapshot) {
             //     if (snapshot.hasData) {
             //       //debugPrint('products size: ${snapshot.data?.orderId?.items?.length}');
@@ -193,6 +193,10 @@ Widget _itemsBuilder(Products product,BuildContext context,Widget widget) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                     placeholder: 'assets/images/no_image.png',
                     image: '$productThumbUrl${product.image}',
                     width: 120,
@@ -832,7 +836,7 @@ async{
   FocusScope.of(context).requestFocus(FocusNode());
 
   var response = await ApiCall()
-      .execute<CheckoutResponse, Null>("checkout/en", body);
+      .execute<CheckoutResponse, Null>("checkout/"+selectLanguage, body);
 
   if (response!= null) {
     ApiCall().showToast(response.message);
@@ -845,7 +849,7 @@ async{
 Future<void> checkoutWithPdf(CartResponse response,BuildContext context,Widget widget,FileModel doc)
 async {
   var request =
-  ApiCall().getMultipartRequest("eye-power/store/en");
+  ApiCall().getMultipartRequest("eye-power/store/"+selectLanguage);
   request.fields['right_eye_sphere'] = sphereright;
   request.fields['right_eye_cyi'] = cylright;
   request.fields['right_eye_axis'] = axixright;
@@ -867,7 +871,7 @@ async {
   }
   FocusScope.of(context).requestFocus(FocusNode());
   var response = await ApiCall()
-      .execute<CheckoutResponse, Null>("checkout/en", null,multipartRequest: request);
+      .execute<CheckoutResponse, Null>("checkout/"+selectLanguage, null,multipartRequest: request);
   if (response!= null) {
     ApiCall().showToast(response.message);
     Navigator.pushReplacement(

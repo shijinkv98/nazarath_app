@@ -143,7 +143,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
       body:
       FutureBuilder<FilterResponse>(
         future: ApiCall()
-            .execute<FilterResponse, Null>('filters/en', null),
+            .execute<FilterResponse, Null>('filters/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return getFilterContent(snapshot.data);

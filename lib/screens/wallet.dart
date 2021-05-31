@@ -33,7 +33,7 @@ class _WalletScreenState extends State<WalletScreen> {
       body:
       FutureBuilder<WalletResponse>(
         future: ApiCall()
-            .execute<WalletResponse, Null>('wallet/en', null),
+            .execute<WalletResponse, Null>('wallet/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //debugPrint('products size: ${snapshot.data!=null}');

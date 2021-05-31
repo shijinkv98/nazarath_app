@@ -40,7 +40,7 @@ class _WishListState extends State<WishListScreen> {
       // name,email,phone_number,passwor
     };
     wishlistresponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/en", body);
+        .execute<WishListResponse, Null>("wishlist/"+selectLanguage, body);
 
     if (wishlistresponse != null) {
       products=wishlistresponse.products;
@@ -140,7 +140,7 @@ class _WishListState extends State<WishListScreen> {
 
       body: FutureBuilder<WishListResponse>(
         future: ApiCall()
-            .execute<WishListResponse, Null>('wishlist/en', null),
+            .execute<WishListResponse, Null>('wishlist/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             ////debugPrint('products size: ${snapshot.data?.products?.length}');
@@ -205,6 +205,10 @@ class _WishListState extends State<WishListScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                       placeholder: 'assets/images/no_image.png',
                       image: '$productThumbUrl${product.image}',
                       width: 120,
@@ -280,7 +284,7 @@ class _WishListState extends State<WishListScreen> {
       "store":store
     };
     WishListResponse wishlistresponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/add/en", body);
+        .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
     if (wishlistresponse != null) {
       ApiCall().showToast(wishlistresponse.message);
@@ -301,7 +305,7 @@ class _WishListState extends State<WishListScreen> {
       "store":store
     };
     WishListResponse wishlistresponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/move/en", body);
+        .execute<WishListResponse, Null>("wishlist/move/"+selectLanguage, body);
 
     if (wishlistresponse != null) {
       ApiCall().showToast(wishlistresponse.message);
@@ -504,7 +508,7 @@ class _WishListState extends State<WishListScreen> {
 
   Future<void> getWishListResponse() async {
     var response = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/en", null);
+        .execute<WishListResponse, Null>("wishlist/"+selectLanguage, null);
     if(response!=null)
     {
       _updateNotifier.wishListResponse=response;

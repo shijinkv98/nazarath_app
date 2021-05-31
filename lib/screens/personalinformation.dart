@@ -89,7 +89,7 @@ Widget getButton(BuildContext context,var customer) {
           FocusScope.of(context).requestFocus(FocusNode());
 
           var response = await ApiCall()
-              .execute<String, Null>("update-profile/en", body);
+              .execute<String, Null>("update-profile/"+selectLanguage, body);
 
           if (response!= null) {
             customer.name=username;

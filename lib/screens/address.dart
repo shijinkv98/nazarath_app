@@ -37,7 +37,7 @@ class _AddressState extends State<AddressScreen> {
       backgroundColor: Colors.white,
       body: FutureBuilder<AddressResponse>(
         future: ApiCall()
-            .execute<AddressResponse, Null>('customer-addresses/en', null),
+            .execute<AddressResponse, Null>('customer-addresses/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //debugPrint('products size: ${snapshot.data?.addresses?.length}');
@@ -331,7 +331,7 @@ class _AddressState extends State<AddressScreen> {
 
                                       var response = await ApiCall()
                                           .execute<AddressResponse, Null>(
-                                          "customer-addresses/delete/en",
+                                          "customer-addresses/delete/"+selectLanguage,
                                           body);
 
                                       if (response != null) {
@@ -460,7 +460,7 @@ class _AddressState extends State<AddressScreen> {
 //     //
 //     //         //this.value = value;
 //     //         // if (value) {
-//     //         //   String url = "customer-addresses/update/en";
+//     //         //   String url = "customer-addresses/update/"+selectLanguage;
 //     //         //   homeResponse.address=address;
 //     //         //   Map body = {
 //     //         //     "address_id": address.id.toString(),

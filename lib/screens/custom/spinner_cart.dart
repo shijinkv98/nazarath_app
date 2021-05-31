@@ -34,7 +34,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
   Future<void> getCartResponse()
   async {
     var response = await ApiCall()
-        .execute<CartResponse, Null>("'cart/en'", null);
+        .execute<CartResponse, Null>("'cart/'+selectLanguage", null);
     if(response!=null)
     {
       notifer.cartAdded=response;
@@ -121,7 +121,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
      // ApiCall().showToast(cartResponse.message);
@@ -164,7 +164,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
       ApiCall().showToast(cartResponse.message);

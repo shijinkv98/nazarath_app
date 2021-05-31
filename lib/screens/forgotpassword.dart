@@ -80,7 +80,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               FocusScope.of(context).requestFocus(FocusNode());
 
               var response = await ApiCall()
-                  .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body);
+                  .execute<ResetPasswordResponse, Null>("send-reset-password-code/"+selectLanguage, body);
 
               if (response!= null) {
                 Navigator.push(

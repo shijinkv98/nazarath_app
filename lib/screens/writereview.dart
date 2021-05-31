@@ -54,6 +54,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                         placeholder: 'assets/images/no_image.png',
                         image: '$productThumbUrl${item.image}',
                         height:80,
@@ -164,7 +168,7 @@ Widget getButton(BuildContext context,ItemsNew item){
               fontWeight: FontWeight.w400,
               color: Colors.white)),
       onPressed: () async {
-        String url='${"add-product-review/"}${item.slug}${"/en"}';
+        String url='${"add-product-review/"}${item.slug}${"/"+selectLanguage}';
         Map body={
             "title":item.productName,
             "message":review,

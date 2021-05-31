@@ -33,7 +33,7 @@ class _ReferScreenState extends State<ReferScreen> {
       backgroundColor: Colors.white,
       body:  FutureBuilder<ReferalResponse>(
         future: ApiCall()
-            .execute<ReferalResponse, Null>('referral-url/en', null),
+            .execute<ReferalResponse, Null>('referral-url/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
 

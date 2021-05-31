@@ -117,7 +117,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
         backgroundColor: Colors.white,
         body:FutureBuilder<ProductDetailsResponse>(
         future: ApiCall()
-            .execute<ProductDetailsResponse, Null>('${"product/en/"}$slug', null),
+            .execute<ProductDetailsResponse, Null>('${"product/"}$selectLanguage${"/"}$slug', null),
         builder: (context, snapshot) {
         if (snapshot.hasData) {
           _productDetailsResponse=snapshot.data;
@@ -171,6 +171,10 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
       },
       child: Container(
         child: FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
           placeholder: 'assets/images/no_image.png',
           image: '$productThumbUrl$url',
 
@@ -926,7 +930,7 @@ Future<String>addtoCart(String slug,String store,BuildContext context,Widget wid
     "store":store
   };
   CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/en", body);
+      .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
   if (cartResponse != null) {
     ApiCall().showToast(cartResponse.message);
@@ -944,7 +948,7 @@ Future<String>addtoWishList(String slug,String store,BuildContext context,Widget
     "store": store
   };
   WishListResponse Productresponse = await ApiCall()
-      .execute<WishListResponse, Null>("wishlist/add/en", body);
+      .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
   if (Productresponse != null) {
     ApiCall().showToast(Productresponse.message);

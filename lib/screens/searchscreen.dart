@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SearchResponse.dart';
 import 'package:nazarath_app/notifiers/searchnotifier.dart';
@@ -106,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     };
     SearchResponse response = await ApiCall()
-        .execute<SearchResponse, Null>("search-products/en", body);
+        .execute<SearchResponse, Null>("search-products/"+selectLanguage, body);
     if(response!=null)
     {
 

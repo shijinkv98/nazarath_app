@@ -264,7 +264,7 @@ class _RegisterState extends State<Register> {
               FocusScope.of(context).requestFocus(FocusNode());
               _loadingNotifier.isLoading = true;
               var response = await ApiCall()
-                  .execute<SignupResponse, Null>("register/en", body);
+                  .execute<SignupResponse, Null>("register/"+selectLanguage, body);
               if (response != null) {
                 _loadingNotifier.isLoading = false;
                 if (response?.customerData != null) {

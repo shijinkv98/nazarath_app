@@ -117,7 +117,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
       body:
       FutureBuilder<NewsDetailsResponse>(
         future: ApiCall()
-            .execute<NewsDetailsResponse, Null>('${"news/show/"}$slug${"/en"}', null),
+            .execute<NewsDetailsResponse, Null>('${"news/show/"}$slug${"/"+selectLanguage}', null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return getNewsScreen(snapshot.data,context,super.widget);
@@ -252,6 +252,10 @@ Container getNewsDetails(News item,BuildContext context,Widget widget){
             height: 200,
             child: Center(
               child: FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                   placeholder: 'assets/images/no_image.png',
                   image: '$newsImageUrl${item.image}',
                   width: double.infinity,

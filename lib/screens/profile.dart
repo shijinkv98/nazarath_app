@@ -55,7 +55,7 @@ ProfileResponse profileResponse;
       backgroundColor: Colors.white,
       body: FutureBuilder<ProfileResponse>(
         future: ApiCall()
-            .execute<ProfileResponse, Null>('my-profile/en', null),
+            .execute<ProfileResponse, Null>('my-profile/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             profileResponse=snapshot.data;

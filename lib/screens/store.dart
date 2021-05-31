@@ -31,7 +31,7 @@ class _StoreScreenState extends State<StoreScreen> {
         body:
             FutureBuilder<StoreResponse>(
               future: ApiCall()
-                  .execute<StoreResponse, Null>('stores/en', null),
+                  .execute<StoreResponse, Null>('stores/'+selectLanguage, null),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   //debugPrint('products size: ${snapshot.data?.stores?.length}');

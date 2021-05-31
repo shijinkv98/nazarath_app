@@ -131,7 +131,7 @@ class _CartState extends State<CartScreen> {
       body:Container(
         child:FutureBuilder<CartResponse>(
           future: ApiCall()
-              .execute<CartResponse, Null>('cart/en', null),
+              .execute<CartResponse, Null>('cart/'+selectLanguage, null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               //debugPrint('products size: ${snapshot.data?.products?.length}');
@@ -152,7 +152,7 @@ class _CartState extends State<CartScreen> {
   Future<void> getCartResponse()
   async {
     var response = await ApiCall()
-        .execute<CartResponse, Null>("'cart/en'", null);
+        .execute<CartResponse, Null>("'cart/'+selectLanguage", null);
     if(response!=null)
       {
         _updateNotifier.cartAdded=response;
@@ -243,6 +243,10 @@ class _CartState extends State<CartScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                       placeholder: 'assets/images/no_image.png',
                       image: '$productThumbUrl${product.image}',
                       width: 120,
@@ -376,7 +380,7 @@ Future<String>removeFromCart(String slug,String store,BuildContext context,Widge
     "store":store
   };
   CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/en", body);
+      .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
   if (cartResponse != null) {
     ApiCall().showToast(cartResponse.message);
@@ -395,7 +399,7 @@ Future<String> movetoWishList(String slug,String store,BuildContext context,Widg
     "store":store
   };
   CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/move/en", body);
+      .execute<CartResponse, Null>("cart/move/"+selectLanguage, body);
 
   if (cartResponse != null) {
     ApiCall().showToast(cartResponse.message);
@@ -783,7 +787,7 @@ Widget getCoupon() {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
       // ApiCall().showToast(cartResponse.message);

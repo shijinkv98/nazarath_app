@@ -162,7 +162,7 @@ class _ProductState extends State<ProductScreen> {
       backgroundColor: product_bg,
       body: FutureBuilder<ProductListResponse>(
         future: ApiCall()
-            .execute<ProductListResponse, Null>('products/en', para),
+            .execute<ProductListResponse, Null>('products/'+selectLanguage, para),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if(snapshot.data.products==null)
@@ -722,7 +722,7 @@ Future<String>addtoWishListNew(String slug,String store,BuildContext context,Wid
     "store": store
   };
   WishListResponse wishListResponse = await ApiCall()
-      .execute<WishListResponse, Null>("wishlist/add/en", body);
+      .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
   if (wishListResponse != null) {
     ApiCall().showToast(wishListResponse.message);
@@ -740,7 +740,7 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
     "store": store
   };
   WishListResponse wishListResponse = await ApiCall()
-      .execute<WishListResponse, Null>("wishlist/add/en", body);
+      .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
   if (wishListResponse != null) {
     ApiCall().showToast(wishListResponse.message);

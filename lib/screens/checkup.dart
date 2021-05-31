@@ -251,7 +251,7 @@ Future<String>checkup(String phone,
   "longitude":log
   };
    ApiCall()
-      .execute<UpdateResponse, Null>("appointment/store/en", body).then((result) {
+      .execute<UpdateResponse, Null>("appointment/store/"+selectLanguage, body).then((result) {
     ApiCall().showToast(result.message);
   });
 

@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
             // };
             // isLoading=true;
             // var response = await ApiCall()
-            //     .execute<LoginResponse, Null>("login/en", body);
+            //     .execute<LoginResponse, Null>("login/"+selectLanguage, body);
             //
             // if (response?.customerData != null) {
             //   isLoading=false;
@@ -467,7 +467,7 @@ class _LoginState extends State<Login> {
       // name,email,phone_number,password
     };
     var response = await ApiCall()
-        .execute<LoginResponse, Null>("guest-login/en", body);
+        .execute<LoginResponse, Null>("guest-login/"+selectLanguage, body);
 
     if(response!=null) {
       _loadingNotifier.isLoading = false;
@@ -501,7 +501,7 @@ class _LoginState extends State<Login> {
       'guest_id':'',
     };
     var response = await ApiCall()
-        .execute<LoginResponse, Null>("login/en", body);
+        .execute<LoginResponse, Null>("login/"+selectLanguage, body);
     if(response!=null) {
       _loadingNotifier.isLoading = false;
       if (response?.customerData != null) {
@@ -523,7 +523,7 @@ class _LoginState extends State<Login> {
       'id': id,
     };
     var response = await ApiCall()
-        .execute<LoginResponse, Null>("verify-email/en", body);
+        .execute<LoginResponse, Null>("verify-email/"+selectLanguage, body);
 
     if (response?.customerData != null) {
       await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));

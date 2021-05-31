@@ -119,7 +119,7 @@ class _DashBoard extends State<DashBoard> {
     //   //   {
     //   //
     //   //     // var response = await ApiCall()
-    //   //     //     .execute<ProfileResponse, Null>('my-profile/en', null);
+    //   //     //     .execute<ProfileResponse, Null>('my-profile/'+selectLanguage, null);
     //   //     // if(response!=null)
     //   //     //   {
     //   //     //     userName=response.name;
@@ -134,7 +134,7 @@ class _DashBoard extends State<DashBoard> {
     //   // name,email,phone_number,passwor
     // };
     // homeResponse = await ApiCall()
-    //     .execute<HomeResponse, Null>("home/en", body);
+    //     .execute<HomeResponse, Null>("home/"+selectLanguage, body);
     //
     // if (homeResponse != null) {
     //
@@ -770,7 +770,7 @@ async {
       MaterialPageRoute(
           builder: (BuildContext context) => Login()));
   // LogoutResponse logoutResponse = await ApiCall()
-  //     .execute<LogoutResponse, Null>("logout/en", null);
+  //     .execute<LogoutResponse, Null>("logout/"+selectLanguage, null);
   //   if(logoutResponse!=null)
   //     {
   //       gotoLogin(context);

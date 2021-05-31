@@ -46,7 +46,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
       backgroundColor: Colors.white,
       body:FutureBuilder<EyePowerResponse>(
       future: ApiCall()
-        .execute<EyePowerResponse, Null>('eye-power/en', null),
+        .execute<EyePowerResponse, Null>('eye-power/'+selectLanguage, null),
     builder: (context, snapshot) {
     if (snapshot.hasData) {
       _eyePowerResponse=snapshot.data;
@@ -419,7 +419,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
     FocusScope.of(context).requestFocus(FocusNode());
 
     var response = await ApiCall()
-        .execute<EyePowerResponse, Null>("eye-power/store/en", body);
+        .execute<EyePowerResponse, Null>("eye-power/store/"+selectLanguage, body);
 
     if (response?.data != null) {
       ApiCall().showToast(response.message);
@@ -430,7 +430,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
    async {
      _docsAddedNotifier.isLoading=true;
     var request =
-    ApiCall().getMultipartRequest("eye-power/store/en");
+    ApiCall().getMultipartRequest("eye-power/store/"+selectLanguage);
     request.fields['right_eye_sphere'] = sphereright;
     request.fields['right_eye_cyi'] = cylright;
     request.fields['right_eye_axis'] = axixright;
@@ -449,7 +449,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
 
     }
     ApiCall()
-        .execute<EyePowerResponse, Null>("eye-power/store/en", null,multipartRequest: request).then((EyePowerResponse response){
+        .execute<EyePowerResponse, Null>("eye-power/store/"+selectLanguage, null,multipartRequest: request).then((EyePowerResponse response){
       setState(() {
         _docsAddedNotifier.isLoading=false;
         ApiCall().showToast(response.message);

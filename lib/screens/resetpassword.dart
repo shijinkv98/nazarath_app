@@ -90,7 +90,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               FocusScope.of(context).requestFocus(FocusNode());
 
               var response = await ApiCall()
-                  .execute<ForgotResponse, Null>("reset-password/en", body);
+                  .execute<ForgotResponse, Null>("reset-password/"+selectLanguage, body);
 
               if (response != null) {
                 if (response.success != 0) {
@@ -134,7 +134,7 @@ Widget getResendOtp(){
                 FocusScope.of(context).requestFocus(FocusNode());
 
                  ApiCall()
-                    .execute<ResetPasswordResponse, Null>("send-reset-password-code/en", body).then((ResetPasswordResponse data){
+                    .execute<ResetPasswordResponse, Null>("send-reset-password-code/"+selectLanguage, body).then((ResetPasswordResponse data){
                       ApiCall().showToast(data.message);
 
                 });

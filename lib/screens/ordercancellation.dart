@@ -53,6 +53,10 @@ Widget _itemsBuilder(BuildContext context, ItemsNew item,Data orderData) {
             mainAxisSize: MainAxisSize.min,
             children: [
               FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                 placeholder: 'assets/images/no_image.png',
                 image: item.image!=null?'$productThumbUrl${item.image}':"",
                 width: 120,
@@ -198,7 +202,7 @@ Widget getButton(BuildContext context,ItemsNew item) {
             FocusScope.of(context).requestFocus(FocusNode());
 
             var response = await ApiCall()
-                .execute<String, Null>("cancel-order/en", body);
+                .execute<String, Null>("cancel-order/"+selectLanguage, body);
             if (response!= null)
             {
               ApiCall().showToast("ORDER CANCELL REQUESTED");

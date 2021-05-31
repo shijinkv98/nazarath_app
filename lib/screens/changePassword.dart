@@ -145,7 +145,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     _updateNotifier.isProgressShown=true;
    ApiCall()
         .execute<ChangePasswordResponse, Null>(
-        "change-password/en", body).then((result) {
+        "change-password/"+selectLanguage, body).then((result) {
       ApiCall().showToast(result.message);
       _updateNotifier.isProgressShown=false;
       tbPosition = 3;

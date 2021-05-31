@@ -109,7 +109,7 @@ class _OrderState extends State<OrderScreen> {
       ),
       body: FutureBuilder<OrderResponse>(
         future: ApiCall()
-            .execute<OrderResponse, Null>('my-orders/en', null),
+            .execute<OrderResponse, Null>('my-orders/'+selectLanguage, null),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
 
@@ -217,6 +217,10 @@ class _OrderState extends State<OrderScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
                       placeholder: 'assets/images/no_image.png',
                       image: '$productThumbUrl${item.image}',
                       width: 120,

@@ -98,7 +98,7 @@ class _NotificationState extends State<NotificationScreen> {
       body: Container(
         child:FutureBuilder<NotificationResponse>(
           future: ApiCall()
-              .execute<NotificationResponse, Null>('notifications/en', null),
+              .execute<NotificationResponse, Null>('notifications/'+selectLanguage, null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
             //  //debugPrint('products size: ${snapshot.data?.notifications?.length}');

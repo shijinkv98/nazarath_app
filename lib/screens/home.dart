@@ -72,7 +72,7 @@ class HomePage extends State<Home> {
         backgroundColor:home_bg,
         // drawer: SideDrawer(),
         body: FutureBuilder<HomeResponse>(
-          future: ApiCall().execute<HomeResponse, Null>('home/en', null),
+          future: ApiCall().execute<HomeResponse, Null>('home/'+selectLanguage, null),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return getFullView(snapshot.data, context,super.widget);
@@ -184,7 +184,7 @@ class HomePage extends State<Home> {
             Container(
               padding: EdgeInsets.only(left: 5, right: 5,top: 10),
               color: home_bg,
-              height: 120,
+              height: selectLanguage=="en"?120:132,
               width: double.infinity,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -634,7 +634,7 @@ class HomePage extends State<Home> {
       "store": store
     };
     WishListResponse wishListResponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/add/en", body);
+        .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
     if (wishListResponse != null) {
       ApiCall().showToast(wishListResponse.message);
@@ -651,7 +651,7 @@ class HomePage extends State<Home> {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
       // ApiCall().showToast(cartResponse.message);
@@ -670,7 +670,7 @@ class HomePage extends State<Home> {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
       ApiCall().showToast(cartResponse.message);
@@ -686,7 +686,7 @@ class HomePage extends State<Home> {
       "store": store
     };
     WishListResponse Productresponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/add/en", body);
+        .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
 
     if (Productresponse != null) {
       ApiCall().showToast(Productresponse.message);
@@ -708,7 +708,7 @@ class HomePage extends State<Home> {
       "store":store
     };
     CartResponse cartResponse = await ApiCall()
-        .execute<CartResponse, Null>("cart/add/en", body);
+        .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
 
     if (cartResponse != null) {
       ApiCall().showToast(cartResponse.message);
@@ -1012,6 +1012,10 @@ class HomePage extends State<Home> {
     return Container(
       color: Color(0xFFe5eeef),
       child: FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.cover,
+                      ),
         placeholder: 'assets/images/no_image.png',
         image: '$bannerThumbUrl$url',
 
@@ -1024,6 +1028,10 @@ class HomePage extends State<Home> {
     return Container(
       color: Color(0xFFe5eeef),
       child: FadeInImage.assetNetwork(
+        imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+          image: AssetImage("assets/images/no_image.png"),
+          fit: BoxFit.cover,
+        ),
         placeholder: 'assets/images/no_image.png',
         image: '$bannerThumbUrl$url',
 
@@ -1035,6 +1043,10 @@ class HomePage extends State<Home> {
     return Container(
 
       child: FadeInImage.assetNetwork(
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                        image: AssetImage("assets/images/no_image.png"),
+                        fit: BoxFit.contain,
+                      ),
         placeholder: 'assets/images/no_image.png',
         image: '$offerThumbUrl$url',
         fit: BoxFit.fitWidth,
