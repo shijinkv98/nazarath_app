@@ -10,6 +10,7 @@ import 'package:nazarath_app/screens/notification.dart';
 import 'package:nazarath_app/screens/register/otp_reset.dart';
 import 'package:nazarath_app/screens/resetpassword.dart';
 
+import '../languages.dart';
 import 'DashBoard.dart';
 import 'cart.dart';
 
@@ -39,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: phoneField,
+                child: phoneField(),
               ),
 
 
@@ -147,61 +148,62 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
 
   }
+  String phoneNo;
+  bool isLoading = false;
+// _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
+  Widget phoneField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    inputFormatters: [
+      new WhitelistingTextInputFormatter(
+          new RegExp(r'^[0-9]*$')),
+      new LengthLimitingTextInputFormatter(10)
+    ],
+    onChanged: (value) {
+      phoneNo = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return value.length < 10 ? 'Enter a valid mobile number' : null;
+      }
+    },
+    keyboardType: TextInputType.phone,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).phoneNumber, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).phoneNumber,
+      prefixText: "971",
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon:
+      new IconButton(
+        icon: new Image.asset(
+          'assets/icons/call.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
 }
 
 
 
 
-String phoneNo;
-bool isLoading = false;
-// _checkBoxNotifier = Provider.of<CheckBoxNotifier>(context, listen: false);
-final phoneField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  inputFormatters: [
-    new WhitelistingTextInputFormatter(
-        new RegExp(r'^[0-9]*$')),
-    new LengthLimitingTextInputFormatter(10)
-  ],
-  onChanged: (value) {
-    phoneNo = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return value.length < 10 ? 'Enter a valid mobile number' : null;
-    }
-  },
-  keyboardType: TextInputType.phone,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Phone Number", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Phone Number',
-    prefixText: "971",
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
 
-
-    prefixIcon:
-    new IconButton(
-      icon: new Image.asset(
-        'assets/icons/call.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
 

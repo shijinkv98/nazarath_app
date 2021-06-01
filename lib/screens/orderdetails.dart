@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 
 import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/ordercancellation.dart';
@@ -365,7 +366,7 @@ Widget getOrderSummaryDetails(
         Container(
           padding: EdgeInsets.only(left: 10),
           child: Text(
-            "Order Summary",
+           Languages.of(context).orderSummary,
             textAlign: TextAlign.start,
             style: TextStyle(
               color: text_tilte_page,
@@ -377,16 +378,16 @@ Widget getOrderSummaryDetails(
         SizedBox(
           height: 5,
         ),
-        getTextContainer("Sub Total", '${"AED  "}${orderData.orderTotalAmount}',
+        getTextContainer(Languages.of(context).subTotal, '${"AED  "}${orderData.orderTotalAmount}',
             "normal", item_text_gray_light, item_text_gray_light, "normal"),
         getTextContainer(
-            "Shipping",
+            Languages.of(context).shipping,
             '${"AED "}${orderData.orderShippingCharge}',
             "normal",
             item_text_gray_light,
             item_text_gray_light,
             "normal"),
-        getTextContainer("Total", '${"AED "}${orderData.orderNetTotalAmount}',
+        getTextContainer(Languages.of(context).total, '${"AED "}${orderData.orderNetTotalAmount}',
             "bold", text_tilte_page, colorRed, "title")
       ],
     ),

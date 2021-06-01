@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/custom/PinField.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 // import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/forgotresponse.dart';
@@ -74,7 +75,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: RaisedButton(
           color: colorPrimary,
           elevation: 0,
-          child: Text('Update',
+          child: Text(Languages.of(context).update,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -119,7 +120,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
   }
-Widget getResendOtp(){
+  Widget getResendOtp(){
     return Container(
       margin: EdgeInsets.only(left:50,right: 50,top:10),
       child: Row(
@@ -163,6 +164,136 @@ Widget getResendOtp(){
       },
     );
   }
+  Widget getPersonalInfo()
+  {
+    return Container(
+      margin: EdgeInsets.only(top: 45),
+      child: Container(width: double.infinity,
+        child: Column(
+
+          children: [
+            getForms(),
+
+
+          ],
+        ),
+
+      ),
+    );
+    //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
+
+  }
+  Widget getForms(){
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: passwordField(),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: repasswordField()
+            ),
+
+
+          ],
+        ),
+      ),
+    );
+  }
+
+  String password="";
+  Widget passwordField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      password = value;
+    },
+    initialValue: password,
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Enter New Password", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'New Password',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/password.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String repassword="";
+  Widget repasswordField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      repassword = value;
+    },
+    initialValue: repassword,
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Confirm Password", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'Re-enter New Password',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/password.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
 }
 // Widget getOtp(){
 //   return Padding(
@@ -175,195 +306,3 @@ Widget getResendOtp(){
 // }
 
 
-Container getPersonalInfo()
-{
-  return Container(
-    margin: EdgeInsets.only(top: 45),
-    child: Container(width: double.infinity,
-      child: Column(
-
-        children: [
-          getForms(),
-
-
-        ],
-      ),
-
-    ),
-  );
-  //return Container(child: Column(children: [Container(child:_listview(products,context,widget))],),);
-
-}
-Widget getForms(){
-  return Container(
-    width: double.infinity,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 5,left: 25,right: 25,bottom: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: passwordField,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: repasswordField
-          ),
-
-
-        ],
-      ),
-    ),
-  );
-}
-
-String password="";
-final passwordField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    password = value;
-  },
-  initialValue: password,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Enter New Password", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'New Password',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/password.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String repassword="";
-final repasswordField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    repassword = value;
-  },
-  initialValue: repassword,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Confirm Password", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Re-enter New Password',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/password.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-
-
-
-// String otp="";
-// final    otpField = TextFormField(
-//   cursorColor: colorPrimary,
-//   obscureText: false,
-//   onChanged: (value) {
-//     otp = value;
-//   },
-//   initialValue: otp,
-//   // style: style,
-//   validator: (value) {
-//     if (value.trim().isEmpty) {
-//       return Languages.of(context).thisFieldRequired;
-//     } else {
-//       return null;
-//     }
-//   },
-//   keyboardType: TextInputType.number,
-//   maxLength: 6,
-//   textInputAction: TextInputAction.next,
-//   decoration: InputDecoration(
-//     contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-//     hintText: "Enter Otp", hintStyle: TextStyle(color: textColorSecondary),
-//     // labelText: 'New Password',
-//     labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-//     enabledBorder: UnderlineInputBorder(
-//       borderSide: BorderSide(color: Colors.grey[200]),
-//     ),
-//     focusedBorder: UnderlineInputBorder(
-//       borderSide: BorderSide(color: colorPrimary),
-//     ),
-//
-//
-//     // prefixIcon: new IconButton(
-//     //   icon: new Image.asset(
-//     //     'assets/icons/change_password.png',
-//     //     width: register_icon_size,
-//     //     height: register_icon_size,
-//     //   ),
-//     //   onPressed: null,
-//     //   color: colorPrimary,
-//     // ),
-//
-//     // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-//   ),
-// );
-//
-// class OTPNotifier extends ChangeNotifier {
-//   String _otp;
-//   String get otp => _otp;
-//   set otp(String otp2) {
-//     _otp = otp2;
-//     notifyListeners();
-//   }
-//
-//   set otpWithoutNotify(String otp) {
-//     _otp = otp;
-//   }
-// }

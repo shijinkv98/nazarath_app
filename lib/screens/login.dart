@@ -508,7 +508,6 @@ class _LoginState extends State<Login> {
       _loadingNotifier.isLoading = false;
       if (response?.customerData != null) {
 
-        isLoading = false;
         await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));
         Navigator.pushReplacement(

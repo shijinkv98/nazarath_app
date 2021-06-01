@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'dart:convert';
 
@@ -669,7 +670,7 @@ Widget getCoupon() {
                   if(homeResponse.address==null) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EditAddressScreen("cart","add",response,null)),
+                      MaterialPageRoute(builder: (context) => EditAddressScreen("cart",Languages.of(context).add,response,null)),
                     );
                   }
                   else
@@ -731,16 +732,16 @@ Widget getCoupon() {
             color: Colors.white,
             padding: EdgeInsets.only(left:10,top: 15),
             child: Text(
-              "Order Summary",
+             Languages.of(context).orderSummary,
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
             ),
           ),
 
-          getTextContainer("Sub Total", '${cartResponse.symbolLeft}${" "}${cartResponse.netTotal}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
-          getTextContainer("Shipping", '${cartResponse.symbolLeft}${" "}${cartResponse.deliveryCharge.toString()}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
-          getTextContainer("Total", '${cartResponse.symbolLeft}${" "}${cartResponse.grandTotal}', "bold", text_tilte_page, colorRed, "title")
+          getTextContainer(Languages.of(context).subTotal, '${cartResponse.symbolLeft}${" "}${cartResponse.netTotal}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer(Languages.of(context).shipping, '${cartResponse.symbolLeft}${" "}${cartResponse.deliveryCharge.toString()}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer(Languages.of(context).total, '${cartResponse.symbolLeft}${" "}${cartResponse.grandTotal}', "bold", text_tilte_page, colorRed, "title")
         ],
 
       ),

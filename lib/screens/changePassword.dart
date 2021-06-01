@@ -165,7 +165,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
           color: colorPrimary,
           elevation: 0,
-          child: Text('Update', style: TextStyle(
+          child: Text(Languages.of(context).update, style: TextStyle(
               fontSize: 14, fontWeight: FontWeight.w400,color: Colors.white)),
           onPressed: () async {
             if (_formKey_chang.currentState.validate()) {

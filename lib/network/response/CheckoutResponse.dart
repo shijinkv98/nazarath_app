@@ -62,10 +62,10 @@ class OrderId {
   String couponDiscount;
   int couponDiscountType;
   String discountAmount;
-  int walletAmount;
+  String walletAmount;
   String shippingCharge;
   String totalTaxAmount;
-  int netTotalAmount;
+  String netTotalAmount;
   int paymentMode;
   String deliveryMode;
   String pickupStoreId;
@@ -196,11 +196,11 @@ class OrderId {
     couponCode = json['coupon_code'].toString();
     couponDiscount = json['coupon_discount'].toString();
     couponDiscountType = json['coupon_discount_type'];
-    discountAmount = json['discount_amount'];
-    walletAmount = json['wallet_amount'];
-    shippingCharge = json['shipping_charge'];
-    totalTaxAmount = json['total_tax_amount'];
-    netTotalAmount = json['net_total_amount'];
+    discountAmount = json['discount_amount'].toString();
+    walletAmount = json['wallet_amount'].toString();
+    shippingCharge = json['shipping_charge'].toString();
+    totalTaxAmount = json['total_tax_amount'].toString();
+    netTotalAmount = json['net_total_amount'].toString();
     paymentMode = json['payment_mode'];
     deliveryMode = json['delivery_mode'];
     pickupStoreId = json['pickup_store_id'].toString();
@@ -212,15 +212,15 @@ class OrderId {
     orderStatusId = json['order_status_id'];
     orderStatus = json['order_status'];
     paymentStatus = json['payment_status'];
-    orderCancelReason = json['order_cancel_reason'];
-    orderCancelDescription = json['order_cancel_description'];
-    otherDetails = json['other_details'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    orderWalletAmount = json['order_wallet_amount'];
-    orderTotalAmount = json['order_total_amount'];
-    orderNetTotalAmount = json['order_net_total_amount'];
-    orderShippingCharge = json['order_shipping_charge'];
+    orderCancelReason = json['order_cancel_reason'].toString();
+    orderCancelDescription = json['order_cancel_description'].toString();
+    otherDetails = json['other_details'].toString();
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
+    orderWalletAmount = json['order_wallet_amount'].toString();
+    orderTotalAmount = json['order_total_amount'].toString();
+    orderNetTotalAmount = json['order_net_total_amount'].toString();
+    orderShippingCharge = json['order_shipping_charge'].toString();
     if (json['items'] != null) {
       items = new List<Items>();
       json['items'].forEach((v) {

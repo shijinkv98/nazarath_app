@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/helper/mime_type.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/model/file_model.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/EyePowerResponse.dart';
@@ -40,7 +41,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Saved Power',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text(Languages.of(context).savedPower,style:TextStyle(fontSize:15,color: Colors.white),
         ),
       ),
       backgroundColor: Colors.white,
@@ -93,7 +94,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
-                      'Upload Prescription',
+                      Languages.of(context).uploadPrescription,
                       style:
                       TextStyle(color: textColor, fontSize: 12,fontWeight: FontWeight.bold),
                     ),
@@ -109,7 +110,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                             elevation: 0,
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Text('Upload',
+                              child: Text(Languages.of(context).upload,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
@@ -175,7 +176,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 5, left: 40,bottom: 15),
               child: Text(
-                '(upload pdf,jpg,png format)',
+                Languages.of(context).uploadFormat,
                 style: TextStyle(color: textColor, fontSize: 9),
               ),
             ),
@@ -220,19 +221,19 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: sphereFieldleft,
+                                  child: sphereFieldleft(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: cylFieldleft,
+                                  child: cylFieldleft(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: axixFieldleft,
+                                  child: axixFieldleft(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                  child: addFieldleft,
+                                  child: addFieldleft(),
                                 )
                               ],
                             ),
@@ -262,19 +263,19 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: sphereFieldright,
+                                  child: sphereFieldright(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: cylFieldright,
+                                  child: cylFieldright(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: axixFieldright,
+                                  child: axixFieldright(),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                  child: addFieldright,
+                                  child: addFieldright(),
                                 )
                               ],
                             ),
@@ -300,7 +301,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                      'Support(Assist)',
+                                      Languages.of(context).supportAssist,
                                       style:
                                       TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
                                   ),
@@ -313,7 +314,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                         ),
                                         child: Center(child: Padding(
                                           padding: const EdgeInsets.only(left: 25,right: 25),
-                                          child: supportassistField,
+                                          child: supportassistField(),
                                         ))),
                                   ),
                                   Padding(
@@ -324,7 +325,7 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
                                       child: RaisedButton(
                                         color: colorPrimary,
                                         elevation: 0,
-                                        child: Text('Update',
+                                        child: Text(Languages.of(context).update,
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
@@ -468,325 +469,317 @@ class _SavedPowerScreenState extends State<SavedPowerScreen> {
     //   // );
     // }
   }
+  String sphereleft="";
+  String axixleft="";
+  String cylleft="";
+  String addleft="";
+  String sphereright="";
+  String supportassist="";
+  String cylright="";
+  String axixright="";
+  String addright="";
+  Widget sphereFieldleft()
+  {
+    return TextFormField(
+      cursorColor: colorPrimary,
+      obscureText: false,
+      onChanged: (value) {
+        sphereleft = value;
+      },
+      // style: style,
+      validator: (value) {
+        if (value.trim().isEmpty) {
+          return Languages.of(context).thisFieldRequired;
+        } else {
+          return null;
+        }
+      },
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+        hintText: Languages.of(context).sphere,
+        hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).sphere,
+        labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[200]),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: colorPrimary),
+        ),
+
+
+
+        // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+      ),
+    );
+  }
+
+  Widget cylFieldleft ()=> TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      cylleft = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).cyl,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).cyl,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget axixFieldleft() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      axixleft = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).axix,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).axix,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget addFieldleft()=> TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      addleft = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).add,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).add,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget supportassistField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onSaved: (value) {
+      supportassist = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).typeHere,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).typeHere,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget sphereFieldright() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      sphereright = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).sphere,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).sphere,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget cylFieldright() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      cylright = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).cyl,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).cyl,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget axixFieldright() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      axixright = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).axix,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).axix,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  Widget addFieldright() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      addright = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: Languages.of(context).add,
+      hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).add,
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
 }
 
 
 
 
-String sphereleft="";
-final sphereFieldleft = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    sphereleft = value;
-  },
 
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  initialValue: sphereleft,
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Sphere",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Sphere',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-String cylleft="";
-final cylFieldleft = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    cylleft = value;
-  },
-  initialValue: cylleft,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "CYL",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'CYL',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String axixleft="";
-final axixFieldleft = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    axixleft = value;
-  },
-  initialValue: axixleft,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Axix",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Axix',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String addleft="";
-final addFieldleft = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    addleft = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  initialValue: addleft,
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Add",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Add',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String sphereright="";
-final sphereFieldright = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    sphereright = value;
-  },
-  initialValue: sphereright,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Sphere",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Sphere',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String supportassist;
-final supportassistField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    supportassist = value;
-  },
-
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Type Here",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Type Here',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-String cylright="";
-final cylFieldright = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    cylright = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  initialValue: cylright,
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "CYL",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'CYL',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String axixright="";
-final axixFieldright = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    axixright = value;
-  },
-  initialValue: axixright,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Axix",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Axix',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String addright="";
-final addFieldright = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    addright = value;
-  },
-
-  initialValue: addright,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Add",
-    hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'Add',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
 

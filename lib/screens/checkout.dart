@@ -53,6 +53,25 @@ class _CheckoutState extends State<CheckoutScreen> {
     ApiCall()
         .execute<EyePowerResponse, Null>('eye-power/'+selectLanguage, null).then((value) {
           _eyePowerResponse=value;
+          Data data=_eyePowerResponse.data;
+          if(data.rxOdReAxis!=null)
+            axixright=data.rxOdReAxis;
+          if(data.rxOdReAddv!=null)
+            addright=data.rxOdReAddv;
+          if(data.rxOdReCyi!=null)
+            cylright=data.rxOdReCyi;
+          if(data.rxOdReSphere!=null)
+            sphereright=data.rxOdReSphere;
+
+          if(data.rxOsLeAxis!=null)
+            axixleft=data.rxOsLeAxis;
+          if(data.rxOsLeAddv!=null)
+            addleft=data.rxOsLeAddv;
+          if(data.rxOsLeCyi!=null)
+            cylleft=data.rxOsLeCyi;
+          if(data.rxOsLeSphere!=null)
+            sphereleft=data.rxOsLeSphere;
+          _updateNotifier.update();
 
     });
     return "Success!";
@@ -156,8 +175,29 @@ class _CheckoutState extends State<CheckoutScreen> {
             ),
           ],
         ),
-        body:customView()
+        body:getViews()
         );
+  }
+  Widget getViews()
+  {
+      return Consumer<CheckoutUpdatedNotifier>(
+        builder: (context, value, child) {
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            child:  Stack(
+              children: [
+                Align(
+                    alignment:Alignment.topCenter,child: customView()),
+                Align(alignment: Alignment.center,
+                  child:  value.isProgressShown ? progressBar : SizedBox()
+                )
+              ],
+            ),
+          );
+
+        },
+      );
+
   }
   Widget customView()
   {
@@ -170,13 +210,23 @@ class _CheckoutState extends State<CheckoutScreen> {
         SliverPadding(
           padding: const EdgeInsets.only(bottom: 10.0),
         ),
-        SliverFixedExtentList(
-          itemExtent: _itemExtent,  // I'm forcing item heights
-          delegate: SliverChildBuilderDelegate(
-                (context, index) => _itemsBuilder(cartResponse.products[index]),
-            childCount: cartResponse.products.length,
-          ),
-        ),
+        SliverToBoxAdapter(child:
+        ListView.builder(
+          //here your code
+            scrollDirection: Axis.vertical,
+            itemCount: cartResponse.products.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return _itemsBuilder(cartResponse.products[index]);
+            }),),
+        // SliverFixedExtentList(
+        //   itemExtent: _itemExtent, // I'm forcing item heights
+        //   delegate: SliverChildBuilderDelegate(
+        //         (context, index) => _itemsBuilder(cartResponse.products[index]),
+        //     childCount: cartResponse.products.length,
+        //   ),
+        // ),
 
         SliverPadding(
           padding: const EdgeInsets.only(bottom: 10.0),
@@ -277,8 +327,8 @@ class _CheckoutState extends State<CheckoutScreen> {
           Container(
             child:
             TabBar(labelColor: textColor, indicatorColor: product_bg, tabs: [
-              Tab(text: "Upload Prescription"),
-              Tab(text: "Eye Power enter manually"),
+              Tab(text: Languages.of(context).uploadPrescription),
+              Tab(text: Languages.of(context).eyePowerEnterManually),
             ]),
             color: Colors.white,
           ),
@@ -297,7 +347,8 @@ class _CheckoutState extends State<CheckoutScreen> {
   }
   Widget getTabSection1()
   {
-    return CustomScrollView(
+    return
+      CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
           child:    getTabSectionNormal(),
@@ -472,7 +523,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                           elevation: 0,
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text('Upload',
+                            child: Text(Languages.of(context).upload,
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,
@@ -522,7 +573,7 @@ class _CheckoutState extends State<CheckoutScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 40),
                 child: Text(
-                  '(upload pdf,jpg,png format)',
+                  Languages.of(context).uploadFormat,
                   style: TextStyle(color: textColor, fontSize: 9),
                 ),
               ),
@@ -628,11 +679,11 @@ class _CheckoutState extends State<CheckoutScreen> {
   {
     return showDialog(context: context,
         builder: (ctx) => AlertDialog(
-          title: Text("SUCCESS"),
+          title: Text(Languages.of(context).successCaps),
           content: Container(child:Column(
             children: [
-              Text('"INVOICE_NUMBER"${response.orderId.invoiceNumber}'),
-              Text('"ORDER ID"${response.orderId.id}'),
+              Text('${Languages.of(context).invoiceNumber}${response.orderId.invoiceNumber}'),
+              Text('${Languages.of(context).orderId}${response.orderId.id}'),
             ],
           )),
           actions: <Widget>[
@@ -644,7 +695,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                 );
                 Navigator.of(ctx).pop();
               },
-              child: Text("Continue"),
+              child: Text(Languages.of(context).continue_),
             ),
 
           ],
@@ -654,14 +705,14 @@ class _CheckoutState extends State<CheckoutScreen> {
   {
     return showDialog(context: context,
         builder: (ctx) => AlertDialog(
-          title: Text("Confirm Order"),
-          content: Text("Do you want to place order?"),
+          title: Text(Languages.of(context).confirmOrder),
+          content: Text(Languages.of(context).wantToPlaceOrder),
           actions: <Widget>[
             FlatButton(
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
-              child: Text("Cancel"),
+              child: Text(Languages.of(context).cancel),
             ),
             FlatButton(
               onPressed: () {
@@ -671,7 +722,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                   checkoutWithoutPdf(response, context, widget);
                 Navigator.of(ctx).pop();
               },
-              child: Text("Ok"),
+              child: Text(Languages.of(context).ok),
             ),
           ],
         ));
@@ -693,12 +744,13 @@ class _CheckoutState extends State<CheckoutScreen> {
       "coupon_code":""
     };
     FocusScope.of(context).requestFocus(FocusNode());
-
+    _updateNotifier.isProgressShown=true;
     var response = await ApiCall()
         .execute<CheckoutResponse, Null>("checkout/"+selectLanguage, body);
 
     if (response!= null) {
       ApiCall().showToast(response.message);
+      _updateNotifier.isProgressShown=false;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => orderSucessScreen(response)),
@@ -728,11 +780,13 @@ class _CheckoutState extends State<CheckoutScreen> {
           filename: doc.name,
           contentType: MimeTypes.getContentType(doc)));
     }
+    _updateNotifier.isProgressShown=true;
     FocusScope.of(context).requestFocus(FocusNode());
     var response = await ApiCall()
         .execute<CheckoutResponse, Null>("checkout/"+selectLanguage, null,multipartRequest: request);
     if (response!= null) {
       ApiCall().showToast(response.message);
+      _updateNotifier.isProgressShown=false;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => orderSucessScreen(response)),
@@ -755,7 +809,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                 elevation: 0,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text('Continue',
+                  child: Text(Languages.of(context).continue_,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -894,7 +948,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        'Support(Assist)',
+                                        Languages.of(context).supportAssist,
                                         style:
                                         TextStyle(color: textColor, fontSize: 10,fontWeight: FontWeight.bold)
                                     ),
@@ -962,9 +1016,9 @@ class _CheckoutState extends State<CheckoutScreen> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Sphere",
+        hintText: Languages.of(context).sphere,
         hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'Sphere',
+        labelText: Languages.of(context).sphere,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -998,9 +1052,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "CYL",
+      hintText: Languages.of(context).cyl,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'CYL',
+      labelText: Languages.of(context).cyl,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1030,9 +1084,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Axix",
+      hintText: Languages.of(context).axix,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Axix',
+      labelText: Languages.of(context).axix,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1062,9 +1116,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Add",
+      hintText: Languages.of(context).add,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Add',
+      labelText: Languages.of(context).add,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1094,9 +1148,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Type Here",
+      hintText: Languages.of(context).typeHere,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Type Here',
+      labelText: Languages.of(context).typeHere,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1128,9 +1182,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Sphere",
+      hintText: Languages.of(context).sphere,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Sphere',
+      labelText: Languages.of(context).sphere,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1162,9 +1216,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "CYL",
+      hintText: Languages.of(context).cyl,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'CYL',
+      labelText: Languages.of(context).cyl,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1194,9 +1248,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Axix",
+      hintText: Languages.of(context).axix,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Axix',
+      labelText: Languages.of(context).axix,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -1226,9 +1280,9 @@ class _CheckoutState extends State<CheckoutScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Add",
+      hintText: Languages.of(context).add,
       hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Add',
+      labelText: Languages.of(context).add,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),

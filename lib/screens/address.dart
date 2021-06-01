@@ -64,7 +64,7 @@ class _AddressState extends State<AddressScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    EditAddressScreen("address", "add", null, null)),
+                    EditAddressScreen("address", Languages.of(context).add, null, null)),
           );
         },
         child: Container(

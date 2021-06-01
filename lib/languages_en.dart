@@ -164,4 +164,86 @@ class LanguageEn extends Languages {
 
   @override
   String get guest => "Guest";
+
+  @override
+  String get add => "Add";
+  @override
+  String get addAddress => "Add Address";
+  @override
+  String get axix => "AXIX";
+  @override
+  String get confirm => "Confirm";
+  @override
+  String get cyl => "CYL";
+  @override
+  String get deliveryAddress => "Delivery Address";
+  @override
+  String get discountCode => "Discount Code";
+  @override
+  String get dontRecieveOtp => "Don\'t receive the OTP ?";
+  @override
+  String get editAddress => "Edit Address";
+  @override
+  String get enterTheCodeSendToYou => "Enter the code sent to you";
+  @override
+  String get eyePowerEnterManually => "Eye Power enter manually";
+  @override
+  String get filter => "Filter";
+  @override
+  String get orderSummary => "Order Summary";
+  @override
+  String get otpVerification => "OTP Verification";
+  @override
+  String get resendOtp => "Resend OTP";
+  @override
+  String get rxODLeft => "RX.OD(left)";
+  @override
+  String get rxODRight => "RX.OD(Right)";
+  @override
+  String get shipping => "Shipping";
+  @override
+  String get shippingAddress => "Shipping Address";
+  @override
+  String get sort =>"Sort";
+  @override
+  String get sphere => "SPHERE";
+  @override
+  String get subTotal => "Sub Total";
+  @override
+  String get supportAssist => "Support(Assist)";
+  @override
+  String get total => "Total";
+  @override
+  String get typeHere => "Type here";
+  @override
+  String get update => "Update";
+  @override
+  String get uploadPrescription => "Upload Prescription";
+
+  @override
+  String get continue_ => "Continue";
+
+  @override
+  String get quantity =>"Quantity";
+
+  @override
+  String get confirmOrder => "Confirm Order";
+
+  @override
+  String get wantToPlaceOrder => "Do you want to place order?";
+  @override
+  String get uploadFormat => "(upload pdf,jpg,png format)";
+
+  @override
+  String get invoiceNumber => "INVOICE NUMBER";
+
+  @override
+  String get orderId => "ORDER ID";
+
+  @override
+  String get successCaps => "SUCCESS";
+  @override
+  String get Name => "Name";
+  @override
+  String get upload => "Upload";
 }

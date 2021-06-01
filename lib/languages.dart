@@ -2,14 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 abstract class Languages {
 
-
-
-
-
-
-
-
-
   static Languages of(BuildContext context) {
     return Localizations.of<Languages>(context, Languages);
   }
@@ -18,7 +10,7 @@ abstract class Languages {
 
   String get labelWelcome;
   String get labelInfo;
-
+  String get Name;
   String get labelSelectLanguage;
   String get profile;
   String get myOrders;
@@ -88,6 +80,7 @@ abstract class Languages {
   String get addAddress;
   String get update;
   String get discountCode;
+  String get orderSummary;
   String get subTotal;
   String get shipping;
   String get total;
@@ -96,12 +89,26 @@ abstract class Languages {
   String get eyePowerEnterManually;
   String get rxODLeft;
   String get rxODRight;
-  String get axisLeft;
-  String get axisRight;
-  String get cyl;
-  String get cylRight;
-  String get cylLeft;
+  String get continue_;
+  String get quantity;
+  String get confirmOrder;
+  String get wantToPlaceOrder;
 
+  String get cyl;
+  String get sphere;
+  String get supportAssist;
+  String get uploadPrescription;
+  String get axix;
+  String get add;
+  String get typeHere;
+  String get uploadFormat;
+  String get successCaps;
+  String get invoiceNumber;
+  String get orderId;
+  String get upload;
+
+  //String get emptyAddress;
+  //String get continue_;
 
 
 }

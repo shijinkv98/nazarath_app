@@ -13,6 +13,7 @@ import 'package:nazarath_app/screens/address.dart';
 import 'package:nazarath_app/screens/notification.dart';
 import 'package:provider/provider.dart';
 
+import '../languages.dart';
 import 'DashBoard.dart';
 import 'cart.dart';
 import 'checkout.dart';
@@ -67,9 +68,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   @override
   Widget build(BuildContext context) {
 
-    String title="Add Adress";
+    String title=Languages.of(context).addAddress;
     if(type=="edit")
-      title="Edit Address";
+      title=Languages.of(context).editAddress;
     return Scaffold(
       appBar: AppBar(
         title: Text(title,style: TextStyle(
@@ -155,15 +156,15 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 10,top: 10),
-              child: addressField,
+              child: addressField(),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: stateField,
+              child: stateField(),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: postalField,
+              child: postalField(),
             ),
 
             Padding(
@@ -233,7 +234,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     // padding: EdgeInsets.only(left: 5, right: 5),
                     textColor: Colors.white,
                     child: Text(
-                      'Update',
+                      Languages.of(context).update,
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.w400),
                     )),
@@ -244,159 +245,159 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       ),
     );
   }
+  String address="";
+  Widget addressField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
 
+    onChanged: (value) {
+      address = value;
+    },
+    initialValue: address,
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Full address(Building name,Area,Location,Street name)", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'ADDRESS*',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/user.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: () async {
+          //  Map body={
+          //    "address":address,
+          //    "zipcode":postal,
+          //    "state":state,
+          //  };
+          // // FocusScope.of(context).requestFocus(FocusNode());
+          //
+          //  var response = await ApiCall()
+          //      .execute<AddressResponse, Null>("customer-addresses/add/"+selectLanguage, body);
+          //
+          //  if (response?.addresses!= null) {
+          //  }
+        },
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String state="";
+  Widget stateField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      state = value;
+    },
+    // style: style,
+    initialValue: state,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "State/Province", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'STATE/PROVINCE',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/user.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: (){
+
+        },
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String postal="";
+  Widget postalField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      postal = value;
+    },
+    initialValue: postal,
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Zip/Postal COde", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'ZIP/POSTAL CODE',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/user.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: (){},
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
 }
 
 
 
-String address="";
-final addressField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
 
-  onChanged: (value) {
-    address = value;
-  },
-  initialValue: address,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Full address(Building name,Area,Location,Street name)", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ADDRESS*',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/user.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: () async {
-       //  Map body={
-       //    "address":address,
-       //    "zipcode":postal,
-       //    "state":state,
-       //  };
-       // // FocusScope.of(context).requestFocus(FocusNode());
-       //
-       //  var response = await ApiCall()
-       //      .execute<AddressResponse, Null>("customer-addresses/add/"+selectLanguage, body);
-       //
-       //  if (response?.addresses!= null) {
-       //  }
-      },
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String state="";
-final stateField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    state = value;
-  },
-  // style: style,
-  initialValue: state,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "State/Province", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'STATE/PROVINCE',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/user.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: (){
-
-      },
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String postal="";
-final postalField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    postal = value;
-  },
-  initialValue: postal,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Zip/Postal COde", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ZIP/POSTAL CODE',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/user.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: (){},
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
 
 
 

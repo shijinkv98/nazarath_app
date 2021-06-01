@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
@@ -50,7 +51,7 @@ class _SpinnerCartState extends State<SpinnerCart> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${"Quantity :"}${spinner_cart.toInt().toString()}',
+          Text('${Languages.of(context).quantity}${" :"}${spinner_cart.toInt().toString()}',
           style: TextStyle(
               fontSize: 9,
               color: item_text_gray_light,

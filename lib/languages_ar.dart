@@ -158,6 +158,85 @@ class LanguageAr extends Languages {
   @override
 
   String get signIn => "تسجيل الدخول";
+  @override
+  String get add => "يضيف";
+  @override
+  String get addAddress => "اضف عنوان";
+  @override
+  String get axix => "أكسكس";
+  @override
+  String get confirm => "يتأكد";
+  @override
+  String get cyl => "اسطوانة";
+  @override
+  String get deliveryAddress => "عنوان التسليم";
+  @override
+  String get discountCode => "رمز التخفيض";
+  @override
+  String get dontRecieveOtp => "ألا تتلقى كلمة المرور لمرة واحدة؟";
+  @override
+  String get editAddress => "تعديل العنوان";
+  @override
+  String get enterTheCodeSendToYou => "أدخل الرمز المرسل لك";
+  @override
+  String get eyePowerEnterManually => "أدخل قوة العين يدويًا";
+  @override
+  String get filter => "منقي";
+  @override
+  String get orderSummary => "ملخص الطلب";
+  @override
+  String get otpVerification => "التحقق من كلمة المرور لمرة واحدة";
+  @override
+  String get resendOtp => "إعادة إرسال كلمة المرور لمرة واحدة";
+  @override
+  String get rxODLeft => "RX.OD (يسار)";
+  @override
+  String get rxODRight => "RX.OD (يمين)";
+  @override
+  String get shipping => "شحن";
+  @override
+  String get shippingAddress => "عنوان الشحن";
+  @override
+  String get sort =>"فرز";
+  @override
+  String get sphere => "جسم كروى";
+  @override
+  String get subTotal => "المجموع الفرعي";
+  @override
+  String get supportAssist => "الدعم (المساعدة)";
+  @override
+  String get total => "مجموع";
+  @override
+  String get typeHere => "أكتب هنا";
+  @override
+  String get update => "تحديث";
+  @override
+  String get uploadPrescription => "تحميل الوصفة الطبية";
+  @override
+  String get continue_ => "يكمل";
 
+  @override
+  String get quantity =>"كمية";
 
+  @override
+  String get confirmOrder => "أكد الطلب";
+
+  @override
+  String get wantToPlaceOrder => "هل تريد تقديم الطلب؟";
+
+  @override
+  String get uploadFormat => "(تحميل بصيغة pdf، jpg، png)";
+
+  @override
+  String get invoiceNumber => "رقم الفاتورة";
+
+  @override
+  String get orderId => "رقم التعريف الخاص بالطلب";
+
+  @override
+  String get successCaps => "نجاح";
+  @override
+  String get Name => "اسم";
+  @override
+  String get upload => "تحميل";
 }

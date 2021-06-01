@@ -288,7 +288,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Name",
+                          Languages.of(context).Name,
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f1),
                         ),

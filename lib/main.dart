@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/notifiers/cartnotifier.dart';
+import 'package:nazarath_app/notifiers/checkout_notifier.dart';
 import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
 import 'package:nazarath_app/notifiers/searchnotifier.dart';
 import 'package:nazarath_app/screens/Splash.dart';
@@ -124,6 +125,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
               create: (context) => OTPNotifier()
+          ),
+          ChangeNotifierProvider(
+              create: (context) => CheckoutUpdatedNotifier()
           )
         ],
     child: MaterialApp(

@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/updateresponse.dart';
 
@@ -96,7 +97,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                       key: _checkUpForms,
                       child: Column(
                         children: [
-                          mobileNumberField,
+                          mobileNumberField(),
                         ],
                       ),
                     ),
@@ -104,7 +105,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: addressField,
+                  child: addressField(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
@@ -137,7 +138,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                           ),
                         );
                       },
-                      child: locationField),
+                      child: locationField()),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
@@ -145,7 +146,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                       onTap: () {
                         _selectDate(context);
                       },
-                      child: dateField),
+                      child: dateField()),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
@@ -153,7 +154,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
                       onTap: () {
                         _selectTime(context);
                       },
-                      child: timeField),
+                      child: timeField()),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30, left: 22, right: 22,bottom: 20),
@@ -190,294 +191,295 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
           ])),
     );
   }
-}
-
-String date;
-final dateField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  enabled: false,
-  controller: _dateController,
-  onSaved: (String val) {
-    _setDate = val;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Date", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'DATE',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/calendar.png',
-        width: register_icon_size,
-        height: register_icon_size,
+  String date;
+  Widget dateField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    enabled: false,
+    controller: _dateController,
+    onSaved: (String val) {
+      _setDate = val;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Date", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'DATE',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
       ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-Future<String>checkup(String phone,
-    String adrs,String loc,String date,String time,String msg,String lat,String log) async {
-
-  Map body = {
-  "phone":phone,
-  "address":address,
-  "location":loc,
-  "date":date,
-  "time":time,
-  "message":msg,
-  "latitude":lat,
-  "longitude":log
-  };
-   ApiCall()
-      .execute<UpdateResponse, Null>("appointment/store/"+selectLanguage, body).then((result) {
-    ApiCall().showToast(result.message);
-  });
-
-  return "Success!";
-}
-String mobileNmber;
-final mobileNumberField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    mobileNmber = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Mobile Number", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'MOBILE NUMBER',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/mobile.png',
-        width: register_icon_size,
-        height: register_icon_size,
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
       ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
 
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String address;
-final addressField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onChanged: (value) {
-    address = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'ADDRESS',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/home.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String location;
-final    locationField = TextFormField(
-  cursorColor: colorPrimary,
-  controller: _locationController,
-  obscureText: false,
-  enabled: false,
-  onChanged: (value) {
-    location = value;
-  },
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Location", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'LOCATION',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/location.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-String time;
-final timeField = TextFormField(
-  cursorColor: colorPrimary,
-  obscureText: false,
-  onSaved: (String val) {
-    _setTime = val;
-  },
-  enabled: false,
-  // style: style,
-  validator: (value) {
-    if (value.trim().isEmpty) {
-      return Languages.of(context).thisFieldRequired;
-    } else {
-      return null;
-    }
-  },
-  keyboardType: TextInputType.name,
-  controller: _timeController,
-  textInputAction: TextInputAction.next,
-  decoration: InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-    hintText: "Time", hintStyle: TextStyle(color: textColorSecondary),
-    labelText: 'TIME',
-    labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey[200]),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: colorPrimary),
-    ),
-
-    prefixIcon: new IconButton(
-      icon: new Image.asset(
-        'assets/icons/time.png',
-        width: register_icon_size,
-        height: register_icon_size,
-      ),
-      onPressed: null,
-      color: colorPrimary,
-    ),
-
-    // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-  ),
-);
-
-Container getTopContainer() {
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(100.0),
-                      bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: Container(
-                    height: 100,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                      image: new AssetImage("assets/icons/inner_banner.png"),
-                      fit: BoxFit.fill,
-                    ))),
-              ),
-            )
-          ],
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/calendar.png',
+          width: register_icon_size,
+          height: register_icon_size,
         ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "How it works",
-            style: TextStyle(
-                color: text_tilte_page,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
     ),
   );
+
+  Future<String>checkup(String phone,
+      String adrs,String loc,String date,String time,String msg,String lat,String log) async {
+
+    Map body = {
+      "phone":phone,
+      "address":address,
+      "location":loc,
+      "date":date,
+      "time":time,
+      "message":msg,
+      "latitude":lat,
+      "longitude":log
+    };
+    ApiCall()
+        .execute<UpdateResponse, Null>("appointment/store/"+selectLanguage, body).then((result) {
+      ApiCall().showToast(result.message);
+    });
+
+    return "Success!";
+  }
+  String mobileNmber;
+  Widget mobileNumberField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      mobileNmber = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Mobile Number", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'MOBILE NUMBER',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/mobile.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String address;
+  Widget addressField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onChanged: (value) {
+      address = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'ADDRESS',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/home.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String location;
+  Widget    locationField() => TextFormField(
+    cursorColor: colorPrimary,
+    controller: _locationController,
+    obscureText: false,
+    enabled: false,
+    onChanged: (value) {
+      location = value;
+    },
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Location", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'LOCATION',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/location.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+  String time;
+  Widget timeField() => TextFormField(
+    cursorColor: colorPrimary,
+    obscureText: false,
+    onSaved: (String val) {
+      _setTime = val;
+    },
+    enabled: false,
+    // style: style,
+    validator: (value) {
+      if (value.trim().isEmpty) {
+        return Languages.of(context).thisFieldRequired;
+      } else {
+        return null;
+      }
+    },
+    keyboardType: TextInputType.name,
+    controller: _timeController,
+    textInputAction: TextInputAction.next,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+      hintText: "Time", hintStyle: TextStyle(color: textColorSecondary),
+      labelText: 'TIME',
+      labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[200]),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
+
+      prefixIcon: new IconButton(
+        icon: new Image.asset(
+          'assets/icons/time.png',
+          width: register_icon_size,
+          height: register_icon_size,
+        ),
+        onPressed: null,
+        color: colorPrimary,
+      ),
+
+      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+    ),
+  );
+
+  Widget getTopContainer() {
+    return Container(
+      child: Column(
+        children: [
+          Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: colorPrimary,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  child: Container(
+                      height: 100,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/icons/inner_banner.png"),
+                            fit: BoxFit.fill,
+                          ))),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Text(
+              "How it works",
+              style: TextStyle(
+                  color: text_tilte_page,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+
 
