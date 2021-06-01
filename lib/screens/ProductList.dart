@@ -259,7 +259,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       padding: EdgeInsets.only(left:15,bottom: 10),
                       width:double.infinity,
                       child: Text(
-                        "SORT BY",
+                        Languages.of(context).sortByCaps,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             color:Colors.black,fontSize: 14,fontWeight: FontWeight.bold),
@@ -314,7 +314,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Price - Low to High",
+                          Languages.of(context).priceLowToHigh,
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f2),
                         ),
@@ -340,7 +340,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Price - High to Low",
+                          Languages.of(context).priceHighToLow,
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f3),
                         ),
@@ -366,7 +366,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Popularity",
+                          Languages.of(context).popularity,
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f4),
                         ),
@@ -392,7 +392,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
                       Padding(
                         padding: const EdgeInsets.only(top:15.0,bottom: 15,left:15,right: 15,),
                         child: Text(
-                          "Rating",
+                          Languages.of(context).rating,
                           style: TextStyle(
                               color: Colors.black,fontSize: 12,fontWeight: f5),
                         ),
@@ -463,7 +463,7 @@ Widget getButtonContainer(BuildContext context,String by,String sortBy ,String s
                   border: Border.all(color: colorPrimary),
                 color: Colors.white,
               ),
-              child: Center(child: Text('Sort')),
+              child: Center(child: Text(Languages.of(context).sort)),
             ),
           ),
           // SizedBox(width: 10,),
@@ -479,7 +479,7 @@ Widget getButtonContainer(BuildContext context,String by,String sortBy ,String s
               height: 36,
               width: MediaQuery.of(context).size.width/ 2.2,
               color: colorPrimary,
-              child: Center(child: Text('Filter')),
+              child: Center(child: Text(Languages.of(context).filter)),
             ),
           )
         ],

@@ -49,7 +49,7 @@ class _AddressState extends State<AddressScreen> {
                 super.widget);
           } else if (snapshot.hasError) {
             return getEmptyContainerAddress(
-                context, "Address is empty", "empty_cart");
+                context, Languages.of(context).emptyAddress, "empty_cart");
           } else {
             return progressBar;
           }
@@ -155,12 +155,12 @@ class _AddressState extends State<AddressScreen> {
               height: 10,
             ),
 
-            updateButton(context, "Update"),
+            updateButton(context, Languages.of(context).update),
 
             SizedBox(
               height: 10,
             ),
-            newAddressButton(context, "Add New Address")
+            newAddressButton(context, Languages.of(context).addNewAddress)
           ],
         ),
       ),
@@ -303,7 +303,7 @@ class _AddressState extends State<AddressScreen> {
                                     // padding: EdgeInsets.only(left: 5, right: 5),
                                     textColor: Colors.black,
                                     label: Text(
-                                      'Edit',
+                                      Languages.of(context).edit,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
@@ -355,7 +355,7 @@ class _AddressState extends State<AddressScreen> {
                                     // padding: EdgeInsets.only(left: 5, right: 5),
                                     textColor: Colors.black,
                                     label: Text(
-                                      'Delete',
+                                      Languages.of(context).delete,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
@@ -406,7 +406,7 @@ class _AddressState extends State<AddressScreen> {
               SizedBox(
                 height: 10,
               ),
-              updateButton(context, "Add Address")
+              updateButton(context, Languages.of(context).addAddress)
             ],
           ),
         ));

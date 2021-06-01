@@ -5,6 +5,7 @@ import 'package:nazarath_app/network/response/TrackOrderResponse.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import '../languages.dart';
 import 'notification.dart';
 import 'util.dart';
 
@@ -123,7 +124,7 @@ class _TrackingScreenState extends State<TrackingScreen>
                 //debugPrint('products size: ${snapshot.data?.data}');
                 return getTrackingFull(snapshot.data.data,context,super.widget);
               } else if (snapshot.hasError) {
-                return  getEmptyContainer(context, "No data", "empty_cart");
+                return  getEmptyContainer(context, Languages.of(context).noData, "empty_cart");
                 //return getEmptyContainerCart(context);
               } else {
                 return progressBar;
@@ -167,7 +168,7 @@ class _TrackingScreenState extends State<TrackingScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${"TrackingNO: "}${data.trackingid}',
+                  '${Languages.of(context).trackingNo}${": "}${data.trackingid}',
                   style: TextStyle(
                       color: text_tilte_page,fontSize: 14),
                 ),
@@ -232,7 +233,7 @@ class _TrackingScreenState extends State<TrackingScreen>
           ),
           Center(
             child: Text(
-              "Tracking",
+              Languages.of(context).tracking,
               style: TextStyle(
                   color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
             ),

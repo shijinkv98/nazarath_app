@@ -93,7 +93,7 @@ class Notification {
   int status;
   String createdAt;
   String updatedAt;
-  List<Languages> languages;
+  List<NotificationLanguages> languages;
 
   Notification(
       {this.id,
@@ -114,9 +114,9 @@ class Notification {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['languages'] != null) {
-      languages = new List<Languages>();
+      languages = new List<NotificationLanguages>();
       json['languages'].forEach((v) {
-        languages.add(new Languages.fromJson(v));
+        languages.add(new NotificationLanguages.fromJson(v));
       });
     }
   }
@@ -137,7 +137,7 @@ class Notification {
   }
 }
 
-class Languages {
+class NotificationLanguages {
   int id;
   int notificationId;
   int languageId;
@@ -149,7 +149,7 @@ class Languages {
   String createdAt;
   String updatedAt;
 
-  Languages(
+  NotificationLanguages(
       {this.id,
         this.notificationId,
         this.languageId,
@@ -161,7 +161,7 @@ class Languages {
         this.createdAt,
         this.updatedAt});
 
-  Languages.fromJson(Map<String, dynamic> json) {
+  NotificationLanguages.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     notificationId = json['notification_id'];
     languageId = json['language_id'];

@@ -162,6 +162,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     onChanged: (value) {
       phoneNo = value;
     },
+    maxLength: 10,
     // style: style,
     validator: (value) {
       if (value.trim().isEmpty) {

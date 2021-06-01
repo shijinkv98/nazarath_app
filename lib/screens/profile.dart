@@ -210,7 +210,7 @@ ProfileResponse profileResponse;
                               else
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AddressScreen("Address is empty")),
+                                  MaterialPageRoute(builder: (context) => AddressScreen(Languages.of(context).emptyAddress)),
                                 );
                             },
                             ),
@@ -349,7 +349,7 @@ ProfileResponse profileResponse;
                 ));
           } else if (snapshot.hasError) {
 
-            return  getEmptyContainer(context, "No data", "empty_cart");
+            return  getEmptyContainer(context, Languages.of(context).noData, "empty_cart");
           } else {
             return progressBar;
           }

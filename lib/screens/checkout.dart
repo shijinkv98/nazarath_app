@@ -245,6 +245,8 @@ class _CheckoutState extends State<CheckoutScreen> {
 
       },
       child: Container(
+        constraints: BoxConstraints(
+            minHeight: 110),
         margin: const EdgeInsets.only(bottom: 5.0,left: 10.0,top:5,right:10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -439,6 +441,29 @@ class _CheckoutState extends State<CheckoutScreen> {
       ],
     );
   }
+  Widget getPaymentOptions(/*CartResponse rsponse*/)
+  {
+    return
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 25,right: 25),
+            child: Container(
+              width: MediaQuery.of(context).size.width-50,
+              child:Text(
+                Languages.of(context).paymentOptions,
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),textAlign: TextAlign.start,
+              ),
+            ),
+          ),
+          MyStatefulWidget(),
+        ],
+
+      );
+  }
   Widget getCheckout() {
     return Container(
       child: Column(
@@ -487,7 +512,7 @@ class _CheckoutState extends State<CheckoutScreen> {
           ),
           Center(
             child: Text(
-              "Checkout",
+              Languages.of(context).checkout,
               style: TextStyle(
                   color: text_tilte_page,
                   fontSize: 16,
@@ -497,6 +522,68 @@ class _CheckoutState extends State<CheckoutScreen> {
           SizedBox(
             height: 10,
           ),
+        ],
+      ),
+    );
+  }
+  Widget getDetails(BuildContext context,Widget widget,CartResponse cartResponse)
+  {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: double.infinity,
+            color: Colors.white,
+            padding: EdgeInsets.only(left:10,top: 15),
+            child: Text(
+              Languages.of(context).orderSummary,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
+            ),
+          ),
+
+          getTextContainer(Languages.of(context).subTotal, '${cartResponse.symbolLeft}${" "}${cartResponse.netTotal}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer(Languages.of(context).shipping, '${cartResponse.symbolLeft}${" "}${cartResponse.deliveryCharge.toString()}', "normal", item_text_gray_light, item_text_gray_light, "normal"),
+          getTextContainer(Languages.of(context).total, '${cartResponse.symbolLeft}${" "}${cartResponse.grandTotal}', "bold", text_tilte_page, colorRed, "title")
+        ],
+
+      ),
+    );
+  }
+  Widget getTextContainer(String title, String value,String style,Color color1,Color color2,String type)
+  {
+
+    return Container(
+
+      padding:EdgeInsets.only(left: 10,right: 10,top: 15) ,
+      color: Colors.white,
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getText(title, color1, 12, type, style,TextAlign.start),
+                  getText(value, color2, 12, type, style,TextAlign.end)
+
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Divider(
+            height: 1,
+          )
         ],
       ),
     );
@@ -1329,7 +1416,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: Container(
             height: 30,
             child: ListTile(
-              title: const Text('Cash on Delivery'),
+              title:  Text(Languages.of(context).cashOnDelivery),
               leading: Radio(
                 value: BestTutorSite.cashondelivery,
                 activeColor: colorPrimary,
@@ -1405,34 +1492,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 
 }
-Widget getPaymentOptions(/*CartResponse rsponse*/)
-{
-  return
-    Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10, left: 25),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Payment Options',
-                  style: TextStyle(
-                      color: textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                ),
-              ],
-            ),
-          ),
-        ),
-        MyStatefulWidget(),
-      ],
 
-    );
-}
 
 Widget getShippingAdress()
 {

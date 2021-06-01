@@ -6,6 +6,7 @@ import 'package:nazarath_app/network/response/FilterResponse.dart';
 import 'package:nazarath_app/notifiers/filternotifier.dart';
 import 'package:nazarath_app/screens/filterprice.dart';
 import 'package:provider/provider.dart';
+import '../languages.dart';
 import '../main.dart';
 import 'ProductList.dart';
 import 'vertical_tabs.dart';
@@ -89,7 +90,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
                padding: const EdgeInsets.only(left: 20,top: 20),
                child: Container(
                  color: Colors.white,
-                 child: Text('Select Price Range',style: TextStyle(fontSize: 12,color: textColor,fontWeight: FontWeight.bold),),
+                 child: Text(Languages.of(context).selectPriceRange,style: TextStyle(fontSize: 12,color: textColor,fontWeight: FontWeight.bold),),
                ),
              ),
              RangeSlider(
@@ -151,7 +152,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
 
           } else if (snapshot.hasError) {
             return errorScreen('Error: ${snapshot.error}');
-             //return  getEmptyContainer(context, "No data", "empty_cart");
+             //return  getEmptyContainer(context, Languages.of(context).noData, "empty_cart");
 
           } else {
             return progressBar;
@@ -223,7 +224,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(Icons.refresh_rounded),
-                          Text('Clear All'),
+                          Text(Languages.of(context).clearAll),
                         ],
                       ),
                     ),
@@ -347,7 +348,7 @@ class _FilterScreeenState extends State<FilterScreeen> {
                       ImageIcon(AssetImage('assets/icons/filtercontrol.png'),size: 30,color:colorPrimary),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text('Apply Filters',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:colorPrimary)),
+                        child: Text(Languages.of(context).applyFilters,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:colorPrimary)),
                       )
                     ],
                   ),

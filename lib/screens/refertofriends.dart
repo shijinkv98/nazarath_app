@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/RefferalResponse.dart';
 import 'package:nazarath_app/screens/notification.dart';
@@ -27,7 +28,7 @@ class _ReferScreenState extends State<ReferScreen> {
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Refer to Friend',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text(Languages.of(context).referToFriend,style:TextStyle(fontSize:15,color: Colors.white),
         ),
       ),
       backgroundColor: Colors.white,
@@ -59,29 +60,30 @@ class _ReferScreenState extends State<ReferScreen> {
       )
     );
   }
+  Widget getButton(ReferalResponse referal) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, left: 25, right: 25),
+      child: Container(
+        width: double.infinity,
+        height: 40,
+        child: RaisedButton(
+          color: colorPrimary,
+          elevation: 0,
+          child: Text(Languages.of(context).refer,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white)),
+          onPressed: () async {
+            share(referal);
+          },
+        ),
+      ),
+    );
+  }
 }
 
-Widget getButton(ReferalResponse referal) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 40, left: 25, right: 25),
-    child: Container(
-      width: double.infinity,
-      height: 40,
-      child: RaisedButton(
-        color: colorPrimary,
-        elevation: 0,
-        child: Text('Refer',
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.white)),
-        onPressed: () async {
-          share(referal);
-        },
-      ),
-    ),
-  );
-}
+
 
 Container getReferFriend(ReferalResponse data) {
   return Container(

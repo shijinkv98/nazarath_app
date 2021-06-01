@@ -10,6 +10,7 @@ import 'package:nazarath_app/screens/news.dart';
 import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 
+import '../languages.dart';
 import 'cart.dart';
 import 'notification.dart';
 
@@ -134,167 +135,176 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
 
     );
   }
-
-}
-Container getEmptyContainerNews(BuildContext context)
-{
-  return Container(
-      height: double.infinity,
-      child: Center(
-        child:Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Image.asset(
-                "assets/icons/news.png",height: 50,),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Text(
-                "No Details Available",
-                style: TextStyle(
-                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-          ],),
-      )
-  );
-
-
-
-}
-Widget getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){
-if(response.news==null)
+  Widget getEmptyContainerNews(BuildContext context)
   {
-    return getEmptyContainerNews(context);
-  }
-  return Container(
-    child: Column(
-      children: [
-        getTopContainer(),
-        getNews(),
-        getNewsDetails(response.news, context, widget),
-
-
-      ],
-    ),
-  );
-}
-
-Container getTopContainer() {
-  return Container(
-    color: product_bg,
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(100.0),
-                      bottomLeft: Radius.circular(100.0)),
+    return Container(
+        height: double.infinity,
+        child: Center(
+          child:Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/icons/news.png",height: 50,),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "No Details Available",
+                  style: TextStyle(
+                      color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: Container(
-                    height: 100,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
-                        ))),
+              SizedBox(
+                height: 10,
               ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-      ],
-    ),
-  );
-}
-Container getNewsDetails(News item,BuildContext context,Widget widget){
-  return Container(
-    child: Column(
-      children: [
-        Container(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 25,left: 20),
-            child: Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
+
+            ],),
+        )
+    );
+
+
+
+  }
+  Widget getNewsScreen(NewsDetailsResponse response,BuildContext context,Widget widget){
+    if(response.news==null)
+    {
+      return getEmptyContainerNews(context);
+    }
+    return Container(
+      child: Column(
+        children: [
+          getTopContainer(),
+          getNews(),
+          getNewsDetails(response.news, context, widget),
+
+
+        ],
+      ),
+    );
+  }
+  Widget getNews(){
+    return Container(
+      width: double.infinity,
+      color: product_bg,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Center(child: Text(Languages.of(context).news,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
+      ),
+    );
+  }
+  Widget getTopContainer() {
+    return Container(
+      color: product_bg,
+      child: Column(
+        children: [
+          Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: colorPrimary,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  child: Container(
+                      height: 100,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/icons/inner_banner.png"),
+                            fit: BoxFit.fill,
+                          ))),
+                ),
+              )
+            ],
           ),
-        ),
-        Container(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 5,left: 20),
-            child: Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
+          SizedBox(
+            height: 15,
           ),
-        ),
-        Padding(
-          padding:const EdgeInsets.only(top: 5,left: 20,right: 20),
-          child: Container(
-            color: Colors.transparent,
+        ],
+      ),
+    );
+  }
+  Widget getNewsDetails(News item,BuildContext context,Widget widget){
+    return Container(
+      child: Column(
+        children: [
+          Container(
             width: double.infinity,
-            height: 200,
-            child: Center(
-              child: FadeInImage.assetNetwork(
-                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
-                        image: AssetImage("assets/images/no_image.png"),
-                        fit: BoxFit.cover,
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 25,left: 20),
+              child: Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5,left: 20),
+              child: Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold),textAlign: TextAlign.start,),
+            ),
+          ),
+          Padding(
+            padding:const EdgeInsets.only(top: 5,left: 20,right: 20),
+            child: Container(
+              color: Colors.transparent,
+              width: double.infinity,
+              height: 200,
+              child: Center(
+                child: FadeInImage.assetNetwork(
+                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                    image: AssetImage("assets/images/no_image.png"),
+                    fit: BoxFit.cover,
+                  ),
                   placeholder: 'assets/images/no_image.png',
                   image: '$newsImageUrl${item.image}',
                   width: double.infinity,
-                fit: BoxFit.contain,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding:const EdgeInsets.only(top: 5,left: 20,right: 20),
-          child: Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            child: Text(item.details!=null?item.details:"",
-            style: TextStyle(color: textColor,fontSize: 12),
+          Padding(
+            padding:const EdgeInsets.only(top: 5,left: 20,right: 20),
+            child: Container(
+              color: Colors.transparent,
+              width: double.infinity,
+              child: Text(item.details!=null?item.details:"",
+                style: TextStyle(color: textColor,fontSize: 12),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding:const EdgeInsets.only(top: 15,left: 20,right: 20),
-          child: Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            child: Text(item.name!=null?item.name:"" ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
+          Padding(
+            padding:const EdgeInsets.only(top: 15,left: 20,right: 20),
+            child: Container(
+              color: Colors.transparent,
+              width: double.infinity,
+              child: Text(item.name!=null?item.name:"" ,style: TextStyle(color: textColor,fontSize: 12,fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding:const EdgeInsets.only(top: 8,left: 20,right: 20),
-          child: Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            child: Text(item.description!=null?item.description:"",
-              style: TextStyle(color: textColor,fontSize: 12),
+          Padding(
+            padding:const EdgeInsets.only(top: 8,left: 20,right: 20),
+            child: Container(
+              color: Colors.transparent,
+              width: double.infinity,
+              child: Text(item.description!=null?item.description:"",
+                style: TextStyle(color: textColor,fontSize: 12),
+              ),
             ),
           ),
-        ),
 
-      ],
-    ),
-  );}
+        ],
+      ),
+    );}
+}
+
 // Text(item.createdAt,style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),

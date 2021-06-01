@@ -50,7 +50,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Personal Information',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text(Languages.of(context).personalInformation,style:TextStyle(fontSize:15,color: Colors.white),
         ),
       ),
       backgroundColor: Colors.white,
@@ -169,8 +169,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Enter friend email id", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'EMAIL',
+      hintText: Languages.of(context).email, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).emailCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -213,8 +213,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "User Name", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'USER NAME',
+      hintText: Languages.of(context).userName, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).userNameCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -321,7 +321,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           ),
           Center(
             child: Text(
-              "How it works",
+              Languages.of(context).howItWorks,
               style: TextStyle(
                   color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
             ),

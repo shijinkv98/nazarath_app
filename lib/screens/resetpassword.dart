@@ -45,7 +45,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Reset Password',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text(Languages.of(context).resetPassword,style:TextStyle(fontSize:15,color: Colors.white),
         ),
       ),
       backgroundColor: Colors.white,
@@ -106,7 +106,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 }
               }
               else {
-                ApiCall().showToast("password not match");
+                ApiCall().showToast(Languages.of(context).passwordNotMatch);
               }
               // Navigator.push(
               //     context,
@@ -140,7 +140,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
                 });
               },
-              child: Text('Resend Otp',style: TextStyle(color: Colors.black,fontSize: 12),)),
+              child: Text(Languages.of(context).resendOtp,style: TextStyle(color: Colors.black,fontSize: 12),)),
         ],
       )
     );
@@ -226,8 +226,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Enter New Password", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'New Password',
+      hintText: Languages.of(context).enterNewPassword, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).newPassword,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -270,8 +270,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Confirm Password", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'Re-enter New Password',
+      hintText: Languages.of(context).confirmPassWord, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).reEnterPaassword,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),

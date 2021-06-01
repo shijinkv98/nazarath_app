@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 
 import 'cart.dart';
@@ -170,14 +171,14 @@ class getSortFilter extends StatelessWidget{
              decoration: BoxDecoration(
                border: Border.all(color: colorPrimary)
              ),
-             child: Center(child: Text('Sort')),
+             child: Center(child: Text(Languages.of(context).sort)),
            ),
            // SizedBox(width: 10,),
            Container(
              height: 36,
              width: MediaQuery.of(context).size.width/ 2.2,
              color: colorPrimary,
-             child: Center(child: Text('Filter')),
+             child: Center(child: Text(Languages.of(context).filter)),
            )
          ],
        ),

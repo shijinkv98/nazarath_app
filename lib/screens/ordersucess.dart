@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/response/CheckoutResponse.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
@@ -52,7 +53,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
             ),
             Center(
               child: Text(
-                'SUCCESS',
+                Languages.of(context).successCaps,
                 style: TextStyle(
                     color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
               ),
@@ -61,7 +62,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
               padding: EdgeInsets.only(top: 10),
               child: Center(
                 child: Text(
-                  '${"Your Order Number is "}${response.orderId!=null?response.orderId.id:""}',
+                  '${Languages.of(context).yourOrderNumberIs}${response.orderId!=null?response.orderId.id:""}',
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
@@ -83,7 +84,7 @@ Widget getOrderSucess(CheckoutResponse response,BuildContext context) {
                       MaterialPageRoute(builder: (context) => DashBoard()),);
                   },
 
-                  child: Text("Continue Shopping",
+                  child: Text(Languages.of(context).continueShopping,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),

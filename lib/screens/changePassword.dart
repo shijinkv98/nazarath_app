@@ -50,7 +50,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         backgroundColor: colorPrimary,
         centerTitle: false,
         automaticallyImplyLeading: true,
-        title:  Text('Change Password',style:TextStyle(fontSize:15,color: Colors.white),
+        title:  Text(Languages.of(context).changePassword,style:TextStyle(fontSize:15,color: Colors.white),
           ),
         ),
 
@@ -192,7 +192,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
-          return 'Minimum 8 character needed';
+          return Languages.of(context).minEightCharecterRequired;
         }
         else {
           return null;
@@ -202,8 +202,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Enter current password ", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'CURRENT PASSWORD',
+        hintText: Languages.of(context).enterCurrentPassword, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).currentPassword,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -242,7 +242,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
-          return 'Minimum 8 character needed';
+          return Languages.of(context).minEightCharecterRequired;
         }
         else {
           return null;
@@ -251,8 +251,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-        hintText: "Enter a new password", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'NEW PASSWORD',
+        hintText: Languages.of(context).enterNewPassword, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).newPassword,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),
@@ -291,10 +291,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           return Languages.of(context).thisFieldRequired;
         }
         else if (value.trim().length<8) {
-          return 'Minimum 8 character needed';
+          return Languages.of(context).minEightCharecterRequired;
         }
         else if(newpassword!=confirmpassword)
-          return ("password do not match");
+          return (Languages.of(context).emptyAddress);
         else {
           return null;
         }
@@ -303,8 +303,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         // contentPadding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
-        hintText: "Re-enter the new password", hintStyle: TextStyle(color: textColorSecondary),
-        labelText: 'CONFIRM PASSWORD',
+        hintText: Languages.of(context).reEnterPaassword, hintStyle: TextStyle(color: textColorSecondary),
+        labelText: Languages.of(context).confirmPassWord,
         labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[200]),

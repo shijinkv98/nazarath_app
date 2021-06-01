@@ -123,7 +123,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
           _productDetailsResponse=snapshot.data;
         return getProductDetailsValue();
         } else if (snapshot.hasError) {
-        return getEmptyContainer(context, "Product List is empty", "empty_cart");
+        return getEmptyContainer(context, Languages.of(context).emptyProduct, "empty_cart");
         } else {
         return progressBar;
         }
@@ -134,7 +134,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
   Widget getProductDetailsValue()
   {
     if(_productDetailsResponse.product==null)
-      return getEmptyContainer(context, "Product List is empty", "empty_cart");
+      return getEmptyContainer(context, Languages.of(context).emptyProduct, "empty_cart");
     return  SingleChildScrollView(
       child: Column(
         children: [
@@ -319,7 +319,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 5),
                             child: Text(
-                              '${product.ratingcount.toString()}${" reviews"}',
+                              '${product.ratingcount.toString()}${Languages.of(context).reviews}',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,
@@ -443,19 +443,19 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
   }
 
   Widget getStock() {
-    String text="Instock";
+    String text=Languages.of(context).inStock;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            'Availability',
+            Languages.of(context).availability,
             style: TextStyle(color: Colors.grey, fontSize: 12),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Text(
-              'Instock',
+              Languages.of(context).inStock,
               style: TextStyle(
                   color: Colors.green, fontSize: 13, fontWeight: FontWeight.bold),
             ),
@@ -503,7 +503,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Color:',
+                '${Languages.of(context).inStock}${" :"}',
                 style: TextStyle(color: Colors.black, fontSize: 15),
               ), //<< any widgets added
               Expanded(
@@ -606,7 +606,7 @@ Widget _itemsBuilder(Options specifications, BuildContext context, Widget widget
               width: 20,
             ),
             Expanded(
-                child: Text('Size Chart', style: TextStyle(color: colorPrimary)))
+                child: Text(Languages.of(context).sizeChart, style: TextStyle(color: colorPrimary)))
           ],
         ),
       ),
@@ -637,7 +637,7 @@ Widget getButtons(String store,String quantity) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Add to Cart",
+                      Languages.of(context).addToCart,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -667,7 +667,7 @@ Widget getButtons(String store,String quantity) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Add to Wishlist",
+                      Languages.of(context).addToWishList,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -693,7 +693,7 @@ Widget getProductDescription( String description) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            'Product Description',
+          Languages.of(context).productDescription,
             style: TextStyle(color: Colors.grey[900], fontSize: 15),
           ),
           SizedBox(height: 12),

@@ -11,6 +11,7 @@ import 'package:nazarath_app/notifiers/wishlistnotifier.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
 import 'package:provider/provider.dart';
 
+import '../languages.dart';
 import 'DashBoard.dart';
 import 'ProductDetails.dart';
 import 'cart.dart';
@@ -389,8 +390,7 @@ class _WishListState extends State<WishListScreen> {
             height: 10,
           ),
           Center(
-            child: Text(
-              "WishList",
+            child: Text(Languages.of(context).wishlist,
               style: TextStyle(
                   color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
             ),
@@ -419,7 +419,7 @@ class _WishListState extends State<WishListScreen> {
             children: [
               Image.asset("assets/icons/bag.png",height: 18,),
               Text(
-                "Move to bag",
+                Languages.of(context).moveToBag,
                 style: TextStyle(
                     color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
               )
@@ -444,7 +444,7 @@ class _WishListState extends State<WishListScreen> {
             children: [
               Image.asset("assets/icons/remove.png",width: 18,),
               Text(
-                "Remove",
+                Languages.of(context).remove,
                 style: TextStyle(
                     color: Colors.grey[500],fontSize: 12,fontWeight: FontWeight.bold),
               )
@@ -471,7 +471,7 @@ class _WishListState extends State<WishListScreen> {
               ),
               Center(
                 child: Text(
-                  "Your WishList is Empty",
+                  Languages.of(context).emptyWishList,
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
@@ -492,7 +492,7 @@ class _WishListState extends State<WishListScreen> {
                         MaterialPageRoute(builder: (context) => DashBoard()),);
                     },
 
-                    child: Text("Continue Shopping",
+                    child: Text(Languages.of(context).continueShopping,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),

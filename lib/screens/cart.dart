@@ -366,290 +366,243 @@ class _CartState extends State<CartScreen> {
     _updateNotifier.reset();
     super.dispose();
   }
-}
-
-// Widget getSpinner(String slug,String store)
-// {
-//   return SpinnerCart(slug,store);
-// }
-
-Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
-
-  Map body = {
-    "slug":slug,
-    "quantity":"0",
-    "store":store
-  };
-  CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
-
-  if (cartResponse != null) {
-    ApiCall().showToast(cartResponse.message);
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (BuildContext context) => widget));
-  }
-  return "Success!";
-}
-Future<String> movetoWishList(String slug,String store,BuildContext context,Widget widget) async {
-
-  Map body = {
-    "slug":slug,
-    "quantity":"1",
-    "store":store
-  };
-  CartResponse cartResponse = await ApiCall()
-      .execute<CartResponse, Null>("cart/move/"+selectLanguage, body);
-
-  if (cartResponse != null) {
-    ApiCall().showToast(cartResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
-  }
-  return "Success!";
-}
-
-
-Container getTopContainer()
-{
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0,left: 15,right: 15),
+  Widget getTopContainer()
+  {
+    return Container(
+      child: Column(
+        children: [
+          Stack(
+            children: <Widget>[
+              Center(
                 child: Container(
-                    height: 125,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fitWidth,
-                        )
-                    )
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: colorPrimary,
+                    borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(100.0),bottomLeft: Radius.circular(100.0)),
+                  ),
                 ),
               ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "Your Cart",
-            style: TextStyle(
-                color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 0,left: 15,right: 15),
+                  child: Container(
+                      height: 125,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/icons/inner_banner.png"),
+                            fit: BoxFit.fitWidth,
+                          )
+                      )
+                  ),
+                ),
+              )
+            ],
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    ),
-  );
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Text(
+              Languages.of(context).yourCart,
+              style: TextStyle(
+                  color: text_tilte_page,fontSize: 16,fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    );
 
-}
-Container getEmptyContainerCart(BuildContext context)
-{
-  return Container(
-    height: double.infinity,
-    child: Center(
-      child:Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Center(
-            child: Image.asset(
-                "assets/icons/empty_cart.png",height: 50,),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
+  }
+  Container getEmptyContainerCart(BuildContext context)
+  {
+    return Container(
+        height: double.infinity,
+        child: Center(
+          child:Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/icons/empty_cart.png",height: 50,),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
                 child: Text(
-                  "Your Cart is Empty",
+                  Languages.of(context).emptyCart,
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Material(
+                  elevation: 0.0,
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: colorPrimary,
+                  child: MaterialButton(
+                    minWidth: 100,
+                    padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DashBoard()),);
+                    },
+
+                    child: Text(Languages.of(context).continueShopping,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
+                  )
+              ),
+            ],),
+        )
+    );
+
+
+
+  }
+  Widget getSpinner(String store,String slug,Widget widget,BuildContext context)
+  {
+    Container(
+      padding:EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2) ,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 0.5, color:item_text_gray_light),
+        borderRadius:
+        BorderRadius.only(bottomRight: Radius.circular(0.0)),
+      ),
+      child: SpinnerInput(
+        spinnerValue: 1,
+        minValue: 1,
+        maxValue: 200,
+        step: 1,
+        disabledLongPress: true,
+        disabledPopup: true,
+        middleNumberStyle: TextStyle(fontSize: 12),
+        middleNumberBackground: Colors.white,
+        plusButton: SpinnerButtonStyle(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(0),
+            textColor: Colors.black,
+
+            elevation: 0
         ),
-        SizedBox(
-          height: 10,
-        ),
-        Material(
-          elevation: 0.0,
-          borderRadius: BorderRadius.circular(5.0),
-          color: colorPrimary,
-          child: MaterialButton(
-            minWidth: 100,
-            padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DashBoard()),);
-            },
-
-            child: Text("Continue Shopping",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),
-          )
-        ),
-      ],),
-    )
-  );
-
-
-
-}
-Widget getSpinner(String store,String slug,Widget widget,BuildContext context)
-{
-  Container(
-    padding:EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2) ,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(width: 0.5, color:item_text_gray_light),
-      borderRadius:
-      BorderRadius.only(bottomRight: Radius.circular(0.0)),
-    ),
-    child: SpinnerInput(
-      spinnerValue: 1,
-      minValue: 1,
-      maxValue: 200,
-      step: 1,
-      disabledLongPress: true,
-      disabledPopup: true,
-      middleNumberStyle: TextStyle(fontSize: 12),
-      middleNumberBackground: Colors.white,
-      plusButton: SpinnerButtonStyle(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(0),
+        minusButton: SpinnerButtonStyle(elevation: 0,
+          color: Colors.white, borderRadius: BorderRadius.circular(0),
           textColor: Colors.black,
 
-          elevation: 0
-      ),
-      minusButton: SpinnerButtonStyle(elevation: 0,
-        color: Colors.white, borderRadius: BorderRadius.circular(0),
-        textColor: Colors.black,
-
-      ),
-      onChange: (newValue) {
+        ),
+        onChange: (newValue) {
           addtoCartReferesh(slug, store, context, widget, newValue.toString());
-      },
-    ),
-  );
-}
-Widget getDiscountButton(BuildContext context,Widget widget)
-{
-  return Container(
-    decoration: BoxDecoration(
+        },
+      ),
+    );
+  }
+  Widget getDiscountButton(BuildContext context,Widget widget)
+  {
+    return Container(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
 
-    ),
-    margin: EdgeInsets.only(left: 10,right: 10),
-    child:Container(
-      width: MediaQuery.of(context).size.width,
-      height: 40,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 40,
-            padding:EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-            width: MediaQuery.of(context).size.width*0.70,
+      ),
+      margin: EdgeInsets.only(left: 10,right: 10),
+      child:Container(
+        width: MediaQuery.of(context).size.width,
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 40,
+              padding:EdgeInsets.symmetric(vertical: 8,horizontal: 10),
+              width: MediaQuery.of(context).size.width*0.70,
               child: getCoupon(),
             ),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              GestureDetector(
-                onTap: (){
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                GestureDetector(
+                  onTap: (){
 
-                },
-                child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),
-                          bottomRight:Radius.circular(10) ),
-                      color: colorPrimary,
+                  },
+                  child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(10),
+                            bottomRight:Radius.circular(10) ),
+                        color: colorPrimary,
 
-                    ),
-                  // height: 50,
-                  padding: EdgeInsets.only(left: 25 ,right: 25),
-                  child: Center(child: Text(
-                      "Apply",
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 11)),
-                  )
+                      ),
+                      // height: 50,
+                      padding: EdgeInsets.only(left: 25 ,right: 25),
+                      child: Center(child: Text(
+                          Languages.of(context).apply,
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 11)),
+                      )
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
-    ),
-  );
-}
-String coupon;
-Widget getCoupon() {
-  return Container(
-    height: 40,
+    );
+  }
+  String coupon;
+  Widget getCoupon() {
+    return Container(
+        height: 40,
 
-  child:
-    TextFormField(
-    cursorColor: colorPrimary,
-    obscureText: false,
-    onSaved: (value) {
-      coupon = value;
-    },
-    // style: style,
-    // validator: (value) {
-    //   if (value.trim().isEmpty) {
-    //     return Languages.of(context).thisFieldRequired;
-    //   } else {
-    //     return null;
-    //   }
-    // },
-    keyboardType: TextInputType.text,
-    textInputAction: TextInputAction.next,
-    decoration: InputDecoration(
-      hintText: "Discount code ",
-      hintStyle: TextStyle(color: textColor, fontSize: 12),
-      // labelText: 'Discount code',
-      // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide.none,
+        child:
+        TextFormField(
+          cursorColor: colorPrimary,
+          obscureText: false,
+          onSaved: (value) {
+            coupon = value;
+          },
+          // style: style,
+          // validator: (value) {
+          //   if (value.trim().isEmpty) {
+          //     return Languages.of(context).thisFieldRequired;
+          //   } else {
+          //     return null;
+          //   }
+          // },
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(
+            hintText: Languages.of(context).discountCode,
+            hintStyle: TextStyle(color: textColor, fontSize: 12),
+            // labelText: 'Discount code',
+            // labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide.none,
 
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-      ),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
 
 
-      // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-    ),
-    )
+            // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+          ),
+        )
 
-  );
-}
+    );
+  }
   Widget getPlaceOrderButton(BuildContext context,Widget widget,CartResponse response,var login_data)
   {
     return Container(
@@ -683,7 +636,7 @@ Widget getCoupon() {
                 }
               },
               child: Text(
-                "Place Order",
+                Languages.of(context).placeOrder,
                 style: TextStyle(
                     color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
 
@@ -708,7 +661,7 @@ Widget getCoupon() {
     //           crossAxisAlignment: CrossAxisAlignment.center,
     //           children: [
     //             Center(child:  Text(
-    //               "Place Order",
+    //               Languages.of(context).placeOrder,
     //               style: TextStyle(
     //                   color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
     //             )
@@ -732,7 +685,7 @@ Widget getCoupon() {
             color: Colors.white,
             padding: EdgeInsets.only(left:10,top: 15),
             child: Text(
-             Languages.of(context).orderSummary,
+              Languages.of(context).orderSummary,
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: text_tilte_page,fontSize: 14,fontWeight: FontWeight.bold,),
@@ -780,6 +733,54 @@ Widget getCoupon() {
       ),
     );
   }
+}
+
+// Widget getSpinner(String slug,String store)
+// {
+//   return SpinnerCart(slug,store);
+// }
+
+Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":"0",
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/add/"+selectLanguage, body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+Future<String> movetoWishList(String slug,String store,BuildContext context,Widget widget) async {
+
+  Map body = {
+    "slug":slug,
+    "quantity":"1",
+    "store":store
+  };
+  CartResponse cartResponse = await ApiCall()
+      .execute<CartResponse, Null>("cart/move/"+selectLanguage, body);
+
+  if (cartResponse != null) {
+    ApiCall().showToast(cartResponse.message);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => widget));
+  }
+  return "Success!";
+}
+
+
+
   Future<String>addtoCartReferesh(String slug,String store,BuildContext context,Widget widget,String quantity) async {
 
     Map body = {

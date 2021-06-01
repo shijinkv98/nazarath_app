@@ -28,7 +28,7 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
         centerTitle: false,
         automaticallyImplyLeading: true,
         title: Text(
-          'Order Cancellation',
+          Languages.of(context).orderCancellation,
           style: TextStyle(fontSize: 15, color: Colors.white),
         ),
       ),
@@ -111,7 +111,7 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
                         padding: const EdgeInsets.only(bottom: 5),
                         child: Row(
                           children: [
-                            Text('Status :',
+                            Text('${Languages.of(context).status}${" :"}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 11,
@@ -131,7 +131,7 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
                         padding: const EdgeInsets.only(bottom: 5),
                         child: Row(
                           children: [
-                            Text('Qty :',
+                            Text(Languages.of(context).qty,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 11,
@@ -189,15 +189,15 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
         child: RaisedButton(
           color: colorPrimary,
           elevation: 0,
-          child: Text('Submit',
+          child: Text(Languages.of(context).submit,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: Colors.white)),
           onPressed: () async {
-            if(dropdownValue==""||dropdownValue=="Please select a reason for cancellation")
+            if(dropdownValue==""||dropdownValue==Languages.of(context).selectReason)
             {
-              ApiCall().showToast("Please select a reason for cancellation");
+              ApiCall().showToast(Languages.of(context).selectReason);
             }
             else{
               Map body={
@@ -212,7 +212,7 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
                   .execute<String, Null>("cancel-order/"+selectLanguage, body);
               if (response!= null)
               {
-                ApiCall().showToast("ORDER CANCELL REQUESTED");
+                ApiCall().showToast(Languages.of(context).orderCancelRequested);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => OrderScreen()),
@@ -265,7 +265,7 @@ class _OrderCancelScreenState extends State<OrderCancelScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(0,2, 0, 0.0),
-      hintText: "Tell us more(optional)", hintStyle: TextStyle(color: textColorSecondary,fontSize: 14,fontWeight: FontWeight.bold),
+      hintText: Languages.of(context).tellUsMore, hintStyle: TextStyle(color: textColorSecondary,fontSize: 14,fontWeight: FontWeight.bold),
 
       helperMaxLines: 5,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
@@ -292,7 +292,7 @@ class DropDown extends StatefulWidget {
   DropDownWidget createState() => DropDownWidget();
 }
 
-class DropDownWidget extends State {
+class DropDownWidget extends State<DropDown> {
 
 
   List<String> spinnerItems = [
@@ -306,6 +306,7 @@ class DropDownWidget extends State {
 
   @override
   Widget build(BuildContext context) {
+    spinnerItems=Languages.of(context).cancelReasons;
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),

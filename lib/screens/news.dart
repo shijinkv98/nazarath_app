@@ -8,6 +8,8 @@ import 'package:nazarath_app/network/response/OrderResponse.dart';
 import 'package:nazarath_app/screens/newsDetails.dart';
 import 'package:nazarath_app/screens/order.dart';
 
+import '../languages.dart';
+
 class NewsScreen extends StatefulWidget {
   String title;
   NewsScreen(String title)
@@ -50,169 +52,169 @@ class _NewsState extends State<NewsScreen> {
       // )
     );
   }
-
-}
-Container getEmptyContainerNews(BuildContext context)
-{
-  return Container(
-      height: double.infinity,
-      child: Center(
-        child:Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Image.asset(
-                "assets/icons/news.png",height: 50,),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Text(
-                "No Details Available",
-                style: TextStyle(
-                    color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+  Widget getEmptyContainerNews(BuildContext context)
+  {
+    return Container(
+        height: double.infinity,
+        child: Center(
+          child:Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/icons/news.png",height: 50,),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "No Details Available",
+                  style: TextStyle(
+                      color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
 
-          ],),
-      )
-  );
+            ],),
+        )
+    );
 
 
 
-}
+  }
 
-Container getNewsScreen(List<News> news,BuildContext context,Widget widget){
+  Widget getNewsScreen(List<News> news,BuildContext context,Widget widget){
 
-  return Container(
-    child: Column(
-      children: [
-        getTopContainer(),
-        getNews(),
-        Flexible(child: _listview(news, context, widget))
+    return Container(
+      child: Column(
+        children: [
+          getTopContainer(),
+          getNews(),
+          Flexible(child: _listview(news, context, widget))
 
-      ],
-    ),
-  );
-}
-Widget _listview(List<News> items,BuildContext context,Widget widget) => ListView.builder(
+        ],
+      ),
+    );
+  }
+  Widget _listview(List<News> items,BuildContext context,Widget widget) => ListView.builder(
     // padding: EdgeInsets.only(bottom: 70),
-    itemBuilder: (context, index) =>
-        getListView(items[index],context,widget),
-    // separatorBuilder: (context, index) => Divider(
-    //       color: Colors.grey,
-    //       height: 1,
-    //     ),
-    itemCount: items.length);
-Container getTopContainer() {
-  return Container(
-    color: product_bg,
-    child: Column(
-      children: [
-        Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(100.0),
-                      bottomLeft: Radius.circular(100.0)),
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+      itemBuilder: (context, index) =>
+          getListView(items[index],context,widget),
+      // separatorBuilder: (context, index) => Divider(
+      //       color: Colors.grey,
+      //       height: 1,
+      //     ),
+      itemCount: items.length);
+  Widget getTopContainer() {
+    return Container(
+      color: product_bg,
+      child: Column(
+        children: [
+          Stack(
+            children: <Widget>[
+              Center(
                 child: Container(
-                    height: 100,
-                    decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/icons/inner_banner.png"),
-                          fit: BoxFit.fill,
-                        ))),
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: colorPrimary,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                ),
               ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-      ],
-    ),
-  );
-}
-Container getNews(){
-  return Container(
-    width: double.infinity,
-    color: product_bg,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Center(child: Text('News',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
-    ),
-  );
-}
-Widget getListView(News item,BuildContext context,Widget widget) {
-  // if (featured == null)
-  //   return Container();
-  // else if (featured.length == 0) return Container();
-  return GestureDetector(
-    onTap: (){Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) =>NewsDetailsScreen(item.slug)));
-    },
-    child: Container(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5,right: 5),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color:Colors.white,
-          child: Container(
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: FadeInImage.assetNetwork(
-                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
-                        image: AssetImage("assets/images/no_image.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    placeholder: 'assets/images/no_image.png',
-                    image: '$newsThumbUrl${item.image}',
-                    width: 100
-                  ),
-                ),
-                Flexible(
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                   child: Container(
-                    color: Colors.white,
-                    child:Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-
-                          Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
-                          Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    )
-                  ),
+                      height: 100,
+                      decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/icons/inner_banner.png"),
+                            fit: BoxFit.fill,
+                          ))),
                 ),
-              ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
+    );
+  }
+  Widget getNews(){
+    return Container(
+      width: double.infinity,
+      color: product_bg,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Center(child: Text(Languages.of(context).news,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[600]),)),
+      ),
+    );
+  }
+  Widget getListView(News item,BuildContext context,Widget widget) {
+    // if (featured == null)
+    //   return Container();
+    // else if (featured.length == 0) return Container();
+    return GestureDetector(
+      onTap: (){Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) =>NewsDetailsScreen(item.slug)));
+      },
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 5,right: 5),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color:Colors.white,
+            child: Container(
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: FadeInImage.assetNetwork(
+                        imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace)=>Image(
+                          image: AssetImage("assets/images/no_image.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        placeholder: 'assets/images/no_image.png',
+                        image: '$newsThumbUrl${item.image}',
+                        width: 100
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                        color: Colors.white,
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+
+                              Text(item.createdAt!=null?item.createdAt:"",style: TextStyle(color: textColor,fontSize: 12,),textAlign: TextAlign.start,),
+                              Text(item.title!=null?item.title:"",style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        )
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
+
 }

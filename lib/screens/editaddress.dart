@@ -91,7 +91,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               child: getFullView(snapshot.data.countries),
             );
           } else if (snapshot.hasError) {
-            return  getEmptyContainer(context, "No data", "empty_cart");
+            return  getEmptyContainer(context, Languages.of(context).noData, "empty_cart");
             //return errorScreen('Error: ${snapshot.error}');
           } else {
             return progressBar;
@@ -266,8 +266,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Full address(Building name,Area,Location,Street name)", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'ADDRESS*',
+      hintText: Languages.of(context).address, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).addressCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -323,8 +323,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "State/Province", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'STATE/PROVINCE',
+      hintText: Languages.of(context).state, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).stateCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -369,8 +369,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Zip/Postal COde", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'ZIP/POSTAL CODE',
+      hintText: Languages.of(context).zipCode, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).zipCodeCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),

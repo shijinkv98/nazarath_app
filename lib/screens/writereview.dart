@@ -35,7 +35,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         appBar:AppBar(
           centerTitle: false,
           automaticallyImplyLeading: true,
-          title: Text('Write Review',style: TextStyle(fontSize: 15),),
+          title: Text(Languages.of(context).writeReview,style: TextStyle(fontSize: 15),),
           backgroundColor: colorPrimary,
         ),
 
@@ -144,7 +144,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('WRITE YOUR REVIEW HERE', style: TextStyle(color: textColor,fontSize: 12),),
+          Text(Languages.of(context).writeYourReviewHereCaps, style: TextStyle(color: textColor,fontSize: 12),),
           Padding(
             padding: const EdgeInsets.only(top: 15,right: 25),
             child: reviewField(),
@@ -211,8 +211,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
-      hintText: "Please Write review here", hintStyle: TextStyle(color: textColorSecondary,fontSize: 10,fontWeight: FontWeight.bold),
-      labelText: 'Please Write review here',
+      hintText: Languages.of(context).plsWriteReviewHere, hintStyle: TextStyle(color: textColorSecondary,fontSize: 10,fontWeight: FontWeight.bold),
+      labelText: Languages.of(context).plsWriteReviewHere,
       helperMaxLines: 5,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(

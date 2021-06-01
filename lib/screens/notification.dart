@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/NotificationResponse.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
@@ -137,7 +138,7 @@ class _NotificationState extends State<NotificationScreen> {
         children: [
           Center(
             child: Text(
-              "Notification",
+              Languages.of(context).notification,
               style: TextStyle(
                   color: Colors.grey,fontSize: 11),
             ),
@@ -156,7 +157,7 @@ class _NotificationState extends State<NotificationScreen> {
         children: [
           Center(
             child: Text(
-              "Notification is Empty",
+              Languages.of(context).emptyNotification,
               style: TextStyle(
                   color: Colors.grey,fontSize: 15),
             ),
@@ -272,7 +273,7 @@ class _NotificationState extends State<NotificationScreen> {
               ),
               Center(
                 child: Text(
-                  "Your WishList is Empty",
+                  Languages.of(context).emptyNotification,
                   style: TextStyle(
                       color: Colors.grey[500],fontSize: 16,fontWeight: FontWeight.bold),
                 ),
@@ -293,7 +294,7 @@ class _NotificationState extends State<NotificationScreen> {
                         MaterialPageRoute(builder: (context) => DashBoard()),);
                     },
 
-                    child: Text("Continue Shopping",
+                    child: Text(Languages.of(context).continueShopping,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),

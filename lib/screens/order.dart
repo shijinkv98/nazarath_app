@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 
 
@@ -302,7 +303,7 @@ class _OrderState extends State<OrderScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "View Details",
+                Languages.of(context).viewDetails,
                 style: TextStyle(
                     color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),
               )
@@ -350,7 +351,7 @@ class _OrderState extends State<OrderScreen> {
           ),
           Center(
             child: Text(
-              "My Orders",
+              Languages.of(context).myOrders,
               style: TextStyle(
                   color: Colors.grey[600],fontSize: 16,fontWeight: FontWeight.bold),
             ),
@@ -401,7 +402,7 @@ class _OrderState extends State<OrderScreen> {
                         MaterialPageRoute(builder: (context) => DashBoard()),);
                     },
 
-                    child: Text("Continue Shopping",
+                    child: Text(Languages.of(context).continueShopping,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),

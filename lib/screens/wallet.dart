@@ -6,6 +6,8 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/WalletResponse.dart';
 import 'package:nazarath_app/screens/order.dart';
 
+import '../languages.dart';
+
 class WalletScreen extends StatefulWidget {
   String title;
   WalletScreen(String title)
@@ -25,7 +27,7 @@ class _WalletScreenState extends State<WalletScreen> {
           backgroundColor: colorPrimary,
           centerTitle: false,
           automaticallyImplyLeading: true,
-          title:  Text('Wallet',style:TextStyle(fontSize:15,color: Colors.white),
+          title:  Text(Languages.of(context).myWallet,style:TextStyle(fontSize:15,color: Colors.white),
           ),
         ),
         backgroundColor: Colors.white,
@@ -91,7 +93,7 @@ Widget  getTopWallet(BuildContext context,WalletResponse response){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Current Balance',style:TextStyle(color: Colors.white,fontSize: 10),),
+                    Text(Languages.of(context).currentBalance,style:TextStyle(color: Colors.white,fontSize: 10),),
                     Text('${response.currency.symbolLeft}${" "}${response.data.balance}',style:TextStyle(color: Colors.white,fontSize: 20),),
                   ],
                 ),
@@ -130,10 +132,10 @@ Widget _tabSection(BuildContext context,WalletResponse response) {
                 tabs: [ Container(
 
                     height: 30,width: 100,
-                    child: Center(child: Text("History"))),
+                    child: Center(child: Text(Languages.of(context).history))),
                  Container(
                      height: 30,width: 100,
-                     child: Center(child: Text("Upcoming")))],
+                     child: Center(child: Text(Languages.of(context).upComing)))],
               ),
             ),
           ),

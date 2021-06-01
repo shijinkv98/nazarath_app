@@ -56,14 +56,14 @@ class HomePage extends State<Home> {
         onWillPop: () async => showDialog(
         context: context,
         builder: (context) =>
-            AlertDialog(title: Text('Are you sure you want to quit?'), actions: <Widget>[
+            AlertDialog(title: Text(Languages.of(context).wantToQuit), actions: <Widget>[
               RaisedButton(
                 color: colorPrimary,
-                  child: Text('Ok'),
+                  child: Text(Languages.of(context).ok),
                   onPressed: () => Navigator.of(context).pop(exit(0))),
               RaisedButton(
                   color: colorPrimary,
-                  child: Text('Cancel'),
+                  child: Text(Languages.of(context).cancel),
                   onPressed: () => Navigator.of(context).pop(false)),
             ])),
     child:
@@ -77,7 +77,7 @@ class HomePage extends State<Home> {
             if (snapshot.hasData) {
               return getFullView(snapshot.data, context,super.widget);
             } else if (snapshot.hasError) {
-              return  getEmptyContainer(context, "No data", "empty_cart");
+              return  getEmptyContainer(context, Languages.of(context).noData, "empty_cart");
             } else {
               return progressBar;
             }

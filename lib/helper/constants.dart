@@ -339,7 +339,7 @@ Container getEmptyContainer(BuildContext context,String emptyText,String imagena
                       MaterialPageRoute(builder: (context) => DashBoard()),);
                   },
 
-                  child: Text("Continue Shopping",
+                  child: Text(Languages.of(context).continueShopping,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,fontSize: 13,fontWeight: FontWeight.normal)),

@@ -246,4 +246,13 @@ class LanguageEn extends Languages {
   String get Name => "Name";
   @override
   String get upload => "Upload";
+
+  @override
+  List<String> get cancelReasons=>[
+    'Please select a reason for cancellation',
+    'Item not fit',
+    'low quality',
+    'ordered by mistake',
+    'find new model'
+  ];
 }

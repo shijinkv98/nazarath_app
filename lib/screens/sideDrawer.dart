@@ -12,6 +12,7 @@ import 'package:nazarath_app/screens/store.dart';
 import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
 
+import '../languages.dart';
 import 'DashBoard.dart';
 import 'changePassword.dart';
 import 'notification.dart';
@@ -155,7 +156,7 @@ class SideDrawer extends StatelessWidget{
                           children: <Widget>[
                             ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
                             SizedBox(width: 10),
-                            Text('Wishlist',style:TextStyle(color:Colors.white),)
+                            Text(Languages.of(context).wishlist,style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
                         Navigator.push(
@@ -242,7 +243,7 @@ class SideDrawer extends StatelessWidget{
                           children: <Widget>[
                             ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
                             SizedBox(width: 10),
-                            Text('News',style:TextStyle(color:Colors.white),)
+                            Text(Languages.of(context).news,style:TextStyle(color:Colors.white),)
                           ],
                         ), onPressed: () {
                         tbPosition=4;

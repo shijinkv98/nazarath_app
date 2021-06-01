@@ -212,8 +212,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Date", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'DATE',
+      hintText: Languages.of(context).date, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).dateCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -271,12 +271,12 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
         return null;
       }
     },
-    keyboardType: TextInputType.name,
+    keyboardType: TextInputType.phone,
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Mobile Number", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'MOBILE NUMBER',
+      hintText: Languages.of(context).phoneNumber, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).phoneNumberCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -317,8 +317,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Address", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'ADDRESS',
+      hintText: Languages.of(context).address, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).addressCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -405,8 +405,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Time", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'TIME',
+      hintText: Languages.of(context).time, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).timeCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),
@@ -465,7 +465,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
           ),
           Center(
             child: Text(
-              "How it works",
+              Languages.of(context).howItWorks,
               style: TextStyle(
                   color: text_tilte_page,
                   fontSize: 16,
@@ -479,6 +479,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
       ),
     );
   }
+
 }
 
 
