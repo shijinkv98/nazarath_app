@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/main.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';

@@ -241,164 +241,164 @@ class LanguageAr extends Languages {
   String get upload => "تحميل";
   @override
   List<String> get cancelReasons=>[
-    'Please select a reason for cancellation',
-    'Item not fit',
-    'low quality',
-    'ordered by mistake',
-    'find new model'
+    'الرجاء تحديد سبب الإلغاء',
+    'البند لا يصلح',
+    'جودة منخفضة',
+    'أمرت بالخطأ',
+    'ابحث عن موديل جديد'
   ];
   @override
-  String get Return => "Return";
+  String get Return => "إرجاع";
   @override
-  String get addNewAddress => "Add new Address";
+  String get addNewAddress => "أضف عنوان جديد";
   @override
-  String get addToCart => "Add to Cart";
+  String get addToCart => "أضف إلى السلة";
   @override
-  String get addToWishList => "Add to Wishlist";
+  String get addToWishList => "أضف إلى قائمة الامنيات";
   @override
-  String get address => "Address";
+  String get address => "عنوان";
   @override
-  String get addressCaps => "ADDRESS";
+  String get addressCaps => "عنوان";
   @override
-  String get apply => "Apply";
+  String get apply => "تطبيق";
   @override
-  String get applyFilters => "APPLY FILTERS";
+  String get applyFilters => "تطبيق المرشحات";
   @override
-  String get availability => "Availability";
+  String get availability => "التوفر";
   @override
-  String get cart => "Cart";
+  String get cart => "عربة التسوق";
   @override
-  String get cashOnDelivery => "Cash on Delivery";
+  String get cashOnDelivery => "الدفع عند الاستلام";
   @override
-  String get checkout => "Checkout";
+  String get checkout => "الدفع";
   @override
-  String get clearAll => "Clear All";
+  String get clearAll => "امسح الكل";
   @override
-  String get color => "Color";
+  String get color => "اللون";
   @override
-  String get continueShopping => "Continue Shopping";
+  String get continueShopping => "مواصلة التسوق";
   @override
-  String get currentBalance => "Current Balance";
+  String get currentBalance => "مواصلة التسوق";
   @override
-  String get currentPassword => "Current Password";
+  String get currentPassword => "كلمة السر الحالية";
   @override
-  String get date => "Date";
+  String get date => "تاريخ";
   @override
-  String get dateCaps => "DATE";
+  String get dateCaps => "تاريخ";
   @override
-  String get delete => "Delete";
+  String get delete => "حذف";
   @override
-  String get delivery => "Delivery";
+  String get delivery => "توصيل";
   @override
-  String get edit => "Edit";
+  String get edit => "يحرر";
   @override
-  String get emptyAddress => "Your Address list is Empty";
+  String get emptyAddress => "قائمة العناوين الخاصة بك فارغة";
   @override
-  String get emptyCart => "Your Cart is Empty";
+  String get emptyCart => "عربة التسوق فارغة";
   @override
-  String get emptyNotification => "Your Notification is Empty";
+  String get emptyNotification => "عربة التسوق فارغة";
   @override
-  String get emptyProduct => "Your Product List is Empty";
+  String get emptyProduct => "قائمة المنتجات الخاصة بك فارغة";
   @override
-  String get emptyStoreList => "Your Store list is Empty";
+  String get emptyStoreList => "قائمة المتاجر الخاصة بك فارغة";
   @override
-  String get emptyWishList => "Your Wish list is Empty";
+  String get emptyWishList => "قائمة رغباتك فارغة";
   @override
-  String get enterCurrentPassword => "Enter your current password";
+  String get enterCurrentPassword => "أدخل كلمة المرور الحالية";
   @override
-  String get enterNewPassword => "Enter new password";
+  String get enterNewPassword => "أدخل كلمة مرور جديدة";
   @override
-  String get history => "History";
+  String get history => "تاريخ";
   @override
-  String get howItWorks => "How it works";
+  String get howItWorks => "كيف تعمل";
   @override
-  String get inStock => "In Stock";
+  String get inStock => "في المخزن";
   @override
-  String get moveToBag => "Move to bag";
+  String get moveToBag => "انتقل إلى الحقيبة";
   @override
-  String get newPassword => "New password";
+  String get newPassword => "كلمة السر الجديدة";
   @override
-  String get noData => "No data";
+  String get noData => "لايوجد بيانات";
   @override
-  String get orderCancelRequested => "Order Cancel Requested";
+  String get orderCancelRequested => "طلب إلغاء الطلب";
   @override
-  String get orderCancellation => "Order cancellation";
+  String get orderCancellation => "إلغاء الطلب";
   @override
-  String get passwordNotMatch => "Password do not match";
+  String get passwordNotMatch => "كلمة السر غير مطابقة";
   @override
-  String get payment => "Payment";
+  String get payment => "دفع";
   @override
-  String get paymentOptions => "Payment Options";
+  String get paymentOptions => "خيارات الدفع";
   @override
-  String get personalInformation => "Personal Information";
+  String get personalInformation => "معلومات شخصية";
   @override
-  String get placeOrder => "Place Order";
+  String get placeOrder => "مكان الامر";
   @override
-  String get plsWriteReviewHere => "Please Write your review here";
+  String get plsWriteReviewHere => "الرجاء كتابة رأيك هنا";
   @override
-  String get popularity => "Popularity";
+  String get popularity => "شعبية";
   @override
-  String get priceHighToLow => "Price - High to Low";
+  String get priceHighToLow => "السعر الاعلى الى الادنى";
   @override
-  String get priceLowToHigh => "Price - Low to High";
+  String get priceLowToHigh => "السعر من الارخص للاعلى";
   @override
-  String get productDescription => "Product Description";
+  String get productDescription => "وصف المنتج";
   @override
-  String get qty => "QTY :";
+  String get qty => "الكمية:";
   @override
-  String get rating => "Rating";
+  String get rating => "تقييم";
   @override
-  String get reEnterPaassword => "Re - Enter Password";
+  String get reEnterPaassword => "إعادة إدخال كلمة المرور";
   @override
-  String get refer => "Refer";
+  String get refer => "أشير";
   @override
-  String get remove => "Remove";
+  String get remove => "إزالة";
   @override
-  String get resetPassword => "Reset Password";
+  String get resetPassword => "إعادة تعيين كلمة المرور";
   @override
-  String get reviews => "Reviews";
+  String get reviews => "المراجعات";
   @override
-  String get selectPriceRange => "Select Price Range";
+  String get selectPriceRange => "حدد نطاق السعر";
   @override
-  String get selectReason => "Select Reason for cancellation";
+  String get selectReason => "حدد سبب الإلغاء";
   @override
-  String get sizeChart => "Size Chart";
+  String get sizeChart => "حجم الرسم البياني";
   @override
-  String get sortBy => "Sort by";
+  String get sortBy => "ترتيب حسب";
   @override
-  String get sortByCaps => "SORT BY";
+  String get sortByCaps => "ترتيب حسب";
   @override
-  String get state => "State/Provinces";
+  String get state => "الولاية / المقاطعات";
   @override
-  String get stateCaps => "STATE/PROVINCES";
+  String get stateCaps => "الولاية / المقاطعات";
   @override
-  String get status => "Status";
+  String get status => "حالة";
   @override
-  String get submit =>"Submit";
+  String get submit =>"إرسال";
   @override
-  String get tellUsMore => "Tell us more(optional_";
+  String get tellUsMore => "أخبرنا بالمزيد (اختياري_";
   @override
-  String get time => "Time";
+  String get time => "زمن";
   @override
-  String get timeCaps => "TIME";
+  String get timeCaps => "زمن";
   @override
-  String get tracking =>"Tracking";
+  String get tracking =>"تتبع";
   @override
-  String get trackingNo => "Tracking Number";
+  String get trackingNo => "رقم التعقب";
   @override
   String get upComing => "Up coming";
   @override
-  String get viewDetails => "View details";
+  String get viewDetails => "القادمة";
   @override
-  String get writeReview => "Write Review";
+  String get writeReview => "أكتب مراجعة";
   @override
-  String get writeYourReviewHereCaps => "WRITE REVIEW";
+  String get writeYourReviewHereCaps => "أكتب مراجعة";
   @override
-  String get yourCart => "Your Cart";
+  String get yourCart => "عربتك";
   @override
-  String get yourOrderNumberIs => "Your Order Number is";
+  String get yourOrderNumberIs => "رقم الطلب الخاص بك هو";
   @override
-  String get zipCode => "Zip/Postal Code";
+  String get zipCode => "الرمز البريدي / الرمز البريدي";
   @override
-  String get zipCodeCaps => "ZIP/POSTAL CODE";
+  String get zipCodeCaps => "الرمز البريدي / الرمز البريدي";
 }
