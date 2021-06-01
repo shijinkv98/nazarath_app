@@ -205,7 +205,7 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
 
   Widget customScrollView(
       BuildContext context, OrderDetailsScreen widget, Data response) {
-    final _itemExtent = 220.0;
+    double  _itemExtent = selectLanguage=="en"?220:250;
     return CustomScrollView(
       slivers: <Widget>[
         SliverFixedExtentList(
@@ -542,7 +542,7 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        "Rate Product",
+                        Languages.of(context).writeReview,
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: text_tilte_page,
@@ -562,7 +562,7 @@ class _OrderDetailsState extends State<OrderDetailsScreen> {
                       );
                     },
                     child: Text(
-                      "Tell us more",
+                      Languages.of(context).tellUsMore,
                       textAlign: TextAlign.center,
                       style: new TextStyle(
                           color: colorPrimary,

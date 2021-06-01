@@ -384,7 +384,7 @@ class LanguageEn extends Languages {
   @override
   String get submit =>"Submit";
   @override
-  String get tellUsMore => "Tell us more(optional_";
+  String get tellUsMore => "Tell us more";
   @override
   String get time => "Time";
   @override
@@ -409,4 +409,16 @@ class LanguageEn extends Languages {
   String get zipCode => "Zip/Postal Code";
   @override
   String get zipCodeCaps => "ZIP/POSTAL CODE";
+
+  @override
+  String get call => "Call";
+
+  @override
+  String get location => "Location";
+  @override
+  String get locationCaps => "LOCATION";
+  @override
+  String get map => "Map";
+  @override
+  String get searchProducts => "Search products";
 }

@@ -64,7 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         //       Icons.search,
                         //     ),),
                           decoration: InputDecoration(
-                            hintText: hint,
+                            hintText: Languages.of(context).searchProducts,
                             prefixIcon: const Icon(
                                     Icons.search,
                                   ),
@@ -117,7 +117,10 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget getSearchResult(SearchResponse searchResponse)
   {
     _searchResponse=searchResponse;
-
+    if(searchResponse.products==null)
+      return Container();
+    if(searchResponse.products.length==0)
+      return Container()
     return Container(child:
       ListView.builder(
         scrollDirection: Axis.vertical,

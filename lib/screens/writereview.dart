@@ -162,7 +162,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       child: RaisedButton(
         color: colorPrimary,
         elevation: 0,
-        child: Text('Submit',
+        child: Text(Languages.of(context).submit,
             style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,

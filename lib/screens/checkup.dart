@@ -361,8 +361,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
-      hintText: "Location", hintStyle: TextStyle(color: textColorSecondary),
-      labelText: 'LOCATION',
+      hintText: Languages.of(context).location, hintStyle: TextStyle(color: textColorSecondary),
+      labelText: Languages.of(context).locationCaps,
       labelStyle: TextStyle(fontSize: field_text_size, color: textColor),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey[200]),

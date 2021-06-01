@@ -254,7 +254,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15,bottom: 20, left: 10),
+                            padding: const EdgeInsets.only(top: 15,bottom: 20, left: 10,right: 10),
                             child: Container(
                               height: 35,
                               decoration: BoxDecoration(

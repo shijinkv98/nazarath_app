@@ -376,7 +376,7 @@ class LanguageAr extends Languages {
   @override
   String get submit =>"إرسال";
   @override
-  String get tellUsMore => "أخبرنا بالمزيد (اختياري_";
+  String get tellUsMore => "أخبرنا بالمزيد";
   @override
   String get time => "زمن";
   @override
@@ -386,7 +386,7 @@ class LanguageAr extends Languages {
   @override
   String get trackingNo => "رقم التعقب";
   @override
-  String get upComing => "Up coming";
+  String get upComing => "القادمة";
   @override
   String get viewDetails => "القادمة";
   @override
@@ -401,4 +401,15 @@ class LanguageAr extends Languages {
   String get zipCode => "الرمز البريدي / الرمز البريدي";
   @override
   String get zipCodeCaps => "الرمز البريدي / الرمز البريدي";
+  @override
+  String get call => "يتصل";
+
+  @override
+  String get location => "موقع";
+  @override
+  String get locationCaps => "موقع";
+  @override
+  String get map => "خريطة";
+  @override
+  String get searchProducts => "البحث عن المنتجات";
 }

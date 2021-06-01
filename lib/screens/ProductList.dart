@@ -246,7 +246,7 @@ void displayBottomSheet(BuildContext context,String by ,String sortBy,String sor
       context: context,
       builder: (ctx) {
         return Container(
-          height: 300,
+          height: selectLanguage=="en"?300:315,
           child: Column(
             children: [
               Container(

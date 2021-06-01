@@ -184,6 +184,11 @@ abstract class Languages {
   String get plsWriteReviewHere;
   String get writeYourReviewHereCaps;
   String get writeReview;
+  String get map;
+  String get call;
+  String get location;
+  String get locationCaps;
+  String get searchProducts;
   //String get continue_;
 
 
