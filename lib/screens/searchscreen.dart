@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/SearchResponse.dart';
 import 'package:nazarath_app/notifiers/searchnotifier.dart';
@@ -120,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
     if(searchResponse.products==null)
       return Container();
     if(searchResponse.products.length==0)
-      return Container()
+      return Container();
     return Container(child:
       ListView.builder(
         scrollDirection: Axis.vertical,
