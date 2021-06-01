@@ -77,6 +77,31 @@ abstract class Languages {
   String get ok;
   String get cancel;
 
+  String get otpVerification;
+  String get enterTheCodeSendToYou;
+  String get confirm;
+  String get dontRecieveOtp;
+  String get filter;
+  String get sort;
+  String get resendOtp;
+  String get editAddress;
+  String get addAddress;
+  String get update;
+  String get discountCode;
+  String get subTotal;
+  String get shipping;
+  String get total;
+  String get deliveryAddress;
+  String get shippingAddress;
+  String get eyePowerEnterManually;
+  String get rxODLeft;
+  String get rxODRight;
+  String get axisLeft;
+  String get axisRight;
+  String get cyl;
+  String get cylRight;
+  String get cylLeft;
+
 
 
 }

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/custom/PinField.dart';
 import 'package:nazarath_app/helper/constants.dart';
+import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
@@ -38,9 +39,6 @@ String otp_value="";
   @override
   void initState() {
     super.initState();
-
-   // _otpNotifier = Provider.of<OTPNotifier>(context, listen: false);
-  //  _otpNotifier.otpWithoutNotify = widget.userData?.otp;
   }
 
   @override
@@ -48,7 +46,7 @@ String otp_value="";
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'OTP Verification',
+          Languages.of(context).otpVerification,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: colorPrimary,
@@ -83,7 +81,7 @@ String otp_value="";
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      "Enter the code sent to you",
+                      Languages.of(context).enterTheCodeSendToYou,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -144,7 +142,7 @@ String otp_value="";
                       color: colorPrimary,
                       padding: EdgeInsets.all(10),
                       textColor: Colors.white,
-                      child: Text('Confirm',
+                      child: Text(Languages.of(context).confirm,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 18,
@@ -157,11 +155,11 @@ String otp_value="";
                   ),
                   RichText(
                       text: TextSpan(
-                          text: 'Don\'t receive the OTP ?',
+                          text: Languages.of(context).dontRecieveOtp,
                           style: TextStyle(color: Colors.black, fontSize: 15),
                           children: <TextSpan>[
                         TextSpan(
-                            text: ' Resend OTP',
+                            text:Languages.of(context).resendOtp,
                             recognizer: new TapGestureRecognizer()
                               ..onTap = () async {
                                 if (widget.userData != null) {
@@ -171,8 +169,9 @@ String otp_value="";
                                     'id': widget.userData.id,
                                     'mode': 'register', //register/change
                                   };
-                                  var response = await ApiCall()
-                                      .execute<LoginResponse, Null>("send-otp", body);
+                                  await ApiCall()
+                                      .execute<LoginResponse, Null>("send-otp", body).then((result) {
+                                  });
                                 }
                               },
                             style: TextStyle(

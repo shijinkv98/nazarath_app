@@ -7,7 +7,7 @@ import 'package:nazarath_app/network/response/AddressResponse.dart';
 import 'package:nazarath_app/network/response/HomeResponse.dart';
 import 'package:nazarath_app/screens/editaddress.dart';
 
-import 'DashBoard.dart';
+import '../languages.dart';
 import 'home.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _AddressState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Addresses",
+        title: Text(Languages.of(context).myAddress,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

@@ -160,7 +160,7 @@ final emailField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return "This field is Required";
+      return Languages.of(context).thisFieldRequired;
     } else {
       return null;
     }
@@ -204,7 +204,7 @@ final usernameField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return "This field is Required";
+      return Languages.of(context).thisFieldRequired;
     } else {
       return null;
     }
@@ -248,7 +248,7 @@ final phonenumberField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return "This field is Required";
+      return Languages.of(context).thisFieldRequired;
     } else {
       return null;
     }

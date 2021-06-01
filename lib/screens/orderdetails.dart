@@ -285,10 +285,10 @@ Widget getAddressPanel(
     color: Colors.white,
     child: Column(
       children: [
-        getAdress("Delivery Address", orderData.billingAddress,
+        getAdress(Languages.of(context).deliveryAddress, orderData.billingAddress,
             orderData.billingName, orderData.billingPhone),
         Container(color: item_text_gray, height: 1, width: double.infinity),
-        getAdress("Shipping Address", orderData.shippingAddress,
+        getAdress(Languages.of(context).shippingAddress, orderData.shippingAddress,
             orderData.shippingName, orderData.shippingPhone),
         Container(color: item_text_gray, height: 1, width: double.infinity),
       ],

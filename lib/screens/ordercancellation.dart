@@ -247,7 +247,7 @@ final tellusmoreField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return "This field is Required";
+      return Languages.of(context).thisFieldRequired;
     } else {
       return null;
     }

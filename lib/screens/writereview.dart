@@ -202,7 +202,7 @@ final reviewField = TextFormField(
   // style: style,
   validator: (value) {
     if (value.trim().isEmpty) {
-      return "This field is required";
+      return Languages.of(context).thisFieldRequired;
     } else {
       return null;
     }
