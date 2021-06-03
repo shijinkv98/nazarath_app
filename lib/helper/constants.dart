@@ -48,7 +48,7 @@ const double appTabIconPad=5;
 
 const double appTabLeft=0;
 const double appTabRight=0;
-const double appTabImageSize=90.0;
+const double appTabImageSize=75.0;
 const double register_icon_size=16.0;
 const double font_size_head=16.0;
 const double field_text_size=10.0;
@@ -418,7 +418,154 @@ Widget getBottomTabPannel(BuildContext context )
     ),
   );
 }
+Widget homeAppbar(BuildContext context)
+{
+  return AppBar(
+    iconTheme: IconThemeData(color: Colors.white),
+    centerTitle: true,
+    // titleSpacing: 100,
+    // leading: SideDrawer(),
+    title: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
+        child: ImageIcon(
+          AssetImage("assets/icons/nazarath_logo.png"),
+          size: appTabImageSize,
+          color: Colors.white,
+        ),
+      ),
+    ),
+    backgroundColor: colorPrimary,
+    elevation: 0,
 
+    actions: <Widget>[
+      // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+              );
+            },
+            child: Container(
+              height: appTabIconSize,
+              width: appTabIconSize,
+              child: ImageIcon(AssetImage("assets/icons/search.png"), color: Colors.white,),
+            ),
+          )
+      ),
+      // NotificationBadge(notificationCounterValueNotifer),
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
+              );
+            },
+            child: Container(
+              height: appTabIconSize,
+              width: appTabIconSize,
+              child: Stack(
+                  children:[ Align(
+                      alignment: Alignment.center,
+                      child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 12),
+                    //   child: Align(
+                    //       alignment: Alignment.topRight,
+                    //       child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
+                    //           radius:7,
+                    //           backgroundColor: Colors.white,
+                    //           child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                    // )
+                  ]),
+            ),
+          )
+      ),
+
+      Padding(
+          padding: const EdgeInsets.only(right: appTabIconPad),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishListScreen()),
+              );
+            },
+            child: Container(
+                height: appTabIconSize,
+                width: appTabIconSize,
+                child: Stack(
+                    children:[ Align(
+                        alignment:Alignment.center,
+                        child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 12),
+                      //   child: Align(
+                      //       alignment: Alignment.topRight,
+                      //       child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
+                      //           radius:7,
+                      //           backgroundColor: Colors.white,
+                      //           child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                      // ),
+                    ]
+                )
+
+            ),
+          )
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: appTabIconPad),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+            );
+          },
+          child: Container(
+            height: appTabIconSize,
+            width: appTabIconSize,
+            child: Stack(
+                children:[ Align(
+                    alignment: Alignment.center,
+
+                    child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 12),
+                  //   child: Align(
+                  //       alignment: Alignment.topRight,
+                  //       child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
+                  //           radius:7,
+                  //           backgroundColor: Colors.white,
+                  //           child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                  // )
+
+                ]),
+          ),
+        ),
+      ),
+
+
+    ],
+  );
+}
+Widget notificationAppbar()
+{
+
+}
+Widget wishlistAppbar()
+{
+
+}
+Widget cartAppbar()
+{
+
+}
 Widget getIndividualTab(String imagePath,String title)
 {
   return
