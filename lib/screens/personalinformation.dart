@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/languages.dart';
-import 'package:nazarath_app/model/user.dart';
+// import 'package:nazarath_app/model/user.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/ProfileResponse.dart';
+import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
+import 'package:nazarath_app/screens/DashBoard.dart';
+import 'package:nazarath_app/screens/profile.dart';
+import 'package:provider/provider.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   String title;
@@ -21,10 +25,17 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   String title;
   _PersonalInfoScreenState({ this.title,this.customer}) ;
   ProfileResponse customer;
+  DataUpdateNotifier _updateNotifier;
 
   @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
+  }
+  @override
   void initState() {
-
+    _updateNotifier =
+        Provider.of<DataUpdateNotifier>(context, listen: false);
     getData();
     super.initState();
 
@@ -46,24 +57,42 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorPrimary,
-        centerTitle: false,
-        automaticallyImplyLeading: true,
-        title:  Text(Languages.of(context).personalInformation,style:TextStyle(fontSize:15,color: Colors.white),
+        appBar: AppBar(
+          backgroundColor: colorPrimary,
+          centerTitle: false,
+          automaticallyImplyLeading: true,
+          title:  Text(Languages.of(context).personalInformation,style:TextStyle(fontSize:15,color: Colors.white),
+          ),
         ),
-      ),
-      backgroundColor: Colors.white,
-      body:SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 25),
-            child: Column(
-              children: [
-                getPersonalInfo(),
-                getButton(context,customer)
-              ],
-            ),
-          )),
+        backgroundColor: Colors.white,
+        body:
+        Container(
+          child: Stack(
+            children: [
+              Align(alignment: Alignment.topCenter,
+                child:  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Column(
+                        children: [
+                          getPersonalInfo(),
+                          getButton(context,customer)
+                        ],
+                      ),
+                    )),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Consumer<DataUpdateNotifier>(
+                  builder: (context, value, child) {
+                    return _updateNotifier.isProgressShown?progressBar:SizedBox();
+                  },
+                ),
+              )
+            ],
+          ),
+        )
+
     );
   }
   Widget getButton(BuildContext context,var customer) {
@@ -81,6 +110,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   fontWeight: FontWeight.w400,
                   color: Colors.white)),
           onPressed: () async {
+            _updateNotifier.isProgressShown=true;
             Map body={
               "name":username,
               "email":email,
@@ -90,13 +120,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
             var response = await ApiCall()
                 .execute<String, Null>("update-profile/"+selectLanguage, body);
-
+            _updateNotifier.isProgressShown=false;
             if (response!= null) {
               customer.name=username;
               customer.email=email;
-              customer.mobile=phonenumber;
-              print(response);
+              customer.phoneNumber=phonenumber;
               print(customer.toJson().toString());
+              ApiCall().showToast("Update Successfully");
+          //    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashBoard()));
               //ApiCall().saveUser(customer.toJson().toString());
             }
           },

@@ -8,6 +8,8 @@ import 'package:nazarath_app/helper/constants.dart';
 import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/updateresponse.dart';
+import 'package:nazarath_app/notifiers/dataupdatenotifier.dart';
+import 'package:provider/provider.dart';
 
 TextEditingController _dateController = TextEditingController();
 TextEditingController _timeController = TextEditingController();
@@ -23,6 +25,25 @@ class CheckUpScreen extends StatefulWidget {
 class _CheckUpScreenState extends State<CheckUpScreen> {
   double _height;
   double _width;
+  DataUpdateNotifier _updateNotifier;
+
+  @override
+  void dispose() {
+    _updateNotifier.reset();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    _updateNotifier =
+        Provider.of<DataUpdateNotifier>(context, listen: false);
+    _dateController.text = DateFormat.yMd().format(DateTime.now());
+
+    _timeController.text = formatDate(
+        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
+        [hh, ':', nn, " ", am]).toString();
+    super.initState();
+
+  }
   PickResult selectedPlace;
 
   String _hour, _minute, _time;
@@ -67,128 +88,138 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
       });
   }
 
-  @override
-  void initState() {
-    _dateController.text = DateFormat.yMd().format(DateTime.now());
 
-    _timeController.text = formatDate(
-        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-        [hh, ':', nn, " ", am]).toString();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     dateTime = DateFormat.yMd().format(DateTime.now());
+
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-            Column(
-              children: [
-                getTopContainer(),
-                Container(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10, left: 22, right: 22),
-                    child: Form(
-                      key: _checkUpForms,
-                      child: Column(
-                        children: [
-                          mobileNumberField(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: addressField(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: InkWell(
-                      onTap: (){
+        body:Container(
+          child: Stack(
+            children: [
+              Align(alignment: Alignment.topCenter,
+                child:  SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Column(
+                            children: [
+                              getTopContainer(),
+                              Container(
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.only(top: 10, left: 22, right: 22),
+                                  child: Form(
+                                    key: _checkUpForms,
+                                    child: Column(
+                                      children: [
+                                        mobileNumberField(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
+                                child: addressField(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
+                                child: InkWell(
+                                    onTap: (){
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return
-                                PlacePicker(
-                                apiKey: 'AIzaSyAIjaTpHNWTYXsHI-aW1kNxGQVXc3_epGA'.trim(),
-                                initialPosition: CheckUpScreen.kInitialPosition,
-                                useCurrentLocation: true,
-                                selectInitialPosition: true,
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return
+                                              PlacePicker(
+                                                apiKey: 'AIzaSyAIjaTpHNWTYXsHI-aW1kNxGQVXc3_epGA'.trim(),
+                                                initialPosition: CheckUpScreen.kInitialPosition,
+                                                useCurrentLocation: true,
+                                                selectInitialPosition: true,
 
-                                //usePlaceDetailSearch: true,
-                                onPlacePicked: (result) {
-                                  selectedPlace = result;
-                                  Navigator.of(context).pop();
-                                  setState(() {
-                                    _locationController.text=selectedPlace == null ?"":selectedPlace.formattedAddress ?? "";
+                                                //usePlaceDetailSearch: true,
+                                                onPlacePicked: (result) {
+                                                  selectedPlace = result;
+                                                  Navigator.of(context).pop();
+                                                  setState(() {
+                                                    _locationController.text=selectedPlace == null ?"":selectedPlace.formattedAddress ?? "";
 
-                                  });
-                                },
+                                                  });
+                                                },
 
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: locationField()),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: InkWell(
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                      child: dateField()),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-                  child: InkWell(
-                      onTap: () {
-                        _selectTime(context);
-                      },
-                      child: timeField()),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 22, right: 22,bottom: 20),
-                  child: Container(
-                    width: double.infinity,
-                    height: 40,
-                    child: RaisedButton(
-                      color: colorPrimary,
-                      elevation: 0,
-                      child: Text('Book an Appointment',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white)),
-                      onPressed: () async {
-                        if (_checkUpForms.currentState.validate()) {
-                          _checkUpForms.currentState.save();
-                            selected_date=selectedDate.year.toString()+"-"+selectedDate.month.toString()+"-"+
-                                selectedDate.day.toString();
-                            String hr=selectedTime.hour<12?"0"+selectedTime.hour.toString():selectedTime.hour.toString();
-                            String mt=selectedTime.minute<10?"0"+selectedTime.minute.toString():selectedTime.minute.toString();
-                            selected_Time=hr+":"+mt+":00";
-                            String lat=selectedPlace.geometry.location.lat.toString();
-                          String lng=selectedPlace.geometry.location.lng.toString();
-                          checkup(mobileNmber, address, selectedPlace.formattedAddress, selected_date, selected_Time, "message", lat, lng);
+                                              );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: locationField()),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
+                                child: InkWell(
+                                    onTap: () {
+                                      _selectDate(context);
+                                    },
+                                    child: dateField()),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
+                                child: InkWell(
+                                    onTap: () {
+                                      _selectTime(context);
+                                    },
+                                    child: timeField()),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30, left: 22, right: 22,bottom: 20),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  child: RaisedButton(
+                                      color: colorPrimary,
+                                      elevation: 0,
+                                      child: Text('Book an Appointment',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white)),
+                                      onPressed: () async {
+                                        if (_checkUpForms.currentState.validate()) {
+                                          _checkUpForms.currentState.save();
+                                          selected_date=selectedDate.year.toString()+"-"+selectedDate.month.toString()+"-"+
+                                              selectedDate.day.toString();
+                                          String hr=selectedTime.hour<12?"0"+selectedTime.hour.toString():selectedTime.hour.toString();
+                                          String mt=selectedTime.minute<10?"0"+selectedTime.minute.toString():selectedTime.minute.toString();
+                                          selected_Time=hr+":"+mt+":00";
+                                          String lat=selectedPlace.geometry.location.lat.toString();
+                                          String lng=selectedPlace.geometry.location.lng.toString();
+                                          checkup(mobileNmber, address, selectedPlace.formattedAddress, selected_date, selected_Time, "message", lat, lng);
 
-                        }
-                      }
-                    ),
-                  ),
+                                        }
+                                      }
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ])),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Consumer<DataUpdateNotifier>(
+                  builder: (context, value, child) {
+                    return _updateNotifier.isProgressShown?progressBar:SizedBox();
+                  },
                 ),
-              ],
-            )
-          ])),
+              )
+            ],
+          ),
+        )
+
     );
   }
   String date;
@@ -238,7 +269,7 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
 
   Future<String>checkup(String phone,
       String adrs,String loc,String date,String time,String msg,String lat,String log) async {
-
+  _updateNotifier.isProgressShown=true;
     Map body = {
       "phone":phone,
       "address":address,
@@ -251,6 +282,8 @@ class _CheckUpScreenState extends State<CheckUpScreen> {
     };
     ApiCall()
         .execute<UpdateResponse, Null>("appointment/store/"+selectLanguage, body).then((result) {
+          _updateNotifier.isProgressShown=false;
+          ApiCall().showToast("Successfully booked appointment");
       ApiCall().showToast(result.message);
     });
 
