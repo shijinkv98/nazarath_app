@@ -952,11 +952,13 @@ Future<String>addtoWishList(String slug,String store,BuildContext context,Widget
 
   if (Productresponse != null) {
     ApiCall().showToast(Productresponse.message);
-    homeResponse.wishlistcount++;
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (BuildContext context) => widget));
+    //homeResponse.wishlistcount++;
+    if(dashBoardUpdateNotifier!=null)
+    {
+      dashBoardUpdateNotifier.wishListCount=Productresponse.products.length.toString();
+      dashBoardUpdateNotifier.update();
+      saveCounts(dashBoardUpdateNotifier.wishListCount,  dashBoardUpdateNotifier.cartCount, dashBoardUpdateNotifier.notificationCount);
+    }
   }
   return "Success!";
 }

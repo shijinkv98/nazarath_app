@@ -46,6 +46,7 @@ class Home extends StatefulWidget {
 
 class HomePage extends State<Home> {
   //final String title;
+  var customer;
   AppLifecycleState _notification;
   DashBoardUpdateNotifier notifier;
  // HomePage({Key key, this.title}) : super(key: key);
@@ -70,7 +71,8 @@ class HomePage extends State<Home> {
 
       Scaffold(
         backgroundColor:home_bg,
-        // drawer: SideDrawer(),
+         //drawer: getSideDrawerHome(context),
+         // appBar: homeAppbar(context, notifier),
         body: FutureBuilder<HomeResponse>(
           future: ApiCall().execute<HomeResponse, Null>('home/'+selectLanguage, null),
           builder: (context, snapshot) {
@@ -84,6 +86,7 @@ class HomePage extends State<Home> {
           },
         )));
   }
+
   Widget getFullView(
       HomeResponse homeResponse1, BuildContext context,Widget widget) {
     homeResponse=homeResponse1;
@@ -638,7 +641,8 @@ class HomePage extends State<Home> {
 
     if (wishListResponse != null) {
       ApiCall().showToast(wishListResponse.message);
-      notifier.wishListCount=wishListResponse.products.length.toString();
+      if(wishListResponse.products!=null)
+        notifier.wishListCount=wishListResponse.products.length.toString();
       saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
     }
     return "Success!";
@@ -675,6 +679,7 @@ class HomePage extends State<Home> {
     if (cartResponse != null) {
       ApiCall().showToast(cartResponse.message);
       notifier.cartCount=cartResponse.cartcount.toString();
+      notifier.update();
       saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
     }
     return "Success!";
@@ -685,19 +690,23 @@ class HomePage extends State<Home> {
       "quantity": "1",
       "store": store
     };
-    WishListResponse Productresponse = await ApiCall()
-        .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body);
-
-    if (Productresponse != null) {
-      ApiCall().showToast(Productresponse.message);
-      homeResponse.wishlistcount++;
-      notifier.wishListCount=Productresponse.products.length.toString();
+    ApiCall()
+        .execute<WishListResponse, Null>("wishlist/add/"+selectLanguage, body).then((value) {
+      notifier.wishListCount=value.products.length.toString();
+      notifier.update();
       saveCounts(notifier.wishListCount,  notifier.cartCount, notifier.notificationCount);
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (BuildContext context) => widget));
-    }
+    });
+
+    // if (Productresponse != null) {
+    //   ApiCall().showToast(Productresponse.message);
+    //  // homeResponse.wishlistcount++;
+    //
+    //
+    //   // Navigator.pushReplacement(
+    //   //     context,
+    //   //     MaterialPageRoute(
+    //   //         builder: (BuildContext context) => widget));
+    // }
     return "Success!";
   }
   Future<String>removeFromCart(String slug,String store,BuildContext context,Widget widget) async {

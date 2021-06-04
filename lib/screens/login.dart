@@ -15,6 +15,7 @@ import 'package:nazarath_app/network/ApiCall.dart';
 import 'package:nazarath_app/network/response/LoginResponse.dart';
 import 'package:nazarath_app/notifiers/login_notifier.dart';
 import 'package:nazarath_app/screens/forgotpassword.dart';
+import 'package:nazarath_app/screens/register/otp.dart';
 import 'package:nazarath_app/screens/register/register.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -506,7 +507,23 @@ class _LoginState extends State<Login> {
         .execute<LoginResponse, Null>("login/"+selectLanguage, body);
     if(response!=null) {
       _loadingNotifier.isLoading = false;
-      if (response?.customerData != null) {
+        if(response.success=="-3")
+        {
+          Map body = {
+            // phone_number,id,mode=register/change
+            'phone_number': email_phone,
+            'id': response.customerData.id,
+            'mode': 'register', //register/change
+          };
+          await ApiCall()
+              .execute<LoginResponse, Null>("send-otp", body).then((result) {
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                OtpScreen(userData: response.customerData)),);
+        }
+      else if (response?.customerData != null) {
 
         await ApiCall().saveUser(jsonEncode(response.customerData.toJson()));
         await ApiCall().saveLoginResponse(jsonEncode(response.toJson()));

@@ -37,6 +37,8 @@ import 'package:nazarath_app/network/response/addaddressresponse.dart';
 import 'package:nazarath_app/network/response/forgotresponse.dart';
 import 'package:nazarath_app/network/response/resetpasswordresponse.dart';
 import 'package:nazarath_app/network/response/updateresponse.dart';
+import 'package:nazarath_app/notifiers/login_notifier.dart';
+import 'package:nazarath_app/notifiers/register_notifier.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/constants.dart';
@@ -61,7 +63,8 @@ class ApiCall{
   }
   Future<T> execute<T, K>(String url, Map params,
       {
-        bool isGet = false, http.MultipartRequest multipartRequest}) async {
+        bool isGet = false, http.MultipartRequest multipartRequest,LoginLoadingNotifier loginNotifier,
+        RegisterLoadingNotifier registerLoadingNotifier}) async {
     bool isConnected = false;
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -148,17 +151,16 @@ class ApiCall{
         //Navigator.of(context).pushReplacementNamed('/login');
       }
 
-      else if (success == '3') {
+      else if (success == '3'){
         showToast(jsonResponse['message'] ?? "Something went wrong!");
         gotoLogin(context);
         // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
         //     false;
         return fromJson<T, K>(jsonResponse);
       }
-      else if (success == '0') {
+      else if (success == '0'||success=="-3") {
         showToast(jsonResponse['message'] ?? "Something went wrong!");
         return fromJson<T, K>(jsonResponse);
-        await saveUser("");
 
         // Provider.of<DutyChangeNotifier>(context, listen: false).isDutyOn =
         //     false;

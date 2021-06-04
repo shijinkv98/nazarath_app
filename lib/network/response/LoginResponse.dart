@@ -2,7 +2,7 @@ import 'package:nazarath_app/model/user.dart';
 
 class LoginResponse {
   UserData customerData;
-  int success;
+  String success;
   String message,guest_id;
   LoginResponse()
   {
@@ -17,7 +17,7 @@ class LoginResponse {
     guest_id= json['guest_id'];
    // customerData.guest_id=guest_id;
     message = json['message'];
-    success = json['success'];
+    success = json['success'].toString();
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

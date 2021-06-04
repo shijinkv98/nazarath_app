@@ -57,10 +57,13 @@ class _DashBoard extends State<DashBoard> {
   DashBoardUpdateNotifier _updateNotifier;
   @override
   void initState() {
+
     _updateNotifier =
         Provider.of<DashBoardUpdateNotifier>(context, listen: false);
+    dashBoardUpdateNotifier=_updateNotifier;
     if(customer!=null)
       {
+        customerData=customer;
         _updateNotifier.user=customer;
       }
     //_updateNotifier.reset();
@@ -105,6 +108,7 @@ class _DashBoard extends State<DashBoard> {
       });
     });
     login_data = await ApiCall().getLoginResponse();
+    loginData=login_data;
     if(customer==null) {
       customer = await ApiCall().getUser();
 
@@ -432,139 +436,141 @@ class _DashBoard extends State<DashBoard> {
       initialIndex: tbPosition,
       child: Scaffold(
 
-        appBar:AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          centerTitle: true,
-          // titleSpacing: 100,
-          // leading: SideDrawer(),
-          title: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
-              child: ImageIcon(
-                AssetImage("assets/icons/nazarath_logo.png"),
-                size: appTabImageSize,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          backgroundColor: colorPrimary,
-          elevation: 0,
-
-          actions: <Widget>[
-            // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
-            Padding(
-                padding: const EdgeInsets.only(right: appTabIconPad),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
-                    );
-                  },
-                  child: Container(
-                    height: appTabIconSize,
-                    width: appTabIconSize,
-                    child: ImageIcon(AssetImage("assets/icons/search.png"), color: Colors.white,),
-                  ),
-                )
-            ),
-            // NotificationBadge(notificationCounterValueNotifer),
-            Padding(
-                padding: const EdgeInsets.only(right: appTabIconPad),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
-                    );
-                  },
-                  child: Container(
-                    height: appTabIconSize,
-                    width: appTabIconSize,
-                    child: Stack(
-                        children:[ Align(
-                            alignment: Alignment.center,
-                            child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(top: 12),
-                          //   child: Align(
-                          //       alignment: Alignment.topRight,
-                          //       child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
-                          //           radius:7,
-                          //           backgroundColor: Colors.white,
-                          //           child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                          // )
-                        ]),
-                  ),
-                )
-            ),
-
-            Padding(
-                padding: const EdgeInsets.only(right: appTabIconPad),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WishListScreen()),
-                    );
-                  },
-                  child: Container(
-                    height: appTabIconSize,
-                    width: appTabIconSize,
-                    child: Stack(
-                      children:[ Align(
-                        alignment:Alignment.center,
-                          child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 12),
-                      //   child: Align(
-                      //       alignment: Alignment.topRight,
-                      //       child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
-                      //           radius:7,
-                      //           backgroundColor: Colors.white,
-                      //           child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                      // ),
-              ]
-                    )
-
-                  ),
-                )
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: appTabIconPad),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CartScreen()),
-                  );
-                },
-                child: Container(
-                  height: appTabIconSize,
-                  width: appTabIconSize,
-                  child: Stack(
-                      children:[ Align(
-                          alignment: Alignment.center,
-
-                          child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 12),
-                        //   child: Align(
-                        //       alignment: Alignment.topRight,
-                        //       child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
-                        //           radius:7,
-                        //           backgroundColor: Colors.white,
-                        //           child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                        // )
-
-                      ]),
-                ),
-              ),
-            ),
-
-
-          ],
-        ),
+        //appBar:
+        // AppBar(
+        //   iconTheme: IconThemeData(color: Colors.white),
+        //   centerTitle: true,
+        //   // titleSpacing: 100,
+        //   // leading: SideDrawer(),
+        //   title: SafeArea(
+        //     child: Padding(
+        //       padding: const EdgeInsets.only(bottom: appTabBottom, top: appTabTop),
+        //       child: ImageIcon(
+        //         AssetImage("assets/icons/nazarath_logo.png"),
+        //         size: appTabImageSize,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        //   backgroundColor: colorPrimary,
+        //   elevation: 0,
+        //
+        //   actions: <Widget>[
+        //     // ImageIcon(AssetImage("assets/icons/nazarath_logo.png"),size: 100,)
+        //     Padding(
+        //         padding: const EdgeInsets.only(right: appTabIconPad),
+        //         child: GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(builder: (context) =>SearchScreen(from: "",hint: "Search products",)),
+        //             );
+        //           },
+        //           child: Container(
+        //             height: appTabIconSize,
+        //             width: appTabIconSize,
+        //             child: ImageIcon(AssetImage("assets/icons/search.png"), color: Colors.white,),
+        //           ),
+        //         )
+        //     ),
+        //     // NotificationBadge(notificationCounterValueNotifer),
+        //     Padding(
+        //         padding: const EdgeInsets.only(right: appTabIconPad),
+        //         child: GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(builder: (context) => NotificationScreen("notification")),
+        //             );
+        //           },
+        //           child: Container(
+        //             height: appTabIconSize,
+        //             width: appTabIconSize,
+        //             child: Stack(
+        //                 children:[ Align(
+        //                     alignment: Alignment.center,
+        //                     child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
+        //                   // Padding(
+        //                   //   padding: const EdgeInsets.only(top: 12),
+        //                   //   child: Align(
+        //                   //       alignment: Alignment.topRight,
+        //                   //       child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
+        //                   //           radius:7,
+        //                   //           backgroundColor: Colors.white,
+        //                   //           child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+        //                   // )
+        //                 ]),
+        //           ),
+        //         )
+        //     ),
+        //
+        //     Padding(
+        //         padding: const EdgeInsets.only(right: appTabIconPad),
+        //         child: GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(builder: (context) => WishListScreen()),
+        //             );
+        //           },
+        //           child: Container(
+        //             height: appTabIconSize,
+        //             width: appTabIconSize,
+        //             child: Stack(
+        //               children:[ Align(
+        //                 alignment:Alignment.center,
+        //                   child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
+        //               // Padding(
+        //               //   padding: const EdgeInsets.only(top: 12),
+        //               //   child: Align(
+        //               //       alignment: Alignment.topRight,
+        //               //       child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
+        //               //           radius:7,
+        //               //           backgroundColor: Colors.white,
+        //               //           child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+        //               // ),
+        //       ]
+        //             )
+        //
+        //           ),
+        //         )
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.only(right: appTabIconPad),
+        //       child: GestureDetector(
+        //         onTap: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => CartScreen()),
+        //           );
+        //         },
+        //         child: Container(
+        //           height: appTabIconSize,
+        //           width: appTabIconSize,
+        //           child: Stack(
+        //               children:[ Align(
+        //                   alignment: Alignment.center,
+        //
+        //                   child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
+        //                 // Padding(
+        //                 //   padding: const EdgeInsets.only(top: 12),
+        //                 //   child: Align(
+        //                 //       alignment: Alignment.topRight,
+        //                 //       child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
+        //                 //           radius:7,
+        //                 //           backgroundColor: Colors.white,
+        //                 //           child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+        //                 // )
+        //
+        //               ]),
+        //         ),
+        //       ),
+        //     ),
+        //
+        //
+        //   ],
+        // ),
+          appBar: homeAppbar(context, _updateNotifier),
         drawer: getSideDrawer(),
         // drawer: SideDrawer(),
 
@@ -587,7 +593,7 @@ class _DashBoard extends State<DashBoard> {
   }
 }
 
-Container getBottomNav(BuildContext context)
+Widget getBottomNav(BuildContext context)
 {
 
   return Container(

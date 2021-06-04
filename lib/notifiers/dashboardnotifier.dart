@@ -21,6 +21,10 @@ class DashBoardUpdateNotifier extends ChangeNotifier {
     _wishListCount=count;
     notifyListeners();
   }
+  void update()
+  {
+    notifyListeners();
+  }
   String get cartCount=>_cartCount;
   set cartCount(String count)
   {

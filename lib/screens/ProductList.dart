@@ -726,10 +726,12 @@ Future<String>addtoWishListNew(String slug,String store,BuildContext context,Wid
 
   if (wishListResponse != null) {
     ApiCall().showToast(wishListResponse.message);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    if(dashBoardUpdateNotifier!=null)
+    {
+      dashBoardUpdateNotifier.wishListCount=wishListResponse.products.length.toString();
+      dashBoardUpdateNotifier.update();
+      saveCounts(dashBoardUpdateNotifier.wishListCount,  dashBoardUpdateNotifier.cartCount, dashBoardUpdateNotifier.notificationCount);
+    }
   }
   return "Success!";
 }
@@ -744,10 +746,16 @@ Future<String>removefromWishList(String slug,String store,BuildContext context,W
 
   if (wishListResponse != null) {
     ApiCall().showToast(wishListResponse.message);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => widget));
+    if(dashBoardUpdateNotifier!=null)
+      {
+        dashBoardUpdateNotifier.wishListCount=wishListResponse.products.length.toString();
+        dashBoardUpdateNotifier.update();
+        saveCounts(dashBoardUpdateNotifier.wishListCount,  dashBoardUpdateNotifier.cartCount, dashBoardUpdateNotifier.notificationCount);
+      }
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => widget));
   }
   return "Success!";
 }

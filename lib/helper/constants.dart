@@ -1,14 +1,21 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nazarath_app/languages.dart';
 import 'package:nazarath_app/main.dart';
 import 'package:nazarath_app/network/ApiCall.dart';
+import 'package:nazarath_app/notifiers/dashboardnotifier.dart';
 import 'package:nazarath_app/screens/DashBoard.dart';
 import 'package:nazarath_app/screens/cart.dart';
+import 'package:nazarath_app/screens/changePassword.dart';
+import 'package:nazarath_app/screens/languagescreen.dart';
 import 'package:nazarath_app/screens/notification.dart';
+import 'package:nazarath_app/screens/order.dart';
 import 'package:nazarath_app/screens/searchscreen.dart';
+import 'package:nazarath_app/screens/wallet.dart';
 import 'package:nazarath_app/screens/wishlist.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const Color colorPrimary = Color(0xFF5BC4BF);
@@ -418,7 +425,286 @@ Widget getBottomTabPannel(BuildContext context )
     ),
   );
 }
-Widget homeAppbar(BuildContext context)
+var customerData;
+var loginData;
+Widget getSideDrawerHome(BuildContext context)
+{
+ var customer=customerData;
+ var login_data=loginData;
+    return Container(
+      color: Colors.white,
+      child:Drawer(
+
+        child: Container(
+          color: slider_bg,
+          height: double.infinity,
+
+          child: SingleChildScrollView(
+
+            child: Container(
+              color: slider_bg,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+
+                  Container(
+                      child: Container(
+
+                          child:Container(
+
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                  BorderRadius.only(bottomRight: Radius.circular(45.0)),
+                                ),
+                                height: 150,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 45, top: 30, bottom: 10),
+                                      child: CircleAvatar(
+                                        radius: 35,
+                                        backgroundColor: Colors.grey[300],
+                                        backgroundImage: AssetImage('assets/icons/no_image.png'
+                                          // NetworkImage(''
+                                          // profileData.user.getImage()
+                                        ),
+
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+
+                                        children: [
+                                          SizedBox(
+                                            width: 180,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 6),
+                                              child: Text(customer==null?"GUEST":customer.name!=null&&customer.name!=""?customer.name:"GUEST",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15)),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 180,
+
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 6),
+                                              child: AutoSizeText(customer==null?"":customer.email!=null&&customer.email!=""?customer.email:"",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[700],
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 15)),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ))
+
+                      )),
+                  SizedBox(height: 20,),
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Column(
+                      children: [
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/edit_profile.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).profile,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=3;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/my_orders.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).myOrders,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => OrderScreen()),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/favourite.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).wishlist,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WishListScreen()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/wallet.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).myWallet,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => WalletScreen("")),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/change_password.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).changePassword,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ChangePasswordScreen("",customer)),
+                            );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/stores.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).stores,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=2;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/notification.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).notification,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NotificationScreen("Notification is empty")),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/language_icon.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages
+                                  .of(context)
+                                  .labelSelectLanguage,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => languageScreen("")),
+                          );
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/news_white.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).news,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          tbPosition=4;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => DashBoard()),
+                          );
+
+                        },
+                        ),
+                        FlatButton(
+                          color: slider_bg,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              ImageIcon(AssetImage('assets/icons/log_out.png'),color: Colors.white,),
+                              SizedBox(width: 10),
+                              Text(Languages.of(context).logout,style:TextStyle(color:Colors.white),)
+                            ],
+                          ), onPressed: () {
+                          if(login_data.guest_id != null && login_data.guest_id.length>0)
+                            gotoLogin(context);
+                          else
+                            logout(context);
+                        },
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+}
+Widget homeAppbar(BuildContext context,DashBoardUpdateNotifier notifier)
 {
   return AppBar(
     iconTheme: IconThemeData(color: Colors.white),
@@ -473,15 +759,19 @@ Widget homeAppbar(BuildContext context)
                   children:[ Align(
                       alignment: Alignment.center,
                       child: ImageIcon(AssetImage("assets/icons/notification.png"),color: Colors.white,)),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 12),
-                    //   child: Align(
-                    //       alignment: Alignment.topRight,
-                    //       child: _updateNotifier.notificationCount!=null? _updateNotifier.notificationCount!="0"?CircleAvatar(
-                    //           radius:7,
-                    //           backgroundColor: Colors.white,
-                    //           child: Text( _updateNotifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                    // )
+                    Consumer<DashBoardUpdateNotifier>(
+                      builder: (context, value, child) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child:notifier.notificationCount!=null?notifier.notificationCount!="0"?CircleAvatar(
+                                  radius:7,
+                                  backgroundColor: Colors.white,
+                                  child: Text( notifier.notificationCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                        );
+                      },
+                    )
                   ]),
             ),
           )
@@ -503,15 +793,19 @@ Widget homeAppbar(BuildContext context)
                     children:[ Align(
                         alignment:Alignment.center,
                         child: ImageIcon(AssetImage("assets/icons/favorite.png"), color: Colors.white,)),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 12),
-                      //   child: Align(
-                      //       alignment: Alignment.topRight,
-                      //       child: _updateNotifier.wishListCount!=null?_updateNotifier.wishListCount!="0"?CircleAvatar(
-                      //           radius:7,
-                      //           backgroundColor: Colors.white,
-                      //           child: Text( _updateNotifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                      // ),
+                      Consumer<DashBoardUpdateNotifier>(
+                        builder: (context, value, child) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child:notifier.wishListCount!=null?notifier.wishListCount!="0"?CircleAvatar(
+                                    radius:7,
+                                    backgroundColor: Colors.white,
+                                    child: Text( notifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                          );
+                        },
+                      )
                     ]
                 )
 
@@ -535,15 +829,20 @@ Widget homeAppbar(BuildContext context)
                     alignment: Alignment.center,
 
                     child: ImageIcon(AssetImage("assets/icons/cart.png"), color: Colors.white,)),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 12),
-                  //   child: Align(
-                  //       alignment: Alignment.topRight,
-                  //       child:_updateNotifier.cartCount!=null?_updateNotifier.cartCount!="0"?CircleAvatar(
-                  //           radius:7,
-                  //           backgroundColor: Colors.white,
-                  //           child: Text( _updateNotifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
-                  // )
+                  Consumer<DashBoardUpdateNotifier>(
+                    builder: (context, value, child) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child:notifier.cartCount!=null?notifier.cartCount!="0"?CircleAvatar(
+                                radius:7,
+                                backgroundColor: Colors.white,
+                                child: Text( notifier.cartCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                      );
+                    },
+                  )
+
 
                 ]),
           ),
@@ -554,6 +853,7 @@ Widget homeAppbar(BuildContext context)
     ],
   );
 }
+DashBoardUpdateNotifier dashBoardUpdateNotifier;
 Widget notificationAppbar()
 {
 
