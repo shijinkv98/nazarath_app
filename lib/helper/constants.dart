@@ -799,10 +799,10 @@ Widget homeAppbar(BuildContext context,DashBoardUpdateNotifier notifier)
                             padding: const EdgeInsets.only(top: 12),
                             child: Align(
                                 alignment: Alignment.topRight,
-                                child:notifier.wishListCount!=null?notifier.wishListCount!="0"?CircleAvatar(
+                                child:notifier.wishListCount!=null&&notifier.wishListCount!="0"&&notifier.wishListCount!="null"?CircleAvatar(
                                     radius:7,
                                     backgroundColor: Colors.white,
-                                    child: Text( notifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox():SizedBox()),
+                                    child: Text( notifier.wishListCount,style: TextStyle(color: colorPrimary,fontSize: 10),)):SizedBox()),
                           );
                         },
                       )

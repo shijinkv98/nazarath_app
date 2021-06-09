@@ -349,7 +349,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
                     ),
                     Container(
                         padding: EdgeInsets.only(right: 10),
-                        child:  Text(
+                        child:  product.oldprice!=product.price?Text(
                           '${product.symbolLeft}${" "}${product.oldprice}${product.symbolRight}',
                           textAlign:TextAlign.end,
                           style: TextStyle(
@@ -357,7 +357,7 @@ class _ProductDetailsState extends State<ProductDetailsScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                               decoration: TextDecoration.lineThrough),
-                        )
+                        ):Container()
                     )
                   ],
                 )
@@ -876,7 +876,7 @@ Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget wid
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 2),
-                                  Text(
+                                  item.oldprice!=item.price? Text(
                                     '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -884,7 +884,7 @@ Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget wid
                                         fontSize: 9,
                                         decoration: TextDecoration
                                             .lineThrough),
-                                  )
+                                  ):Container()
                                 ],
                               ),
                             )

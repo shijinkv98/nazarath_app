@@ -16,6 +16,7 @@ import 'package:nazarath_app/network/response/WishListResponse.dart';
 import 'package:nazarath_app/network/response/CartResponse.dart';
 import 'package:nazarath_app/notifiers/dashboardnotifier.dart';
 import 'package:nazarath_app/notifiers/profilenotifier.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'ProductDetails.dart';
 import 'ProductList.dart';
@@ -134,10 +135,14 @@ class HomePage extends State<Home> {
             padding: const EdgeInsets.only(top: 10),
             child: Center(child: getCategory(homeResponse.categories)),
           ),
-          getFeatured(homeResponse.featuredProducts,widget),
-          getSlider(homeResponse.slider,190),
-          getRecommended(homeResponse.recommendedProducts,widget),
-          getBannerSlider(homeResponse.banners,180)
+          homeResponse.featuredProducts!=null&&homeResponse.featuredProducts.length!=0?
+          getFeatured(homeResponse.featuredProducts,widget):Container(),
+          homeResponse.slider!=null&&homeResponse.slider.length!=0?
+          getSlider(homeResponse.slider,190):Container(),
+          homeResponse.recommendedProducts!=null&&homeResponse.recommendedProducts.length!=0?
+          getRecommended(homeResponse.recommendedProducts,widget):Container(),
+          homeResponse.banners!=null&&homeResponse.banners.length!=0?
+          getBannerSlider(homeResponse.banners,180):Container()
         ],
       ),
     );
@@ -449,7 +454,7 @@ class HomePage extends State<Home> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 2),
-                                  Text(
+                                  item.oldprice!=item.price?Text(
                                     '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -457,7 +462,7 @@ class HomePage extends State<Home> {
                                         fontSize: 9,
                                         decoration: TextDecoration
                                             .lineThrough),
-                                  )
+                                  ):Container()
                                 ],
                               ),
                             )
@@ -603,7 +608,7 @@ class HomePage extends State<Home> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 2),
-                                  Text(
+                                  item.oldprice!=item.price?Text(
                                     '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -611,7 +616,7 @@ class HomePage extends State<Home> {
                                         fontSize: 9,
                                         decoration: TextDecoration
                                             .lineThrough),
-                                  )
+                                  ):Container()
                                 ],
                               ),
                             )
@@ -954,7 +959,11 @@ class HomePage extends State<Home> {
         items: banners.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return getImageBanner(i.image);
+              return InkWell(
+                onTap: (){
+                  handleBannerClick(i.linkType.toString(), i.linkValue, i.name);
+                },
+                  child: getImageBanner(i.image));
             },
           );
         }).toList(),
@@ -982,7 +991,11 @@ class HomePage extends State<Home> {
           items: sliders.map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return getImage(i.image);
+                return InkWell(
+                  onTap: (){
+                    handleBannerClick(i.linkType.toString(), i.linkValue, i.name);
+                  },
+                    child: getImage(i.image));
               },
             );
           }).toList(),
@@ -1007,7 +1020,11 @@ class HomePage extends State<Home> {
         items: offers.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return getImageOffer(i.image);
+              return InkWell(
+                onTap: (){
+                  handleBannerClick("3", i.slug, i.name);
+                },
+                  child: getImageOffer(i.image));
             },
           );
         }).toList(),
@@ -1064,53 +1081,86 @@ class HomePage extends State<Home> {
     );
   }
 
-}
-
-
-
-InkWell getWishListIcon(int condition,double size )
-{
-  if(condition==1) {
+  InkWell getWishListIcon(int condition,double size )
+  {
+    if(condition==1) {
+      return InkWell(
+// onTap: ,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: ImageIcon(
+            AssetImage('assets/icons/fav_active.png'),
+            size: size,
+            color: colorPrimary,
+          ),
+        ),
+      );
+    }
     return InkWell(
 // onTap: ,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 10),
+      child:  Padding(
+        padding: const EdgeInsets.only(right: 8),
         child: ImageIcon(
-          AssetImage('assets/icons/fav_active.png'),
+          AssetImage('assets/icons/favorite.png'),
           size: size,
           color: colorPrimary,
         ),
       ),
     );
   }
-  return InkWell(
-// onTap: ,
-    child:  Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: ImageIcon(
-        AssetImage('assets/icons/favorite.png'),
-        size: size,
-        color: colorPrimary,
-      ),
-    ),
-  );
+  Widget getBottomBanner() {
+    return Container(
+        height: 150,
+        width: double.infinity,
+        child: Carousel(
+          dotBgColor: Colors.transparent, // onImageTap: ,
+          images: [
+            AssetImage('assets/icons/banner1.png'),
+            // NetworkImage('imageurl'),
+            AssetImage("assets/icons/banner2.png"),
+            NetworkImage(
+                "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
+            AssetImage("assets/image3.jpeg"),
+            NetworkImage(
+                'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
+          ],
+        ));
+  }
+  void handleBannerClick(String linkType,String linkValue,String title)
+  async
+  {
+    switch(linkType)
+    {
+      case "0"://Link
+        if (await canLaunch(linkValue))
+            await launch(linkValue);
+        break;
+      case "1"://Product
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetailsScreen(linkValue)),
+        );
+        break;
+      case "2"://Category
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              ProductScreen(linkValue, "category","name","asc","","")),
+        );
+        break;
+      case "3"://Offer
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              ProductScreen(linkValue, "offer","name","asc","","")),
+        );
+
+        break;
+    }
+  }
 }
-Container getBottomBanner() {
-  return Container(
-      height: 150,
-      width: double.infinity,
-      child: Carousel(
-        dotBgColor: Colors.transparent, // onImageTap: ,
-        images: [
-          AssetImage('assets/icons/banner1.png'),
-          // NetworkImage('imageurl'),
-          AssetImage("assets/icons/banner2.png"),
-          NetworkImage(
-              "https://image.shutterstock.com/image-photo/micro-peacock-feather-hd-imagebest-260nw-1127238584.jpg"),
-          AssetImage("assets/image3.jpeg"),
-          NetworkImage(
-              'https://i.pinimg.com/originals/94/dd/57/94dd573e4b4de604ea7f33548da99fd6.jpg'),
-        ],
-      ));
-}
+
+
+
 

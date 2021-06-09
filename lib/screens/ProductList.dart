@@ -673,7 +673,7 @@ Widget _itemsBuilder(Data item,BuildContext context,Widget widget) {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(height: 2),
-                                Text(
+                                item.oldprice!=item.price?Text(
                                   '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
@@ -681,7 +681,7 @@ Widget _itemsBuilder(Data item,BuildContext context,Widget widget) {
                                       fontSize: 9,
                                       decoration: TextDecoration
                                           .lineThrough),
-                                )
+                                ):Container()
                               ],
                             ),
                           )
@@ -970,7 +970,7 @@ Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget wid
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(height: 2),
-                                Text(
+                                item.oldprice!=item.price?Text(
                                   '${item.symbolLeft}${" "}${item.oldprice}${item.symbolRight}',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
@@ -978,7 +978,7 @@ Widget getRecommendItem(RecommendedProducts item,BuildContext context,Widget wid
                                       fontSize: 9,
                                       decoration: TextDecoration
                                           .lineThrough),
-                                )
+                                ):Container()
                               ],
                             ),
                           )
